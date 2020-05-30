@@ -1,14 +1,10 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutterusb/Command.dart';
-import 'package:flutterusb/Response.dart';
 import 'package:flutterusb/UsbDevice.dart';
 import 'package:flutterusb/flutter_usb.dart';
+import 'package:sonyalphacontrol/api/sony_api.dart';
 import 'package:sonyalphacontrol/pages/settings_page.dart';
-
-import '../api/commands.dart';
 
 void main() async {
   FlutterUsb.enableLogger();
@@ -27,9 +23,16 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     initPlatformState();
+  }
+
+  Future<void> initPlatformState() async {
+    await FlutterUsb.initializeUsb;
+
+    setState(() {
+      _initialized = true;
+    });
   }
 
   @override
@@ -59,15 +62,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    await FlutterUsb.initializeUsb;
-
-    setState(() {
-      _initialized = true;
-    });
-  }
-
   Widget deviceList() {
     if (_initialized) {
       return FutureBuilder<List<UsbDevice>>(
@@ -94,95 +88,12 @@ class _MyAppState extends State<MyApp> {
       title: Text(device.name),
       subtitle: Text(device.description),
       onTap: () async {
-        await FlutterUsb.connectToUsbDevice(device);
-        await FlutterUsb.sendCommand(Command(Commands.Connect));
+        await SonyApi.connectToCamera(device);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => SettingsPage()),
         );
       },
     );
-  }
-
-  windowsTest() async {
-    //connect
-    //
-    // await FlutterUsb.sendCommand(Command(Commands.requestimageinfo));
-    // await FlutterUsb.sendCommand(Command(Commands.requestimage));
-  }
-
-  liveViewTest() async {
-    if (Platform.isWindows) {
-      //request image information (only once?)
-      var arr = [
-        //0x08 -> image info (eg size (for liveview))
-        0x08, 16, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00, 0x00,
-        0x02, 192, 0xFF, 255, 0x00,
-        0x00, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00, 0x00,
-        0x01, 0x00, 0x00, 0x00, 0x03,
-        0x00, 0x00, 0x00
-      ];
-      Response response = await FlutterUsb.sendCommand(Command(arr));
-      //analyze image
-
-      //position 32: ReadInt16 -> anzahl bilder
-      //position : ReadInt32 -> imageInfoUnk
-      //position : ReadInt32 -> imageSizeInBytes
-      //position82 : ReadByte -> imageName
-
-      //request image
-      //0x09 -> image data (image itself)
-      var arr2 = [
-        0x09,
-        16,
-        0x00,
-        0x00,
-        0x00,
-        0x00,
-        0x00,
-        0x00,
-        0x00,
-        0x00,
-        0x02,
-        192,
-        255,
-        255,
-        0x00,
-        0x00,
-        0x00,
-        0x00,
-        0x00,
-        0x00,
-        0x00,
-        0x00,
-        0x00,
-        0x00,
-        0x00,
-        0x00,
-        0x00,
-        0x00,
-        0x00,
-        0x00,
-        0x01,
-        0x00,
-        0x00,
-        0x00,
-        0x03,
-        0x00,
-        0x00,
-        0x00
-      ];
-      response = await FlutterUsb.sendCommand(Command(arr2));
-
-      //position 30: ReadInt32 -> unkBufferSize
-      //position : ReadInt32 -> liveViewBufferSize
-      //position : unkBufferSize-8 -> unkBuff
-      //position : (remaining) -> buff (image data)
-    }
-
-    sendGetLiveView() {}
   }
 }

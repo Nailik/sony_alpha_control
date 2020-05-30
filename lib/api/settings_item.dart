@@ -12,7 +12,7 @@ import 'package:sonyalphacontrol/ids/record_video_state_ids.dart';
 import 'package:sonyalphacontrol/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/ids/shooting_mode_ids.dart';
 
-class Settings {
+class SettingsItem {
   int value;
   int id;
   List<int> acceptedValues = new List();

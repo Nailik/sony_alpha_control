@@ -27,6 +27,7 @@ dependencies:
     git: https://github.com/Nailik/flutter_usb.git
   convert: ^2.1.1
   http: ^0.12.1
+  provider: ^3.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
