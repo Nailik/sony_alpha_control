@@ -1,0 +1,5 @@
+
+    // gphoto supports a subset of Sony's PTP features. See:
+    // https://github.com/gphoto/libgphoto2/blob/2e5e43430afc62aed8e7950dd4ab48080200d786/camlibs/ptp2/ptp.h#L586
+    // https://github.com/gphoto/libgphoto2/blob/2e5e43430afc62aed8e7950dd4ab48080200d786/camlibs/ptp2/ptp.h#L1045
+    // https://github.com/gphoto/libgphoto2/blob/2e5e43430afc62aed8e7950dd4ab48080200d786/camlibs/ptp2/ptp.h#L2352
