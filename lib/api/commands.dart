@@ -210,6 +210,18 @@ class Commands {
     0x00
   ];
 
+  static Uint8List getCommand(
+      OpCodeId opCode, SettingsId settingsId, var value) {
+    Uint8List c = new Uint8List(40);
+    c.buffer.asByteData().setUint8(30, 1);
+    c.buffer.asByteData().setUint8(34, 4);
+    c.buffer.asByteData().setUint16(0, opCode.value, Endian.little);
+    c.buffer.asByteData().setUint16(10, settingsId.value, Endian.little);
+    c.buffer.asByteData().setUint16(38, value, Endian.little);
+    return c;
+  }
+
+
   static Uint8List getFocusModeCommand(
       OpCodeId opCode, SettingsId settingsId, FocusModeId focusMode) {
     Uint8List c = new Uint8List(40);

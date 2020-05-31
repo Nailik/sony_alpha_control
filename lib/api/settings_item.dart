@@ -1,4 +1,5 @@
 import 'package:sonyalphacontrol/ids/aspect_ratio_ids.dart';
+import 'package:sonyalphacontrol/ids/auto_focus_state.dart';
 import 'package:sonyalphacontrol/ids/drive_mode_ids.dart';
 import 'package:sonyalphacontrol/ids/dro_hdr_ids.dart';
 import 'package:sonyalphacontrol/ids/flash_mode_ids.dart';
@@ -34,7 +35,215 @@ class SettingsItem {
           values.add(AcceptedValue(mode.value, mode.name));
         });
         break;
-      default:
+      case SettingsId.FileFormat:
+        acceptedValues.forEach((element) {
+          var mode = getImageFileFormatId(element);
+          values.add(AcceptedValue(mode.value, mode.name));
+        });
+        break;
+      case SettingsId.WhiteBalance:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.FNumber:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.MeteringMode:
+        acceptedValues.forEach((element) {
+          var mode = getMeteringModeId(element);
+          values.add(AcceptedValue(mode.value, mode.name));
+        });
+        break;
+      case SettingsId.FlashMode:
+        acceptedValues.forEach((element) {
+          var mode = getFlashModeId(element);
+          values.add(AcceptedValue(mode.value, mode.name));
+        });
+        break;
+      case SettingsId.ShootingMode:
+        acceptedValues.forEach((element) {
+          var mode = getShootingModeId(element);
+          values.add(AcceptedValue(mode.value, mode.name));
+        });
+        break;
+      case SettingsId.EV:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.DriveMode:
+        acceptedValues.forEach((element) {
+          var mode = getDriveModeId(element);
+          values.add(AcceptedValue(mode.value, mode.name));
+        });
+        break;
+      case SettingsId.Flash:
+        acceptedValues.forEach((element) {
+          var mode = getFlashModeId(element);
+          values.add(AcceptedValue(mode.value, mode.name));
+        });
+        break;
+      case SettingsId.DroHdr:
+        acceptedValues.forEach((element) {
+          var mode = getDroHdrId(element);
+          values.add(AcceptedValue(mode.value, mode.name));
+        });
+        break;
+      case SettingsId.ImageSize:
+        acceptedValues.forEach((element) {
+          var mode = getImageSizeId(element);
+          values.add(AcceptedValue(mode.value, mode.name));
+        });
+        break;
+      case SettingsId.ShutterSpeed:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.UnkD20E:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.WhiteBalanceColorTemp:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.WhiteBalanceGM:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.AspectRatio:
+        acceptedValues.forEach((element) {
+          var mode = getAspectRatioId(element);
+          values.add(AcceptedValue(mode.value, mode.name));
+        });
+        break;
+      case SettingsId.UnkD212:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.AutoFocusState:
+        acceptedValues.forEach((element) {
+          var mode = getAutoFocusStateId(element);
+          values.add(AcceptedValue(mode.value, mode.name));
+        });
+        break;
+      case SettingsId.Zoom:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.PhotoTransferQueue:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.AEL_State:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.BatteryInfo:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.SensorCrop:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.PictureEffect:
+        acceptedValues.forEach((element) {
+          var mode = getPictureEffectId(element);
+          values.add(AcceptedValue(mode.value, mode.name));
+        });
+        break;
+      case SettingsId.WhiteBalanceAB:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.RecordVideoState:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.ISO:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.FEL_State:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.LiveViewState:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.UnkD222:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.FocusArea:
+        acceptedValues.forEach((element) {
+          var mode = getFocusAreaId(element);
+          values.add(AcceptedValue(mode.value, mode.name));
+        });
+        break;
+      case SettingsId.FocusMagnifierPhase:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.UnkD22E:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.FocusMagnifier:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.FocusMagnifierPosition:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.UseLiveViewDisplayEffect:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.FocusAreaSpot:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.FocusMagnifierState:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.FocusModeToggleResponse:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.UnkD236:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.HalfPressShutter:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.CapturePhoto:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.AEL:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.UnkD2C5:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.UnkD2C7:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.RecordVideo:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.FEL:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.FocusMagnifierRequest:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.FocusMagnifierResetRequest:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.FocusMagnifierMoveUpRequest:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.FocusMagnifierMoveDownRequest:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.FocusMagnifierMoveLeftRequest:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.FocusMagnifierMoveRightRequest:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.FocusDistance:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.FocusModeToggleRequest:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.UnkD2D3:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.UnkD2D4:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.Unknown:
+        // TODO: Handle this case.
         break;
     }
     return values;
