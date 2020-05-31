@@ -2,7 +2,7 @@ enum OpCodeId {
   Connect,
 
   /// <summary>
-  /// The response contains a list of available main/sub settings (just their ids)
+  /// The response contains a list of available main/sub settings (just their usb.ids)
   /// </summary>
   SettingsList,
 

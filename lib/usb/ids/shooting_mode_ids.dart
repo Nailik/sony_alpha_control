@@ -19,6 +19,14 @@ enum ShootingModeId {
   SCN_S,
 //13 80 - Moon icon
   SCN_MOON,
+  SCN_PORTRAIT_NIGHT,
+  SUPERIOR_AUTO,
+  TELE_ZOOM_CONT_AE_PRIORITY,
+  SWEEP_PANORAMA,
+  INTELLIGENT_AUTO_FLASH_OFF,
+  HANDHELD_TWILIGHT,
+  PICTURE_EFFECT,
+  Movie,
 //17 80 - Moon icon with person
   SCN_MOON_P,
   //00 80 - AUTO
@@ -67,10 +75,22 @@ extension ShootingModeIdExtension on ShootingModeId {
         return 0x8012;
       case ShootingModeId.SCN_MOON:
         return 0x8013;
-      case ShootingModeId.SCN_MOON_P:
+      case ShootingModeId.SCN_PORTRAIT_NIGHT:
         return 0x8017;
       case ShootingModeId.AUTO:
         return 0x8000;
+      case ShootingModeId.SUPERIOR_AUTO:
+        return 0x8001;
+      case ShootingModeId.TELE_ZOOM_CONT_AE_PRIORITY:
+        return 0x8031;
+      case ShootingModeId.SWEEP_PANORAMA:
+        return 0x8041;
+      case ShootingModeId.INTELLIGENT_AUTO_FLASH_OFF:
+        return 0x8060;
+      case ShootingModeId.HANDHELD_TWILIGHT:
+        return 0x8016;
+      case ShootingModeId.PICTURE_EFFECT:
+        return 0x8070;
       case ShootingModeId.Movie_P:
         return 0x8050;
       case ShootingModeId.Movie_A:
@@ -79,6 +99,8 @@ extension ShootingModeIdExtension on ShootingModeId {
         return 0x8052;
       case ShootingModeId.Movie_M:
         return 0x8053;
+      case ShootingModeId.Movie:
+        return 0x8056;
       case ShootingModeId.SQ_P:
         return 0x8084;
       case ShootingModeId.SQ_A:
@@ -96,7 +118,6 @@ extension ShootingModeIdExtension on ShootingModeId {
 }
 
 ShootingModeId getShootingModeId(int value) {
-  return ShootingModeId.values.firstWhere(
-          (element) => element.value == value,
+  return ShootingModeId.values.firstWhere((element) => element.value == value,
       orElse: () => ShootingModeId.Unknown);
 }

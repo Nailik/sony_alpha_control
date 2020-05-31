@@ -1,17 +1,17 @@
-import 'package:sonyalphacontrol/ids/aspect_ratio_ids.dart';
-import 'package:sonyalphacontrol/ids/auto_focus_state.dart';
-import 'package:sonyalphacontrol/ids/drive_mode_ids.dart';
-import 'package:sonyalphacontrol/ids/dro_hdr_ids.dart';
-import 'package:sonyalphacontrol/ids/flash_mode_ids.dart';
-import 'package:sonyalphacontrol/ids/focus_area_ids.dart';
-import 'package:sonyalphacontrol/ids/focus_mode_ids.dart';
-import 'package:sonyalphacontrol/ids/image_file_format_ids.dart';
-import 'package:sonyalphacontrol/ids/image_size_ids.dart';
-import 'package:sonyalphacontrol/ids/metering_mode_ids.dart';
-import 'package:sonyalphacontrol/ids/picture_effect_ids.dart';
-import 'package:sonyalphacontrol/ids/record_video_state_ids.dart';
-import 'package:sonyalphacontrol/ids/setting_ids.dart';
-import 'package:sonyalphacontrol/ids/shooting_mode_ids.dart';
+import 'package:sonyalphacontrol/usb/ids/aspect_ratio_ids.dart';
+import 'package:sonyalphacontrol/usb/ids/auto_focus_state.dart';
+import 'package:sonyalphacontrol/usb/ids/drive_mode_ids.dart';
+import 'package:sonyalphacontrol/usb/ids/dro_hdr_ids.dart';
+import 'package:sonyalphacontrol/usb/ids/flash_mode_ids.dart';
+import 'package:sonyalphacontrol/usb/ids/focus_area_ids.dart';
+import 'package:sonyalphacontrol/usb/ids/focus_mode_ids.dart';
+import 'package:sonyalphacontrol/usb/ids/image_file_format_ids.dart';
+import 'package:sonyalphacontrol/usb/ids/image_size_ids.dart';
+import 'package:sonyalphacontrol/usb/ids/metering_mode_ids.dart';
+import 'package:sonyalphacontrol/usb/ids/picture_effect_ids.dart';
+import 'package:sonyalphacontrol/usb/ids/record_video_state_ids.dart';
+import 'package:sonyalphacontrol/usb/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/usb/ids/shooting_mode_ids.dart';
 
 class SettingsItem {
   int value;

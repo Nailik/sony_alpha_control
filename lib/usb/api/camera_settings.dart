@@ -4,9 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutterusb/Command.dart';
 import 'package:flutterusb/Response.dart';
 import 'package:flutterusb/flutter_usb.dart';
-import 'package:sonyalphacontrol/api/commands.dart';
-import 'package:sonyalphacontrol/api/settings_item.dart';
-import 'package:sonyalphacontrol/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/usb/api/commands.dart';
+import 'package:sonyalphacontrol/usb/api/settings_item.dart';
 
 class CameraSettings extends ChangeNotifier {
   List<int> mainSettings = new List();
@@ -161,18 +160,9 @@ class CameraSettings extends ChangeNotifier {
               offset += 2;
               setting.acceptedValues.clear();
               for (int i = 0; i < num; i++) {
-                if(num <= 3) {
-                  //else there is a problem at metering mode
-                  //reporting "center" as 3rd option with value 0x8002 but actually is 0x0002
-                  //and reporting "center" as current value 0x0002
-                  setting.acceptedValues
-                      .add(bytes.getUint8(offset));
-                  offset += 2;
-                }else{
-                  setting.acceptedValues
-                      .add(bytes.getUint16(offset, Endian.little));
-                  offset += 2;
-                }
+                setting.acceptedValues
+                    .add(bytes.getUint16(offset, Endian.little));
+                offset += 2;
               }
               break;
             default:

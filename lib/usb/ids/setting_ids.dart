@@ -265,9 +265,9 @@ extension SettingsIdExtension on SettingsId {
       case SettingsId.FocusModeToggleRequest:
         return 0xD2D2;
       case SettingsId.UnkD2D3:
-        return 0xD2D3;
+        return 0xD2D3; //manual focus?
       case SettingsId.UnkD2D4:
-        return 0xD2D4;
+        return 0xD2D4; //??
       case SettingsId.Unknown:
         return -1;
       default:

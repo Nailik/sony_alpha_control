@@ -1,8 +1,9 @@
 import 'dart:typed_data';
 
-import 'package:sonyalphacontrol/ids/setting_ids.dart';
-import 'package:sonyalphacontrol/ids/focus_mode_ids.dart';
-import 'package:sonyalphacontrol/ids/opcodes_ids.dart';
+import 'package:sonyalphacontrol/usb/ids/focus_mode_ids.dart';
+import 'package:sonyalphacontrol/usb/ids/opcodes_ids.dart';
+import 'package:sonyalphacontrol/usb/ids/setting_ids.dart';
+
 
 class Commands {
   static var Connect = [

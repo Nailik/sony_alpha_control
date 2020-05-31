@@ -1,7 +1,7 @@
 import 'package:flutterusb/Command.dart';
 import 'package:flutterusb/UsbDevice.dart';
 import 'package:flutterusb/flutter_usb.dart';
-import 'package:sonyalphacontrol/api/sony_camera.dart';
+import 'package:sonyalphacontrol/usb/api/sony_camera.dart';
 
 import 'commands.dart';
 

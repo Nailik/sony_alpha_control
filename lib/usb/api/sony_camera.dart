@@ -1,11 +1,11 @@
 import 'package:flutterusb/Command.dart';
 import 'package:flutterusb/UsbDevice.dart';
 import 'package:flutterusb/flutter_usb.dart';
-import 'package:sonyalphacontrol/api/camera_settings.dart';
-import 'package:sonyalphacontrol/api/commands.dart';
-import 'package:sonyalphacontrol/ids/focus_mode_ids.dart';
-import 'package:sonyalphacontrol/ids/opcodes_ids.dart';
-import 'package:sonyalphacontrol/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/usb/ids/opcodes_ids.dart';
+import 'package:sonyalphacontrol/usb/ids/setting_ids.dart';
+
+import 'camera_settings.dart';
+import 'commands.dart';
 
 class SonyCamera {
   UsbDevice device;

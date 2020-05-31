@@ -9,6 +9,7 @@ enum FlashModeId {
   EyeFlashAuto_SlowSync, // unsure of offical name
   SlowSync,
   SlowWL,
+  WirelessSync,
   RearWL,
   Unknown
 }
@@ -38,6 +39,8 @@ extension FlashModeIdExtension on FlashModeId {
         return 0x8032;
       case FlashModeId.SlowWL:
         return 0x8041;
+      case FlashModeId.WirelessSync:
+        return 0x8004;
       case FlashModeId.RearWL:
         return 0x8042;
       case FlashModeId.Unknown:
@@ -46,7 +49,7 @@ extension FlashModeIdExtension on FlashModeId {
         return -2;
     }
   }
-}
+}//8004
 
 FlashModeId getFlashModeId(int value) {
   return FlashModeId.values.firstWhere(
