@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sonyalphacontrol/usb/api/camera_settings.dart';
 import 'package:sonyalphacontrol/usb/api/settings_item.dart';
-import 'package:sonyalphacontrol/usb/api/sony_api.dart';
+import 'file:///C:/Users/kilia/Documents/Projects/sony_alpha_control/lib/top_level_api/sony_api.dart';
 import 'package:sonyalphacontrol/usb/ids/setting_ids.dart';
 
 class SettingsPage extends StatefulWidget {

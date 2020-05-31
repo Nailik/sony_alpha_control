@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutterusb/UsbDevice.dart';
 import 'package:flutterusb/flutter_usb.dart';
-import 'package:sonyalphacontrol/usb/api/sony_api.dart';
-import 'package:sonyalphacontrol/usb/pages/settings_page.dart';
+import 'package:sonyalphacontrol/test_ui/settings_page.dart';
+import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
 
 void main() async {
   FlutterUsb.enableLogger();
