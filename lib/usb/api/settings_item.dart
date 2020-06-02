@@ -1,4 +1,4 @@
-import 'package:sonyalphacontrol/usb/ids/aspect_ratio_ids.dart';
+import 'package:sonyalphacontrol/usb/ids/ids_settings.dart';
 import 'package:sonyalphacontrol/usb/ids/auto_focus_state.dart';
 import 'package:sonyalphacontrol/usb/ids/drive_mode_ids.dart';
 import 'package:sonyalphacontrol/usb/ids/dro_hdr_ids.dart';

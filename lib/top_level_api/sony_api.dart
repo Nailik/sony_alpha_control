@@ -17,12 +17,14 @@ class SonyApi {
 
   static get usbApi => _usbApi;
 
-  static get api {
+  static ApiInterface get api {
     switch (_connectedCamera.interfaceType) {
       case InterfaceType.Wifi_Interface:
         return _wifiApi;
       case InterfaceType.USB_Interface:
         return _usbApi;
+      default:
+        return null;
     }
   }
 
@@ -79,7 +81,6 @@ class SonyApi {
   }
 
   ///when the camera is connected it's possible to read the "Available" items, this represents what the camera can do, not whats currently at the moment is supported
-
   static List<CameraStatusItemType> get availableStatusItems =>
       api.availableStatusItems;
 
@@ -100,4 +101,6 @@ class SonyApi {
 
   static Future<bool> setSettingsRaw(int id, int value) =>
       api.setSettingsRaw(id, value, _connectedCamera);
+
+
 }
