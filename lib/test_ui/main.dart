@@ -1,13 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutterusb/UsbDevice.dart';
-import 'package:flutterusb/flutter_usb.dart';
 import 'package:sonyalphacontrol/test_ui/settings_page.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
+import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
 
 void main() async {
-  FlutterUsb.enableLogger();
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(MyApp());
@@ -28,7 +26,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initPlatformState() async {
-    await FlutterUsb.initializeUsb;
+    await SonyApi.initialize(wifi: false);
 
     setState(() {
       _initialized = true;
@@ -64,7 +62,7 @@ class _MyAppState extends State<MyApp> {
 
   Widget deviceList() {
     if (_initialized) {
-      return FutureBuilder<List<UsbDevice>>(
+      return FutureBuilder<List<SonyCameraDevice>>(
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
@@ -77,16 +75,16 @@ class _MyAppState extends State<MyApp> {
             return Container();
           }
         },
-        future: FlutterUsb.getUsbDevices,
+        future: SonyApi.getDevices(),
       );
     }
     return Container();
   }
 
-  Widget getListTile(UsbDevice device, BuildContext context) {
+  Widget getListTile(SonyCameraDevice device, BuildContext context) {
     return ListTile(
       title: Text(device.name),
-      subtitle: Text(device.description),
+      subtitle: Text("huhu"),
       onTap: () async {
         await SonyApi.connectToCamera(device);
         Navigator.push(

@@ -1,18 +1,18 @@
 import 'dart:typed_data';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutterusb/Command.dart';
 import 'package:flutterusb/Response.dart';
 import 'package:flutterusb/flutter_usb.dart';
+import 'package:sonyalphacontrol/top_level_api/camera_settings.dart';
 import 'package:sonyalphacontrol/usb/api/commands.dart';
 import 'package:sonyalphacontrol/usb/api/settings_item.dart';
 
-class CameraSettings extends ChangeNotifier {
+class CameraUsbSettings extends CameraSettings {
   List<int> mainSettings = new List();
   List<int> subSettings = new List();
-  List<SettingsItem> settings = new List();
 
-  update() async {
+  @override
+  Future<bool> update() async {
     var response =
         await FlutterUsb.sendCommand(Command(Commands.settingswhatavailable));
     analyzeSettingsAvailable(response);
@@ -21,6 +21,8 @@ class CameraSettings extends ChangeNotifier {
     analyzeSettings(response);
 
     notifyListeners();
+
+    return true;
   }
 
   analyzeSettingsAvailable(Response response) {

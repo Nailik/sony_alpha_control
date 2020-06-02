@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sonyalphacontrol/usb/api/camera_settings.dart';
+import 'package:sonyalphacontrol/top_level_api/camera_settings.dart';
+import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
 import 'package:sonyalphacontrol/usb/api/settings_item.dart';
-import 'file:///C:/Users/kilia/Documents/Projects/sony_alpha_control/lib/top_level_api/sony_api.dart';
 import 'package:sonyalphacontrol/usb/ids/setting_ids.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -35,7 +35,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: Text("reload"),
                 color: Colors.blue,
                 onPressed: () {
-                  SonyApi.connectedCamera.updateSettings();
+                  SonyApi.updateSettings();
                 },
               )
             ],
@@ -79,7 +79,7 @@ class _SettingsPageState extends State<SettingsPage> {
       list.add(
         new SimpleDialogOption(
           onPressed: () {
-            SonyApi.connectedCamera.setSettingsRaw(data.id, value.value);
+            SonyApi.setSettingsRaw(data.id, value.value);
           },
           child: Text(value.name),
         ),
