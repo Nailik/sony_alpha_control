@@ -9,7 +9,8 @@ class FNumberSettings extends ValueSettings<FNumberValue> {
 
   @override
   // TODO: implement value
-  Future<Value> get value => throw UnimplementedError();
+  Future<FNumberValue> get value => throw UnimplementedError();
+
 
 }
 

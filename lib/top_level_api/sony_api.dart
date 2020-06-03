@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:sonyalphacontrol/top_level_api/api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
-import 'package:sonyalphacontrol/usb/api/sony_usb_api.dart';
-import 'package:sonyalphacontrol/wifi/api/sony_wifi_api.dart';
+import 'file:///C:/Users/kilia/Documents/Projects/sony_alpha_control/lib/usb/sony_usb_api.dart';
+import 'file:///C:/Users/kilia/Documents/Projects/sony_alpha_control/lib/wifi/sony_wifi_api.dart';
 
 class SonyApi {
   static SonyCameraDevice _connectedCamera;

@@ -21,7 +21,7 @@ abstract class Value {
 }
 
 class SelfTimerValue extends Value {
-  SelfTimerValue(int usbValue, int wifiValue) : super(usbValue, wifiValue);
+  SelfTimerValue(int usbValue, String wifiValue) : super(usbValue, wifiValue);
 
   @override
   String toReadableValue() {

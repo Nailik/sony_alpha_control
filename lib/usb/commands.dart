@@ -1,9 +1,8 @@
 import 'dart:typed_data';
 
-import 'package:sonyalphacontrol/usb/ids/focus_mode_ids.dart';
-import 'package:sonyalphacontrol/usb/ids/opcodes_ids.dart';
-import 'package:sonyalphacontrol/usb/ids/setting_ids.dart';
-
+import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 
 class Commands {
   static var Connect = [
@@ -221,7 +220,6 @@ class Commands {
     c.buffer.asByteData().setUint16(38, value, Endian.little);
     return c;
   }
-
 
   static Uint8List getFocusModeCommand(
       OpCodeId opCode, SettingsId settingsId, FocusModeId focusMode) {

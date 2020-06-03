@@ -4,8 +4,9 @@ import 'package:flutterusb/Command.dart';
 import 'package:flutterusb/Response.dart';
 import 'package:flutterusb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/camera_settings.dart';
-import 'package:sonyalphacontrol/usb/api/commands.dart';
-import 'package:sonyalphacontrol/usb/api/settings_item.dart';
+import 'package:sonyalphacontrol/usb/settings_item.dart';
+
+import 'commands.dart';
 
 class CameraUsbSettings extends CameraSettings {
   List<int> mainSettings = new List();

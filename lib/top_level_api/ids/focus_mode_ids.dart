@@ -30,6 +30,7 @@ extension FocusModeIdExtension on FocusModeId {
   }
 }
 
+
 FocusModeId getFocusModeId(int value) {
   return FocusModeId.values.firstWhere(
           (element) => element.value == value,

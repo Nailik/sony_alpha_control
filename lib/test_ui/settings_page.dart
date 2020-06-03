@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sonyalphacontrol/top_level_api/camera_settings.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
-import 'package:sonyalphacontrol/usb/api/settings_item.dart';
-import 'package:sonyalphacontrol/usb/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/usb/settings_item.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
