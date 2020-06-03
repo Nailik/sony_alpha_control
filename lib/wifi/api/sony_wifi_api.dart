@@ -30,7 +30,12 @@ class SonyWifiApi extends ApiInterface {
 
   @override
   Future<bool> setSettingsRaw(int id, int value, SonyCameraDevice device) {
-    // TODO: implement setSettingsRaw
+
+    //i need:
+    //value: as string eventually also version and api Group
+    //id: as string
+
+
     throw UnimplementedError();
   }
 
