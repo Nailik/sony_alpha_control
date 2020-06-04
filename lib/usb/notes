@@ -213,3 +213,594 @@ windowsTest() async {
 
     sendGetLiveView() {}
  */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public CameraSetting GetSetting(SettingIds id)
+         {
+             CameraSetting setting;
+             cameraSettings.TryGetValue(id, out setting);
+             return setting;
+         }
+
+         public void CapturePhoto()
+         {
+             // NOTE: The camera always wants to send the data over to the PC. Is there any way to do it without transfer?
+
+             // TODO: Some proper logic needs to be here depending on what type of photo is being taken. AF mode requires focus
+             // to be found before the shutter is released, so we can't instantly press/release the shutter. Same goes for continuous shooting.
+             // - Capture photo may need to be done in a different thread to "Update()" so we can watch for changes in AF state / captured images.
+
+             // Press shutter button
+             DoMainSettingI16(SettingIds.HalfPressShutter, 2);// Enter half-press shutter mode
+             DoMainSettingI16(SettingIds.CapturePhoto, 2);// Take the photo
+
+             //System.Threading.Thread.Sleep(100);
+
+             // Release shutter
+             DoMainSettingI16(SettingIds.HalfPressShutter, 1);// Leave half-press shutter mode
+             DoMainSettingI16(SettingIds.CapturePhoto, 1);// Some kind of state reset?
+         }
+
+         public void PressShutter()
+         {
+             PressShutterHalf();
+             PressShutterFull();
+         }
+
+         public void PressShutterHalf()
+         {
+             DoMainSettingI16(SettingIds.HalfPressShutter, 2);
+         }
+
+         public void PressShutterFull()
+         {
+             DoMainSettingI16(SettingIds.CapturePhoto, 2);
+         }
+
+         public void ReleaseShutter()
+         {
+             ReleaseShutterHalf();
+             ReleaseShutterFull();
+         }
+
+         public void ReleaseShutterHalf()
+         {
+             DoMainSettingI16(SettingIds.HalfPressShutter, 1);
+         }
+
+         public void ReleaseShutterFull()
+         {
+             DoMainSettingI16(SettingIds.CapturePhoto, 1);
+         }
+
+         public void StartRecordingVideo()
+         {
+             DoMainSettingI16(SettingIds.RecordVideo, 2);
+         }
+
+         public void StopRecordingVideo()
+         {
+             DoMainSettingI16(SettingIds.RecordVideo, 1);
+         }
+
+         public int GetFNumber()
+         {
+             CameraSetting setting = GetSetting(SettingIds.FNumber);
+             return setting != null ? setting.Value : 0;
+         }
+
+         public void ModifyFNumber(short steps)
+         {
+             DoMainSettingI16(SettingIds.FNumber, steps);
+         }
+
+         public bool IsAutoISO(int iso)
+         {
+             return iso == 0xFFFFFF;
+         }
+
+         public bool IsAutoISO()
+         {
+             return IsAutoISO(GetISO());
+         }
+
+         public int GetISO()
+         {
+             CameraSetting setting = GetSetting(SettingIds.ISO);
+             return setting != null ? setting.Value : 0;
+         }
+
+         public void ModifyISO(int steps)
+         {
+             DoMainSettingI32(SettingIds.ISO, steps);
+         }
+
+         public ShutterSpeedInfo GetShutterSpeed()
+         {
+             CameraSetting setting = GetSetting(SettingIds.ShutterSpeed);
+             if (setting != null)
+             {
+                 return new ShutterSpeedInfo(
+                     setting.SubValue == 1 ? setting.Value : (float)setting.SubValue / 10,
+                     setting.SubValue == 1);
+             }
+             else
+             {
+                 return default(ShutterSpeedInfo);
+             }
+         }
+
+         public void ModifyShutterSpeed(int steps)
+         {
+             DoMainSettingI32(SettingIds.ShutterSpeed, steps);
+         }
+
+         public int GetBatteryChargePercent()
+         {
+             CameraSetting setting = GetSetting(SettingIds.BatteryInfo);
+             return setting != null ? setting.Value : 0;
+         }
+
+         public bool GetAEL()
+         {
+             CameraSetting setting = GetSetting(SettingIds.AEL_State);
+             return setting != null ? setting.Value == 2 : false;
+         }
+
+         public void SetAEL(bool enable)
+         {
+             if (enable)
+             {
+                 DoMainSettingI16(SettingIds.AEL, 1);
+                 DoMainSettingI16(SettingIds.AEL, 2);
+             }
+             else
+             {
+                 DoMainSettingI16(SettingIds.AEL, 2);
+                 DoMainSettingI16(SettingIds.AEL, 1);
+             }
+         }
+
+         public bool GetFEL()
+         {
+             CameraSetting setting = GetSetting(SettingIds.FEL_State);
+             return setting != null ? setting.Value == 2 : false;
+         }
+
+         public void SetFEL(bool enable)
+         {
+             if (enable)
+             {
+                 DoMainSettingI16(SettingIds.FEL, 1);
+                 DoMainSettingI16(SettingIds.FEL, 2);
+             }
+             else
+             {
+                 DoMainSettingI16(SettingIds.FEL, 2);
+                 DoMainSettingI16(SettingIds.FEL, 1);
+             }
+         }
+
+         public FocusAreaIds[] GetAvailableFocusAreas()
+         {
+             List<FocusAreaIds> result = new List<FocusAreaIds>();
+             CameraSetting setting = GetSetting(SettingIds.FocusArea);
+             foreach (int value in setting.AcceptedValues)
+             {
+                 result.Add((FocusAreaIds)value);
+             }
+             return result.ToArray();
+         }
+
+         public FocusAreaIds GetFocusArea()
+         {
+             CameraSetting setting = GetSetting(SettingIds.FocusArea);
+             return setting != null ? (FocusAreaIds)setting.Value : default(FocusAreaIds);
+         }
+
+         public void SetFocusArea(FocusAreaIds focusArea)
+         {
+             DoSubSettingI16(SettingIds.FocusArea, (short)focusArea);
+         }
+
+         public Position GetFocusAreaSpot()
+         {
+             CameraSetting setting = GetSetting(SettingIds.FocusAreaSpot);
+             return setting != null ? new Position(setting.SubValue, setting.Value) : default(Position);
+         }
+
+         public void SetFocusAreaSpot(short x, short y)
+         {
+             DoMainSettingI16(SettingIds.FocusAreaSpot, y, x);
+         }
+
+         public AutoFocusState GetAutoFocusState()
+         {
+             CameraSetting setting = GetSetting(SettingIds.AutoFocusState);
+             return setting != null ? (AutoFocusState)setting.Value : default(AutoFocusState);
+         }
+
+         public float GetEV()
+         {
+             CameraSetting setting = GetSetting(SettingIds.EV);
+             return setting != null ? (float)setting.Value / 1000 : 0;
+         }
+
+         public void ModifyEV(short steps)
+         {
+             DoMainSettingI16(SettingIds.EV, steps);
+         }
+
+         public float GetFlash()
+         {
+             CameraSetting setting = GetSetting(SettingIds.Flash);
+             return setting != null ? (float)setting.Value / 1000 : 0;
+         }
+
+         public void ModifyFlash(short steps)
+         {
+             DoMainSettingI16(SettingIds.Flash, steps);
+         }
+
+         public ImageFileFormat GetFileFormat()
+         {
+             CameraSetting setting = GetSetting(SettingIds.FileFormat);
+             return setting != null ? (ImageFileFormat)setting.Value : default(ImageFileFormat);
+         }
+
+         public void SetFileFormat(ImageFileFormat fileFormat)
+         {
+             DoSubSettingI16(SettingIds.FileFormat, (short)fileFormat);
+         }
+
+         public PictureEffect[] GetAvailablePictureEffects()
+         {
+             List<PictureEffect> result = new List<PictureEffect>();
+             CameraSetting setting = GetSetting(SettingIds.PictureEffect);
+             foreach (int value in setting.AcceptedValues)
+             {
+                 result.Add((PictureEffect)value);
+             }
+             return result.ToArray();
+         }
+
+         public PictureEffect GetPictureEffect()
+         {
+             CameraSetting setting = GetSetting(SettingIds.PictureEffect);
+             return setting != null ? (PictureEffect)setting.Value : default(PictureEffect);
+         }
+
+         public void SetPictureEffect(PictureEffect pictureEffect)
+         {
+             DoSubSettingI16(SettingIds.PictureEffect, (short)pictureEffect);
+         }
+
+         public DroHdr[] GetAvailableDroHdr()
+         {
+             List<DroHdr> result = new List<DroHdr>();
+             CameraSetting setting = GetSetting(SettingIds.DroHdr);
+             foreach (int value in setting.AcceptedValues)
+             {
+                 result.Add((DroHdr)value);
+             }
+             return result.ToArray();
+         }
+
+         public DroHdr GetDroHdr()
+         {
+             CameraSetting setting = GetSetting(SettingIds.DroHdr);
+             return setting != null ? (DroHdr)setting.Value : default(DroHdr);
+         }
+
+         public void SetDroHdr(DroHdr droHdr)
+         {
+             DoSubSettingI16(SettingIds.DroHdr, (short)droHdr);
+         }
+
+         public AspectRatio[] GetAvailableAspectRatios()
+         {
+             List<AspectRatio> result = new List<AspectRatio>();
+             CameraSetting setting = GetSetting(SettingIds.AspectRatio);
+             foreach (int value in setting.AcceptedValues)
+             {
+                 result.Add((AspectRatio)value);
+             }
+             return result.ToArray();
+         }
+
+         public AspectRatio GetAspectRatio()
+         {
+             CameraSetting setting = GetSetting(SettingIds.AspectRatio);
+             return setting != null ? (AspectRatio)setting.Value : default(AspectRatio);
+         }
+
+         public void SetAspectRatio(AspectRatio aspectRatio)
+         {
+             DoSubSettingU8(SettingIds.AspectRatio, (byte)aspectRatio);
+         }
+
+         public FocusMode[] GetAvailableFocusModes()
+         {
+             List<FocusMode> result = new List<FocusMode>();
+             CameraSetting setting = GetSetting(SettingIds.FocusMode);
+             foreach (int value in setting.AcceptedValues)
+             {
+                 result.Add((FocusMode)value);
+             }
+             return result.ToArray();
+         }
+
+         public FocusMode GetFocusMode()
+         {
+             CameraSetting setting = GetSetting(SettingIds.FocusMode);
+             return setting != null ? (FocusMode)setting.Value : default(FocusMode);
+         }
+
+         public void SetFocusMode(FocusMode focusMode)
+         {
+             DoSubSettingI16(SettingIds.FocusMode, (short)focusMode);
+         }
+
+         public void SetFocusMode(FocusModeToggle focusMode)
+         {
+             DoMainSettingI16(SettingIds.FocusModeToggleRequest, (short)focusMode);
+         }
+
+         /// <summary>
+         /// Maximum value is 7/-7
+         /// </summary>
+         /// <param name="steps"></param>
+         public void ModifyFocusDistance(int steps)
+         {
+             // TODO: If the steps value is larger than 7 then use a loop?
+             DoMainSettingI16(SettingIds.FocusDistance, (short)steps);
+         }
+
+         public ShootingMode GetShootingMode()
+         {
+             CameraSetting setting = GetSetting(SettingIds.ShootingMode);
+             return setting != null ? (ShootingMode)setting.Value : default(ShootingMode);
+         }
+
+         public WhiteBalance[] GetAvailableWhiteBalance()
+         {
+             List<WhiteBalance> result = new List<WhiteBalance>();
+             CameraSetting setting = GetSetting(SettingIds.WhiteBalance);
+             foreach (int value in setting.AcceptedValues)
+             {
+                 result.Add((WhiteBalance)value);
+             }
+             return result.ToArray();
+         }
+
+         public WhiteBalance GetWhiteBalance()
+         {
+             CameraSetting setting = GetSetting(SettingIds.WhiteBalance);
+             return setting != null ? (WhiteBalance)setting.Value : default(WhiteBalance);
+         }
+
+         public void SetWhiteBalance(WhiteBalance whiteBalance)
+         {
+             DoSubSettingI16(SettingIds.WhiteBalance, (short)whiteBalance);
+         }
+
+         public ushort GetWhiteBalanceColorTemp()
+         {
+             CameraSetting setting = GetSetting(SettingIds.WhiteBalanceColorTemp);
+             return setting != null ? (ushort)setting.Value : (ushort)0;
+         }
+
+         /// <summary>
+         /// Accepted values: 2500k-9900k (in increments of 100)
+         /// </summary>
+         public void SetWhiteBalanceColorTemp(ushort value)
+         {
+             DoSubSettingI16(SettingIds.WhiteBalanceColorTemp, (short)value);
+         }
+
+         public WhiteBalanceAB GetWhiteBalanceAB()
+         {
+             CameraSetting setting = GetSetting(SettingIds.WhiteBalanceAB);
+             return setting != null ? (WhiteBalanceAB)setting.Value : default(WhiteBalanceAB);
+         }
+
+         public void SetWhiteBalanceAB(WhiteBalanceAB value)
+         {
+             DoSubSettingU8(SettingIds.WhiteBalanceAB, (byte)value);
+         }
+
+         public WhiteBalanceGM GetWhiteBalanceGM()
+         {
+             CameraSetting setting = GetSetting(SettingIds.WhiteBalanceGM);
+             return setting != null ? (WhiteBalanceGM)setting.Value : default(WhiteBalanceGM);
+         }
+
+         public void SetWhiteBalanceGM(WhiteBalanceGM value)
+         {
+             DoSubSettingU8(SettingIds.WhiteBalanceGM, (byte)value);
+         }
+
+         public DriveMode[] GetAvailableDriveModes()
+         {
+             List<DriveMode> result = new List<DriveMode>();
+             CameraSetting setting = GetSetting(SettingIds.DriveMode);
+             foreach (int value in setting.AcceptedValues)
+             {
+                 result.Add((DriveMode)value);
+             }
+             return result.ToArray();
+         }
+
+         public DriveMode GetDriveMode()
+         {
+             CameraSetting setting = GetSetting(SettingIds.DriveMode);
+             return setting != null ? (DriveMode)setting.Value : default(DriveMode);
+         }
+
+         public void SetDriveMode(DriveMode driveMode)
+         {
+             DoSubSettingI16(SettingIds.DriveMode, (short)driveMode);
+         }
+
+         public FlashMode[] GetAvailableFlashModes()
+         {
+             List<FlashMode> result = new List<FlashMode>();
+             CameraSetting setting = GetSetting(SettingIds.FlashMode);
+             foreach (int value in setting.AcceptedValues)
+             {
+                 result.Add((FlashMode)value);
+             }
+             return result.ToArray();
+         }
+
+         public FlashMode GetFlashMode()
+         {
+             CameraSetting setting = GetSetting(SettingIds.FlashMode);
+             return setting != null ? (FlashMode)setting.Value : default(FlashMode);
+         }
+
+         public void SetFlashMode(FlashMode flashMode)
+         {
+             DoSubSettingI16(SettingIds.FlashMode, (short)flashMode);
+         }
+
+         public MeteringMode[] GetAvailableMeteringModes()
+         {
+             List<MeteringMode> result = new List<MeteringMode>();
+             CameraSetting setting = GetSetting(SettingIds.MeteringMode);
+             foreach (int value in setting.AcceptedValues)
+             {
+                 result.Add((MeteringMode)value);
+             }
+             return result.ToArray();
+         }
+
+         public MeteringMode GetMeteringMode()
+         {
+             CameraSetting setting = GetSetting(SettingIds.MeteringMode);
+             return setting != null ? (MeteringMode)setting.Value : default(MeteringMode);
+         }
+
+         public void SetMeteringMode(MeteringMode value)
+         {
+             DoSubSettingI16(SettingIds.MeteringMode, (short)value);
+         }
+
+         public float GetFocusMagnifier()
+         {
+             CameraSetting setting = GetSetting(SettingIds.MeteringMode);
+             return setting != null && setting.Value != 0 ? (float)setting.Value / 10 : 1;
+         }
+
+         public FocusMagnifierPhase GetFocusMagnifierPhase()
+         {
+             CameraSetting setting = GetSetting(SettingIds.MeteringMode);
+             return setting != null ? (FocusMagnifierPhase)setting.Value : default(FocusMagnifierPhase);
+         }
+
+         public Position GetFocusMagnifierPosition()
+         {
+             CameraSetting setting = GetSetting(SettingIds.FocusMagnifierPosition);
+             return setting != null ? new Position(setting.SubValue, setting.Value) : default(Position);
+         }
+
+         public void StepFocusMagnifier(int steps)
+         {
+             for (int i = 0; i < steps; i++)
+             {
+                 DoMainSettingI16(SettingIds.FocusMagnifierRequest, 2);
+                 DoMainSettingI16(SettingIds.FocusMagnifierRequest, 1);
+             }
+         }
+
+         public void MoveFocusMagnifier(FocusMagnifierDirection direction, int steps)
+         {
+             SettingIds opcode;
+             switch (direction)
+             {
+                 case FocusMagnifierDirection.Left:
+                     opcode = SettingIds.FocusMagnifierMoveLeftRequest;
+                     break;
+                 case FocusMagnifierDirection.Right:
+                     opcode = SettingIds.FocusMagnifierMoveRightRequest;
+                     break;
+                 case FocusMagnifierDirection.Up:
+                     opcode = SettingIds.FocusMagnifierMoveUpRequest;
+                     break;
+                 case FocusMagnifierDirection.Down:
+                     opcode = SettingIds.FocusMagnifierMoveDownRequest;
+                     break;
+                 default:
+                     return;
+             }
+             for (int i = 0; i < steps; i++)
+             {
+                 DoMainSettingI16(opcode, 2);
+                 DoMainSettingI16(opcode, 1);
+             }
+         }
+     }
+
+     public struct ShutterSpeedInfo
+     {
+         public float Value;
+
+         /// <summary>
+         /// e.g. 1/80 (as opposed to a value like 0.4")
+         /// </summary>
+         public bool IsFraction;
+
+         public ShutterSpeedInfo(float value, bool isFraction)
+         {
+             Value = value;
+             IsFraction = isFraction;
+         }
+     }
+
+     public struct Position
+     {
+         public short X;
+         public short Y;
+
+         public Position(short x, short y)
+         {
+             X = x;
+             Y = y;
+         }
+
+         public Position(int x, int y)
+         {
+             X = (short)x;
+             Y = (short)y;
+         }
+     }

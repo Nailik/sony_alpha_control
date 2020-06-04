@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:sonyalphacontrol/top_level_api/api_interface.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
 import 'file:///C:/Users/kilia/Documents/Projects/sony_alpha_control/lib/usb/sony_usb_api.dart';
 import 'file:///C:/Users/kilia/Documents/Projects/sony_alpha_control/lib/wifi/sony_wifi_api.dart';
@@ -99,8 +101,15 @@ class SonyApi {
   ///this will start live view loop
   static Future<bool> startLiveView() => api.startLiveView();
 
+
+  ///functions
+
+  ///unsafe to use, id and value need to match
   static Future<bool> setSettingsRaw(int id, int value) =>
       api.setSettingsRaw(id, value, _connectedCamera);
 
+  static Future<bool> setAspectRatio(AspectRatioId value){
+    api.setSettingsRaw(SettingsId.AspectRatio, value, _connectedCamera);
+  }
 
 }

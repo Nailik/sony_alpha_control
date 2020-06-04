@@ -1,4 +1,9 @@
+import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/settigns_item.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
+
+import 'ids/aspect_ratio_ids.dart';
 
 abstract class ApiInterface {
   bool get initialized;
@@ -43,6 +48,10 @@ abstract class ApiInterface {
   }
 
   Future<bool> setSettingsRaw(int id, int value, SonyCameraDevice device);
+
+  Future<bool> setAspectRatio(AspectRatioId value);
+  Future<SettingsItem<AutoFocusStateId>> getAutoFocusState(); //current, available, and all
+  Future<bool> setDriveMode(DriveModeId value);
 }
 
 enum InterfaceType { Wifi_Interface, USB_Interface }
