@@ -96,7 +96,9 @@ extension WhiteBalanceAbIdExtension on WhiteBalanceAbId {
       case WhiteBalanceAbId.A65:
         return 0xDA;
       case WhiteBalanceAbId.A70:
-        return -0xDC;
+        return 0xDC;
+      case WhiteBalanceAbId.Unknown:
+        return -1;
       default:
         return -2;
     }
