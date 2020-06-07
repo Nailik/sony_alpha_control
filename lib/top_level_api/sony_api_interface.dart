@@ -6,11 +6,15 @@ import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/dro_hdr_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/flash_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_area_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_direction_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_phase_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
@@ -55,11 +59,11 @@ abstract class ApiInterface {
     //how to send changes?
   }
 
+  ///usb so far
+
   Future<bool> updateSettings(SonyCameraDevice device) =>
       device.cameraSettings.update();
   Future<bool> setSettingsRaw(int id, int value, SonyCameraDevice device);
-
-  Future<bool> setDriveMode(DriveModeId value, SonyCameraDevice device);
 
   Future<bool> capturePhoto(SonyCameraDevice device); //TODO return foto?
 
@@ -131,6 +135,85 @@ abstract class ApiInterface {
 
   Future<SettingsItem<WhiteBalanceAbId>> getWhiteBalanceAb(SonyCameraDevice device);
   Future<bool> setWhiteBalanceAb(WhiteBalanceAbId value, SonyCameraDevice device);
+
+  Future<SettingsItem<WhiteBalanceGmId>> getWhiteBalanceGm(SonyCameraDevice device);
+  Future<bool> setWhiteBalanceGm(WhiteBalanceGmId value, SonyCameraDevice device);
+
+  Future<SettingsItem<DriveModeId>> getDriveMode(SonyCameraDevice device);
+  Future<bool> setDriveMode(DriveModeId value, SonyCameraDevice device);
+
+  Future<SettingsItem<MeteringModeId>> getMeteringMode(SonyCameraDevice device);
+  Future<bool> setMeteringMode(MeteringModeId value, SonyCameraDevice device);
+
+  Future<SettingsItem<FocusMagnifierDirectionId>> getFocusMagnifierDirection(SonyCameraDevice device);
+  Future<bool> setFocusMagnifierDirection(FocusMagnifierDirectionId value, int steps, SonyCameraDevice device); //move with steps?
+
+  Future<SettingsItem<FocusMagnifierPhaseId>> getFocusMagnifierPhase(SonyCameraDevice device);
+  Future<bool> setFocusMagnifierPhase(FocusMagnifierPhaseId value, SonyCameraDevice device);
+
+  Future<double> getFocusMagnifier(SonyCameraDevice device);
+  Future<bool> setFocusMagnifier(double value, SonyCameraDevice device); //steps?
+
+
+///wifi
+/*
+audio recording
+audi orecording setting
+auto power off
+beep mode
+bulb shooting
+camera function
+camera setuo
+color setting
+cont shoot mde
+cont shoot speed
+dare time
+delete contentx
+event notification
+exposure compensation
+exposure mode
+flash mode
+flip setting
+f number
+focus mode
+half press shutter
+interval still recording
+interval time
+irremotecontrol
+iso speed rate
+live view
+livewviewframe
+live view size
+loop recording
+loop recording time
+movei file format
+movei waulity
+movie recording
+post view image size
+program shirft
+remove plaback
+scene seleciton
+self timer
+server information
+shoot mode
+shutter speed
+silent shooting setting
+steady mode
+still caputre
+still quality
+still size
+storage infor
+touch af position
+tracking focus
+transferring images
+tv color system
+view angle
+white balance
+wind noise reduction
+zoom
+zoom setting
+ */
+
 }
 
 enum InterfaceType { Wifi_Interface, USB_Interface }

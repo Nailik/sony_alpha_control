@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:sonyalphacontrol/top_level_api/api_interface.dart';
+import 'package:sonyalphacontrol/top_level_api/sony_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';

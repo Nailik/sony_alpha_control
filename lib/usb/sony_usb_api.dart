@@ -1,7 +1,7 @@
 import 'package:flutterusb/Command.dart';
 import 'package:flutterusb/UsbDevice.dart';
 import 'package:flutterusb/flutter_usb.dart';
-import 'package:sonyalphacontrol/top_level_api/api_interface.dart';
+import 'package:sonyalphacontrol/top_level_api/sony_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';

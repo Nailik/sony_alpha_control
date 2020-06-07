@@ -1,4 +1,4 @@
-import 'package:sonyalphacontrol/top_level_api/api_interface.dart';
+import 'package:sonyalphacontrol/top_level_api/sony_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/camera_settings.dart';
 
 abstract class SonyCameraDevice {
