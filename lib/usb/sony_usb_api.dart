@@ -2,8 +2,12 @@ import 'package:flutterusb/Command.dart';
 import 'package:flutterusb/UsbDevice.dart';
 import 'package:flutterusb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/api_interface.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
 import 'package:sonyalphacontrol/usb/sony_camera_usb_device.dart';
 
@@ -225,5 +229,23 @@ class SonyUsbApi extends ApiInterface {
       int id, int value, SonyCameraDevice device) async {
     setSettings(getSettingsId(id), value);
     return true;
+  }
+
+  @override
+  Future<SettingsItem<AutoFocusStateId>> getAutoFocusState() {
+    // TODO: implement getAutoFocusState
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setAspectRatio(AspectRatioIdId value) {
+    // TODO: implement setAspectRatio
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setDriveMode(AspectRatioId value) {
+    // TODO: implement setDriveMode
+    throw UnimplementedError();
   }
 }

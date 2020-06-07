@@ -92,7 +92,7 @@ class SonyApi {
   static List<CameraFunctionItemType> get availableFunctionItems =>
       api.availableFunctionItems;
 
-  static Future<bool> updateSettings() => api.update(_connectedCamera);
+  static Future<bool> updateSettings() => api.updateSettings(_connectedCamera);
 
   ///this loop will update the camera status, current available items and current available settings
   static Future<bool> startUpdateLoop() =>
@@ -109,7 +109,7 @@ class SonyApi {
       api.setSettingsRaw(id, value, _connectedCamera);
 
   static Future<bool> setAspectRatio(AspectRatioId value){
-    api.setSettingsRaw(SettingsId.AspectRatio, value, _connectedCamera);
+    api.setAspectRatio(value, _connectedCamera);
   }
 
 }
