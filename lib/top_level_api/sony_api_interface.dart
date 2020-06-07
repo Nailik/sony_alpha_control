@@ -1,4 +1,4 @@
-import 'dart:html';
+import 'dart:math';
 
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';

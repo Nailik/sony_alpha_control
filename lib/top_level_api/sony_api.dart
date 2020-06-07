@@ -45,21 +45,37 @@ class SonyApi {
     return _wifiApi.initialized && _usbApi.initialized;
   }
 
-  static Future<List<SonyCameraDevice>> getDevices() async {
-    var devices = new List<SonyCameraDevice>();
+  static bool readDevices = false;
 
-    if (usbEnabled) {
-      devices.addAll(await _usbApi.getAvailableCameras());
+  ///
+  /// stopUpdatingDevices has to be called to stop updating
+  static Stream<List<SonyCameraDevice>> getDevices(Duration updateDuration) async* {
+    readDevices = true;
+    while (readDevices) {
+      await Future.delayed(updateDuration);
+      var devices = new List<SonyCameraDevice>();
+
+      if (usbEnabled) {
+        devices.addAll(await _usbApi.getAvailableCameras());
+      }
+
+      if (wifiEnabled) {
+        devices.addAll(await _wifiApi.getAvailableCameras());
+      }
+      //TODO close?!
+      yield devices;
     }
 
-    if (wifiEnabled) {
-      devices.addAll(await _wifiApi.getAvailableCameras());
-    }
-    return devices;
+  }
+
+  /// stopUpdatingDevices this will stop loop in get devices, also called in connec camera
+  static stopUpdatingDevices(){
+    readDevices = false;
   }
 
   static Future<bool> connectToCamera(SonyCameraDevice sonyCameraDevice) async {
     //call the correct api to connect
+    stopUpdatingDevices();
     bool result = false;
     switch (sonyCameraDevice.interfaceType) {
       case InterfaceType.Wifi_Interface:
@@ -108,7 +124,7 @@ class SonyApi {
   static Future<bool> setSettingsRaw(int id, int value) =>
       api.setSettingsRaw(id, value, _connectedCamera);
 
-  static Future<bool> setAspectRatio(AspectRatioId value){
+  static Future<bool> setAspectRatio(AspectRatioId value) {
     api.setAspectRatio(value, _connectedCamera);
   }
 

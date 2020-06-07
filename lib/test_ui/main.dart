@@ -62,7 +62,7 @@ class _MyAppState extends State<MyApp> {
 
   Widget deviceList() {
     if (_initialized) {
-      return FutureBuilder<List<SonyCameraDevice>>(
+      return StreamBuilder<List<SonyCameraDevice>>(
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
@@ -75,7 +75,7 @@ class _MyAppState extends State<MyApp> {
             return Container();
           }
         },
-        future: SonyApi.getDevices(),
+        stream: SonyApi.getDevices(new Duration(seconds: 5)),
       );
     }
     return Container();
