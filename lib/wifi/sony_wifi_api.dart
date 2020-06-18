@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cross_connectivity/cross_connectivity.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
@@ -19,6 +20,8 @@ import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
+import 'package:sonyalphacontrol/wifi/sony_camera_wifi_device.dart';
+import 'package:sonyalphacontrol/wifi/wifi_connector.dart';
 
 class SonyWifiApi extends ApiInterface {
   var _initialized = false;
@@ -35,8 +38,14 @@ class SonyWifiApi extends ApiInterface {
   }
 
   @override
-  Future<List<SonyCameraDevice>> getAvailableCameras() async {
-    return new List<SonyCameraDevice>();
+  Future<List<SonyCameraWifiDevice>> getAvailableCameras() async {
+    var connectivityStatus = await Connectivity().checkConnectivity();
+   // if(connectivityStatus == ConnectivityStatus.wifi){
+      WifiConnector.ssdpRequest();
+      //we now its wifi so there can be some cameras
+      //ping the device and check if it's there
+  //  }
+    return new List<SonyCameraWifiDevice>();
   }
 
   @override

@@ -25,8 +25,15 @@ class _MyAppState extends State<MyApp> {
     initPlatformState();
   }
 
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+
   Future<void> initPlatformState() async {
-    await SonyApi.initialize(wifi: false);
+    await SonyApi.initialize();
 
     setState(() {
       _initialized = true;
@@ -87,7 +94,7 @@ class _MyAppState extends State<MyApp> {
       subtitle: Text("huhu"),
       onTap: () async {
         await SonyApi.connectToCamera(device);
-        Navigator.push(
+        Navigator.pushReplacement (
           context,
           MaterialPageRoute(builder: (context) => SettingsPage()),
         );

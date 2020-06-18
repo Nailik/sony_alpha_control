@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:sonyalphacontrol/top_level_api/sony_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/sony_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
-import 'file:///C:/Users/kilia/Documents/Projects/sony_alpha_control/lib/usb/sony_usb_api.dart';
-import 'file:///C:/Users/kilia/Documents/Projects/sony_alpha_control/lib/wifi/sony_wifi_api.dart';
+import 'package:sonyalphacontrol/usb/sony_usb_api.dart';
+import 'package:sonyalphacontrol/wifi/sony_wifi_api.dart';
+import 'package:cross_connectivity/cross_connectivity.dart';
 
 class SonyApi {
   static SonyCameraDevice _connectedCamera;
@@ -45,37 +45,34 @@ class SonyApi {
     return _wifiApi.initialized && _usbApi.initialized;
   }
 
-  static bool readDevices = false;
+  static Stream<List<SonyCameraDevice>> getDevices(Duration updateDuration) {
+    StreamController<List<SonyCameraDevice>> controller;
+    controller =
+        new StreamController<List<SonyCameraDevice>>(onListen: () async {
+      while (controller.hasListener) {
+        var devices = new List<SonyCameraDevice>();
 
-  ///
-  /// stopUpdatingDevices has to be called to stop updating
-  static Stream<List<SonyCameraDevice>> getDevices(Duration updateDuration) async* {
-    readDevices = true;
-    while (readDevices) {
-      await Future.delayed(updateDuration);
-      var devices = new List<SonyCameraDevice>();
+        if (usbEnabled) {
+          devices.addAll(await _usbApi.getAvailableCameras());
+        }
 
-      if (usbEnabled) {
-        devices.addAll(await _usbApi.getAvailableCameras());
+        if (wifiEnabled) {
+          devices.addAll(await _wifiApi.getAvailableCameras());
+        }
+        if (!controller.isClosed) {
+          controller.add(devices);
+        }
+        await Future.delayed(updateDuration);
       }
-
-      if (wifiEnabled) {
-        devices.addAll(await _wifiApi.getAvailableCameras());
-      }
-      //TODO close?!
-      yield devices;
-    }
-
-  }
-
-  /// stopUpdatingDevices this will stop loop in get devices, also called in connec camera
-  static stopUpdatingDevices(){
-    readDevices = false;
+    }, onCancel: () {
+      controller.close();
+    });
+    return controller.stream;
   }
 
   static Future<bool> connectToCamera(SonyCameraDevice sonyCameraDevice) async {
     //call the correct api to connect
-    stopUpdatingDevices();
+    // stopUpdatingDevices();
     bool result = false;
     switch (sonyCameraDevice.interfaceType) {
       case InterfaceType.Wifi_Interface:
@@ -117,7 +114,6 @@ class SonyApi {
   ///this will start live view loop
   static Future<bool> startLiveView() => api.startLiveView();
 
-
   ///functions
 
   ///unsafe to use, id and value need to match
@@ -127,5 +123,4 @@ class SonyApi {
   static Future<bool> setAspectRatio(AspectRatioId value) {
     api.setAspectRatio(value, _connectedCamera);
   }
-
 }
