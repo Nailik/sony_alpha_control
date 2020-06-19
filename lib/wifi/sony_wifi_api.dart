@@ -41,7 +41,7 @@ class SonyWifiApi extends ApiInterface {
   Future<List<SonyCameraWifiDevice>> getAvailableCameras() async {
     var connectivityStatus = await Connectivity().checkConnectivity();
    // if(connectivityStatus == ConnectivityStatus.wifi){
-      WifiConnector.ssdpRequest();
+    WifiCameraInfo ionfo = await WifiConnector.ssdpRequest();
       //we now its wifi so there can be some cameras
       //ping the device and check if it's there
   //  }
