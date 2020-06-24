@@ -3,9 +3,14 @@
 
 
  */
+import 'dart:collection';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:sonyalphacontrol/wifi/sony_camera_wifi_device.dart';
+import 'package:sonyalphacontrol/wifi/wifi_camera_xml.dart';
+import 'package:wifi_iot/wifi_iot.dart';
+import 'package:xml2json/xml2json.dart';
 
 class WifiConnector {
   static var SSDP_PORT = 1900;
@@ -18,23 +23,77 @@ class WifiConnector {
 
   static RawDatagramSocket socket;
 
+  static Future<SonyCameraWifiDevice> getCamera() async {
+    WifiCameraInfo cameraInfo = await ssdpRequest();
+
+    if (cameraInfo != null) {
+      //else it will use mobile internet on android when trying to read camera info
+      if (Platform.isAndroid) {
+        WiFiForIoTPlugin.forceWifiUsage(true);
+      }
+
+      await new HttpClient()
+          .getUrl(Uri.parse(cameraInfo.location))
+          .then((HttpClientRequest request) => request.close())
+          .then((HttpClientResponse response) =>
+              response.transform(new Utf8Decoder()).listen((data) {
+                Xml2Json xml2Json = new Xml2Json();
+                xml2Json.parse(data);
+                var jsonString = xml2Json.toParker();
+                var d = Root.fromJson(jsonDecode(jsonString)["root"]);
+                print(d);
+              }));
+
+      /*
+            //read xml
+            val xml = readFromUrl(cameraDevice.location)
+
+            Timber.d("fetch%s", xml)
+            //parse device
+            val device = parseXmlString(xml, cameraDevice)
+
+            //parse other shit
+            for(service in device.serviceList){
+                if(stopped)return null
+                if(!service.SCPDURL.isNullOrBlank()) {
+                    //TODO try catch
+                    parseService(readFromUrl(device.baseUrl + service.SCPDURL), service)
+                }
+            }
+            return device
+     */
+    }
+  }
+
   static Future<WifiCameraInfo> ssdpRequest() async {
+    //TODo stream der so
     //if (socket == null) {
     //when not on camera cannot access?
-    socket =
-    await RawDatagramSocket.bind(InternetAddress("192.168.122.131"), 0);
-    socket.send(request.codeUnits, InternetAddress(SSDP_ADDRESS), SSDP_PORT);
+    try {
+      if (socket == null) {
+        socket =
+            await RawDatagramSocket.bind(InternetAddress("192.168.122.131"), 0);
+      }
 
-     await socket.forEach((RawSocketEvent event) {
-    if (event == RawSocketEvent.read) {
-      Datagram dg = socket.receive();
+      socket.send(request.codeUnits, InternetAddress(SSDP_ADDRESS), SSDP_PORT);
+
+      //   await socket.forEach((RawSocketEvent event) {
+      //  if (event == RawSocketEvent.read) {
+      Datagram dg;
+      while (dg == null) {
+        dg = socket.receive();
+      }
       return _SsdMessageProcessor.analyzeResponse(
           new String.fromCharCodes(dg.data));
-    }
-       });
-    //  }
+      //     }
+      //    });
 
-    return null;
+    } on SocketException catch (e) {
+      socket = null;
+      print(e);
+      //camera not connected
+    }
+    //  }
   }
 }
 
@@ -64,14 +123,15 @@ class _SsdMessageProcessor {
               uuid == null)) {
         return WifiCameraInfo(usn, uuid, location, server, st);
       }
-      return null;
     }
+    return null;
   }
 
   static String _findValue(String message, String key) {
     //(?mis) multiline, insensitive, singleline (dot matches new line charakters)
-    RegExpMatch regExp =
-        new RegExp(".*^$key:\\s?([^\\r]+).*", multiLine: true, caseSensitive: false, dotAll: true).firstMatch(message);
+    RegExpMatch regExp = new RegExp(".*^$key:\\s?([^\\r]+).*",
+            multiLine: true, caseSensitive: false, dotAll: true)
+        .firstMatch(message);
     if (regExp != null) {
       return regExp.group(1);
     }

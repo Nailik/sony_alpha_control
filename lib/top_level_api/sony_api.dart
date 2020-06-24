@@ -5,7 +5,6 @@ import 'package:sonyalphacontrol/top_level_api/sony_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
 import 'package:sonyalphacontrol/usb/sony_usb_api.dart';
 import 'package:sonyalphacontrol/wifi/sony_wifi_api.dart';
-import 'package:cross_connectivity/cross_connectivity.dart';
 
 class SonyApi {
   static SonyCameraDevice _connectedCamera;

@@ -25,12 +25,18 @@ dependencies:
     sdk: flutter
   flutterusb:
     git: https://github.com/Nailik/flutter_usb.git
+  wifi_iot:
+    git: https://github.com/alternadom/WiFiFlutter.git
+  xml2json:
+  json_annotation:
   convert:
   http:
   provider:
   cross_connectivity:
 
 dev_dependencies:
+  build_runner:
+  json_serializable:
   flutter_test:
     sdk: flutter
 
