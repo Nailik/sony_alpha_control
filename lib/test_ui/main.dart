@@ -1,13 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutterusb/flutter_usb.dart';
 import 'package:sonyalphacontrol/test_ui/settings_page.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
+import 'package:sonyalphacontrol/top_level_api/sony_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  //FlutterUsb.enableLogger();
   runApp(MyApp());
 }
 
@@ -94,6 +96,8 @@ class _MyAppState extends State<MyApp> {
       subtitle: Text("huhu"),
       onTap: () async {
         await SonyApi.connectToCamera(device);
+        await SonyApi.api.updateSettings(device);
+        await SonyApi.api.capturePhoto(device);
         Navigator.pushReplacement (
           context,
           MaterialPageRoute(builder: (context) => SettingsPage()),

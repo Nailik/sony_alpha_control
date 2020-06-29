@@ -1,6 +1,11 @@
+import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
+import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:flutterusb/Command.dart';
+import 'package:flutterusb/Response.dart';
 import 'package:flutterusb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
@@ -222,24 +227,48 @@ class SonyUsbApi extends ApiInterface {
     return false;
   }
 
-
   @override
-  Future<bool> pressShutter (
-      ShutterPressType shutterPressType, SonyCameraDevice device) {
-
-    switch(shutterPressType){
-
+  Future<bool> pressShutter(
+      ShutterPressType shutterPressType, SonyCameraDevice device) async {
+    Response response;
+    switch (shutterPressType) {
       case ShutterPressType.Half:
-        // TODO: Handle this case.
+        response = await FlutterUsb.sendCommand(Command(
+            Commands.getCommandMainSettingI16(SettingsId.HalfPressShutter, 2)));
         break;
       case ShutterPressType.Full:
-        // TODO: Handle this case.
+        response = await FlutterUsb.sendCommand(Command(
+            Commands.getCommandMainSettingI16(SettingsId.CapturePhoto, 2)));
         break;
       case ShutterPressType.Both:
-        // TODO: Handle this case.
+        response = await FlutterUsb.sendCommand(Command(
+            Commands.getCommandMainSettingI16(SettingsId.HalfPressShutter, 2)));
+        response = await FlutterUsb.sendCommand(Command(
+            Commands.getCommandMainSettingI16(SettingsId.CapturePhoto, 2)));
         break;
     }
-    // TODO: implement pressShutter
+  }
+
+  @override
+  Future<bool> releaseShutter(
+      ShutterPressType shutterPressType, SonyCameraDevice device) async {
+    Response response;
+    switch (shutterPressType) {
+      case ShutterPressType.Half:
+        response = await FlutterUsb.sendCommand(Command(
+            Commands.getCommandMainSettingI16(SettingsId.HalfPressShutter, 1)));
+        break;
+      case ShutterPressType.Full:
+        response = await FlutterUsb.sendCommand(Command(
+            Commands.getCommandMainSettingI16(SettingsId.CapturePhoto, 1)));
+        break;
+      case ShutterPressType.Both:
+        response = await FlutterUsb.sendCommand(Command(
+            Commands.getCommandMainSettingI16(SettingsId.HalfPressShutter, 1)));
+        response = await FlutterUsb.sendCommand(Command(
+            Commands.getCommandMainSettingI16(SettingsId.CapturePhoto, 1)));
+        break;
+    }
   }
 
   @override
@@ -248,9 +277,29 @@ class SonyUsbApi extends ApiInterface {
   }
 
   @override
-  Future<bool> capturePhoto(SonyCameraDevice device) {
-    // TODO: implement capturePhoto
-    throw UnimplementedError();
+  Future<bool> capturePhoto(SonyCameraDevice device) async {
+    await pressShutter(ShutterPressType.Both, device);
+    await releaseShutter(ShutterPressType.Both, device);
+    //read photo
+    await device.cameraSettings.update();
+    var item = device.cameraSettings.settings.firstWhere(
+        (element) => element.id == SettingsId.PhotoTransferQueue.value);
+
+    if (item != null) {
+      int num = item.value & 0xFF;
+      bool photoAvailableForTransfer = ((item.value >> 8) & 0xFF) == 0x80;
+      print(num);
+      if (photoAvailableForTransfer) {
+        print("GetImage");
+        var image = await GetImage(false);
+      //  Image.memory(image);
+        print("saveFile");
+        File file = new File("C:\\Users\\kilia\\Desktop\\test.jpg");
+        file.writeAsBytesSync(image);
+        file = new File("C:\\Users\\kilia\\Desktop\\test.ARW");
+        file.writeAsBytesSync(image);
+      }
+    }
   }
 
   @override
@@ -420,13 +469,6 @@ class SonyUsbApi extends ApiInterface {
   }
 
   @override
-  Future<bool> releaseShutter(
-      ShutterPressType shutterPressType, SonyCameraDevice device) {
-    // TODO: implement releaseShutter
-    throw UnimplementedError();
-  }
-
-  @override
   Future<bool> setAel(bool value, SonyCameraDevice device) {
     // TODO: implement setAel
     throw UnimplementedError();
@@ -586,5 +628,75 @@ class SonyUsbApi extends ApiInterface {
   Future<bool> stopRecordingVideo(SonyCameraDevice device) {
     // TODO: implement stopRecordingVideo
     throw UnimplementedError();
+  }
+
+  Future<Uint8List> GetImage(bool liveView) async {
+    var response =
+        await FlutterUsb.sendCommand(Commands.getImageCommand(liveView, true));
+
+    print("response valid ${response.isValidResponse()}");
+    if (!response.isValidResponse()) return null;
+
+    var bytes = response.getData().buffer.asByteData();
+    int numImages = bytes.getUint16(32, Endian.little);
+
+    print("images $numImages");
+    if (numImages != 1) return null;
+
+    int imageInfoUnk = bytes.getUint32(34, Endian.little);
+    int imageSizeInBytes = bytes.getUint32(38, Endian.little); //24 630 528
+                                                               //2 643 449
+                                                                //24 000 000
+    //26 883 8912
+
+    if (imageSizeInBytes <= 0) return null;
+    print("images $imageSizeInBytes");
+
+    String imageName = bytes.getUint8(82).toString();
+    //TODO in chunks, very slow at the moment? loading slow or json slow?
+    response = await FlutterUsb.sendCommand(Commands.getImageCommand(
+        liveView, false,
+        imageSizeInBytes: imageSizeInBytes.truncateToDouble()));
+
+    if (!response.isValidResponse()) return null;
+    var buffer = response.getData().buffer;
+    bytes = buffer.asByteData();
+
+    if (liveView) {
+      int unkBufferSize = bytes.getUint32(30, Endian.little);
+      int liveViewBufferSize = bytes.getUint32(34, Endian.little);
+      var unkBuff = ByteData.view(buffer, 38, unkBufferSize - 8);
+      var start = 38 + unkBufferSize - 8;
+      return response.getData().sublist(start, buffer.lengthInBytes - start);
+    } else {
+      //10 27 00 00 d4 05 00 00
+      //10 27 00 00 27 0c 00 00
+      //10 27 00 00 71 18 00 00
+      //10 27 00 00 78 02 00 00
+      //10 27 00 00 c3 00 00 00
+      //10 27 00 00 61 02 00 00
+      //10 27 00 00 16 1d 00 00
+      //10 27 00 00 27 00 9a 82
+      //05 00 01 00 00
+
+      //05 d4 = 20692
+      //d4 05 = 54352
+
+      //2c 07 = 9996
+      //2190540839
+
+      //ohne 10 ...
+      return response.getData().sublist(0, buffer.lengthInBytes);
+    }
+  }
+}
+
+extension ResponseValidation on Response {
+  bool isSuccess() {
+    return true;
+  }
+
+  bool isValidResponse() {
+    return inData[0] == 1 && inData[1] == 0x20;
   }
 }

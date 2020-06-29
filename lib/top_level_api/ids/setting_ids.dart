@@ -144,6 +144,12 @@ enum SettingsId {
   FocusModeToggleRequest,
   UnkD2D3,
   UnkD2D4,
+
+
+  LiveViewInfo,
+  PhotoInfo,
+
+
   Unknown
 }
 
@@ -268,6 +274,10 @@ extension SettingsIdExtension on SettingsId {
         return 0xD2D3; //manual focus?
       case SettingsId.UnkD2D4:
         return 0xD2D4; //??
+      case SettingsId.LiveViewInfo:
+        return 0xC002;
+      case SettingsId.PhotoInfo: //0c00
+        return 0xC001;
       case SettingsId.Unknown:
         return -1;
       default:
