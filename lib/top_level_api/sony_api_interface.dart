@@ -226,4 +226,4 @@ enum CameraSettingsItemType { FNumber_Settings }
 
 enum CameraFunctionItemType { Capture_Function }
 
-enum ShutterPressType{ Half, Full, Any } //Any means both
+enum ShutterPressType{ Half, Full, Both } //Any means both

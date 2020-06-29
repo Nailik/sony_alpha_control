@@ -222,6 +222,26 @@ class SonyUsbApi extends ApiInterface {
     return false;
   }
 
+
+  @override
+  Future<bool> pressShutter (
+      ShutterPressType shutterPressType, SonyCameraDevice device) {
+
+    switch(shutterPressType){
+
+      case ShutterPressType.Half:
+        // TODO: Handle this case.
+        break;
+      case ShutterPressType.Full:
+        // TODO: Handle this case.
+        break;
+      case ShutterPressType.Both:
+        // TODO: Handle this case.
+        break;
+    }
+    // TODO: implement pressShutter
+  }
+
   @override
   Future<bool> setSettingsRaw(int id, int value, SonyCameraDevice device) {
     return setSettings(getSettingsId(id), value, device);
@@ -396,13 +416,6 @@ class SonyUsbApi extends ApiInterface {
   Future<SettingsItem<WhiteBalanceGmId>> getWhiteBalanceGm(
       SonyCameraDevice device) {
     // TODO: implement getWhiteBalanceGm
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> pressShutter(
-      ShutterPressType shutterPressType, SonyCameraDevice device) {
-    // TODO: implement pressShutter
     throw UnimplementedError();
   }
 
