@@ -102,7 +102,7 @@ abstract class ApiInterface {
   Future<SettingsItem<AutoFocusStateId>> getAutoFocusState(SonyCameraDevice device);
 
   Future<SettingsItem<double>> getEV(SonyCameraDevice device);
-  Future<bool> setEV(double value, SonyCameraDevice device);
+  Future<bool> setEV(int value, SonyCameraDevice device);
 
   Future<SettingsItem<FlashModeId>> getFlashMode(SonyCameraDevice device);
   Future<bool> setFlashMode(FlashModeId value, SonyCameraDevice device);

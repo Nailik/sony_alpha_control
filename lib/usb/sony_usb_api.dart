@@ -1,9 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
-import 'dart:ui';
 
-import 'package:flutter/material.dart';
 import 'package:flutterusb/Command.dart';
 import 'package:flutterusb/Response.dart';
 import 'package:flutterusb/flutter_usb.dart';
@@ -16,9 +14,9 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_area_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_direction_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_phase_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
@@ -78,33 +76,27 @@ class SonyUsbApi extends ApiInterface {
         // TODO: Handle this case.
         break;
       case SettingsId.EV:
-        // TODO: Handle this case.
-        break;
+        return setEV(value, device);
       case SettingsId.DriveMode:
         return setDriveMode(getDriveModeId(value), device);
       case SettingsId.Flash:
         return setFlashMode(getFlashModeId(value), device);
       case SettingsId.DroHdr:
-        // TODO: Handle this case.
-        break;
+        return setDroHdr(getDroHdrId(value), device);
       case SettingsId.ImageSize:
         // TODO: Handle this case.
         break;
       case SettingsId.ShutterSpeed:
-        // TODO: Handle this case.
-        break;
+        return setShutterSpeed(value, device);
       case SettingsId.UnkD20E:
         // TODO: Handle this case.
         break;
       case SettingsId.WhiteBalanceColorTemp:
-        // TODO: Handle this case.
-        break;
+        return setWhiteBalanceColorTemp(value, device);
       case SettingsId.WhiteBalanceGM:
-        // TODO: Handle this case.
-        break;
+        return setWhiteBalanceGm(getWhiteBalanceGmId(value), device);
       case SettingsId.AspectRatio:
-        // TODO: Handle this case.
-        break;
+        return setAspectRatio(getAspectRatioId(value), device);
       case SettingsId.UnkD212:
         return false;
       case SettingsId.AutoFocusState:
@@ -126,17 +118,14 @@ class SonyUsbApi extends ApiInterface {
         // TODO: Handle this case.
         break;
       case SettingsId.PictureEffect:
-        // TODO: Handle this case.
-        break;
+        return setPictureEffect(getPictureEffectId(value), device);
       case SettingsId.WhiteBalanceAB:
-        // TODO: Handle this case.
-        break;
+        return setWhiteBalanceAb(getWhiteBalanceAbId(value), device);
       case SettingsId.RecordVideoState:
         // TODO: Handle this case.
         break;
       case SettingsId.ISO:
-        // TODO: Handle this case.
-        break;
+        return setIso(value, device);
       case SettingsId.FEL_State:
         // TODO: Handle this case.
         break;
@@ -229,46 +218,38 @@ class SonyUsbApi extends ApiInterface {
 
   @override
   Future<bool> pressShutter(
-      ShutterPressType shutterPressType, SonyCameraDevice device) async {
-    Response response;
-    switch (shutterPressType) {
-      case ShutterPressType.Half:
-        response = await FlutterUsb.sendCommand(Command(
-            Commands.getCommandMainSettingI16(SettingsId.HalfPressShutter, 2)));
-        break;
-      case ShutterPressType.Full:
-        response = await FlutterUsb.sendCommand(Command(
-            Commands.getCommandMainSettingI16(SettingsId.CapturePhoto, 2)));
-        break;
-      case ShutterPressType.Both:
-        response = await FlutterUsb.sendCommand(Command(
-            Commands.getCommandMainSettingI16(SettingsId.HalfPressShutter, 2)));
-        response = await FlutterUsb.sendCommand(Command(
-            Commands.getCommandMainSettingI16(SettingsId.CapturePhoto, 2)));
-        break;
-    }
-  }
+          ShutterPressType shutterPressType, SonyCameraDevice device) =>
+      doShutter(shutterPressType, true);
 
   @override
   Future<bool> releaseShutter(
-      ShutterPressType shutterPressType, SonyCameraDevice device) async {
-    Response response;
+          ShutterPressType shutterPressType, SonyCameraDevice device) =>
+      doShutter(shutterPressType, false);
+
+  Future<bool> doShutter(ShutterPressType shutterPressType, bool press) async {
     switch (shutterPressType) {
       case ShutterPressType.Half:
-        response = await FlutterUsb.sendCommand(Command(
-            Commands.getCommandMainSettingI16(SettingsId.HalfPressShutter, 1)));
-        break;
+        return (await FlutterUsb.sendCommand(Command(
+                Commands.getCommandMainSettingI16(
+                    SettingsId.HalfPressShutter, press ? 2 : 1))))
+            .isValidResponse();
       case ShutterPressType.Full:
-        response = await FlutterUsb.sendCommand(Command(
-            Commands.getCommandMainSettingI16(SettingsId.CapturePhoto, 1)));
-        break;
+        return (await FlutterUsb.sendCommand(Command(
+                Commands.getCommandMainSettingI16(
+                    SettingsId.CapturePhoto, press ? 2 : 1))))
+            .isValidResponse();
       case ShutterPressType.Both:
-        response = await FlutterUsb.sendCommand(Command(
-            Commands.getCommandMainSettingI16(SettingsId.HalfPressShutter, 1)));
-        response = await FlutterUsb.sendCommand(Command(
-            Commands.getCommandMainSettingI16(SettingsId.CapturePhoto, 1)));
-        break;
+        if ((await FlutterUsb.sendCommand(Command(
+                Commands.getCommandMainSettingI16(
+                    SettingsId.HalfPressShutter, press ? 2 : 1))))
+            .isValidResponse()) {
+          return (await FlutterUsb.sendCommand(Command(
+                  Commands.getCommandMainSettingI16(
+                      SettingsId.CapturePhoto, press ? 2 : 1))))
+              .isValidResponse();
+        }
     }
+    return false;
   }
 
   @override
@@ -292,7 +273,7 @@ class SonyUsbApi extends ApiInterface {
       if (photoAvailableForTransfer) {
         print("GetImage");
         var image = await GetImage(false);
-      //  Image.memory(image);
+        //  Image.memory(image);
         print("saveFile");
         File file = new File("C:\\Users\\kilia\\Desktop\\test.jpg");
         file.writeAsBytesSync(image);
@@ -304,14 +285,25 @@ class SonyUsbApi extends ApiInterface {
 
   @override
   Future<SettingsItem<bool>> getAel(SonyCameraDevice device) {
-    // TODO: implement getAel
-    throw UnimplementedError();
+    bool value = device.cameraSettings.settings
+            .firstWhere((element) => element.id == SettingsId.AEL_State.value)
+            .value !=
+        2;
+    //TODO
   }
 
   @override
-  Future<SettingsItem<AspectRatioId>> getAspectRatio(SonyCameraDevice device) {
-    // TODO: implement getAspectRatio
-    throw UnimplementedError();
+  Future<SettingsItem<AspectRatioId>> getAspectRatio(
+      SonyCameraDevice device) async {
+    var item = device.cameraSettings.settings
+        .firstWhere((element) => element.id == SettingsId.AEL_State.value);
+
+    SettingsItem<AspectRatioId> settingsItem =
+        SettingsItem<AspectRatioId>(getAspectRatioId((item.value)));
+    settingsItem.available.forEach((element) =>
+        settingsItem.available.add(getAspectRatioId(element.usbValue)));
+
+    return settingsItem;
   }
 
   @override
@@ -322,9 +314,10 @@ class SonyUsbApi extends ApiInterface {
   }
 
   @override
-  Future<int> getBatteryPercentage(SonyCameraDevice device) {
-    // TODO: implement getBatteryPercentage
-    throw UnimplementedError();
+  Future<int> getBatteryPercentage(SonyCameraDevice device) async {
+    return device.cameraSettings.settings
+        .firstWhere((element) => element.id == SettingsId.BatteryInfo.value)
+        .value;
   }
 
   @override
@@ -470,81 +463,136 @@ class SonyUsbApi extends ApiInterface {
 
   @override
   Future<bool> setAel(bool value, SonyCameraDevice device) {
-    // TODO: implement setAel
-    throw UnimplementedError();
+    if (value) {
+      //enable ael?
+      FlutterUsb.sendCommand(
+          Command(Commands.getCommandMainSettingI16(SettingsId.AEL, 1)));
+      FlutterUsb.sendCommand(
+          Command(Commands.getCommandMainSettingI16(SettingsId.AEL, 2)));
+    } else {
+      FlutterUsb.sendCommand(
+          Command(Commands.getCommandMainSettingI16(SettingsId.AEL, 2)));
+      FlutterUsb.sendCommand(
+          Command(Commands.getCommandMainSettingI16(SettingsId.AEL, 1)));
+    }
   }
 
   @override
   Future<bool> setAspectRatio(AspectRatioId value, SonyCameraDevice device) {
-    // TODO: implement setAspectRatio
-    throw UnimplementedError();
+    FlutterUsb.sendCommand(Command(
+        Commands.getCommandSubSettingU8(SettingsId.AspectRatio, value)));
   }
 
   @override
   Future<bool> setDriveMode(DriveModeId value, SonyCameraDevice device) {
-    // TODO: implement setDriveMode
-    throw UnimplementedError();
+    FlutterUsb.sendCommand(
+        Command(Commands.getCommandSubSettingI16(SettingsId.DriveMode, value)));
   }
 
   @override
   Future<bool> setDroHdr(DroHdrId value, SonyCameraDevice device) {
-    // TODO: implement setDroHdr
-    throw UnimplementedError();
+    FlutterUsb.sendCommand(
+        Command(Commands.getCommandSubSettingI16(SettingsId.DroHdr, value)));
   }
 
   @override
-  Future<bool> setEV(double value, SonyCameraDevice device) {
-    // TODO: implement setEV
-    throw UnimplementedError();
+  Future<bool> setEV(int value, SonyCameraDevice device) {
+    FlutterUsb.sendCommand(
+        Command(Commands.getCommandMainSettingI16(SettingsId.EV, value)));
   }
 
   @override
   Future<bool> setFNumber(int value, SonyCameraDevice device) {
-    // TODO: implement setFNumber
-    throw UnimplementedError();
+    //value = steps
+    FlutterUsb.sendCommand(
+        Command(Commands.getCommandMainSettingI16(SettingsId.FNumber, value)));
   }
 
   @override
   Future<bool> setFel(bool value, SonyCameraDevice device) {
-    // TODO: implement setFel
-    throw UnimplementedError();
+    if (value) {
+      //enable fel?
+      FlutterUsb.sendCommand(
+          Command(Commands.getCommandMainSettingI16(SettingsId.FEL, 1)));
+      FlutterUsb.sendCommand(
+          Command(Commands.getCommandMainSettingI16(SettingsId.FEL, 2)));
+    } else {
+      FlutterUsb.sendCommand(
+          Command(Commands.getCommandMainSettingI16(SettingsId.FEL, 2)));
+      FlutterUsb.sendCommand(
+          Command(Commands.getCommandMainSettingI16(SettingsId.FEL, 1)));
+    }
   }
 
   @override
   Future<bool> setFlashMode(FlashModeId value, SonyCameraDevice device) {
-    // TODO: implement setFlashMode
-    throw UnimplementedError();
+    FlutterUsb.sendCommand(
+        Command(Commands.getCommandSubSettingI16(SettingsId.FlashMode, value)));
+  }
+
+  Future<bool> setFlashValue(int value, SonyCameraDevice device) {
+    //value is steps
+    FlutterUsb.sendCommand(
+        Command(Commands.getCommandMainSettingI16(SettingsId.Flash, value)));
   }
 
   @override
   Future<bool> setFocusArea(FocusAreaId value, SonyCameraDevice device) {
-    // TODO: implement setFocusArea
-    throw UnimplementedError();
+    FlutterUsb.sendCommand(Command(
+        Commands.getCommandSubSettingI16(SettingsId.FocusArea, value.value)));
   }
 
   @override
   Future<bool> setFocusAreaSpot(Point<num> value, SonyCameraDevice device) {
-    // TODO: implement setFocusAreaSpot
-    throw UnimplementedError();
+    FlutterUsb.sendCommand(Command(Commands.getCommandMainSettingI16_2(
+        SettingsId.FocusAreaSpot, value.y, value.x)));
   }
 
   @override
   Future<bool> setFocusDistance(int value, SonyCameraDevice device) {
-    // TODO: implement setFocusDistance
-    throw UnimplementedError();
+    FlutterUsb.sendCommand(Command(
+        Commands.getCommandMainSettingI16(SettingsId.FocusDistance, value)));
   }
 
   @override
   Future<bool> setFocusMagnifier(double value, SonyCameraDevice device) {
-    // TODO: implement setFocusMagnifier
-    throw UnimplementedError();
+    for (int i = 0; i < value; i++) {
+      FlutterUsb.sendCommand(Command(Commands.getCommandMainSettingI16(
+          SettingsId.FocusMagnifierRequest, 2)));
+      FlutterUsb.sendCommand(Command(Commands.getCommandMainSettingI16(
+          SettingsId.FocusMagnifierRequest, 1)));
+    }
   }
 
   @override
   Future<bool> setFocusMagnifierDirection(
       FocusMagnifierDirectionId value, int steps, SonyCameraDevice device) {
-    // TODO: implement setFocusMagnifierDirection
-    throw UnimplementedError();
+    SettingsId opcode;
+    switch (value) {
+      case FocusMagnifierDirectionId.Left:
+        opcode = SettingsId.FocusMagnifierMoveLeftRequest;
+        break;
+      case FocusMagnifierDirectionId.Right:
+        opcode = SettingsId.FocusMagnifierMoveRightRequest;
+        break;
+      case FocusMagnifierDirectionId.Up:
+        opcode = SettingsId.FocusMagnifierMoveUpRequest;
+        break;
+      case FocusMagnifierDirectionId.Down:
+        opcode = SettingsId.FocusMagnifierMoveDownRequest;
+        break;
+      case FocusMagnifierDirectionId.Unknown:
+        opcode = null;
+        break;
+    }
+    if (opcode != null) {
+      for (int i = 0; i < steps; i++) {
+        FlutterUsb.sendCommand(
+            Command(Commands.getCommandMainSettingI16(opcode, 2)));
+        FlutterUsb.sendCommand(
+            Command(Commands.getCommandMainSettingI16(opcode, 1)));
+      }
+    }
   }
 
   @override
@@ -556,78 +604,86 @@ class SonyUsbApi extends ApiInterface {
 
   @override
   Future<bool> setFocusMode(FocusModeId value, SonyCameraDevice device) {
-    FlutterUsb.sendCommand(Command(
-        Commands.getCommand(OpCodeId.SubSetting, SettingsId.FocusMode, value)));
+    FlutterUsb.sendCommand(
+        Command(Commands.getCommandSubSettingI16(SettingsId.FocusMode, value)));
+  }
+
+  Future<bool> setFocusModeToggle(
+      FocusModeToggleId value, SonyCameraDevice device) {
+    FlutterUsb.sendCommand(Command(Commands.getCommandMainSettingI16(
+        SettingsId.FocusModeToggleRequest, value)));
   }
 
   @override
   Future<bool> setImageFileFormat(
       ImageFileFormatId value, SonyCameraDevice device) {
-    // TODO: implement setImageFileFormat
-    throw UnimplementedError();
+    FlutterUsb.sendCommand(Command(
+        Commands.getCommandSubSettingI16(SettingsId.FileFormat, value)));
   }
 
   @override
   Future<bool> setIso(int value, SonyCameraDevice device) {
-    // TODO: implement setIso
-    throw UnimplementedError();
+    //value = steps
+    FlutterUsb.sendCommand(
+        Command(Commands.getCommandMainSettingI32(SettingsId.ISO, value)));
   }
 
   @override
   Future<bool> setMeteringMode(MeteringModeId value, SonyCameraDevice device) {
-    FlutterUsb.sendCommand(Command(Commands.getCommand(
-        OpCodeId.SubSetting, SettingsId.MeteringMode, value)));
+    FlutterUsb.sendCommand(Command(
+        Commands.getCommandSubSettingI16(SettingsId.MeteringMode, value)));
   }
 
   @override
   Future<bool> setPictureEffect(
       PictureEffectId value, SonyCameraDevice device) {
-    // TODO: implement setPictureEffect
-    throw UnimplementedError();
+    FlutterUsb.sendCommand(Command(
+        Commands.getCommandSubSettingI16(SettingsId.PictureEffect, value)));
   }
 
   @override
   Future<bool> setShutterSpeed(int value, SonyCameraDevice device) {
-    // TODO: implement setShutterSpeed
-    throw UnimplementedError();
+    //vlue = steps
+    FlutterUsb.sendCommand(Command(
+        Commands.getCommandMainSettingI32(SettingsId.ShutterSpeed, value)));
   }
 
   @override
   Future<bool> setWhiteBalance(WhiteBalanceId value, SonyCameraDevice device) {
-    // TODO: implement setWhiteBalance
-    throw UnimplementedError();
+    FlutterUsb.sendCommand(Command(
+        Commands.getCommandSubSettingI16(SettingsId.WhiteBalance, value)));
   }
 
   @override
   Future<bool> setWhiteBalanceAb(
       WhiteBalanceAbId value, SonyCameraDevice device) {
-    // TODO: implement setWhiteBalanceAb
-    throw UnimplementedError();
+    FlutterUsb.sendCommand(Command(
+        Commands.getCommandSubSettingI16(SettingsId.WhiteBalanceAB, value)));
   }
 
   @override
   Future<bool> setWhiteBalanceColorTemp(int value, SonyCameraDevice device) {
-    // TODO: implement setWhiteBalanceColorTemp
-    throw UnimplementedError();
+    FlutterUsb.sendCommand(Command(Commands.getCommandSubSettingI16(
+        SettingsId.WhiteBalanceColorTemp, value)));
   }
 
   @override
   Future<bool> setWhiteBalanceGm(
       WhiteBalanceGmId value, SonyCameraDevice device) {
-    // TODO: implement setWhiteBalanceGm
-    throw UnimplementedError();
+    FlutterUsb.sendCommand(Command(
+        Commands.getCommandSubSettingI16(SettingsId.WhiteBalanceGM, value)));
   }
 
   @override
   Future<bool> startRecordingVideo(SonyCameraDevice device) {
-    // TODO: implement startRecordingVideo
-    throw UnimplementedError();
+    FlutterUsb.sendCommand(
+        Command(Commands.getCommandMainSettingI16(SettingsId.RecordVideo, 2)));
   }
 
   @override
   Future<bool> stopRecordingVideo(SonyCameraDevice device) {
-    // TODO: implement stopRecordingVideo
-    throw UnimplementedError();
+    FlutterUsb.sendCommand(
+        Command(Commands.getCommandMainSettingI16(SettingsId.RecordVideo, 1)));
   }
 
   Future<Uint8List> GetImage(bool liveView) async {
@@ -645,8 +701,8 @@ class SonyUsbApi extends ApiInterface {
 
     int imageInfoUnk = bytes.getUint32(34, Endian.little);
     int imageSizeInBytes = bytes.getUint32(38, Endian.little); //24 630 528
-                                                               //2 643 449
-                                                                //24 000 000
+    //2 643 449
+    //24 000 000
     //26 883 8912
 
     if (imageSizeInBytes <= 0) return null;

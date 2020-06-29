@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:flutterusb/Command.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
@@ -230,5 +231,130 @@ class Commands {
     c.buffer.asByteData().setUint16(10, 0x500A, Endian.little);
     c.buffer.asByteData().setUint16(38, focusMode.value, Endian.little);
     return c;
+  }
+
+
+  static Uint8List getCommandMainSettingI32(SettingsId settingsId, var value) {
+    return getCommandSettingI32(OpCodeId.MainSetting, settingsId, value);
+  }
+
+  static Uint8List getCommandSettingI32(
+      OpCodeId mainSetting, SettingsId settingsId, value) {
+    return getCommandSetting(mainSetting, settingsId, value, 0, 4, 0);
+  }
+
+  static Uint8List getCommandMainSettingI16(SettingsId settingsId, var value) {
+    return getCommandSettingI16(OpCodeId.MainSetting, settingsId, value);
+  }
+
+  static Uint8List getCommandSubSettingU8(SettingsId settingsId, var value) {
+    return getCommandSettingU8(OpCodeId.SubSetting, settingsId, value);
+  }
+
+  static Uint8List getCommandSettingU8(
+      OpCodeId mainSetting, SettingsId settingsId, value) {
+    return getCommandSetting(mainSetting, settingsId, value, 0, 1, 0);
+  }
+
+  static Uint8List getCommandSubSettingI16(SettingsId settingsId, var value) {
+    return getCommandSettingI16(OpCodeId.SubSetting, settingsId, value);
+  }
+
+  static Uint8List getCommandMainSettingI16_2(SettingsId settingsId, var value1, var value2) {
+    return getCommandSetting(OpCodeId.MainSetting, settingsId, value1, value2, 2, 2);
+  }
+
+  static Uint8List getCommandSettingI16(
+      OpCodeId mainSetting, SettingsId settingsId, value) {
+    return getCommandSetting(mainSetting, settingsId, value, 0, 2, 0);
+  }
+
+  static Uint8List getCommandSetting(OpCodeId opCodeId, SettingsId settingsId,
+      int value1, int value2, int value1DataSize, int value2DataSize) {
+    Uint8List list = CommandT.createCommand(40);
+    list.writeUInt16(opCodeId.value);
+    list.goTo(10);
+    list.writeUInt16(settingsId.value);
+    list.goTo(30);
+    list.writeUInt8(1);
+    list.goTo(34);
+    list.writeUInt8(4);
+    list.goTo(38);
+
+    addValueToCommand(list, value1, value1DataSize);
+    addValueToCommand(list, value2, value2DataSize);
+
+    return list;
+  }
+
+  static addValueToCommand(Uint8List list, int value, int valueDataSize) {
+    switch (valueDataSize) {
+      case 1:
+        list.writeUInt8(value);
+        break;
+      case 2:
+        list.writeUInt16(value);
+        break;
+      case 4:
+        list.writeUInt32(value);
+        break;
+    }
+  }
+
+  static Command getImageCommand(bool liveView, bool info,
+      {double imageSizeInBytes = 1024}) {
+    if(imageSizeInBytes != 1024){
+      imageSizeInBytes += 32;
+    }
+    // Should be only 29 bytes of extra space required, add a little extra just in case
+    //TODO if not 1024
+    OpCodeId opcode = info ? OpCodeId.GetImageInfo : OpCodeId.GetImageData;
+    SettingsId settingsId =
+        liveView ? SettingsId.LiveViewInfo : SettingsId.PhotoInfo;
+
+    Uint8List list = CommandT.createCommand(40);
+    list.writeUInt16(opcode.value);
+    list.goTo(10);
+    list.writeUInt16(settingsId.value);
+    list.writeUInt8(0xFF);
+    list.writeUInt8(0xFF);
+    list.goTo(30);
+    list.writeUInt8(1);
+    list.goTo(34);
+    list.writeUInt8(3);
+
+    return Command(list, outDataLength: imageSizeInBytes); //TODO image size in bytes
+  }
+}
+
+extension CommandT on Uint8List {
+  static int position = 0;
+
+  static Uint8List createCommand(int f) {
+    position = 0;
+    return Uint8List(f);
+  }
+
+  writeUInt8(value) {
+    buffer.asByteData().setUint8(position, value);
+    position++;
+  }
+
+  writeUInt16(value) {
+    buffer.asByteData().setUint16(position, value, Endian.little);
+    position += 2;
+  }
+
+  writeUInt32(value) {
+    buffer.asByteData().setUint16(position, value, Endian.little);
+    position += 4;
+  }
+
+  goTo(newPosition) {
+    position = newPosition;
+  }
+
+  finishCommand() {
+    position = 0;
   }
 }

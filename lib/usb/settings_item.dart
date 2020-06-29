@@ -245,6 +245,12 @@ class SettingsItem {
       case SettingsId.Unknown:
         // TODO: Handle this case.
         break;
+      case SettingsId.LiveViewInfo:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.PhotoInfo:
+        // TODO: Handle this case.
+        break;
     }
     return values;
   }
@@ -417,6 +423,12 @@ class SettingsItem {
         // TODO: Handle this case.
         break;
       case SettingsId.Unknown:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.LiveViewInfo:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.PhotoInfo:
         // TODO: Handle this case.
         break;
     }
