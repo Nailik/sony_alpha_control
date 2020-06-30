@@ -301,6 +301,13 @@ class Commands {
     }
   }
 
+  //0000   10 00 00 00 01 00 08 10 51 06 00 00 01 c0 ff ff //10 09 getImageInfo //photo info c0 01
+  //0000   10 00 00 00 01 00 08 10 4e 06 00 00 02 c0 ff ff //10 08 getImageInfo //LiveViewInfo c0 02
+  //0000   10 00 00 00 01 00 09 10 4d 06 00 00 01 c0 ff ff //10 09 getImageData //photo info c0 01
+
+
+  //0000   10 00 00 00 01 00 09 10 52 06 00 00 01 c0 ff ff //10 09 getImageData //photo info c0 01
+
   static Command getImageCommand(bool liveView, bool info,
       {double imageSizeInBytes = 1024}) {
     if(imageSizeInBytes != 1024){

@@ -267,18 +267,13 @@ class SonyUsbApi extends ApiInterface {
         (element) => element.id == SettingsId.PhotoTransferQueue.value);
 
     if (item != null) {
-      int num = item.value & 0xFF;
+      int numPhotos = item.value & 0xFF;
       bool photoAvailableForTransfer = ((item.value >> 8) & 0xFF) == 0x80;
-      print(num);
+      print("numPhotos $numPhotos");
       if (photoAvailableForTransfer) {
-        print("GetImage");
-        var image = await GetImage(false);
-        //  Image.memory(image);
-        print("saveFile");
-        File file = new File("C:\\Users\\kilia\\Desktop\\test.jpg");
-        file.writeAsBytesSync(image);
-        file = new File("C:\\Users\\kilia\\Desktop\\test.ARW");
-        file.writeAsBytesSync(image);
+        for(int i = 0; i < numPhotos; i++) {
+          var image = await GetImage(false);
+        }
       }
     }
   }
@@ -708,7 +703,15 @@ class SonyUsbApi extends ApiInterface {
     if (imageSizeInBytes <= 0) return null;
     print("images $imageSizeInBytes");
 
-    String imageName = bytes.getUint8(82).toString();
+    int nameLength = bytes.getUint8(82);
+    int CharSize = 2;
+    int totalLength = nameLength * CharSize;
+    var namebytes = response.getData().sublist(83, 83+totalLength);
+    var name = new String.fromCharCodes(namebytes);
+
+    print(name);
+
+
     //TODO in chunks, very slow at the moment? loading slow or json slow?
     response = await FlutterUsb.sendCommand(Commands.getImageCommand(
         liveView, false,
@@ -742,7 +745,26 @@ class SonyUsbApi extends ApiInterface {
       //2190540839
 
       //ohne 10 ...
-      return response.getData().sublist(0, buffer.lengthInBytes);
+
+      /*
+      Größe: 2779555
+bild abfrage:
+09 10 00 00 00 00 00 00 00 00 01 C0 FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 03 00 00 00
+ergebnis:
+01 20 00 00 00 ...
+
+photoqueue value 32770 -> 2 photos (raw + jpg?)
+
+imagename "DSC01548.ARW" (mit arw!!)
+
+       */
+      Uint8List data = response.getData().sublist(30, buffer.lengthInBytes-30);
+
+      print("saveFile $name");
+      File file = new File("C:\\Users\\kilia\\Desktop\\$name");
+      file.writeAsBytesSync(data);
+      return data;
+
     }
   }
 }

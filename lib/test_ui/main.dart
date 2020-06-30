@@ -99,8 +99,10 @@ class _MyAppState extends State<MyApp> {
         await SonyApi.connectToCamera(device);
         Navigator.pushReplacement (
           context,
-          MaterialPageRoute(builder: (context) => TestsPage()),
+          MaterialPageRoute(builder: (context) => SettingsPage()),
         );
+        //await SonyApi.api.updateSettings(device);
+        await SonyApi.api.capturePhoto(device);
       },
     );
   }
