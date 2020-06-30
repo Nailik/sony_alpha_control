@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sonyalphacontrol/top_level_api/camera_settings.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
-import 'package:sonyalphacontrol/usb/settings_item.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -54,8 +54,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget _buildRow(SettingsItem data) {
     return ListTile(
-      title: Text(getSettingsId(data.id).name),
-      subtitle: Text(data.getValue()),
+      title: Text(data.settingsId.name),
+      subtitle: Text(data.value),
       onTap: () async {
         showDialog(
             context: context,
@@ -68,20 +68,19 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget showSimpleDialog(SettingsItem data, {BuildContext context}) {
     final SimpleDialog dialog = new SimpleDialog(
-        title: Text('Select ${data.getValue()} mode'),
-        children: getOptions(data));
+        title: Text('Select ${data.value} mode'), children: getOptions(data));
     return dialog;
   }
 
   List<Widget> getOptions(SettingsItem data) {
     List<Widget> list = new List();
-    for (AcceptedValue value in data.getAcceptedValues()) {
+    for (Value value in data.available) {
       list.add(
         new SimpleDialogOption(
           onPressed: () {
-            SonyApi.setSettingsRaw(data.id, value.value);
+            SonyApi.setSettingsRaw(data.settingsId, value.value);
           },
-          child: Text(value.name),
+          child: Text(value.value),
         ),
       );
     }

@@ -253,8 +253,8 @@ class SonyUsbApi extends ApiInterface {
   }
 
   @override
-  Future<bool> setSettingsRaw(int id, int value, SonyCameraDevice device) {
-    return setSettings(getSettingsId(id), value, device);
+  Future<bool> setSettingsRaw(SettingsId id, int value, SonyCameraDevice device) {
+    return setSettings(id, value, device);
   }
 
   @override
@@ -264,14 +264,14 @@ class SonyUsbApi extends ApiInterface {
     //read photo
     await device.cameraSettings.update();
     var item = device.cameraSettings.settings.firstWhere(
-        (element) => element.id == SettingsId.PhotoTransferQueue.value);
+        (element) => element.settingsId == SettingsId.PhotoTransferQueue);
 
     if (item != null) {
       int numPhotos = item.value & 0xFF;
       bool photoAvailableForTransfer = ((item.value >> 8) & 0xFF) == 0x80;
       print("numPhotos $numPhotos");
       if (photoAvailableForTransfer) {
-        for(int i = 0; i < numPhotos; i++) {
+        for (int i = 0; i < numPhotos; i++) {
           var image = await GetImage(false);
         }
       }
@@ -281,7 +281,7 @@ class SonyUsbApi extends ApiInterface {
   @override
   Future<SettingsItem<bool>> getAel(SonyCameraDevice device) {
     bool value = device.cameraSettings.settings
-            .firstWhere((element) => element.id == SettingsId.AEL_State.value)
+            .firstWhere((element) => element.settingsId == SettingsId.AEL_State)
             .value !=
         2;
     //TODO
@@ -291,10 +291,12 @@ class SonyUsbApi extends ApiInterface {
   Future<SettingsItem<AspectRatioId>> getAspectRatio(
       SonyCameraDevice device) async {
     var item = device.cameraSettings.settings
-        .firstWhere((element) => element.id == SettingsId.AEL_State.value);
+        .firstWhere((element) => element.settingsId == SettingsId.AEL_State);
 
     SettingsItem<AspectRatioId> settingsItem =
-        SettingsItem<AspectRatioId>(getAspectRatioId((item.value)));
+        SettingsItem<AspectRatioId>(SettingsId.AEL_State);
+    settingsItem.value = getAspectRatioId(item.value);
+
     settingsItem.available.forEach((element) =>
         settingsItem.available.add(getAspectRatioId(element.usbValue)));
 
@@ -311,7 +313,7 @@ class SonyUsbApi extends ApiInterface {
   @override
   Future<int> getBatteryPercentage(SonyCameraDevice device) async {
     return device.cameraSettings.settings
-        .firstWhere((element) => element.id == SettingsId.BatteryInfo.value)
+        .firstWhere((element) => element.settingsId == SettingsId.BatteryInfo)
         .value;
   }
 
@@ -706,11 +708,10 @@ class SonyUsbApi extends ApiInterface {
     int nameLength = bytes.getUint8(82);
     int CharSize = 2;
     int totalLength = nameLength * CharSize;
-    var namebytes = response.getData().sublist(83, 83+totalLength);
+    var namebytes = response.getData().sublist(83, 83 + totalLength);
     var name = new String.fromCharCodes(namebytes);
 
     print(name);
-
 
     //TODO in chunks, very slow at the moment? loading slow or json slow?
     response = await FlutterUsb.sendCommand(Commands.getImageCommand(
@@ -758,13 +759,13 @@ photoqueue value 32770 -> 2 photos (raw + jpg?)
 imagename "DSC01548.ARW" (mit arw!!)
 
        */
-      Uint8List data = response.getData().sublist(30, buffer.lengthInBytes-30);
+      Uint8List data =
+          response.getData().sublist(30, buffer.lengthInBytes - 30);
 
       print("saveFile $name");
       File file = new File("C:\\Users\\kilia\\Desktop\\$name");
       file.writeAsBytesSync(data);
       return data;
-
     }
   }
 }

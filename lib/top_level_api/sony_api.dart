@@ -6,6 +6,8 @@ import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
 import 'package:sonyalphacontrol/usb/sony_usb_api.dart';
 import 'package:sonyalphacontrol/wifi/sony_wifi_api.dart';
 
+import 'ids/setting_ids.dart';
+
 class SonyApi {
   static SonyCameraDevice _connectedCamera;
 
@@ -116,7 +118,7 @@ class SonyApi {
   ///functions
 
   ///unsafe to use, id and value need to match
-  static Future<bool> setSettingsRaw(int id, int value) =>
+  static Future<bool> setSettingsRaw(SettingsId id, int value) =>
       api.setSettingsRaw(id, value, _connectedCamera);
 
   static Future<bool> setAspectRatio(AspectRatioId value) {

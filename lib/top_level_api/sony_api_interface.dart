@@ -19,6 +19,8 @@ import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
 
+import 'ids/setting_ids.dart';
+
 abstract class ApiInterface {
   bool get initialized;
 
@@ -63,7 +65,7 @@ abstract class ApiInterface {
 
   Future<bool> updateSettings(SonyCameraDevice device) =>
       device.cameraSettings.update();
-  Future<bool> setSettingsRaw(int id, int value, SonyCameraDevice device);
+  Future<bool> setSettingsRaw(SettingsId id, int value, SonyCameraDevice device);
 
   Future<bool> capturePhoto(SonyCameraDevice device); //TODO return foto?
 

@@ -13,6 +13,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
@@ -359,7 +360,7 @@ class SonyWifiApi extends ApiInterface {
   }
 
   @override
-  Future<bool> setSettingsRaw(int id, int value, SonyCameraDevice device) {
+  Future<bool> setSettingsRaw(SettingsId id, int value, SonyCameraDevice device) {
     // TODO: implement setSettingsRaw
     throw UnimplementedError();
   }

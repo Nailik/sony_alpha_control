@@ -1,11 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutterusb/flutter_usb.dart';
-import 'package:sonyalphacontrol/test_ui/settings_page.dart';
 import 'package:sonyalphacontrol/test_ui/test_page.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
-import 'package:sonyalphacontrol/top_level_api/sony_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
 
 void main() async {
@@ -28,12 +25,10 @@ class _MyAppState extends State<MyApp> {
     initPlatformState();
   }
 
-
   @override
   void dispose() {
     super.dispose();
   }
-
 
   Future<void> initPlatformState() async {
     await SonyApi.initialize();
@@ -96,13 +91,12 @@ class _MyAppState extends State<MyApp> {
       title: Text(device.name),
       subtitle: Text("huhu"),
       onTap: () async {
-        await SonyApi.connectToCamera(device);
-        Navigator.pushReplacement (
+       // await SonyApi.connectToCamera(device);
+       // await SonyApi.api.updateSettings(device);
+        Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => SettingsPage()),
+          MaterialPageRoute(builder: (context) => TestsPage(device: device)),
         );
-        //await SonyApi.api.updateSettings(device);
-        await SonyApi.api.capturePhoto(device);
       },
     );
   }

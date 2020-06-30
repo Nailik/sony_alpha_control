@@ -4,7 +4,8 @@ import 'package:flutterusb/Command.dart';
 import 'package:flutterusb/Response.dart';
 import 'package:flutterusb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/camera_settings.dart';
-import 'package:sonyalphacontrol/usb/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
 
 import 'commands.dart';
 
@@ -65,11 +66,11 @@ class CameraUsbSettings extends CameraSettings {
       var settingsId = bytes.getUint16(offset, Endian.little);
       offset += 2;
 
-      var setting =
-          settings.singleWhere((it) => it.id == settingsId, orElse: () => null);
+      SettingsItem setting = settings.singleWhere(
+          (it) => it.settingsId.value == settingsId,
+          orElse: () => null);
       if (setting == null) {
-        setting = new SettingsItem();
-        setting.id = settingsId;
+        setting = new SettingsItem(getSettingsId(settingsId));
         settings.add(setting);
       }
 
@@ -106,9 +107,9 @@ class CameraUsbSettings extends CameraSettings {
             case 2:
               var num = bytes.getUint16(offset, Endian.little);
               offset += 2;
-              setting.acceptedValues.clear();
+              setting.available.clear();
               for (int i = 0; i < num; i++) {
-                setting.acceptedValues.add(bytes.getUint8(offset));
+                setting.available.add(bytes.getUint8(offset));
                 offset++;
               }
               break;
@@ -131,10 +132,9 @@ class CameraUsbSettings extends CameraSettings {
             case 2:
               var num = bytes.getUint16(offset, Endian.little);
               offset += 2;
-              setting.acceptedValues.clear();
+              setting.available.clear();
               for (int i = 0; i < num; i++) {
-                setting.acceptedValues
-                    .add(bytes.getUint16(offset, Endian.little));
+                setting.available.add(bytes.getUint16(offset, Endian.little));
                 offset += 2;
               }
               break;
@@ -161,10 +161,9 @@ class CameraUsbSettings extends CameraSettings {
             case 2:
               var num = bytes.getUint16(offset, Endian.little);
               offset += 2;
-              setting.acceptedValues.clear();
+              setting.available.clear();
               for (int i = 0; i < num; i++) {
-                setting.acceptedValues
-                    .add(bytes.getUint16(offset, Endian.little));
+                setting.available.add(bytes.getUint16(offset, Endian.little));
                 offset += 2;
               }
               break;
@@ -194,10 +193,9 @@ class CameraUsbSettings extends CameraSettings {
             case 2:
               var num = bytes.getUint16(offset, Endian.little);
               offset += 2;
-              setting.acceptedValues.clear();
+              setting.available.clear();
               for (int i = 0; i < num; i++) {
-                setting.acceptedValues
-                    .add(bytes.getUint32(offset, Endian.little));
+                setting.available.add(bytes.getUint32(offset, Endian.little));
                 offset += 4;
               }
               break;
