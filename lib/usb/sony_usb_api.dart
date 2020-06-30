@@ -654,14 +654,14 @@ class SonyUsbApi extends ApiInterface {
   @override
   Future<bool> setWhiteBalance(WhiteBalanceId value, SonyCameraDevice device) {
     FlutterUsb.sendCommand(Command(
-        Commands.getCommandSubSettingI16(SettingsId.WhiteBalance, value)));
+        Commands.getCommandSubSettingI16(SettingsId.WhiteBalance, value.value)));
   }
 
   @override
   Future<bool> setWhiteBalanceAb(
       WhiteBalanceAbId value, SonyCameraDevice device) {
     FlutterUsb.sendCommand(Command(
-        Commands.getCommandSubSettingI16(SettingsId.WhiteBalanceAB, value)));
+        Commands.getCommandSubSettingI16(SettingsId.WhiteBalanceAB, value.value)));
   }
 
   @override
@@ -674,7 +674,7 @@ class SonyUsbApi extends ApiInterface {
   Future<bool> setWhiteBalanceGm(
       WhiteBalanceGmId value, SonyCameraDevice device) {
     FlutterUsb.sendCommand(Command(
-        Commands.getCommandSubSettingI16(SettingsId.WhiteBalanceGM, value)));
+        Commands.getCommandSubSettingI16(SettingsId.WhiteBalanceGM, value.value)));
   }
 
   @override

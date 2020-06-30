@@ -35,6 +35,10 @@ class SettingsItem<T> extends ChangeNotifier {
         settingsId == SettingsId.ShutterSpeed);
   }
 
+  String getValueName(){
+    return getNameOf(value);
+  }
+
   String getNameOf(T item) {
     switch (settingsId) {
       case SettingsId.FileFormat:
