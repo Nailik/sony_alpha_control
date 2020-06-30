@@ -265,7 +265,7 @@ class SonyWifiApi extends ApiInterface {
   }
 
   @override
-  Future<bool> setEV(double value, SonyCameraDevice device) {
+  Future<bool> setEV(int value, SonyCameraDevice device) {
     // TODO: implement setEV
     throw UnimplementedError();
   }
