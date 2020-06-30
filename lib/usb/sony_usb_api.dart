@@ -212,6 +212,12 @@ class SonyUsbApi extends ApiInterface {
         return false;
       case SettingsId.Unknown:
         return false;
+      case SettingsId.LiveViewInfo:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.PhotoInfo:
+        // TODO: Handle this case.
+        break;
     }
     return false;
   }

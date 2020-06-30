@@ -91,8 +91,8 @@ class _MyAppState extends State<MyApp> {
       title: Text(device.name),
       subtitle: Text("huhu"),
       onTap: () async {
-       // await SonyApi.connectToCamera(device);
-       // await SonyApi.api.updateSettings(device);
+        await SonyApi.connectToCamera(device);
+        await SonyApi.api.updateSettings(device);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => TestsPage(device: device)),

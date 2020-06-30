@@ -28,6 +28,13 @@ class _TestsPageState extends State<TestsPage> {
               getTwoFunctionRow(
                   "func1", "func2", () => print("func1"), () => print("func2")),
               getFunctionRow(SettingsId.FileFormat),
+              getFunctionRow(SettingsId.WhiteBalance),
+              getFunctionRow(SettingsId.FNumber),
+              getFunctionRow(SettingsId.FocusMode),
+              getFunctionRow(SettingsId.MeteringMode),
+              getFunctionRow(SettingsId.FlashMode),
+              getFunctionRow(SettingsId.ShootingMode),
+              getFunctionRow(SettingsId.EV),
               getStateRow(SettingsId.BatteryInfo),
             ],
           )),
@@ -52,18 +59,18 @@ class _TestsPageState extends State<TestsPage> {
     var name = settingsId.name;
     var value = device.cameraSettings.getItem(settingsId)?.value ?? "null";
     return Card(
-      child: ListTile(title: Text(name), subtitle: Text(value)),
+      child: ListTile(title: Text(name), subtitle: Text(value.toString())),
     );
   }
 
   Widget getFunctionRow(SettingsId settingsId) {
     var name = settingsId.name;
     var settingsItem = device.cameraSettings.getItem(settingsId);
-    var value = settingsItem?.value ?? "null";
+    var value = settingsItem.getNameOf(settingsItem.value);
     return Card(
       child: ListTile(
           title: Text(name),
-          subtitle: Text(value),
+          subtitle: Text(value.toString()),
           onTap: () async {
             showDialog(
                 context: context,
@@ -89,7 +96,7 @@ class _TestsPageState extends State<TestsPage> {
           onPressed: () {
             SonyApi.setSettingsRaw(data.settingsId, value.value);
           },
-          child: Text(value.name),
+          child: Text(data.getNameOf(value)),
         ),
       );
     }

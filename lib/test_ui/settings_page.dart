@@ -55,7 +55,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget _buildRow(SettingsItem data) {
     return ListTile(
       title: Text(data.settingsId.name),
-      subtitle: Text(data.value),
+      subtitle: Text(data.value.toString()),
       onTap: () async {
         showDialog(
             context: context,
@@ -68,7 +68,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget showSimpleDialog(SettingsItem data, {BuildContext context}) {
     final SimpleDialog dialog = new SimpleDialog(
-        title: Text('Select ${data.value} mode'), children: getOptions(data));
+        title: Text('Select ${data.value.toString()} mode'), children: getOptions(data));
     return dialog;
   }
 

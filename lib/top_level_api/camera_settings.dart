@@ -8,7 +8,7 @@ abstract class CameraSettings extends ChangeNotifier {
   Future<bool> update();
 
   SettingsItem getItem(SettingsId settingsId) {
-    return settings.firstWhere((element) => element.value.value == settingsId.value,
+    return settings.firstWhere((element) => element.settingsId == settingsId,
         orElse: () => null);
   }
 }
