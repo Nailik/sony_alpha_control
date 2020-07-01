@@ -10,8 +10,10 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_direction_ids
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_phase_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
@@ -74,6 +76,7 @@ abstract class ApiInterface {
 
   Future<bool> startRecordingVideo(SonyCameraDevice device);
   Future<bool> stopRecordingVideo(SonyCameraDevice device);
+  Future<RecordVideoStateId> getRecordingVideoState(SonyCameraDevice device);
 
   Future<SettingsItem<int>> getFNumber(SonyCameraDevice device);
   Future<bool> setFNumber(int value, SonyCameraDevice device);
@@ -117,6 +120,9 @@ abstract class ApiInterface {
 
   Future<SettingsItem<DroHdrId>> getDroHdr(SonyCameraDevice device);
   Future<bool> setDroHdr(DroHdrId value, SonyCameraDevice device);
+
+  Future<SettingsItem<ImageSizeId>> getImageSize(SonyCameraDevice device);
+  Future<bool> setImageSize(ImageSizeId value, SonyCameraDevice device);
 
   Future<SettingsItem<AspectRatioId>> getAspectRatio(SonyCameraDevice device);
   Future<bool> setAspectRatio(AspectRatioId value, SonyCameraDevice device);

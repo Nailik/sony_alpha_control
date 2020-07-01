@@ -16,8 +16,10 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_phase_ids.dar
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
@@ -773,6 +775,25 @@ imagename "DSC01548.ARW" (mit arw!!)
       file.writeAsBytesSync(data);
       return data;
     }
+  }
+
+  @override
+  Future<RecordVideoStateId> getRecordingVideoState(SonyCameraDevice device) {
+    return device.cameraSettings.settings
+        .firstWhere((element) => element.settingsId == SettingsId.RecordVideoState)
+        .value;
+  }
+
+  @override
+  Future<SettingsItem<ImageSizeId>> getImageSize(SonyCameraDevice device) {
+    // TODO: implement getImageSize
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setImageSize(ImageSizeId value, SonyCameraDevice device) {
+    // TODO: implement setImageSize
+    throw UnimplementedError();
   }
 }
 

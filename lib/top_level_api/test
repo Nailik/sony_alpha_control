@@ -3,3 +3,53 @@
     // https://github.com/gphoto/libgphoto2/blob/2e5e43430afc62aed8e7950dd4ab48080200d786/camlibs/ptp2/ptp.h#L586
     // https://github.com/gphoto/libgphoto2/blob/2e5e43430afc62aed8e7950dd4ab48080200d786/camlibs/ptp2/ptp.h#L1045
     // https://github.com/gphoto/libgphoto2/blob/2e5e43430afc62aed8e7950dd4ab48080200d786/camlibs/ptp2/ptp.h#L2352
+
+
+
+//states
+ShootingMode
+AutoFocusState
+BatteryInfo
+
+//functions
+RecordVideoState (start/stop) | RecordVideo
+HalfPressShutter/ CapturePhoto
+
+//settings
+FileFormat | ImageSize
+WhiteBalance | WhiteBalanceColorTemp | WhiteBalanceGM | WhiteBalanceAB
+FNumber
+FocusMode
+MeteringMode
+FlashMode | Flash (value)
+EV
+DriveMode
+DroHdr
+ShutterSpeed
+AspectRatio
+AEL_State | AEL
+PictureEffect
+ISO
+FEL_State | FEL
+FocusArea
+FocusMagnifierPhase
+FocusMagnifier
+FocusMagnifierPosition
+FocusAreaSpot
+FocusMagnifierRequest | FocusMagnifierResetRequest | FocusMagnifierMoveUpRequest
+| FocusMagnifierMoveDownRequest | FocusMagnifierMoveLeftRequest | FocusMagnifierMoveRightRequest
+FocusDistance
+FocusModeToggleRequest??
+
+LiveViewInfo | PhotoInfo
+
+//other
+PhotoTransferQueue
+
+//TODO
+Zoom
+SensorCrop
+LiveViewState
+UseLiveViewDisplayEffect
+FocusMagnifierState
+FocusModeToggleResponse

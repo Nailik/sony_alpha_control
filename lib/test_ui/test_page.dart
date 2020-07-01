@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sonyalphacontrol/top_level_api/camera_settings.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
+import 'package:sonyalphacontrol/top_level_api/sony_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
 
 class TestsPage extends StatefulWidget {
@@ -21,24 +24,51 @@ class _TestsPageState extends State<TestsPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-          backgroundColor: Colors.blueGrey,
-          body: ListView(
-            children: <Widget>[
-              getTwoFunctionRow(
-                  "func1", "func2", () => print("func1"), () => print("func2")),
-              getStateRow(SettingsId.FileFormat),
-              getWhiteBalanceRow(),
-              getFunctionRow(SettingsId.FNumber),
-              getFunctionRow(SettingsId.FocusMode),
-              getFunctionRow(SettingsId.MeteringMode),
-              getFunctionRow(SettingsId.FlashMode),
-              getFunctionRow(SettingsId.ShootingMode),
-              getFunctionRow(SettingsId.EV),
-              getStateRow(SettingsId.BatteryInfo),
-            ],
-          )),
-    );
+        home: Scaffold(
+            backgroundColor: Colors.blueGrey,
+            body: ChangeNotifierProvider<CameraSettings>(
+                create: (context) => SonyApi.connectedCamera.cameraSettings,
+                child: Consumer<CameraSettings>(
+                  builder: (context, model, _) => ListView(
+                    children: <Widget>[
+                      getTwoFunctionRow("func1", "func2", () => print("func1"),
+                          () => print("func2")),
+                      //states
+                      getStateRow(SettingsId.ShootingMode),
+                      getStateRow(SettingsId.AutoFocusState),
+                      getStateRow(SettingsId.BatteryInfo),
+                      //functions
+                      getVideoRow(),
+                      getImageRow(),
+                      //settings
+                      getImageSizeRow(),
+                      getWhiteBalanceRow(),
+                      getSettingsRow(SettingsId.FNumber),
+                      getSettingsRow(SettingsId.FocusMode),
+                      getSettingsRow(SettingsId.MeteringMode),
+                      getFlashRow(),
+                      getSettingsRow(SettingsId.EV),
+                      getSettingsRow(SettingsId.DriveMode),
+                      getSettingsRow(SettingsId.DroHdr),
+                      getSettingsRow(SettingsId.ShutterSpeed),
+                      getSettingsRow(SettingsId.AspectRatio),
+                    ],
+                  ),
+                )),
+            bottomNavigationBar: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                MaterialButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(18.0)),
+                  child: Text("reload"),
+                  color: Colors.blue,
+                  onPressed: () {
+                    SonyApi.updateSettings();
+                  },
+                )
+              ],
+            )));
   }
 
   Widget getTwoFunctionRow(
@@ -55,6 +85,35 @@ class _TestsPageState extends State<TestsPage> {
     );
   }
 
+  //getSettingsRow(SettingsId.FileFormat),
+
+  Widget getImageSizeRow() {
+    return Card(
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        Expanded(
+          child: ListTile(
+              title: Text(SettingsId.FileFormat.name),
+              subtitle: Text(device.cameraSettings
+                  .getItem(SettingsId.FileFormat)
+                  ?.getValueName()),
+              onTap: () => dialog(
+                  device.cameraSettings.getItem(SettingsId.FileFormat),
+                  context)),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text(SettingsId.ImageSize.name),
+              subtitle: Text(device.cameraSettings
+                  .getItem(SettingsId.ImageSize)
+                  ?.getValueName()),
+              onTap: () => dialog(
+                  device.cameraSettings.getItem(SettingsId.ImageSize),
+                  context)),
+        )
+      ]),
+    );
+  }
+
   Widget getWhiteBalanceRow() {
     return Card(
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -64,10 +123,9 @@ class _TestsPageState extends State<TestsPage> {
               subtitle: Text(device.cameraSettings
                   .getItem(SettingsId.WhiteBalance)
                   ?.getValueName()),
-              onTap: () {
-                showSimpleDialog(device.cameraSettings
-                    .getItem(SettingsId.WhiteBalance), context);
-              }),
+              onTap: () => dialog(
+                  device.cameraSettings.getItem(SettingsId.WhiteBalance),
+                  context)),
         ),
         Expanded(
           child: ListTile(
@@ -75,9 +133,10 @@ class _TestsPageState extends State<TestsPage> {
               subtitle: Text(device.cameraSettings
                   .getItem(SettingsId.WhiteBalanceColorTemp)
                   ?.getValueName()),
-              onTap: () {
-                showSimpleDialog(device.cameraSettings
-                    .getItem(SettingsId.WhiteBalanceColorTemp), context);}),
+              onTap: () => dialog(
+                  device.cameraSettings
+                      .getItem(SettingsId.WhiteBalanceColorTemp),
+                  context)),
         ),
         Expanded(
           child: ListTile(
@@ -85,9 +144,9 @@ class _TestsPageState extends State<TestsPage> {
               subtitle: Text(device.cameraSettings
                   .getItem(SettingsId.WhiteBalanceAB)
                   ?.getValueName()),
-              onTap: () {
-                showSimpleDialog(device.cameraSettings
-                    .getItem(SettingsId.WhiteBalanceAB), context);}),
+              onTap: () => dialog(
+                  device.cameraSettings.getItem(SettingsId.WhiteBalanceAB),
+                  context)),
         ),
         Expanded(
           child: ListTile(
@@ -95,9 +154,9 @@ class _TestsPageState extends State<TestsPage> {
               subtitle: Text(device.cameraSettings
                   .getItem(SettingsId.WhiteBalanceGM)
                   ?.getValueName()),
-              onTap: () {
-                showSimpleDialog(device.cameraSettings
-                    .getItem(SettingsId.WhiteBalanceGM), context);}),
+              onTap: () => dialog(
+                  device.cameraSettings.getItem(SettingsId.WhiteBalanceGM),
+                  context)),
         )
       ]),
     );
@@ -105,13 +164,24 @@ class _TestsPageState extends State<TestsPage> {
 
   Widget getStateRow(SettingsId settingsId) {
     var name = settingsId.name;
-    var value = device.cameraSettings.getItem(settingsId)?.value ?? "null";
+    var value = device.cameraSettings.getItem(settingsId).getValueName();
     return Card(
       child: ListTile(title: Text(name), subtitle: Text(value.toString())),
     );
   }
 
-  Widget getFunctionRow(SettingsId settingsId) {
+  Widget getSettingsRow(SettingsId settingsId) {
+    var name = settingsId.name;
+    var settingsItem = device.cameraSettings.getItem(settingsId);
+    return Card(
+      child: ListTile(
+          title: Text(name),
+          subtitle: Text(settingsItem.getValueName()),
+          onTap: () async => dialog(settingsItem, context)),
+    );
+  }
+
+  Widget getFunctionsRow(SettingsId settingsId) {
     var name = settingsId.name;
     var settingsItem = device.cameraSettings.getItem(settingsId);
     var value = settingsItem.getNameOf(settingsItem.value);
@@ -119,11 +189,11 @@ class _TestsPageState extends State<TestsPage> {
       child: ListTile(
           title: Text(name),
           subtitle: Text(value.toString()),
-          onTap: () async {showSimpleDialog(settingsItem, context);}),
+          onTap: () async => dialog(settingsItem, context)),
     );
   }
 
-  showSimpleDialog(SettingsItem settingsItem, BuildContext context) {
+  dialog(SettingsItem settingsItem, BuildContext context) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -146,5 +216,105 @@ class _TestsPageState extends State<TestsPage> {
       );
     }
     return list;
+  }
+
+  Widget getFlashRow() {
+    return Card(
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        Expanded(
+          child: ListTile(
+              title: Text(SettingsId.FlashMode.name),
+              subtitle: Text(device.cameraSettings
+                  .getItem(SettingsId.FlashMode)
+                  ?.getValueName()),
+              onTap: () => dialog(
+                  device.cameraSettings.getItem(SettingsId.FlashMode),
+                  context)),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text(SettingsId.Flash.name),
+              subtitle: Text(device.cameraSettings
+                  .getItem(SettingsId.Flash)
+                  ?.getValueName()),
+              onTap: () => dialog(
+                  device.cameraSettings.getItem(SettingsId.Flash), context)),
+        )
+      ]),
+    );
+  }
+
+  Widget getVideoRow() {
+    return Card(
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        Expanded(
+          child: ListTile(
+              title: Text("Start Record"),
+              onTap: () => SonyApi.api.startRecordingVideo(device)),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text("Stop Record"),
+              onTap: () => SonyApi.api.stopRecordingVideo(device)),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text(SettingsId.RecordVideoState.name),
+              subtitle: Text(device.cameraSettings
+                  .getItem(SettingsId.RecordVideoState)
+                  ?.getValueName())),
+        )
+      ]),
+    );
+  }
+
+  Widget getImageRow() {
+    return Card(
+        child: Column(
+      children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          Expanded(
+            child: ListTile(
+                title: Text("HalfPressShutter"),
+                onTap: () =>
+                    SonyApi.api.pressShutter(ShutterPressType.Half, device)),
+          ),
+          Expanded(
+            child: ListTile(
+                title: Text("release HalfPressShutter"),
+                onTap: () =>
+                    SonyApi.api.releaseShutter(ShutterPressType.Half, device)),
+          )
+        ]),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          Expanded(
+            child: ListTile(
+                title: Text("FullPressShutter"),
+                onTap: () =>
+                    SonyApi.api.pressShutter(ShutterPressType.Full, device)),
+          ),
+          Expanded(
+            child: ListTile(
+                title: Text("release FullPressShutter"),
+                onTap: () =>
+                    SonyApi.api.releaseShutter(ShutterPressType.Full, device)),
+          )
+        ]),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          Expanded(
+            child: ListTile(
+                title: Text("BothPressShutter"),
+                onTap: () =>
+                    SonyApi.api.pressShutter(ShutterPressType.Both, device)),
+          ),
+          Expanded(
+            child: ListTile(
+                title: Text("release BothPressShutter"),
+                onTap: () =>
+                    SonyApi.api.releaseShutter(ShutterPressType.Both, device)),
+          )
+        ]),
+      ],
+    ));
   }
 }
