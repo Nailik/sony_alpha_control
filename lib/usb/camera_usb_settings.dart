@@ -5,6 +5,7 @@ import 'package:flutterusb/Response.dart';
 import 'package:flutterusb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/camera_settings.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
 
 import 'commands.dart';
@@ -74,6 +75,11 @@ class CameraUsbSettings extends CameraSettings {
         settings.add(setting);
       }
 
+      if (setting.settingsId.name == "FNumber") {
+        print(setting.settingsId.name);
+      } else {
+        print("other");
+      }
       //TODO check if i know this settings id
       var dataType = bytes.getUint16(offset, Endian.little);
       offset += 2;
@@ -101,8 +107,40 @@ class CameraUsbSettings extends CameraSettings {
           var subDataType = bytes.getUint8(offset);
           offset++;
           switch (subDataType) {
+            //white balance ab //-7 + 7 (0,5)
             case 1:
-              offset += 3;
+              //TODO white balance ab
+              //min = 180
+              //max = 1600
+              var min = bytes.getUint8(offset);
+              offset += 1;
+              var max = bytes.getUint8(offset);
+              offset += 1;
+              var steps = bytes.getUint8(offset); //??
+              offset += 1;
+
+              if (setting.settingsId == SettingsId.WhiteBalanceAB ||
+                  setting.settingsId == SettingsId.WhiteBalanceGM) {
+                bool include = false;
+                WhiteBalanceAbId.values.forEach((element) {
+                  //start
+                  if (!include) {
+                    if (element.usbValue == min) {
+                      include = true;
+                    }
+                  }
+                  //end
+                  if (include) {
+                    //add
+                    setting.available
+                        .insert(0, setting.fromUsb(element.usbValue));
+                    if (element.usbValue == max) {
+                      include = false;
+                    }
+                  }
+                });
+              }
+
               break;
             case 2:
               var num = bytes.getUint16(offset, Endian.little);
@@ -146,20 +184,30 @@ class CameraUsbSettings extends CameraSettings {
           }
 
           break;
-        case 4:
+        case 4: //White blanace color temp
           offset += 4;
           setting.value =
               setting.fromUsb(bytes.getUint16(offset, Endian.little));
+          var nn = bytes.getUint16(offset, Endian.little);
+
           offset += 2;
           var subDataType = bytes.getUint8(offset);
           offset++;
           switch (subDataType) {
             case 1:
+              var min = bytes.getUint16(offset, Endian.little);
               offset += 2;
-              //response.ReadInt16();// Decrement value?
+              var max = bytes.getUint16(offset, Endian.little);
               offset += 2;
-              //response.ReadInt16();// Iecrement value?
+              var steps = bytes.getUint16(offset, Endian.little);
               offset += 2;
+
+              if (setting.settingsId == SettingsId.WhiteBalanceColorTemp) {
+                //extra
+                for (int i = min; i <= max; i += steps) {
+                  setting.available.add(setting.fromUsb(i));
+                }
+              }
               break;
             case 2:
               var num = bytes.getUint16(offset, Endian.little);

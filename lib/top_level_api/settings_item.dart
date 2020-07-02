@@ -43,8 +43,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.WhiteBalance:
         return WhiteBalanceValue.fromUSBValue(usbValue);
       case SettingsId.FNumber:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue); //durch 100
       case SettingsId.FocusMode:
         return FocusModeValue.fromUSBValue(usbValue);
       case SettingsId.MeteringMode:
@@ -72,8 +71,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
         // TODO: Handle this case.
         break;
       case SettingsId.WhiteBalanceColorTemp:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.WhiteBalanceGM:
         return WhiteBalanceGmValue.fromUSBValue(usbValue);
       case SettingsId.AspectRatio:

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sonyalphacontrol/top_level_api/camera_settings.dart';
@@ -43,7 +44,7 @@ class _TestsPageState extends State<TestsPage> {
                       //settings
                       getImageSizeRow(),
                       getWhiteBalanceRow(),
-                      getSettingsRow(SettingsId.FNumber),
+                      getFNumberRow(),
                       getSettingsRow(SettingsId.FocusMode),
                       getSettingsRow(SettingsId.MeteringMode),
                       getFlashRow(),
@@ -261,29 +262,55 @@ class _TestsPageState extends State<TestsPage> {
 
   Widget getVideoRow() {
     return Card(
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Expanded(
-              child: ListTile(
-                  title: Text("Start Record"),
-                  onTap: () => SonyApi.api.startRecordingVideo(device)),
-            ),
-            Expanded(
-              child: ListTile(
-                  title: Text("Stop Record"),
-                  onTap: () => SonyApi.api.stopRecordingVideo(device)),
-            ),
-            Expanded(
-              child: ListTile(
-                  title: Text(SettingsId.RecordVideoState.name),
-                  subtitle: Text(device.cameraSettings
-                          .getItem(SettingsId.RecordVideoState)
-                          ?.value
-                          ?.name ??
-                      "")),
-            )
-          ]),
+      child: IntrinsicHeight(
+          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Expanded(
+          child: ListTile(
+              title: Text(SettingsId.RecordVideoState.name),
+              subtitle: Text(device.cameraSettings
+                      .getItem(SettingsId.RecordVideoState)
+                      ?.value
+                      ?.name ??
+                  "")),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text("Start Record"),
+              onTap: () => SonyApi.api.startRecordingVideo(device)),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text("Stop Record"),
+              onTap: () => SonyApi.api.stopRecordingVideo(device)),
+        )
+      ])),
+    );
+  }
+
+  Widget getFNumberRow() {
+    return Card(
+      child: IntrinsicHeight(
+          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Expanded(
+          child: ListTile(
+              title: Text(SettingsId.FNumber.name),
+              subtitle: Text(device.cameraSettings
+                      .getItem(SettingsId.FNumber)
+                      ?.value
+                      ?.name ??
+                  "")),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text("Up"),
+              onTap: () => SonyApi.api.setFNumber(1, device)),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text("Down"),
+              onTap: () => SonyApi.api.setFNumber(-1, device)),
+        )
+      ])),
     );
   }
 
@@ -291,7 +318,9 @@ class _TestsPageState extends State<TestsPage> {
     return Card(
         child: Column(
       children: [
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        IntrinsicHeight(
+            child:
+                Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Expanded(
             child: ListTile(
                 title: Text("HalfPressShutter"),
@@ -304,8 +333,10 @@ class _TestsPageState extends State<TestsPage> {
                 onTap: () =>
                     SonyApi.api.releaseShutter(ShutterPressType.Half, device)),
           )
-        ]),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        ])),
+        IntrinsicHeight(
+            child:
+                Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Expanded(
             child: ListTile(
                 title: Text("FullPressShutter"),
@@ -318,8 +349,10 @@ class _TestsPageState extends State<TestsPage> {
                 onTap: () =>
                     SonyApi.api.releaseShutter(ShutterPressType.Full, device)),
           )
-        ]),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        ])),
+        IntrinsicHeight(
+            child:
+                Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Expanded(
             child: ListTile(
                 title: Text("BothPressShutter"),
@@ -332,7 +365,7 @@ class _TestsPageState extends State<TestsPage> {
                 onTap: () =>
                     SonyApi.api.releaseShutter(ShutterPressType.Both, device)),
           )
-        ]),
+        ])),
       ],
     ));
   }
