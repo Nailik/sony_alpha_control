@@ -26,9 +26,9 @@ extension MeteringModeIdExtension on MeteringModeId {
         return 0x01;
       case MeteringModeId.Multi_2:
         return 0x8001;
-      case MeteringModeId.Center: //2
+      case MeteringModeId.Center:
         return 0x02;
-      case MeteringModeId.Center_2: //2
+      case MeteringModeId.Center_2: //TODO?????
         return 0x8002;
       case MeteringModeId.EntireScreenAvg:
         return 0x03;

@@ -112,6 +112,9 @@ abstract class ApiInterface {
   Future<SettingsItem<FlashModeValue>> getFlashMode(SonyCameraDevice device);
   Future<bool> setFlashMode(FlashModeId value, SonyCameraDevice device);
 
+  Future<SettingsItem<IntValue>> getFlashValue(SonyCameraDevice device);
+  Future<bool> setFlashValue(int value, SonyCameraDevice device);
+
   Future<SettingsItem<ImageFileFormatValue>> getImageFileFormat(SonyCameraDevice device);
   Future<bool> setImageFileFormat(ImageFileFormatId value, SonyCameraDevice device);
 

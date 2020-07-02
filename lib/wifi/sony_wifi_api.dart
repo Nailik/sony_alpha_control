@@ -411,5 +411,17 @@ class SonyWifiApi extends ApiInterface {
     throw UnimplementedError();
   }
 
+  @override
+  Future<SettingsItem<IntValue>> getFlashValue(SonyCameraDevice device) {
+    // TODO: implement getFlashValue
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setFlashValue(int value, SonyCameraDevice device) {
+    // TODO: implement setFlashValue
+    throw UnimplementedError();
+  }
+
 
 }

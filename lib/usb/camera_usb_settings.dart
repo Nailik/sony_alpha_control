@@ -55,7 +55,8 @@ class CameraUsbSettings extends CameraSettings {
 
   analyzeSettings(Response response) {
     if (!isValidResponse(response)) return;
-    var bytes = response.getData().buffer.asByteData();
+    var byteList = response.getData();
+    var bytes = byteList.buffer.asByteData();
 
     int offset = 30;
     var numSettings = bytes.getUint32(offset, Endian.little); //37
@@ -75,7 +76,7 @@ class CameraUsbSettings extends CameraSettings {
         settings.add(setting);
       }
 
-      if (setting.settingsId.name == "FNumber") {
+      if (setting.settingsId.name == "ShutterSpeed") {
         print(setting.settingsId.name);
       } else {
         print("other");
@@ -160,7 +161,7 @@ class CameraUsbSettings extends CameraSettings {
         case 3:
           offset += 4;
           setting.value =
-              setting.fromUsb(bytes.getUint16(offset, Endian.little));
+              setting.fromUsb(bytes.getInt16(offset, Endian.little));
           offset += 2;
           var subDataType = bytes.getUint8(offset);
           offset++;
@@ -174,9 +175,11 @@ class CameraUsbSettings extends CameraSettings {
               setting.available.clear();
               for (int i = 0; i < num; i++) {
                 setting.available.add(
-                    setting.fromUsb(bytes.getUint16(offset, Endian.little)));
+                    setting.fromUsb(bytes.getInt16(offset, Endian.little)));
                 offset += 2;
               }
+              setting.available
+                  .sort((a, b) => a.usbValue.compareTo(b.usbValue));
               break;
             default:
               //unkown
@@ -234,6 +237,12 @@ class CameraUsbSettings extends CameraSettings {
             setting.subValue =
                 setting.fromUsb(bytes.getUint16(offset, Endian.little));
             offset += 2;
+            if (setting.subValue.usbValue == 1 &&
+                setting.settingsId == SettingsId.ShutterSpeed) {
+              setting.value = ShutterSpeedValue(setting.value.usbValue.toDouble());
+            }else{
+              setting.value = ShutterSpeedValue(setting.subValue.usbValue.toDouble() / 10.0);
+            }
           } else {
             setting.value =
                 setting.fromUsb(bytes.getUint32(offset, Endian.little));
@@ -243,7 +252,13 @@ class CameraUsbSettings extends CameraSettings {
           offset++;
           switch (subDataType) {
             case 1:
-              offset += 12;
+              //TODO?
+              var min = bytes.getUint32(offset, Endian.little);
+              offset += 4;
+              var max = bytes.getUint32(offset, Endian.little);
+              offset += 4;
+              var steps = bytes.getUint32(offset, Endian.little);
+              offset += 4;
               break;
             case 2:
               var num = bytes.getUint16(offset, Endian.little);

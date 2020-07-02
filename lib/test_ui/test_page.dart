@@ -48,10 +48,10 @@ class _TestsPageState extends State<TestsPage> {
                       getSettingsRow(SettingsId.FocusMode),
                       getSettingsRow(SettingsId.MeteringMode),
                       getFlashRow(),
-                      getSettingsRow(SettingsId.EV),
+                      getEVRow(),
                       getSettingsRow(SettingsId.DriveMode),
                       getSettingsRow(SettingsId.DroHdr),
-                      getSettingsRow(SettingsId.ShutterSpeed),
+                      getShutterSpeedRow(),
                       getSettingsRow(SettingsId.AspectRatio),
                     ],
                   ),
@@ -223,7 +223,7 @@ class _TestsPageState extends State<TestsPage> {
           onPressed: () {
             SonyApi.setSettingsRaw(data.settingsId, value.usbValue);
           },
-          child: Text(value.name ?? ""),
+          child: Text(value?.name ?? "t"),
         ),
       );
     }
@@ -232,7 +232,8 @@ class _TestsPageState extends State<TestsPage> {
 
   Widget getFlashRow() {
     return Card(
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+      child: IntrinsicHeight(
+          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
         Expanded(
           child: ListTile(
               title: Text(SettingsId.FlashMode.name),
@@ -255,8 +256,18 @@ class _TestsPageState extends State<TestsPage> {
                   ""),
               onTap: () => dialog(
                   device.cameraSettings.getItem(SettingsId.Flash), context)),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text("Up"),
+              onTap: () => SonyApi.api.setFlashValue(1, device)),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text("Down"),
+              onTap: () => SonyApi.api.setFlashValue(-1, device)),
         )
-      ]),
+      ])),
     );
   }
 
@@ -282,6 +293,56 @@ class _TestsPageState extends State<TestsPage> {
           child: ListTile(
               title: Text("Stop Record"),
               onTap: () => SonyApi.api.stopRecordingVideo(device)),
+        )
+      ])),
+    );
+  }
+
+  Widget getEVRow() {
+    return Card(
+      child: IntrinsicHeight(
+          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Expanded(
+          child: ListTile(
+              title: Text(SettingsId.EV.name),
+              subtitle: Text(
+                  device.cameraSettings.getItem(SettingsId.EV)?.value?.name ??
+                      "")),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text("Up"), onTap: () => SonyApi.api.setEV(1, device)),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text("Down"), onTap: () => SonyApi.api.setEV(-1, device)),
+        )
+      ])),
+    );
+  }
+
+  Widget getShutterSpeedRow() {
+    return Card(
+      child: IntrinsicHeight(
+          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Expanded(
+          child: ListTile(
+              title: Text(SettingsId.ShutterSpeed.name),
+              subtitle: Text(device.cameraSettings
+                      .getItem(SettingsId.ShutterSpeed)
+                      ?.value
+                      ?.name ??
+                  "")),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text("Up"),
+              onTap: () => SonyApi.api.setShutterSpeed(1, device)),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text("Down"),
+              onTap: () => SonyApi.api.setShutterSpeed(-1, device)),
         )
       ])),
     );

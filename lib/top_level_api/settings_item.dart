@@ -36,8 +36,8 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
         settingsId == SettingsId.ShutterSpeed);
   }
 
-  SettingsValue fromUsb(int usbValue){
-    switch(settingsId){
+  SettingsValue fromUsb(int usbValue) {
+    switch (settingsId) {
       case SettingsId.FileFormat:
         return ImageFileFormatValue.fromUSBValue(usbValue);
       case SettingsId.WhiteBalance:
@@ -53,20 +53,17 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.ShootingMode:
         return ShootingModeValue.fromUSBValue(usbValue);
       case SettingsId.EV:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.DriveMode:
         return DriveModeValue.fromUSBValue(usbValue);
       case SettingsId.Flash:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.DroHdr:
         return DroHdrValue.fromUSBValue(usbValue);
       case SettingsId.ImageSize:
         return ImageSizeValue.fromUSBValue(usbValue);
       case SettingsId.ShutterSpeed:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.UnkD20E:
         // TODO: Handle this case.
         break;
@@ -247,6 +244,18 @@ class DoubleValue extends SettingsValue<double> {
   String get wifiValue => throw UnimplementedError();
 }
 
+class ShutterSpeedValue extends DoubleValue {
+  ShutterSpeedValue(double id) : super(id);
+
+  @override
+  String get name {
+    if(id > 1.0){
+      return "1/${id.toStringAsPrecision(1)}";
+    }
+    return "$id\"";
+  }
+}
+
 class IntValue extends SettingsValue<int> {
   IntValue(int id) : super(id);
 
@@ -259,7 +268,6 @@ class IntValue extends SettingsValue<int> {
   @override
   String get wifiValue => throw UnimplementedError();
 }
-
 
 abstract class SettingsValue<T> {
   T id;

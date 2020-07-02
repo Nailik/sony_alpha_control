@@ -82,7 +82,7 @@ class SonyUsbApi extends ApiInterface {
       case SettingsId.DriveMode:
         return setDriveMode(getDriveModeId(value), device);
       case SettingsId.Flash:
-        return setFlashMode(getFlashModeId(value), device);
+        return setFlashValue(value, device);
       case SettingsId.DroHdr:
         return setDroHdr(getDroHdrId(value), device);
       case SettingsId.ImageSize:
@@ -480,19 +480,19 @@ class SonyUsbApi extends ApiInterface {
   @override
   Future<bool> setAspectRatio(AspectRatioId value, SonyCameraDevice device) {
     FlutterUsb.sendCommand(Command(
-        Commands.getCommandSubSettingU8(SettingsId.AspectRatio, value)));
+        Commands.getCommandSubSettingU8(SettingsId.AspectRatio, value.usbValue)));
   }
 
   @override
   Future<bool> setDriveMode(DriveModeId value, SonyCameraDevice device) {
     FlutterUsb.sendCommand(
-        Command(Commands.getCommandSubSettingI16(SettingsId.DriveMode, value)));
+        Command(Commands.getCommandSubSettingI16(SettingsId.DriveMode, value.usbValue)));
   }
 
   @override
   Future<bool> setDroHdr(DroHdrId value, SonyCameraDevice device) {
     FlutterUsb.sendCommand(
-        Command(Commands.getCommandSubSettingI16(SettingsId.DroHdr, value)));
+        Command(Commands.getCommandSubSettingI16(SettingsId.DroHdr, value.usbValue)));
   }
 
   @override
@@ -527,9 +527,10 @@ class SonyUsbApi extends ApiInterface {
   @override
   Future<bool> setFlashMode(FlashModeId value, SonyCameraDevice device) {
     FlutterUsb.sendCommand(
-        Command(Commands.getCommandSubSettingI16(SettingsId.FlashMode, value)));
+        Command(Commands.getCommandSubSettingI16(SettingsId.FlashMode, value.usbValue)));
   }
 
+  @override
   Future<bool> setFlashValue(int value, SonyCameraDevice device) {
     //value is steps
     FlutterUsb.sendCommand(
@@ -791,6 +792,11 @@ imagename "DSC01548.ARW" (mit arw!!)
   Future<bool> setImageSize(ImageSizeId value, SonyCameraDevice device) {
     FlutterUsb.sendCommand(Command(
         Commands.getCommandSubSettingI16(SettingsId.ImageSize, value.usbValue)));
+  }
+
+  @override
+  Future<SettingsItem<IntValue>> getFlashValue(SonyCameraDevice device) {
+    //
   }
 }
 
