@@ -74,13 +74,13 @@ class _SettingsPageState extends State<SettingsPage> {
 
   List<Widget> getOptions(SettingsItem data) {
     List<Widget> list = new List();
-    for (Value value in data.available) {
+    for (SettingsValue value in data.available) {
       list.add(
         new SimpleDialogOption(
           onPressed: () {
-            SonyApi.setSettingsRaw(data.settingsId, value.value);
+            SonyApi.setSettingsRaw(data.settingsId, value.id);
           },
-          child: Text(value.value),
+          child: Text(value.name),
         ),
       );
     }

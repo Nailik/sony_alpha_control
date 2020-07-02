@@ -190,7 +190,7 @@ class SonyWifiApi extends ApiInterface {
   }
 
   @override
-  Future<RecordVideoStateId> getRecordingVideoState(SonyCameraDevice device) {
+  Future<RecordVideoStateValue> getRecordingVideoState(SonyCameraDevice device) {
     // TODO: implement getRecordingVideoState
     throw UnimplementedError();
   }

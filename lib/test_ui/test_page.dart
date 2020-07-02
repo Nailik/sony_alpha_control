@@ -94,8 +94,10 @@ class _TestsPageState extends State<TestsPage> {
           child: ListTile(
               title: Text(SettingsId.FileFormat.name),
               subtitle: Text(device.cameraSettings
-                  .getItem(SettingsId.FileFormat)
-                  ?.getValueName()),
+                      .getItem(SettingsId.FileFormat)
+                      ?.value
+                      ?.name ??
+                  ""),
               onTap: () => dialog(
                   device.cameraSettings.getItem(SettingsId.FileFormat),
                   context)),
@@ -104,8 +106,10 @@ class _TestsPageState extends State<TestsPage> {
           child: ListTile(
               title: Text(SettingsId.ImageSize.name),
               subtitle: Text(device.cameraSettings
-                  .getItem(SettingsId.ImageSize)
-                  ?.getValueName()),
+                      .getItem(SettingsId.ImageSize)
+                      ?.value
+                      ?.name ??
+                  ""),
               onTap: () => dialog(
                   device.cameraSettings.getItem(SettingsId.ImageSize),
                   context)),
@@ -121,8 +125,10 @@ class _TestsPageState extends State<TestsPage> {
           child: ListTile(
               title: Text(SettingsId.WhiteBalance.name),
               subtitle: Text(device.cameraSettings
-                  .getItem(SettingsId.WhiteBalance)
-                  ?.getValueName()),
+                      .getItem(SettingsId.WhiteBalance)
+                      ?.value
+                      ?.name ??
+                  ""),
               onTap: () => dialog(
                   device.cameraSettings.getItem(SettingsId.WhiteBalance),
                   context)),
@@ -131,8 +137,10 @@ class _TestsPageState extends State<TestsPage> {
           child: ListTile(
               title: Text(SettingsId.WhiteBalanceColorTemp.name),
               subtitle: Text(device.cameraSettings
-                  .getItem(SettingsId.WhiteBalanceColorTemp)
-                  ?.getValueName()),
+                      .getItem(SettingsId.WhiteBalanceColorTemp)
+                      ?.value
+                      ?.name ??
+                  ""),
               onTap: () => dialog(
                   device.cameraSettings
                       .getItem(SettingsId.WhiteBalanceColorTemp),
@@ -142,8 +150,10 @@ class _TestsPageState extends State<TestsPage> {
           child: ListTile(
               title: Text(SettingsId.WhiteBalanceAB.name),
               subtitle: Text(device.cameraSettings
-                  .getItem(SettingsId.WhiteBalanceAB)
-                  ?.getValueName()),
+                      .getItem(SettingsId.WhiteBalanceAB)
+                      ?.value
+                      ?.name ??
+                  ""),
               onTap: () => dialog(
                   device.cameraSettings.getItem(SettingsId.WhiteBalanceAB),
                   context)),
@@ -152,8 +162,10 @@ class _TestsPageState extends State<TestsPage> {
           child: ListTile(
               title: Text(SettingsId.WhiteBalanceGM.name),
               subtitle: Text(device.cameraSettings
-                  .getItem(SettingsId.WhiteBalanceGM)
-                  ?.getValueName()),
+                      .getItem(SettingsId.WhiteBalanceGM)
+                      ?.value
+                      ?.name ??
+                  ""),
               onTap: () => dialog(
                   device.cameraSettings.getItem(SettingsId.WhiteBalanceGM),
                   context)),
@@ -164,7 +176,7 @@ class _TestsPageState extends State<TestsPage> {
 
   Widget getStateRow(SettingsId settingsId) {
     var name = settingsId.name;
-    var value = device.cameraSettings.getItem(settingsId).getValueName();
+    var value = device.cameraSettings.getItem(settingsId)?.value?.name ?? "";
     return Card(
       child: ListTile(title: Text(name), subtitle: Text(value.toString())),
     );
@@ -176,7 +188,7 @@ class _TestsPageState extends State<TestsPage> {
     return Card(
       child: ListTile(
           title: Text(name),
-          subtitle: Text(settingsItem.getValueName()),
+          subtitle: Text(settingsItem?.value?.name ?? ""),
           onTap: () async => dialog(settingsItem, context)),
     );
   }
@@ -184,11 +196,10 @@ class _TestsPageState extends State<TestsPage> {
   Widget getFunctionsRow(SettingsId settingsId) {
     var name = settingsId.name;
     var settingsItem = device.cameraSettings.getItem(settingsId);
-    var value = settingsItem.getNameOf(settingsItem.value);
     return Card(
       child: ListTile(
           title: Text(name),
-          subtitle: Text(value.toString()),
+          subtitle: Text(settingsItem?.value?.name ?? ""),
           onTap: () async => dialog(settingsItem, context)),
     );
   }
@@ -209,9 +220,9 @@ class _TestsPageState extends State<TestsPage> {
       list.add(
         new SimpleDialogOption(
           onPressed: () {
-            SonyApi.setSettingsRaw(data.settingsId, value);
+            SonyApi.setSettingsRaw(data.settingsId, data.value.id);
           },
-          child: Text(data.getNameOf(value)),
+          child: Text(data?.value?.name ?? ""),
         ),
       );
     }
@@ -225,8 +236,10 @@ class _TestsPageState extends State<TestsPage> {
           child: ListTile(
               title: Text(SettingsId.FlashMode.name),
               subtitle: Text(device.cameraSettings
-                  .getItem(SettingsId.FlashMode)
-                  ?.getValueName()),
+                      .getItem(SettingsId.FlashMode)
+                      ?.value
+                      ?.name ??
+                  ""),
               onTap: () => dialog(
                   device.cameraSettings.getItem(SettingsId.FlashMode),
                   context)),
@@ -235,8 +248,10 @@ class _TestsPageState extends State<TestsPage> {
           child: ListTile(
               title: Text(SettingsId.Flash.name),
               subtitle: Text(device.cameraSettings
-                  .getItem(SettingsId.Flash)
-                  ?.getValueName()),
+                      .getItem(SettingsId.Flash)
+                      ?.value
+                      ?.name ??
+                  ""),
               onTap: () => dialog(
                   device.cameraSettings.getItem(SettingsId.Flash), context)),
         )
@@ -261,8 +276,10 @@ class _TestsPageState extends State<TestsPage> {
           child: ListTile(
               title: Text(SettingsId.RecordVideoState.name),
               subtitle: Text(device.cameraSettings
-                  .getItem(SettingsId.RecordVideoState)
-                  ?.getValueName())),
+                      .getItem(SettingsId.RecordVideoState)
+                      ?.value
+                      ?.name ??
+                  "")),
         )
       ]),
     );
