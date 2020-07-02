@@ -76,7 +76,7 @@ class CameraUsbSettings extends CameraSettings {
         settings.add(setting);
       }
 
-      if (setting.settingsId.name == "ShutterSpeed") {
+      if (setting.settingsId.name == "ISO") {
         print(setting.settingsId.name);
       } else {
         print("other");

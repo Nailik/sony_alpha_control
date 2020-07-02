@@ -12,6 +12,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
@@ -85,8 +86,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
         // TODO: Handle this case.
         break;
       case SettingsId.AEL_State:
-        // TODO: Handle this case.
-        break;
+        return BoolValue(usbValue == 2);
       case SettingsId.BatteryInfo:
         // TODO: Handle this case.
         break;
@@ -94,18 +94,15 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
         // TODO: Handle this case.
         break;
       case SettingsId.PictureEffect:
-        // TODO: Handle this case.
-        break;
+        return PictureEffectValue.fromUSBValue(usbValue);
       case SettingsId.WhiteBalanceAB:
         return WhiteBalanceAbValue.fromUSBValue(usbValue);
       case SettingsId.RecordVideoState:
         return RecordVideoStateValue.fromUSBValue(usbValue);
       case SettingsId.ISO:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.FEL_State:
-        // TODO: Handle this case.
-        break;
+        return BoolValue(usbValue == 2);
       case SettingsId.LiveViewState:
         // TODO: Handle this case.
         break;
@@ -148,8 +145,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
         // TODO: Handle this case.
         break;
       case SettingsId.AEL:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.UnkD2C5:
         // TODO: Handle this case.
         break;
@@ -160,8 +156,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
         // TODO: Handle this case.
         break;
       case SettingsId.FEL:
-        // TODO: Handle this case.
-        break;
+        return BoolValue(usbValue == 2);
       case SettingsId.FocusMagnifierRequest:
         // TODO: Handle this case.
         break;
@@ -250,7 +245,7 @@ class ShutterSpeedValue extends DoubleValue {
   @override
   String get name {
     if(id > 1.0){
-      return "1/${id.toStringAsPrecision(1)}";
+      return "1/$id".replaceAll(".0", "");
     }
     return "$id\"";
   }
@@ -282,3 +277,5 @@ abstract class SettingsValue<T> {
 
   String get name;
 }
+
+//TODO 0xFFFFFF -> auto iso

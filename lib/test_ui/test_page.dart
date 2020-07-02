@@ -53,6 +53,10 @@ class _TestsPageState extends State<TestsPage> {
                       getSettingsRow(SettingsId.DroHdr),
                       getShutterSpeedRow(),
                       getSettingsRow(SettingsId.AspectRatio),
+                      getAelRow(),
+                      getSettingsRow(SettingsId.PictureEffect),
+                      getSettingsRow(SettingsId.ISO),
+                      getFelRow(),
                     ],
                   ),
                 )),
@@ -345,6 +349,62 @@ class _TestsPageState extends State<TestsPage> {
               onTap: () => SonyApi.api.setShutterSpeed(-1, device)),
         )
       ])),
+    );
+  }
+
+
+  Widget getAelRow() {
+    return Card(
+      child: IntrinsicHeight(
+          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Expanded(
+              child: ListTile(
+                  title: Text(SettingsId.AEL_State.name),
+                  subtitle: Text(device.cameraSettings
+                      .getItem(SettingsId.AEL_State)
+                      ?.value
+                      ?.name ??
+                      "")),
+            ),
+            Expanded(
+              child: ListTile(
+                  title: Text("On"),
+                  onTap: () => SonyApi.api.setAel(true, device)),
+            ),
+            Expanded(
+              child: ListTile(
+                  title: Text("Off"),
+                  onTap: () => SonyApi.api.setAel(false, device)),
+            )
+          ])),
+    );
+  }
+
+
+  Widget getFelRow() {
+    return Card(
+      child: IntrinsicHeight(
+          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Expanded(
+              child: ListTile(
+                  title: Text(SettingsId.FEL_State.name),
+                  subtitle: Text(device.cameraSettings
+                      .getItem(SettingsId.FEL_State)
+                      ?.value
+                      ?.name ??
+                      "")),
+            ),
+            Expanded(
+              child: ListTile(
+                  title: Text("On"),
+                  onTap: () => SonyApi.api.setFel(true, device)),
+            ),
+            Expanded(
+              child: ListTile(
+                  title: Text("Off"),
+                  onTap: () => SonyApi.api.setFel(false, device)),
+            )
+          ])),
     );
   }
 
