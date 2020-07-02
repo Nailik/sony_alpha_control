@@ -1,3 +1,5 @@
+import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
+
 enum SettingsId {
   /// <summary>
   /// File format / image quality
@@ -152,7 +154,7 @@ enum SettingsId {
 extension SettingsIdExtension on SettingsId {
   String get name => toString().split('.')[1];
 
-  int get value {
+  int get usbValue {
     switch (this) {
       case SettingsId.FileFormat:
         return 0x5004;
@@ -280,16 +282,22 @@ extension SettingsIdExtension on SettingsId {
         return -2;
     }
   }
+
+  String get wifiValue => "";
 }
 
-SettingsId getSettingsId(int value) {
-  return SettingsId.values.firstWhere(
-          (element) => element.value == value,
+SettingsId getSettingsId(int usbValue) {
+  return SettingsId.values.firstWhere((element) => element.usbValue == usbValue,
       orElse: () => SettingsId.Unknown);
 }
 
-class SettingsValue extends SettingsValue<SettingsId> {
-  SettingsValue(SettingsId id) : super(id);
+class SettingsIdValue extends SettingsValue<SettingsId> {
+  SettingsIdValue(SettingsId id) : super(id);
+
+  @override
+  factory SettingsIdValue.fromUSBValue(int usbValue) {
+    return SettingsIdValue(getSettingsId(usbValue));
+  }
 
   @override
   int get usbValue => id.usbValue;

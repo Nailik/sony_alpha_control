@@ -1,3 +1,5 @@
+import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
+
 enum AutoFocusStateId {
   /// <summary>
   /// Focus state is inactive (no green circle / rings on the screen)
@@ -29,7 +31,7 @@ enum AutoFocusStateId {
 extension AutoFocusStateIdExtension on AutoFocusStateId {
   String get name => toString().split('.')[1];
 
-  int get value {
+  int get usbValue {
     switch (this) {
       case AutoFocusStateId.Inactive:
         return 1;
@@ -47,16 +49,23 @@ extension AutoFocusStateIdExtension on AutoFocusStateId {
         return -2;
     }
   }
+
+  String get wifiValue => "";
 }
 
-AutoFocusStateId getAutoFocusStateId(int value) {
+AutoFocusStateId getAutoFocusStateId(int usbValue) {
   return AutoFocusStateId.values.firstWhere(
-          (element) => element.value == value,
+      (element) => element.usbValue == usbValue,
       orElse: () => AutoFocusStateId.Unknown);
 }
 
 class AutoFocusStateValue extends SettingsValue<AutoFocusStateId> {
   AutoFocusStateValue(AutoFocusStateId id) : super(id);
+
+  @override
+  factory AutoFocusStateValue.fromUSBValue(int usbValue) {
+    return AutoFocusStateValue(getAutoFocusStateId(usbValue));
+  }
 
   @override
   int get usbValue => id.usbValue;

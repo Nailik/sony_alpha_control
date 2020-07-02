@@ -1,3 +1,5 @@
+import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
+
 enum PictureEffectId {
   Off,
   ToyCamera_Normal,
@@ -22,7 +24,7 @@ enum PictureEffectId {
 extension PictureEffectIdExtension on PictureEffectId {
   String get name => toString().split('.')[1];
 
-  int get value {
+  int get usbValue {
     switch (this) {
       case PictureEffectId.Off:
         return 0x8000;
@@ -64,16 +66,23 @@ extension PictureEffectIdExtension on PictureEffectId {
         return -2;
     }
   }
+
+  String get wifiValue => "";
 }
 
-PictureEffectId getPictureEffectId(int value) {
+PictureEffectId getPictureEffectId(int usbValue) {
   return PictureEffectId.values.firstWhere(
-          (element) => element.value == value,
+      (element) => element.usbValue == usbValue,
       orElse: () => PictureEffectId.Unknown);
 }
 
 class PictureEffectValue extends SettingsValue<PictureEffectId> {
   PictureEffectValue(PictureEffectId id) : super(id);
+
+  @override
+  factory PictureEffectValue.fromUSBValue(int usbValue) {
+    return PictureEffectValue(getPictureEffectId(usbValue));
+  }
 
   @override
   int get usbValue => id.usbValue;

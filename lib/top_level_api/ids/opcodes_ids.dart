@@ -1,3 +1,5 @@
+import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
+
 enum OpCodeId {
   Connect,
 
@@ -36,7 +38,7 @@ enum OpCodeId {
 extension OpCodesExtension on OpCodeId {
   String get name => toString().split('.')[1];
 
-  int get value {
+  int get usbValue {
     switch (this) {
       case OpCodeId.Connect:
         return 0x9201;
@@ -58,16 +60,22 @@ extension OpCodesExtension on OpCodeId {
         return -2;
     }
   }
+
+  String get wifiValue => "";
 }
 
-OpCodeId getOpCodeId(int value) {
-  return OpCodeId.values.firstWhere(
-          (element) => element.value == value,
+OpCodeId getOpCodeId(int usbValue) {
+  return OpCodeId.values.firstWhere((element) => element.usbValue == usbValue,
       orElse: () => OpCodeId.Unknown);
 }
 
 class OpCodeValue extends SettingsValue<OpCodeId> {
   OpCodeValue(OpCodeId id) : super(id);
+
+  @override
+  factory OpCodeValue.fromUSBValue(int usbValue) {
+    return OpCodeValue(getOpCodeId(usbValue));
+  }
 
   @override
   int get usbValue => id.usbValue;

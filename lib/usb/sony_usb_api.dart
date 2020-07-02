@@ -261,7 +261,8 @@ class SonyUsbApi extends ApiInterface {
   }
 
   @override
-  Future<bool> setSettingsRaw(SettingsId id, int value, SonyCameraDevice device) {
+  Future<bool> setSettingsRaw(
+      SettingsId id, int value, SonyCameraDevice device) {
     return setSettings(id, value, device);
   }
 
@@ -275,8 +276,9 @@ class SonyUsbApi extends ApiInterface {
         (element) => element.settingsId == SettingsId.PhotoTransferQueue);
 
     if (item != null) {
-      int numPhotos = item.value & 0xFF;
-      bool photoAvailableForTransfer = ((item.value >> 8) & 0xFF) == 0x80;
+      int numPhotos = item.value.usbValue & 0xFF;
+      bool photoAvailableForTransfer =
+          ((item.value.usbValue >> 8) & 0xFF) == 0x80;
       print("numPhotos $numPhotos");
       if (photoAvailableForTransfer) {
         for (int i = 0; i < numPhotos; i++) {
@@ -287,32 +289,24 @@ class SonyUsbApi extends ApiInterface {
   }
 
   @override
-  Future<SettingsItem<bool>> getAel(SonyCameraDevice device) {
+  Future<SettingsItem<BoolValue>> getAel(SonyCameraDevice device) {
     bool value = device.cameraSettings.settings
             .firstWhere((element) => element.settingsId == SettingsId.AEL_State)
-            .value !=
+            .value
+            .usbValue !=
         2;
     //TODO
   }
 
   @override
-  Future<SettingsItem<AspectRatioId>> getAspectRatio(
+  Future<SettingsItem<AspectRatioValue>> getAspectRatio(
       SonyCameraDevice device) async {
-    var item = device.cameraSettings.settings
+    return device.cameraSettings.settings
         .firstWhere((element) => element.settingsId == SettingsId.AEL_State);
-
-    SettingsItem<AspectRatioId> settingsItem =
-        SettingsItem<AspectRatioId>(SettingsId.AEL_State);
-    settingsItem.value = getAspectRatioId(item.value);
-
-    settingsItem.available.forEach((element) =>
-        settingsItem.available.add(getAspectRatioId(element.usbValue)));
-
-    return settingsItem;
   }
 
   @override
-  Future<SettingsItem<AutoFocusStateId>> getAutoFocusState(
+  Future<SettingsItem<AutoFocusStateValue>> getAutoFocusState(
       SonyCameraDevice device) {
     // TODO: implement getAutoFocusState
     throw UnimplementedError();
@@ -322,53 +316,54 @@ class SonyUsbApi extends ApiInterface {
   Future<int> getBatteryPercentage(SonyCameraDevice device) async {
     return device.cameraSettings.settings
         .firstWhere((element) => element.settingsId == SettingsId.BatteryInfo)
-        .value;
+        .value
+        .usbValue;
   }
 
   @override
-  Future<SettingsItem<DriveModeId>> getDriveMode(SonyCameraDevice device) {
+  Future<SettingsItem<DriveModeValue>> getDriveMode(SonyCameraDevice device) {
     // TODO: implement getDriveMode
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<DroHdrId>> getDroHdr(SonyCameraDevice device) {
+  Future<SettingsItem<DroHdrValue>> getDroHdr(SonyCameraDevice device) {
     // TODO: implement getDroHdr
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<double>> getEV(SonyCameraDevice device) {
+  Future<SettingsItem<DoubleValue>> getEV(SonyCameraDevice device) {
     // TODO: implement getEV
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<int>> getFNumber(SonyCameraDevice device) {
+  Future<SettingsItem<IntValue>> getFNumber(SonyCameraDevice device) {
     // TODO: implement getFNumber
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<bool>> getFel(SonyCameraDevice device) {
+  Future<SettingsItem<BoolValue>> getFel(SonyCameraDevice device) {
     // TODO: implement getFel
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<FlashModeId>> getFlashMode(SonyCameraDevice device) {
+  Future<SettingsItem<FlashModeValue>> getFlashMode(SonyCameraDevice device) {
     // TODO: implement getFlashMode
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<FocusAreaId>> getFocusArea(SonyCameraDevice device) {
+  Future<SettingsItem<FocusAreaValue>> getFocusArea(SonyCameraDevice device) {
     // TODO: implement getFocusArea
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<Point<num>>> getFocusAreaSpot(SonyCameraDevice device) {
+  Future<SettingsItem<PointValue>> getFocusAreaSpot(SonyCameraDevice device) {
     // TODO: implement getFocusAreaSpot
     throw UnimplementedError();
   }
@@ -380,87 +375,88 @@ class SonyUsbApi extends ApiInterface {
   }
 
   @override
-  Future<SettingsItem<FocusMagnifierDirectionId>> getFocusMagnifierDirection(
+  Future<SettingsItem<FocusMagnifierDirectionValue>> getFocusMagnifierDirection(
       SonyCameraDevice device) {
     // TODO: implement getFocusMagnifierDirection
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<FocusMagnifierPhaseId>> getFocusMagnifierPhase(
+  Future<SettingsItem<FocusMagnifierPhaseValue>> getFocusMagnifierPhase(
       SonyCameraDevice device) {
     // TODO: implement getFocusMagnifierPhase
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<FocusModeId>> getFocusMode(SonyCameraDevice device) {
+  Future<SettingsItem<FocusModeValue>> getFocusMode(SonyCameraDevice device) {
     // TODO: implement getFocusMode
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<ImageFileFormatId>> getImageFileFormat(
+  Future<SettingsItem<ImageFileFormatValue>> getImageFileFormat(
       SonyCameraDevice device) {
     // TODO: implement getImageFileFormat
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<int>> getIso(SonyCameraDevice device) {
+  Future<SettingsItem<IntValue>> getIso(SonyCameraDevice device) {
     // TODO: implement getIso
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<MeteringModeId>> getMeteringMode(
+  Future<SettingsItem<MeteringModeValue>> getMeteringMode(
       SonyCameraDevice device) {
     // TODO: implement getMeteringMode
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<PictureEffectId>> getPictureEffect(
+  Future<SettingsItem<PictureEffectValue>> getPictureEffect(
       SonyCameraDevice device) {
     // TODO: implement getPictureEffect
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<ShootingModeId>> getShootingMode(
+  Future<SettingsItem<ShootingModeValue>> getShootingMode(
       SonyCameraDevice device) {
     // TODO: implement getShootingMode
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<int>> getShutterSpeed(SonyCameraDevice device) {
+  Future<SettingsItem<IntValue>> getShutterSpeed(SonyCameraDevice device) {
     // TODO: implement getShutterSpeed
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<WhiteBalanceId>> getWhiteBalance(
+  Future<SettingsItem<WhiteBalanceValue>> getWhiteBalance(
       SonyCameraDevice device) {
     // TODO: implement getWhiteBalance
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<WhiteBalanceAbId>> getWhiteBalanceAb(
+  Future<SettingsItem<WhiteBalanceAbValue>> getWhiteBalanceAb(
       SonyCameraDevice device) {
     // TODO: implement getWhiteBalanceAb
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<int>> getWhiteBalanceColorTemp(SonyCameraDevice device) {
+  Future<SettingsItem<IntValue>> getWhiteBalanceColorTemp(
+      SonyCameraDevice device) {
     // TODO: implement getWhiteBalanceColorTemp
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<WhiteBalanceGmId>> getWhiteBalanceGm(
+  Future<SettingsItem<WhiteBalanceGmValue>> getWhiteBalanceGm(
       SonyCameraDevice device) {
     // TODO: implement getWhiteBalanceGm
     throw UnimplementedError();
@@ -543,8 +539,8 @@ class SonyUsbApi extends ApiInterface {
 
   @override
   Future<bool> setFocusArea(FocusAreaId value, SonyCameraDevice device) {
-    FlutterUsb.sendCommand(Command(
-        Commands.getCommandSubSettingI16(SettingsId.FocusArea, value.value)));
+    FlutterUsb.sendCommand(Command(Commands.getCommandSubSettingI16(
+        SettingsId.FocusArea, value.usbValue)));
   }
 
   @override
@@ -655,15 +651,15 @@ class SonyUsbApi extends ApiInterface {
 
   @override
   Future<bool> setWhiteBalance(WhiteBalanceId value, SonyCameraDevice device) {
-    FlutterUsb.sendCommand(Command(
-        Commands.getCommandSubSettingI16(SettingsId.WhiteBalance, value.value)));
+    FlutterUsb.sendCommand(Command(Commands.getCommandSubSettingI16(
+        SettingsId.WhiteBalance, value.usbValue)));
   }
 
   @override
   Future<bool> setWhiteBalanceAb(
       WhiteBalanceAbId value, SonyCameraDevice device) {
-    FlutterUsb.sendCommand(Command(
-        Commands.getCommandSubSettingI16(SettingsId.WhiteBalanceAB, value.value)));
+    FlutterUsb.sendCommand(Command(Commands.getCommandSubSettingI16(
+        SettingsId.WhiteBalanceAB, value.usbValue)));
   }
 
   @override
@@ -675,8 +671,8 @@ class SonyUsbApi extends ApiInterface {
   @override
   Future<bool> setWhiteBalanceGm(
       WhiteBalanceGmId value, SonyCameraDevice device) {
-    FlutterUsb.sendCommand(Command(
-        Commands.getCommandSubSettingI16(SettingsId.WhiteBalanceGM, value.value)));
+    FlutterUsb.sendCommand(Command(Commands.getCommandSubSettingI16(
+        SettingsId.WhiteBalanceGM, value.usbValue)));
   }
 
   @override
@@ -778,14 +774,16 @@ imagename "DSC01548.ARW" (mit arw!!)
   }
 
   @override
-  Future<RecordVideoStateId> getRecordingVideoState(SonyCameraDevice device) {
+  Future<RecordVideoStateValue> getRecordingVideoState(
+      SonyCameraDevice device) async {
     return device.cameraSettings.settings
-        .firstWhere((element) => element.settingsId == SettingsId.RecordVideoState)
-        .value;
+        .firstWhere(
+            (element) => element.settingsId == SettingsId.RecordVideoState)
+        .value as RecordVideoStateValue;
   }
 
   @override
-  Future<SettingsItem<ImageSizeId>> getImageSize(SonyCameraDevice device) {
+  Future<SettingsItem<ImageSizeValue>> getImageSize(SonyCameraDevice device) {
     // TODO: implement getImageSize
     throw UnimplementedError();
   }

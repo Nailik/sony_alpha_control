@@ -76,87 +76,87 @@ abstract class ApiInterface {
 
   Future<bool> startRecordingVideo(SonyCameraDevice device);
   Future<bool> stopRecordingVideo(SonyCameraDevice device);
-  Future<RecordVideoStateId> getRecordingVideoState(SonyCameraDevice device);
+  Future<RecordVideoStateValue> getRecordingVideoState(SonyCameraDevice device);
 
-  Future<SettingsItem<int>> getFNumber(SonyCameraDevice device);
+  Future<SettingsItem<IntValue>> getFNumber(SonyCameraDevice device);
   Future<bool> setFNumber(int value, SonyCameraDevice device);
 
-  Future<SettingsItem<int>> getIso(SonyCameraDevice device); //TODO is auto iso?
+  Future<SettingsItem<IntValue>> getIso(SonyCameraDevice device); //TODO is auto iso?
   Future<bool> setIso(int value, SonyCameraDevice device); //TODO value or steps?
 
 
-  Future<SettingsItem<int>> getShutterSpeed(SonyCameraDevice device);
+  Future<SettingsItem<IntValue>> getShutterSpeed(SonyCameraDevice device);
   Future<bool> setShutterSpeed(int value, SonyCameraDevice device);
 
   Future<int> getBatteryPercentage(SonyCameraDevice device); //TODO multiple batteries
 
   //Auto Exposure Level (lock/unlock)
-  Future<SettingsItem<bool>> getAel(SonyCameraDevice device);
+  Future<SettingsItem<BoolValue>> getAel(SonyCameraDevice device);
   Future<bool> setAel(bool value, SonyCameraDevice device);
 
   //Flash Exposure Level (lock/unlock)
-  Future<SettingsItem<bool>> getFel(SonyCameraDevice device);
+  Future<SettingsItem<BoolValue>> getFel(SonyCameraDevice device);
   Future<bool> setFel(bool value, SonyCameraDevice device);
 
-  Future<SettingsItem<FocusAreaId>> getFocusArea(SonyCameraDevice device);
+  Future<SettingsItem<FocusAreaValue>> getFocusArea(SonyCameraDevice device);
   Future<bool> setFocusArea(FocusAreaId value, SonyCameraDevice device);
 
-  Future<SettingsItem<Point>> getFocusAreaSpot(SonyCameraDevice device);
+  Future<SettingsItem<PointValue>> getFocusAreaSpot(SonyCameraDevice device);
   Future<bool> setFocusAreaSpot(Point value, SonyCameraDevice device);
 
-  Future<SettingsItem<AutoFocusStateId>> getAutoFocusState(SonyCameraDevice device);
+  Future<SettingsItem<AutoFocusStateValue>> getAutoFocusState(SonyCameraDevice device);
 
-  Future<SettingsItem<double>> getEV(SonyCameraDevice device);
+  Future<SettingsItem<DoubleValue>> getEV(SonyCameraDevice device);
   Future<bool> setEV(int value, SonyCameraDevice device);
 
-  Future<SettingsItem<FlashModeId>> getFlashMode(SonyCameraDevice device);
+  Future<SettingsItem<FlashModeValue>> getFlashMode(SonyCameraDevice device);
   Future<bool> setFlashMode(FlashModeId value, SonyCameraDevice device);
 
-  Future<SettingsItem<ImageFileFormatId>> getImageFileFormat(SonyCameraDevice device);
+  Future<SettingsItem<ImageFileFormatValue>> getImageFileFormat(SonyCameraDevice device);
   Future<bool> setImageFileFormat(ImageFileFormatId value, SonyCameraDevice device);
 
-  Future<SettingsItem<PictureEffectId>> getPictureEffect(SonyCameraDevice device);
+  Future<SettingsItem<PictureEffectValue>> getPictureEffect(SonyCameraDevice device);
   Future<bool> setPictureEffect(PictureEffectId value, SonyCameraDevice device);
 
-  Future<SettingsItem<DroHdrId>> getDroHdr(SonyCameraDevice device);
+  Future<SettingsItem<DroHdrValue>> getDroHdr(SonyCameraDevice device);
   Future<bool> setDroHdr(DroHdrId value, SonyCameraDevice device);
 
-  Future<SettingsItem<ImageSizeId>> getImageSize(SonyCameraDevice device);
+  Future<SettingsItem<ImageSizeValue>> getImageSize(SonyCameraDevice device);
   Future<bool> setImageSize(ImageSizeId value, SonyCameraDevice device);
 
-  Future<SettingsItem<AspectRadioValue>> getAspectRatio(SonyCameraDevice device);
+  Future<SettingsItem<AspectRatioValue>> getAspectRatio(SonyCameraDevice device);
   Future<bool> setAspectRatio(AspectRatioId value, SonyCameraDevice device);
 
-  Future<SettingsItem<FocusModeId>> getFocusMode(SonyCameraDevice device);
+  Future<SettingsItem<FocusModeValue>> getFocusMode(SonyCameraDevice device);
   Future<bool> setFocusMode(FocusModeId value, SonyCameraDevice device);
 
 // TODO: If the steps value is larger than 7 then use a loop?
   Future<bool> setFocusDistance(int value, SonyCameraDevice device);
 
-  Future<SettingsItem<ShootingModeId>> getShootingMode(SonyCameraDevice device);
+  Future<SettingsItem<ShootingModeValue>> getShootingMode(SonyCameraDevice device);
 
-  Future<SettingsItem<WhiteBalanceId>> getWhiteBalance(SonyCameraDevice device);
+  Future<SettingsItem<WhiteBalanceValue>> getWhiteBalance(SonyCameraDevice device);
   Future<bool> setWhiteBalance(WhiteBalanceId value, SonyCameraDevice device);
 
-  Future<SettingsItem<int>> getWhiteBalanceColorTemp(SonyCameraDevice device);
+  Future<SettingsItem<IntValue>> getWhiteBalanceColorTemp(SonyCameraDevice device);
   Future<bool> setWhiteBalanceColorTemp(int value, SonyCameraDevice device);
 
-  Future<SettingsItem<WhiteBalanceAbId>> getWhiteBalanceAb(SonyCameraDevice device);
+  Future<SettingsItem<WhiteBalanceAbValue>> getWhiteBalanceAb(SonyCameraDevice device);
   Future<bool> setWhiteBalanceAb(WhiteBalanceAbId value, SonyCameraDevice device);
 
-  Future<SettingsItem<WhiteBalanceGmId>> getWhiteBalanceGm(SonyCameraDevice device);
+  Future<SettingsItem<WhiteBalanceGmValue>> getWhiteBalanceGm(SonyCameraDevice device);
   Future<bool> setWhiteBalanceGm(WhiteBalanceGmId value, SonyCameraDevice device);
 
-  Future<SettingsItem<DriveModeId>> getDriveMode(SonyCameraDevice device);
+  Future<SettingsItem<DriveModeValue>> getDriveMode(SonyCameraDevice device);
   Future<bool> setDriveMode(DriveModeId value, SonyCameraDevice device);
 
-  Future<SettingsItem<MeteringModeId>> getMeteringMode(SonyCameraDevice device);
+  Future<SettingsItem<MeteringModeValue>> getMeteringMode(SonyCameraDevice device);
   Future<bool> setMeteringMode(MeteringModeId value, SonyCameraDevice device);
 
-  Future<SettingsItem<FocusMagnifierDirectionId>> getFocusMagnifierDirection(SonyCameraDevice device);
+  Future<SettingsItem<FocusMagnifierDirectionValue>> getFocusMagnifierDirection(SonyCameraDevice device);
   Future<bool> setFocusMagnifierDirection(FocusMagnifierDirectionId value, int steps, SonyCameraDevice device); //move with steps?
 
-  Future<SettingsItem<FocusMagnifierPhaseId>> getFocusMagnifierPhase(SonyCameraDevice device);
+  Future<SettingsItem<FocusMagnifierPhaseValue>> getFocusMagnifierPhase(SonyCameraDevice device);
   Future<bool> setFocusMagnifierPhase(FocusMagnifierPhaseId value, SonyCameraDevice device);
 
   Future<double> getFocusMagnifier(SonyCameraDevice device);

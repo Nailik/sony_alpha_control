@@ -67,7 +67,7 @@ class CameraUsbSettings extends CameraSettings {
       offset += 2;
 
       SettingsItem setting = settings.singleWhere(
-          (it) => it.settingsId.value == settingsId,
+          (it) => it.settingsId.usbValue == settingsId,
           orElse: () => null);
       if (setting == null) {
         setting = new SettingsItem(getSettingsId(settingsId));
@@ -81,7 +81,7 @@ class CameraUsbSettings extends CameraSettings {
       switch (dataType) {
         case 1:
           offset += 3;
-          setting.value = bytes.getUint8(offset);
+          setting.value = setting.fromUsb(bytes.getUint8(offset));
           offset++;
           var subDataType = bytes.getUint8(offset);
           offset++;
@@ -96,7 +96,7 @@ class CameraUsbSettings extends CameraSettings {
           break;
         case 2:
           offset += 3;
-          setting.value = bytes.getUint8(offset);
+          setting.value = setting.fromUsb(bytes.getUint8(offset));
           offset++;
           var subDataType = bytes.getUint8(offset);
           offset++;
@@ -109,7 +109,7 @@ class CameraUsbSettings extends CameraSettings {
               offset += 2;
               setting.available.clear();
               for (int i = 0; i < num; i++) {
-                setting.available.add(bytes.getUint8(offset));
+                setting.available.add(setting.fromUsb(bytes.getUint8(offset)));
                 offset++;
               }
               break;
@@ -121,7 +121,8 @@ class CameraUsbSettings extends CameraSettings {
           break;
         case 3:
           offset += 4;
-          setting.value = bytes.getUint16(offset, Endian.little);
+          setting.value =
+              setting.fromUsb(bytes.getUint16(offset, Endian.little));
           offset += 2;
           var subDataType = bytes.getUint8(offset);
           offset++;
@@ -134,7 +135,8 @@ class CameraUsbSettings extends CameraSettings {
               offset += 2;
               setting.available.clear();
               for (int i = 0; i < num; i++) {
-                setting.available.add(bytes.getUint16(offset, Endian.little));
+                setting.available.add(
+                    setting.fromUsb(bytes.getUint16(offset, Endian.little)));
                 offset += 2;
               }
               break;
@@ -146,7 +148,8 @@ class CameraUsbSettings extends CameraSettings {
           break;
         case 4:
           offset += 4;
-          setting.value = bytes.getUint16(offset, Endian.little);
+          setting.value =
+              setting.fromUsb(bytes.getUint16(offset, Endian.little));
           offset += 2;
           var subDataType = bytes.getUint8(offset);
           offset++;
@@ -163,7 +166,8 @@ class CameraUsbSettings extends CameraSettings {
               offset += 2;
               setting.available.clear();
               for (int i = 0; i < num; i++) {
-                setting.available.add(bytes.getUint16(offset, Endian.little));
+                setting.available.add(
+                    setting.fromUsb(bytes.getUint16(offset, Endian.little)));
                 offset += 2;
               }
               break;
@@ -176,12 +180,15 @@ class CameraUsbSettings extends CameraSettings {
         case 6:
           offset += 6;
           if (setting.hasSubValue()) {
-            setting.value = bytes.getUint16(offset, Endian.little);
+            setting.value =
+                setting.fromUsb(bytes.getUint16(offset, Endian.little));
             offset += 2;
-            setting.subValue = bytes.getUint16(offset, Endian.little);
+            setting.subValue =
+                setting.fromUsb(bytes.getUint16(offset, Endian.little));
             offset += 2;
           } else {
-            setting.value = bytes.getUint32(offset, Endian.little);
+            setting.value =
+                setting.fromUsb(bytes.getUint32(offset, Endian.little));
             offset += 4;
           }
           var subDataType = bytes.getUint8(offset);
@@ -195,7 +202,8 @@ class CameraUsbSettings extends CameraSettings {
               offset += 2;
               setting.available.clear();
               for (int i = 0; i < num; i++) {
-                setting.available.add(bytes.getUint32(offset, Endian.little));
+                setting.available.add(
+                    setting.fromUsb(bytes.getUint32(offset, Endian.little)));
                 offset += 4;
               }
               break;

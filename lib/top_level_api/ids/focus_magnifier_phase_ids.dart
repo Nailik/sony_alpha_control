@@ -1,3 +1,5 @@
+import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
+
 enum FocusMagnifierPhaseId {
   /// <summary>
   /// The magnifier isn't currently being used
@@ -19,7 +21,7 @@ enum FocusMagnifierPhaseId {
 extension FocusMagnifierPhaseIdExtension on FocusMagnifierPhaseId {
   String get name => toString().split('.')[1];
 
-  int get value {
+  int get usbValue {
     switch (this) {
       case FocusMagnifierPhaseId.Inactive:
         return 0;
@@ -33,16 +35,23 @@ extension FocusMagnifierPhaseIdExtension on FocusMagnifierPhaseId {
         return -2;
     }
   }
+
+  String get wifiValue => "";
 }
 
-FocusMagnifierPhaseId geFocusMagnifierPhaseId(int value) {
+FocusMagnifierPhaseId geFocusMagnifierPhaseId(int usbValue) {
   return FocusMagnifierPhaseId.values.firstWhere(
-          (element) => element.value == value,
+      (element) => element.usbValue == usbValue,
       orElse: () => FocusMagnifierPhaseId.Unknown);
 }
 
 class FocusMagnifierPhaseValue extends SettingsValue<FocusMagnifierPhaseId> {
   FocusMagnifierPhaseValue(FocusMagnifierPhaseId id) : super(id);
+
+  @override
+  factory FocusMagnifierPhaseValue.fromUSBValue(int usbValue) {
+    return FocusMagnifierPhaseValue(geFocusMagnifierPhaseId(usbValue));
+  }
 
   @override
   int get usbValue => id.usbValue;

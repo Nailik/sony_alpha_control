@@ -1,3 +1,5 @@
+import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
+
 ///
 /// Warmth bias used by AB (amber-blue)
 ///
@@ -37,7 +39,7 @@ enum WhiteBalanceAbId {
 extension WhiteBalanceAbIdExtension on WhiteBalanceAbId {
   String get name => toString().split('.')[1];
 
-  int get value {
+  int get usbValue {
     switch (this) {
       case WhiteBalanceAbId.B70:
         return 0xA4;
@@ -103,16 +105,23 @@ extension WhiteBalanceAbIdExtension on WhiteBalanceAbId {
         return -2;
     }
   }
+
+  String get wifiValue => "";
 }
 
-WhiteBalanceAbId getWhiteBalanceAbId(int value) {
+WhiteBalanceAbId getWhiteBalanceAbId(int usbValue) {
   return WhiteBalanceAbId.values.firstWhere(
-          (element) => element.value == value,
+      (element) => element.usbValue == usbValue,
       orElse: () => WhiteBalanceAbId.Unknown);
 }
 
-class WhiteBalanceAbValue extends WhiteBalanceAbValue<WhiteBalanceAbId> {
+class WhiteBalanceAbValue extends SettingsValue<WhiteBalanceAbId> {
   WhiteBalanceAbValue(WhiteBalanceAbId id) : super(id);
+
+  @override
+  factory WhiteBalanceAbValue.fromUSBValue(int usbValue) {
+    return WhiteBalanceAbValue(getWhiteBalanceAbId(usbValue));
+  }
 
   @override
   int get usbValue => id.usbValue;

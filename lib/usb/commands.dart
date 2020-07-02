@@ -168,9 +168,9 @@ class Commands {
   static Uint8List getCommandSetting(OpCodeId opCodeId, SettingsId settingsId,
       int value1, int value2, int value1DataSize, int value2DataSize) {
     Uint8List list = CommandT.createCommand(40);
-    list.writeUInt16(opCodeId.value);
+    list.writeUInt16(opCodeId.usbValue);
     list.goTo(10);
-    list.writeUInt16(settingsId.value);
+    list.writeUInt16(settingsId.usbValue);
     list.goTo(30);
     list.writeUInt8(1);
     list.goTo(34);
@@ -216,9 +216,9 @@ class Commands {
         liveView ? SettingsId.LiveViewInfo : SettingsId.PhotoInfo;
 
     Uint8List list = CommandT.createCommand(40);
-    list.writeUInt16(opcode.value);
+    list.writeUInt16(opcode.usbValue);
     list.goTo(10);
-    list.writeUInt16(settingsId.value);
+    list.writeUInt16(settingsId.usbValue);
     list.writeUInt8(0xFF);
     list.writeUInt8(0xFF);
     list.goTo(30);

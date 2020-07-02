@@ -52,32 +52,31 @@ class SonyWifiApi extends ApiInterface {
   }
 
   @override
-  Future<bool> connectToCamera(SonyCameraDevice device) {
-    // TODO: implement connectToCamera
-    throw UnimplementedError();
-  }
-
-  @override
   Future<bool> capturePhoto(SonyCameraDevice device) {
     // TODO: implement capturePhoto
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<bool>> getAel(SonyCameraDevice device) {
+  Future<bool> connectToCamera(SonyCameraDevice device) {
+    // TODO: implement connectToCamera
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<SettingsItem<BoolValue>> getAel(SonyCameraDevice device) {
     // TODO: implement getAel
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<AspectRatioId>> getAspectRatio(SonyCameraDevice device) {
+  Future<SettingsItem<AspectRatioValue>> getAspectRatio(SonyCameraDevice device) {
     // TODO: implement getAspectRatio
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<AutoFocusStateId>> getAutoFocusState(
-      SonyCameraDevice device) {
+  Future<SettingsItem<AutoFocusStateValue>> getAutoFocusState(SonyCameraDevice device) {
     // TODO: implement getAutoFocusState
     throw UnimplementedError();
   }
@@ -89,49 +88,49 @@ class SonyWifiApi extends ApiInterface {
   }
 
   @override
-  Future<SettingsItem<DriveModeId>> getDriveMode(SonyCameraDevice device) {
+  Future<SettingsItem<DriveModeValue>> getDriveMode(SonyCameraDevice device) {
     // TODO: implement getDriveMode
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<DroHdrId>> getDroHdr(SonyCameraDevice device) {
+  Future<SettingsItem<DroHdrValue>> getDroHdr(SonyCameraDevice device) {
     // TODO: implement getDroHdr
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<double>> getEV(SonyCameraDevice device) {
+  Future<SettingsItem<DoubleValue>> getEV(SonyCameraDevice device) {
     // TODO: implement getEV
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<int>> getFNumber(SonyCameraDevice device) {
+  Future<SettingsItem<IntValue>> getFNumber(SonyCameraDevice device) {
     // TODO: implement getFNumber
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<bool>> getFel(SonyCameraDevice device) {
+  Future<SettingsItem<BoolValue>> getFel(SonyCameraDevice device) {
     // TODO: implement getFel
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<FlashModeId>> getFlashMode(SonyCameraDevice device) {
+  Future<SettingsItem<FlashModeValue>> getFlashMode(SonyCameraDevice device) {
     // TODO: implement getFlashMode
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<FocusAreaId>> getFocusArea(SonyCameraDevice device) {
+  Future<SettingsItem<FocusAreaValue>> getFocusArea(SonyCameraDevice device) {
     // TODO: implement getFocusArea
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<Point<num>>> getFocusAreaSpot(SonyCameraDevice device) {
+  Future<SettingsItem<PointValue>> getFocusAreaSpot(SonyCameraDevice device) {
     // TODO: implement getFocusAreaSpot
     throw UnimplementedError();
   }
@@ -143,102 +142,103 @@ class SonyWifiApi extends ApiInterface {
   }
 
   @override
-  Future<SettingsItem<FocusMagnifierDirectionId>> getFocusMagnifierDirection(
-      SonyCameraDevice device) {
+  Future<SettingsItem<FocusMagnifierDirectionValue>> getFocusMagnifierDirection(SonyCameraDevice device) {
     // TODO: implement getFocusMagnifierDirection
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<FocusMagnifierPhaseId>> getFocusMagnifierPhase(
-      SonyCameraDevice device) {
+  Future<SettingsItem<FocusMagnifierPhaseValue>> getFocusMagnifierPhase(SonyCameraDevice device) {
     // TODO: implement getFocusMagnifierPhase
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<FocusModeId>> getFocusMode(SonyCameraDevice device) {
+  Future<SettingsItem<FocusModeValue>> getFocusMode(SonyCameraDevice device) {
     // TODO: implement getFocusMode
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<ImageFileFormatId>> getImageFileFormat(
-      SonyCameraDevice device) {
+  Future<SettingsItem<ImageFileFormatValue>> getImageFileFormat(SonyCameraDevice device) {
     // TODO: implement getImageFileFormat
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<int>> getIso(SonyCameraDevice device) {
+  Future<SettingsItem<ImageSizeValue>> getImageSize(SonyCameraDevice device) {
+    // TODO: implement getImageSize
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<SettingsItem<IntValue>> getIso(SonyCameraDevice device) {
     // TODO: implement getIso
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<MeteringModeId>> getMeteringMode(
-      SonyCameraDevice device) {
+  Future<SettingsItem<MeteringModeValue>> getMeteringMode(SonyCameraDevice device) {
     // TODO: implement getMeteringMode
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<PictureEffectId>> getPictureEffect(
-      SonyCameraDevice device) {
+  Future<SettingsItem<PictureEffectValue>> getPictureEffect(SonyCameraDevice device) {
     // TODO: implement getPictureEffect
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<ShootingModeId>> getShootingMode(
-      SonyCameraDevice device) {
+  Future<RecordVideoStateId> getRecordingVideoState(SonyCameraDevice device) {
+    // TODO: implement getRecordingVideoState
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<SettingsItem<ShootingModeValue>> getShootingMode(SonyCameraDevice device) {
     // TODO: implement getShootingMode
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<int>> getShutterSpeed(SonyCameraDevice device) {
+  Future<SettingsItem<IntValue>> getShutterSpeed(SonyCameraDevice device) {
     // TODO: implement getShutterSpeed
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<WhiteBalanceId>> getWhiteBalance(
-      SonyCameraDevice device) {
+  Future<SettingsItem<WhiteBalanceValue>> getWhiteBalance(SonyCameraDevice device) {
     // TODO: implement getWhiteBalance
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<WhiteBalanceAbId>> getWhiteBalanceAb(
-      SonyCameraDevice device) {
+  Future<SettingsItem<WhiteBalanceAbValue>> getWhiteBalanceAb(SonyCameraDevice device) {
     // TODO: implement getWhiteBalanceAb
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<int>> getWhiteBalanceColorTemp(SonyCameraDevice device) {
+  Future<SettingsItem<IntValue>> getWhiteBalanceColorTemp(SonyCameraDevice device) {
     // TODO: implement getWhiteBalanceColorTemp
     throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<WhiteBalanceGmId>> getWhiteBalanceGm(
-      SonyCameraDevice device) {
+  Future<SettingsItem<WhiteBalanceGmValue>> getWhiteBalanceGm(SonyCameraDevice device) {
     // TODO: implement getWhiteBalanceGm
     throw UnimplementedError();
   }
 
   @override
-  Future<bool> pressShutter(
-      ShutterPressType shutterPressType, SonyCameraDevice device) {
+  Future<bool> pressShutter(ShutterPressType shutterPressType, SonyCameraDevice device) {
     // TODO: implement pressShutter
     throw UnimplementedError();
   }
 
   @override
-  Future<bool> releaseShutter(
-      ShutterPressType shutterPressType, SonyCameraDevice device) {
+  Future<bool> releaseShutter(ShutterPressType shutterPressType, SonyCameraDevice device) {
     // TODO: implement releaseShutter
     throw UnimplementedError();
   }
@@ -316,15 +316,13 @@ class SonyWifiApi extends ApiInterface {
   }
 
   @override
-  Future<bool> setFocusMagnifierDirection(
-      FocusMagnifierDirectionId value, int steps, SonyCameraDevice device) {
+  Future<bool> setFocusMagnifierDirection(FocusMagnifierDirectionId value, int steps, SonyCameraDevice device) {
     // TODO: implement setFocusMagnifierDirection
     throw UnimplementedError();
   }
 
   @override
-  Future<bool> setFocusMagnifierPhase(
-      FocusMagnifierPhaseId value, SonyCameraDevice device) {
+  Future<bool> setFocusMagnifierPhase(FocusMagnifierPhaseId value, SonyCameraDevice device) {
     // TODO: implement setFocusMagnifierPhase
     throw UnimplementedError();
   }
@@ -336,9 +334,14 @@ class SonyWifiApi extends ApiInterface {
   }
 
   @override
-  Future<bool> setImageFileFormat(
-      ImageFileFormatId value, SonyCameraDevice device) {
+  Future<bool> setImageFileFormat(ImageFileFormatId value, SonyCameraDevice device) {
     // TODO: implement setImageFileFormat
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setImageSize(ImageSizeId value, SonyCameraDevice device) {
+    // TODO: implement setImageSize
     throw UnimplementedError();
   }
 
@@ -355,8 +358,7 @@ class SonyWifiApi extends ApiInterface {
   }
 
   @override
-  Future<bool> setPictureEffect(
-      PictureEffectId value, SonyCameraDevice device) {
+  Future<bool> setPictureEffect(PictureEffectId value, SonyCameraDevice device) {
     // TODO: implement setPictureEffect
     throw UnimplementedError();
   }
@@ -380,8 +382,7 @@ class SonyWifiApi extends ApiInterface {
   }
 
   @override
-  Future<bool> setWhiteBalanceAb(
-      WhiteBalanceAbId value, SonyCameraDevice device) {
+  Future<bool> setWhiteBalanceAb(WhiteBalanceAbId value, SonyCameraDevice device) {
     // TODO: implement setWhiteBalanceAb
     throw UnimplementedError();
   }
@@ -393,8 +394,7 @@ class SonyWifiApi extends ApiInterface {
   }
 
   @override
-  Future<bool> setWhiteBalanceGm(
-      WhiteBalanceGmId value, SonyCameraDevice device) {
+  Future<bool> setWhiteBalanceGm(WhiteBalanceGmId value, SonyCameraDevice device) {
     // TODO: implement setWhiteBalanceGm
     throw UnimplementedError();
   }
@@ -411,22 +411,5 @@ class SonyWifiApi extends ApiInterface {
     throw UnimplementedError();
   }
 
-  @override
-  Future<SettingsItem<ImageSizeId>> getImageSize(SonyCameraDevice device) {
-    // TODO: implement getImageSize
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<RecordVideoStateId> getRecordingVideoState(SonyCameraDevice device) {
-    // TODO: implement getRecordingVideoState
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setImageSize(ImageSizeId value, SonyCameraDevice device) {
-    // TODO: implement setImageSize
-    throw UnimplementedError();
-  }
 
 }

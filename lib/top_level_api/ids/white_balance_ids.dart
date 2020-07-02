@@ -1,3 +1,5 @@
+import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
+
 enum WhiteBalanceId {
   Auto,
   Daylight,
@@ -20,7 +22,7 @@ enum WhiteBalanceId {
 extension WhiteBalanceIdExtension on WhiteBalanceId {
   String get name => toString().split('.')[1];
 
-  int get value {
+  int get usbValue {
     switch (this) {
       case WhiteBalanceId.Auto:
         return 0x0002;
@@ -58,16 +60,23 @@ extension WhiteBalanceIdExtension on WhiteBalanceId {
         return -2;
     }
   }
+
+  String get wifiValue => "";
 }
 
-WhiteBalanceId getWhiteBalanceId(int value) {
+WhiteBalanceId getWhiteBalanceId(int usbValue) {
   return WhiteBalanceId.values.firstWhere(
-          (element) => element.value == value,
+      (element) => element.usbValue == usbValue,
       orElse: () => WhiteBalanceId.Unknown);
 }
 
 class WhiteBalanceValue extends SettingsValue<WhiteBalanceId> {
-  WhiteBalance(WhiteBalanceId id) : super(id);
+  WhiteBalanceValue(WhiteBalanceId id) : super(id);
+
+  @override
+  factory WhiteBalanceValue.fromUSBValue(int usbValue) {
+    return WhiteBalanceValue(getWhiteBalanceId(usbValue));
+  }
 
   @override
   int get usbValue => id.usbValue;

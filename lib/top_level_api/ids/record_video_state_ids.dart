@@ -1,9 +1,11 @@
+import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
+
 enum RecordVideoStateId { Stopped, Recording, UnableToRecord, Unknown }
 
 extension RecordVideoStateIdExtension on RecordVideoStateId {
   String get name => toString().split('.')[1];
 
-  int get value {
+  int get usbValue {
     switch (this) {
       case RecordVideoStateId.Stopped:
         return 0;
@@ -17,16 +19,23 @@ extension RecordVideoStateIdExtension on RecordVideoStateId {
         return -2;
     }
   }
+
+  String get wifiValue => "";
 }
 
-RecordVideoStateId getRecordVideoStateId(int value) {
+RecordVideoStateId getRecordVideoStateId(int usbValue) {
   return RecordVideoStateId.values.firstWhere(
-          (element) => element.value == value,
+      (element) => element.usbValue == usbValue,
       orElse: () => RecordVideoStateId.Unknown);
 }
 
 class RecordVideoStateValue extends SettingsValue<RecordVideoStateId> {
   RecordVideoStateValue(RecordVideoStateId id) : super(id);
+
+  @override
+  factory RecordVideoStateValue.fromUSBValue(int usbValue) {
+    return RecordVideoStateValue(getRecordVideoStateId(usbValue));
+  }
 
   @override
   int get usbValue => id.usbValue;

@@ -1,3 +1,5 @@
+import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
+
 enum FocusAreaId {
   Wide,
   Zone,
@@ -15,10 +17,11 @@ enum FocusAreaId {
   LockOnAF_ExpandFlexibleSpot,
   Unknown
 }
+
 extension FocusAreaIdExtension on FocusAreaId {
   String get name => toString().split('.')[1];
 
-  int get value {
+  int get usbValue {
     switch (this) {
       case FocusAreaId.Wide:
         return 0x0001;
@@ -54,16 +57,23 @@ extension FocusAreaIdExtension on FocusAreaId {
         return -2;
     }
   }
+
+  String get wifiValue => "";
 }
 
-FocusAreaId getFocusAreaId(int value) {
+FocusAreaId getFocusAreaId(int usbValue) {
   return FocusAreaId.values.firstWhere(
-          (element) => element.value == value,
+      (element) => element.usbValue == usbValue,
       orElse: () => FocusAreaId.Unknown);
 }
 
 class FocusAreaValue extends SettingsValue<FocusAreaId> {
   FocusAreaValue(FocusAreaId id) : super(id);
+
+  @override
+  factory FocusAreaValue.fromUSBValue(int usbValue) {
+    return FocusAreaValue(getFocusAreaId(usbValue));
+  }
 
   @override
   int get usbValue => id.usbValue;

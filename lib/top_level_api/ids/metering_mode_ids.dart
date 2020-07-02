@@ -1,3 +1,5 @@
+import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
+
 enum MeteringModeId {
   Multi,
   Multi_2,
@@ -18,7 +20,7 @@ extension MeteringModeIdExtension on MeteringModeId {
   String get name => toString().split('.')[1];
 
   //given: 0x8002 - actual 0x02
-  int get value {
+  int get usbValue {
     switch (this) {
       case MeteringModeId.Multi:
         return 0x01;
@@ -50,15 +52,23 @@ extension MeteringModeIdExtension on MeteringModeId {
         return -2;
     }
   }
+
+  String get wifiValue => "";
 }
 
-MeteringModeId getMeteringModeId(int value) {
-  return MeteringModeId.values.firstWhere((element) => element.value == value,
+MeteringModeId getMeteringModeId(int usbValue) {
+  return MeteringModeId.values.firstWhere(
+      (element) => element.usbValue == usbValue,
       orElse: () => MeteringModeId.Unknown);
 }
 
 class MeteringModeValue extends SettingsValue<MeteringModeId> {
   MeteringModeValue(MeteringModeId id) : super(id);
+
+  @override
+  factory MeteringModeValue.fromUSBValue(int usbValue) {
+    return MeteringModeValue(getMeteringModeId(usbValue));
+  }
 
   @override
   int get usbValue => id.usbValue;

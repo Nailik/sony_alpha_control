@@ -1,3 +1,5 @@
+import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
+
 ///
 /// Warmth bias used by GM (green-magenta)
 ///
@@ -65,7 +67,7 @@ enum WhiteBalanceGmId {
 extension WhiteBalanceAbIdExtension on WhiteBalanceGmId {
   String get name => toString().split('.')[1];
 
-  int get value {
+  int get usbValue {
     switch (this) {
       case WhiteBalanceGmId.M700:
         return 0xA4;
@@ -187,16 +189,23 @@ extension WhiteBalanceAbIdExtension on WhiteBalanceGmId {
         return -2;
     }
   }
+
+  String get wifiValue => "";
 }
 
-WhiteBalanceGmId getWhiteBalanceGmId(int value) {
+WhiteBalanceGmId getWhiteBalanceGmId(int usbValue) {
   return WhiteBalanceGmId.values.firstWhere(
-          (element) => element.value == value,
+      (element) => element.usbValue == usbValue,
       orElse: () => WhiteBalanceGmId.Unknown);
 }
 
 class WhiteBalanceGmValue extends SettingsValue<WhiteBalanceGmId> {
   WhiteBalanceGmValue(WhiteBalanceGmId id) : super(id);
+
+  @override
+  factory WhiteBalanceGmValue.fromUSBValue(int usbValue) {
+    return WhiteBalanceGmValue(getWhiteBalanceGmId(usbValue));
+  }
 
   @override
   int get usbValue => id.usbValue;

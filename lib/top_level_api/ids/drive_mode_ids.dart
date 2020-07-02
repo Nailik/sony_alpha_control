@@ -1,3 +1,5 @@
+import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
+
 enum DriveModeId {
   SingleShooting,
 
@@ -73,11 +75,10 @@ enum DriveModeId {
   Unknown,
 }
 
-
 extension DriveModeIdExtension on DriveModeId {
   String get name => toString().split('.')[1];
 
-  int get value {
+  int get usbValue {
     switch (this) {
       case DriveModeId.SingleShooting:
         return 0x0001;
@@ -185,16 +186,23 @@ extension DriveModeIdExtension on DriveModeId {
         return -2;
     }
   }
+
+  String get wifiValue => "";
 }
 
-DriveModeId getDriveModeId(int value) {
+DriveModeId getDriveModeId(int usbValue) {
   return DriveModeId.values.firstWhere(
-          (element) => element.value == value,
+      (element) => element.usbValue == usbValue,
       orElse: () => DriveModeId.Unknown);
 }
 
 class DriveModeValue extends SettingsValue<DriveModeId> {
   DriveModeValue(DriveModeId id) : super(id);
+
+  @override
+  factory DriveModeValue.fromUSBValue(int usbValue) {
+    return DriveModeValue(getDriveModeId(usbValue));
+  }
 
   @override
   int get usbValue => id.usbValue;

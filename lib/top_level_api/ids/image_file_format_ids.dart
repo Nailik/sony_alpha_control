@@ -1,3 +1,5 @@
+import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
+
 enum ImageFileFormatId {
   JpegStandard,
   JpegFine,
@@ -10,7 +12,7 @@ enum ImageFileFormatId {
 extension ImageFileFormatIdExtension on ImageFileFormatId {
   String get name => toString().split('.')[1];
 
-  int get value {
+  int get usbValue {
     switch (this) {
       case ImageFileFormatId.JpegStandard:
         return 0x02;
@@ -28,16 +30,23 @@ extension ImageFileFormatIdExtension on ImageFileFormatId {
         return -2;
     }
   }
+
+  String get wifiValue => "";
 }
 
-ImageFileFormatId getImageFileFormatId(int value) {
+ImageFileFormatId getImageFileFormatId(int usbValue) {
   return ImageFileFormatId.values.firstWhere(
-          (element) => element.value == value,
+      (element) => element.usbValue == usbValue,
       orElse: () => ImageFileFormatId.Unknown);
 }
 
 class ImageFileFormatValue extends SettingsValue<ImageFileFormatId> {
   ImageFileFormatValue(ImageFileFormatId id) : super(id);
+
+  @override
+  factory ImageFileFormatValue.fromUSBValue(int usbValue) {
+    return ImageFileFormatValue(getImageFileFormatId(usbValue));
+  }
 
   @override
   int get usbValue => id.usbValue;

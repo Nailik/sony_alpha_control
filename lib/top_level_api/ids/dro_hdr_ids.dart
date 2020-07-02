@@ -1,3 +1,5 @@
+import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
+
 /// <summary>
 /// DRO/Auto HDR (Dynamic-Range Optimizer / Auto High Dynamic Range)
 /// </summary>
@@ -22,7 +24,7 @@ enum DroHdrId {
 extension DroHdrIdExtension on DroHdrId {
   String get name => toString().split('.')[1];
 
-  int get value {
+  int get usbValue {
     switch (this) {
       case DroHdrId.DrOff:
         return 0x01;
@@ -58,16 +60,22 @@ extension DroHdrIdExtension on DroHdrId {
         return -2;
     }
   }
+
+  String get wifiValue => "";
 }
 
-DroHdrId getDroHdrId(int value) {
-  return DroHdrId.values.firstWhere(
-          (element) => element.value == value,
+DroHdrId getDroHdrId(int usbValue) {
+  return DroHdrId.values.firstWhere((element) => element.usbValue == usbValue,
       orElse: () => DroHdrId.Unknown);
 }
 
 class DroHdrValue extends SettingsValue<DroHdrId> {
   DroHdrValue(DroHdrId id) : super(id);
+
+  @override
+  factory DroHdrValue.fromUSBValue(int usbValue) {
+    return DroHdrValue(getDroHdrId(usbValue));
+  }
 
   @override
   int get usbValue => id.usbValue;

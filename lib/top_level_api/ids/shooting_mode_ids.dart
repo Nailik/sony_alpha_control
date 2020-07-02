@@ -1,3 +1,5 @@
+import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
+
 enum ShootingModeId {
   //01 00 - M
   M,
@@ -53,7 +55,7 @@ enum ShootingModeId {
 extension ShootingModeIdExtension on ShootingModeId {
   String get name => toString().split('.')[1];
 
-  int get value {
+  int get usbValue {
     switch (this) {
       case ShootingModeId.M:
         return 0x0001;
@@ -115,15 +117,23 @@ extension ShootingModeIdExtension on ShootingModeId {
         return -2;
     }
   }
+
+  String get wifiValue => "";
 }
 
-ShootingModeId getShootingModeId(int value) {
-  return ShootingModeId.values.firstWhere((element) => element.value == value,
+ShootingModeId getShootingModeId(int usbValue) {
+  return ShootingModeId.values.firstWhere(
+      (element) => element.usbValue == usbValue,
       orElse: () => ShootingModeId.Unknown);
 }
 
-class ShootingModeValue extends ShootingModeValue<ShootingModeId> {
+class ShootingModeValue extends SettingsValue<ShootingModeId> {
   ShootingModeValue(ShootingModeId id) : super(id);
+
+  @override
+  factory ShootingModeValue.fromUSBValue(int usbValue) {
+    return ShootingModeValue(getShootingModeId(usbValue));
+  }
 
   @override
   int get usbValue => id.usbValue;
