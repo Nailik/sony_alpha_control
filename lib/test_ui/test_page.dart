@@ -220,9 +220,9 @@ class _TestsPageState extends State<TestsPage> {
       list.add(
         new SimpleDialogOption(
           onPressed: () {
-            SonyApi.setSettingsRaw(data.settingsId, data.value.id);
+            SonyApi.setSettingsRaw(data.settingsId, value.usbValue);
           },
-          child: Text(data?.value?.name ?? ""),
+          child: Text(value.name ?? ""),
         ),
       );
     }
@@ -261,27 +261,29 @@ class _TestsPageState extends State<TestsPage> {
 
   Widget getVideoRow() {
     return Card(
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-        Expanded(
-          child: ListTile(
-              title: Text("Start Record"),
-              onTap: () => SonyApi.api.startRecordingVideo(device)),
-        ),
-        Expanded(
-          child: ListTile(
-              title: Text("Stop Record"),
-              onTap: () => SonyApi.api.stopRecordingVideo(device)),
-        ),
-        Expanded(
-          child: ListTile(
-              title: Text(SettingsId.RecordVideoState.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.RecordVideoState)
-                      ?.value
-                      ?.name ??
-                  "")),
-        )
-      ]),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Expanded(
+              child: ListTile(
+                  title: Text("Start Record"),
+                  onTap: () => SonyApi.api.startRecordingVideo(device)),
+            ),
+            Expanded(
+              child: ListTile(
+                  title: Text("Stop Record"),
+                  onTap: () => SonyApi.api.stopRecordingVideo(device)),
+            ),
+            Expanded(
+              child: ListTile(
+                  title: Text(SettingsId.RecordVideoState.name),
+                  subtitle: Text(device.cameraSettings
+                          .getItem(SettingsId.RecordVideoState)
+                          ?.value
+                          ?.name ??
+                      "")),
+            )
+          ]),
     );
   }
 

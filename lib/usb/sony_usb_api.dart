@@ -86,8 +86,7 @@ class SonyUsbApi extends ApiInterface {
       case SettingsId.DroHdr:
         return setDroHdr(getDroHdrId(value), device);
       case SettingsId.ImageSize:
-        // TODO: Handle this case.
-        break;
+        return setImageSize(getImageSizeId(value), device);
       case SettingsId.ShutterSpeed:
         return setShutterSpeed(value, device);
       case SettingsId.UnkD20E:
@@ -606,20 +605,20 @@ class SonyUsbApi extends ApiInterface {
   @override
   Future<bool> setFocusMode(FocusModeId value, SonyCameraDevice device) {
     FlutterUsb.sendCommand(
-        Command(Commands.getCommandSubSettingI16(SettingsId.FocusMode, value)));
+        Command(Commands.getCommandSubSettingI16(SettingsId.FocusMode, value.usbValue)));
   }
 
   Future<bool> setFocusModeToggle(
       FocusModeToggleId value, SonyCameraDevice device) {
     FlutterUsb.sendCommand(Command(Commands.getCommandMainSettingI16(
-        SettingsId.FocusModeToggleRequest, value)));
+        SettingsId.FocusModeToggleRequest, value.usbValue)));
   }
 
   @override
   Future<bool> setImageFileFormat(
       ImageFileFormatId value, SonyCameraDevice device) {
     FlutterUsb.sendCommand(Command(
-        Commands.getCommandSubSettingI16(SettingsId.FileFormat, value)));
+        Commands.getCommandSubSettingI16(SettingsId.FileFormat, value.usbValue)));
   }
 
   @override
@@ -632,14 +631,14 @@ class SonyUsbApi extends ApiInterface {
   @override
   Future<bool> setMeteringMode(MeteringModeId value, SonyCameraDevice device) {
     FlutterUsb.sendCommand(Command(
-        Commands.getCommandSubSettingI16(SettingsId.MeteringMode, value)));
+        Commands.getCommandSubSettingI16(SettingsId.MeteringMode, value.usbValue)));
   }
 
   @override
   Future<bool> setPictureEffect(
       PictureEffectId value, SonyCameraDevice device) {
     FlutterUsb.sendCommand(Command(
-        Commands.getCommandSubSettingI16(SettingsId.PictureEffect, value)));
+        Commands.getCommandSubSettingI16(SettingsId.PictureEffect, value.usbValue)));
   }
 
   @override
@@ -790,8 +789,8 @@ imagename "DSC01548.ARW" (mit arw!!)
 
   @override
   Future<bool> setImageSize(ImageSizeId value, SonyCameraDevice device) {
-    // TODO: implement setImageSize
-    throw UnimplementedError();
+    FlutterUsb.sendCommand(Command(
+        Commands.getCommandSubSettingI16(SettingsId.ImageSize, value.usbValue)));
   }
 }
 
