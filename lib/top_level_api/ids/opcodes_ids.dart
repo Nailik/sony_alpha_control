@@ -65,3 +65,16 @@ OpCodeId getOpCodeId(int value) {
           (element) => element.value == value,
       orElse: () => OpCodeId.Unknown);
 }
+
+class OpCodeValue extends SettingsValue<OpCodeId> {
+  OpCodeValue(OpCodeId id) : super(id);
+
+  @override
+  int get usbValue => id.usbValue;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
+}

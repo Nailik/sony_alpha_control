@@ -25,3 +25,16 @@ FocusModeToggleId getFocusModeToggleId(int value) {
           (element) => element.value == value,
       orElse: () => FocusModeToggleId.Unknown);
 }
+
+class FocusModeToggleValue extends SettingsValue<FocusModeToggleId> {
+  FocusModeToggleValue(FocusModeToggleId id) : super(id);
+
+  @override
+  int get usbValue => id.usbValue;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
+}

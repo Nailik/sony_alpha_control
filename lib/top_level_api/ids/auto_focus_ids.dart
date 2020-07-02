@@ -26,8 +26,6 @@ enum AutoFocusStateId {
   Unknown
 }
 
-
-
 extension AutoFocusStateIdExtension on AutoFocusStateId {
   String get name => toString().split('.')[1];
 
@@ -57,3 +55,15 @@ AutoFocusStateId getAutoFocusStateId(int value) {
       orElse: () => AutoFocusStateId.Unknown);
 }
 
+class AutoFocusStateValue extends SettingsValue<AutoFocusStateId> {
+  AutoFocusStateValue(AutoFocusStateId id) : super(id);
+
+  @override
+  int get usbValue => id.usbValue;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
+}

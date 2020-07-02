@@ -71,3 +71,16 @@ PictureEffectId getPictureEffectId(int value) {
           (element) => element.value == value,
       orElse: () => PictureEffectId.Unknown);
 }
+
+class PictureEffectValue extends SettingsValue<PictureEffectId> {
+  PictureEffectValue(PictureEffectId id) : super(id);
+
+  @override
+  int get usbValue => id.usbValue;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
+}

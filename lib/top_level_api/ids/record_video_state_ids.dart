@@ -24,3 +24,16 @@ RecordVideoStateId getRecordVideoStateId(int value) {
           (element) => element.value == value,
       orElse: () => RecordVideoStateId.Unknown);
 }
+
+class RecordVideoStateValue extends SettingsValue<RecordVideoStateId> {
+  RecordVideoStateValue(RecordVideoStateId id) : super(id);
+
+  @override
+  int get usbValue => id.usbValue;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
+}

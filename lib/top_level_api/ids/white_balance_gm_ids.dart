@@ -194,3 +194,16 @@ WhiteBalanceGmId getWhiteBalanceGmId(int value) {
           (element) => element.value == value,
       orElse: () => WhiteBalanceGmId.Unknown);
 }
+
+class WhiteBalanceGmValue extends SettingsValue<WhiteBalanceGmId> {
+  WhiteBalanceGmValue(WhiteBalanceGmId id) : super(id);
+
+  @override
+  int get usbValue => id.usbValue;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
+}

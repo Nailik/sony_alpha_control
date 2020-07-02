@@ -1,4 +1,3 @@
-
 /// <summary>
 /// DRO/Auto HDR (Dynamic-Range Optimizer / Auto High Dynamic Range)
 /// </summary>
@@ -19,7 +18,6 @@ enum DroHdrId {
   Hdr6Ev,
   Unknown
 }
-
 
 extension DroHdrIdExtension on DroHdrId {
   String get name => toString().split('.')[1];
@@ -61,8 +59,22 @@ extension DroHdrIdExtension on DroHdrId {
     }
   }
 }
+
 DroHdrId getDroHdrId(int value) {
   return DroHdrId.values.firstWhere(
           (element) => element.value == value,
       orElse: () => DroHdrId.Unknown);
+}
+
+class DroHdrValue extends SettingsValue<DroHdrId> {
+  DroHdrValue(DroHdrId id) : super(id);
+
+  @override
+  int get usbValue => id.usbValue;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
 }

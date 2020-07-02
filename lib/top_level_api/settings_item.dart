@@ -19,13 +19,16 @@ import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 
 import 'ids/aspect_ratio_ids.dart';
 
-class SettingsItem<T> extends ChangeNotifier {
-  T value;
-  T subValue;
+class SettingsItem<T extends SettingsValue> extends
+ChangeNotifier {
+
   SettingsId settingsId;
 
-  List<T> available = new List();
-  List<T> supported = new List();
+  SettingsValue value;
+  SettingsValue subValue;
+
+  List<SettingsValue> available = new List();
+  List<SettingsValue> supported = new List();
 
   SettingsItem(this.settingsId);
 
@@ -35,141 +38,16 @@ class SettingsItem<T> extends ChangeNotifier {
         settingsId == SettingsId.ShutterSpeed);
   }
 
-  String getValueName(){
-    return getNameOf(value);
-  }
-
-  String getNameOf(T item) {
-    switch (settingsId) {
-      case SettingsId.FileFormat:
-        return getImageFileFormatId(item as int).name;
-      case SettingsId.WhiteBalance:
-        return getWhiteBalanceId(item as int).name;
-      case SettingsId.FNumber:
-        return item.toString();
-      case SettingsId.FocusMode:
-        return getFocusModeId(item as int).name;
-      case SettingsId.MeteringMode:
-        return getMeteringModeId(item as int).name;
-      case SettingsId.FlashMode:
-        return getFlashModeId(item as int).name;
-      case SettingsId.ShootingMode:
-        return getShootingModeId(item as int).name;
-      case SettingsId.EV:
-        return item.toString();
-      case SettingsId.DriveMode:
-        return getDriveModeId(item as int).name;
-      case SettingsId.Flash:
-        return getFlashModeId(item as int).name;
-      case SettingsId.DroHdr:
-        return getDroHdrId(item as int).name;
-      case SettingsId.ImageSize:
-        return getImageSizeId(item as int).name;
-      case SettingsId.ShutterSpeed:
-        return item.toString();
-      case SettingsId.UnkD20E:
-        return "UnkD20E";
-      case SettingsId.WhiteBalanceColorTemp:
-        return item.toString();
-      case SettingsId.WhiteBalanceGM:
-        return getWhiteBalanceGmId(item as int).name;
-      case SettingsId.AspectRatio:
-        return getAspectRatioId(item as int).name;
-      case SettingsId.UnkD212:
-        return "UnkD212";
-      case SettingsId.AutoFocusState:
-        return getAutoFocusStateId(item as int).name;
-      case SettingsId.Zoom:
-        return item.toString();
-      case SettingsId.PhotoTransferQueue:
-        return item.toString();
-      case SettingsId.AEL_State:
-        return item.toString();
-      case SettingsId.BatteryInfo:
-        return item.toString();
-      case SettingsId.SensorCrop:
-          return item.toString();
-      case SettingsId.PictureEffect:
-        return getPictureEffectId(item as int).name;
-      case SettingsId.WhiteBalanceAB:
-        return getWhiteBalanceAbId(item as int).name;
-      case SettingsId.RecordVideoState:
-        return getRecordVideoStateId(item as int).name;
-      case SettingsId.ISO:
-        return item.toString();
-      case SettingsId.FEL_State:
-        return item.toString();
-      case SettingsId.LiveViewState:
-        return item.toString();
-      case SettingsId.UnkD222:
-        return "UnkD222";
-      case SettingsId.FocusArea:
-        return getFocusAreaId(item as int).name;
-      case SettingsId.FocusMagnifierPhase:
-        return item.toString();
-      case SettingsId.UnkD22E:
-        return "UnkD22E";
-      case SettingsId.FocusMagnifier:
-        return item.toString();
-      case SettingsId.FocusMagnifierPosition:
-        return item.toString();
-      case SettingsId.UseLiveViewDisplayEffect:
-        return item.toString();
-      case SettingsId.FocusAreaSpot:
-        return item.toString();
-      case SettingsId.FocusMagnifierState:
-        return item.toString();
-      case SettingsId.FocusModeToggleResponse:
-        return item.toString();
-      case SettingsId.UnkD236:
-        return "UnkD236";
-      case SettingsId.HalfPressShutter:
-        return item.toString();
-      case SettingsId.CapturePhoto:
-        return item.toString();
-      case SettingsId.AEL:
-        return item.toString();
-      case SettingsId.UnkD2C5:
-        return "UnkD2C5";
-      case SettingsId.UnkD2C7:
-        return "UnkD2C7";
-      case SettingsId.RecordVideo:
-        return getRecordVideoStateId(item as int).name;
-      case SettingsId.FEL:
-        return item.toString();
-      case SettingsId.FocusMagnifierRequest:
-        return item.toString();
-      case SettingsId.FocusMagnifierResetRequest:
-        return item.toString();
-      case SettingsId.FocusMagnifierMoveUpRequest:
-        return item.toString();
-      case SettingsId.FocusMagnifierMoveDownRequest:
-        return item.toString();
-      case SettingsId.FocusMagnifierMoveLeftRequest:
-        return item.toString();
-      case SettingsId.FocusMagnifierMoveRightRequest:
-        return item.toString();
-      case SettingsId.FocusDistance:
-        return item.toString();
-      case SettingsId.FocusModeToggleRequest:
-        return item.toString();
-      case SettingsId.UnkD2D3:
-        return "UnkD2D3";
-      case SettingsId.UnkD2D4:
-        return "UnkD2D4";
-      case SettingsId.LiveViewInfo:
-        return item.toString();
-      case SettingsId.PhotoInfo:
-        return "UnkD2D4";
-      case SettingsId.Unknown:
-        return "Unknown";
-    }
-    return "";
-  }
 }
 
-class Value<T> {
-  T value;
+abstract class SettingsValue<T> {
+  T id;
 
-  Value(this.value);
+  SettingsValue(this.id);
+
+  int get usbValue;
+
+  String get wifiValue;
+
+  String get name;
 }

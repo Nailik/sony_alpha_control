@@ -24,3 +24,16 @@ ImageSizeId getImageSizeId(int value) {
           (element) => element.value == value,
       orElse: () => ImageSizeId.Unknown);
 }
+
+class ImageSizeValue extends SettingsValue<ImageSizeId> {
+  ImageSizeValue(ImageSizeId id) : super(id);
+
+  @override
+  int get usbValue => id.usbValue;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
+}

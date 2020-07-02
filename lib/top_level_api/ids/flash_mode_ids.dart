@@ -1,4 +1,3 @@
-
 enum FlashModeId {
   AutoFlash,
   FlashOff,
@@ -49,10 +48,23 @@ extension FlashModeIdExtension on FlashModeId {
         return -2;
     }
   }
-}//8004
+} //8004
 
 FlashModeId getFlashModeId(int value) {
   return FlashModeId.values.firstWhere(
           (element) => element.value == value,
       orElse: () => FlashModeId.Unknown);
+}
+
+class FlashModeValue extends SettingsValue<FlashModeId> {
+  FlashModeValue(FlashModeId id) : super(id);
+
+  @override
+  int get usbValue => id.usbValue;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
 }

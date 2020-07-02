@@ -1,5 +1,3 @@
-
-
 enum FocusMagnifierPhaseId {
   /// <summary>
   /// The magnifier isn't currently being used
@@ -41,4 +39,17 @@ FocusMagnifierPhaseId geFocusMagnifierPhaseId(int value) {
   return FocusMagnifierPhaseId.values.firstWhere(
           (element) => element.value == value,
       orElse: () => FocusMagnifierPhaseId.Unknown);
+}
+
+class FocusMagnifierPhaseValue extends SettingsValue<FocusMagnifierPhaseId> {
+  FocusMagnifierPhaseValue(FocusMagnifierPhaseId id) : super(id);
+
+  @override
+  int get usbValue => id.usbValue;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
 }

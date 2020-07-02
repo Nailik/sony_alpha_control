@@ -144,12 +144,8 @@ enum SettingsId {
   FocusModeToggleRequest,
   UnkD2D3,
   UnkD2D4,
-
-
   LiveViewInfo,
   PhotoInfo,
-
-
   Unknown
 }
 
@@ -290,4 +286,17 @@ SettingsId getSettingsId(int value) {
   return SettingsId.values.firstWhere(
           (element) => element.value == value,
       orElse: () => SettingsId.Unknown);
+}
+
+class SettingsValue extends SettingsValue<SettingsId> {
+  SettingsValue(SettingsId id) : super(id);
+
+  @override
+  int get usbValue => id.usbValue;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
 }

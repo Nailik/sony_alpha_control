@@ -1,4 +1,11 @@
-enum ImageFileFormatId { JpegStandard, JpegFine, JpegXFine, Raw, Raw_JPEG, Unknown }
+enum ImageFileFormatId {
+  JpegStandard,
+  JpegFine,
+  JpegXFine,
+  Raw,
+  Raw_JPEG,
+  Unknown
+}
 
 extension ImageFileFormatIdExtension on ImageFileFormatId {
   String get name => toString().split('.')[1];
@@ -25,6 +32,19 @@ extension ImageFileFormatIdExtension on ImageFileFormatId {
 
 ImageFileFormatId getImageFileFormatId(int value) {
   return ImageFileFormatId.values.firstWhere(
-      (element) => element.value == value,
+          (element) => element.value == value,
       orElse: () => ImageFileFormatId.Unknown);
+}
+
+class ImageFileFormatValue extends SettingsValue<ImageFileFormatId> {
+  ImageFileFormatValue(ImageFileFormatId id) : super(id);
+
+  @override
+  int get usbValue => id.usbValue;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
 }

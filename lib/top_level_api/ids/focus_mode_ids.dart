@@ -30,9 +30,22 @@ extension FocusModeIdExtension on FocusModeId {
   }
 }
 
-
 FocusModeId getFocusModeId(int value) {
   return FocusModeId.values.firstWhere(
           (element) => element.value == value,
       orElse: () => FocusModeId.Unknown);
 }
+
+class FocusModeValue extends SettingsValue<FocusModeId> {
+  FocusModeValue(FocusModeId id) : super(id);
+
+  @override
+  int get usbValue => id.usbValue;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
+}
+

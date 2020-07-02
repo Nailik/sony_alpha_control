@@ -1,5 +1,3 @@
-
-
 enum FocusAreaId {
   Wide,
   Zone,
@@ -62,4 +60,17 @@ FocusAreaId getFocusAreaId(int value) {
   return FocusAreaId.values.firstWhere(
           (element) => element.value == value,
       orElse: () => FocusAreaId.Unknown);
+}
+
+class FocusAreaValue extends SettingsValue<FocusAreaId> {
+  FocusAreaValue(FocusAreaId id) : super(id);
+
+  @override
+  int get usbValue => id.usbValue;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
 }

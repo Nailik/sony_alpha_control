@@ -124,7 +124,7 @@ abstract class ApiInterface {
   Future<SettingsItem<ImageSizeId>> getImageSize(SonyCameraDevice device);
   Future<bool> setImageSize(ImageSizeId value, SonyCameraDevice device);
 
-  Future<SettingsItem<AspectRatioId>> getAspectRatio(SonyCameraDevice device);
+  Future<SettingsItem<AspectRadioValue>> getAspectRatio(SonyCameraDevice device);
   Future<bool> setAspectRatio(AspectRatioId value, SonyCameraDevice device);
 
   Future<SettingsItem<FocusModeId>> getFocusMode(SonyCameraDevice device);

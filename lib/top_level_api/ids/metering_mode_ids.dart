@@ -52,8 +52,20 @@ extension MeteringModeIdExtension on MeteringModeId {
   }
 }
 
-//2
 MeteringModeId getMeteringModeId(int value) {
   return MeteringModeId.values.firstWhere((element) => element.value == value,
       orElse: () => MeteringModeId.Unknown);
+}
+
+class MeteringModeValue extends SettingsValue<MeteringModeId> {
+  MeteringModeValue(MeteringModeId id) : super(id);
+
+  @override
+  int get usbValue => id.usbValue;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
 }

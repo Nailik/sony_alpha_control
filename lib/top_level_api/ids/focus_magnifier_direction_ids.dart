@@ -1,8 +1,8 @@
-
 enum FocusMagnifierDirectionId { Left, Right, Up, Down, Unknown }
 
 extension FocusMagnifierDirectionIdExtension on FocusMagnifierDirectionId {
   String get name => toString().split('.')[1];
+
   int get value {
     switch (this) {
       case FocusMagnifierDirectionId.Left:
@@ -25,4 +25,18 @@ FocusMagnifierDirectionId geFocusMagnifierDirectionId(int value) {
   return FocusMagnifierDirectionId.values.firstWhere(
           (element) => element.value == value,
       orElse: () => FocusMagnifierDirectionId.Unknown);
+}
+
+class FocusMagnifierDirectionValue
+    extends SettingsValue<FocusMagnifierDirectionId> {
+  FocusMagnifierDirectionValue(FocusMagnifierDirectionId id) : super(id);
+
+  @override
+  int get usbValue => id.usbValue;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
 }

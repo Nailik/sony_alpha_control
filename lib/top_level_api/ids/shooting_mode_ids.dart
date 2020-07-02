@@ -121,3 +121,16 @@ ShootingModeId getShootingModeId(int value) {
   return ShootingModeId.values.firstWhere((element) => element.value == value,
       orElse: () => ShootingModeId.Unknown);
 }
+
+class ShootingModeValue extends ShootingModeValue<ShootingModeId> {
+  ShootingModeValue(ShootingModeId id) : super(id);
+
+  @override
+  int get usbValue => id.usbValue;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
+}

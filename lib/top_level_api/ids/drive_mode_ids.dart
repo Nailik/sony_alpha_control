@@ -1,4 +1,3 @@
-
 enum DriveModeId {
   SingleShooting,
 
@@ -192,4 +191,17 @@ DriveModeId getDriveModeId(int value) {
   return DriveModeId.values.firstWhere(
           (element) => element.value == value,
       orElse: () => DriveModeId.Unknown);
+}
+
+class DriveModeValue extends SettingsValue<DriveModeId> {
+  DriveModeValue(DriveModeId id) : super(id);
+
+  @override
+  int get usbValue => id.usbValue;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
 }
