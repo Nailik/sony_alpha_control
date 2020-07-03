@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:flutterusb/Command.dart';
+import 'package:flutter_usb/Command.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
@@ -205,7 +205,7 @@ class Commands {
   //0000   10 00 00 00 01 00 09 10 52 06 00 00 01 c0 ff ff //10 09 getImageData //photo info c0 01
 
   static Command getImageCommand(bool liveView, bool info,
-      {double imageSizeInBytes = 1024}) {
+      {int imageSizeInBytes = 1024}) {
     if(imageSizeInBytes != 1024){
       imageSizeInBytes += 32;
     }

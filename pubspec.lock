@@ -7,14 +7,14 @@ packages:
       name: _fe_analyzer_shared
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0"
+    version: "5.0.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.39.10"
+    version: "0.39.11"
   args:
     dependency: transitive
     description:
@@ -140,7 +140,14 @@ packages:
       name: connectivity
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.8+6"
+    version: "0.4.9"
+  connectivity_for_web:
+    dependency: transitive
+    description:
+      name: connectivity_for_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0"
   connectivity_macos:
     dependency: transitive
     description:
@@ -214,15 +221,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutterusb:
+  flutter_usb:
     dependency: "direct main"
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "2f21bb0b51b8b0eaf6c48fc8b36bfe788bad6843"
+      resolved-ref: "8b5c33a7e10d4672b6aac7682050a436908b6ed1"
       url: "https://github.com/Nailik/flutter_usb.git"
     source: git
-    version: "0.0.1"
+    version: "0.0.2"
+  flutter_web_plugins:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   glob:
     dependency: transitive
     description:

@@ -23,7 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutterusb:
+  flutter_usb:
     git: https://github.com/Nailik/flutter_usb.git
   wifi_iot:
     git: https://github.com/alternadom/WiFiFlutter.git

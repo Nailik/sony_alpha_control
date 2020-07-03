@@ -2,9 +2,9 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:flutterusb/Command.dart';
-import 'package:flutterusb/Response.dart';
-import 'package:flutterusb/flutter_usb.dart';
+import 'package:flutter_usb/Command.dart';
+import 'package:flutter_usb/Response.dart';
+import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
@@ -694,7 +694,7 @@ class SonyUsbApi extends ApiInterface {
     print("response valid ${response.isValidResponse()}");
     if (!response.isValidResponse()) return null;
 
-    var bytes = response.getData().buffer.asByteData();
+    var bytes = response.inData.toByteList().buffer.asByteData();
     int numImages = bytes.getUint16(32, Endian.little);
 
     print("images $numImages");
@@ -712,7 +712,7 @@ class SonyUsbApi extends ApiInterface {
     int nameLength = bytes.getUint8(82);
     int CharSize = 2;
     int totalLength = nameLength * CharSize;
-    var namebytes = response.getData().sublist(83, 83 + totalLength);
+    var namebytes = response.inData.toByteList().sublist(83, 83 + totalLength);
     var name = new String.fromCharCodes(namebytes);
 
     print(name);
@@ -720,10 +720,10 @@ class SonyUsbApi extends ApiInterface {
     //TODO in chunks, very slow at the moment? loading slow or json slow?
     response = await FlutterUsb.sendCommand(Commands.getImageCommand(
         liveView, false,
-        imageSizeInBytes: imageSizeInBytes.truncateToDouble()));
+        imageSizeInBytes: imageSizeInBytes));
 
     if (!response.isValidResponse()) return null;
-    var buffer = response.getData().buffer;
+    var buffer = response.inData.toByteList().buffer;
     bytes = buffer.asByteData();
 
     if (liveView) {
@@ -731,7 +731,7 @@ class SonyUsbApi extends ApiInterface {
       int liveViewBufferSize = bytes.getUint32(34, Endian.little);
       var unkBuff = ByteData.view(buffer, 38, unkBufferSize - 8);
       var start = 38 + unkBufferSize - 8;
-      return response.getData().sublist(start, buffer.lengthInBytes - start);
+      return response.inData.toByteList().sublist(start, buffer.lengthInBytes - start);
     } else {
       //10 27 00 00 d4 05 00 00
       //10 27 00 00 27 0c 00 00
@@ -764,7 +764,7 @@ imagename "DSC01548.ARW" (mit arw!!)
 
        */
       Uint8List data =
-          response.getData().sublist(30, buffer.lengthInBytes - 30);
+          response.inData.toByteList().sublist(30, buffer.lengthInBytes - 30);
 
       print("saveFile $name");
       File file = new File("C:\\Users\\kilia\\Desktop\\$name");

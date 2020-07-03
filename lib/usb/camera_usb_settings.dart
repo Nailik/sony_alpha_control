@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
-import 'package:flutterusb/Command.dart';
-import 'package:flutterusb/Response.dart';
-import 'package:flutterusb/flutter_usb.dart';
+import 'package:flutter_usb/Command.dart';
+import 'package:flutter_usb/Response.dart';
+import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/camera_settings.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
@@ -30,7 +30,7 @@ class CameraUsbSettings extends CameraSettings {
 
   analyzeSettingsAvailable(Response response) {
     if (!isValidResponse(response)) return;
-    var bytes = response.getData().buffer.asByteData();
+    var bytes = response.inData.toByteList().asByteData();
 
     int offset = 30;
     //30
@@ -55,7 +55,7 @@ class CameraUsbSettings extends CameraSettings {
 
   analyzeSettings(Response response) {
     if (!isValidResponse(response)) return;
-    var byteList = response.getData();
+    var byteList = response.inData.toByteList();
     var bytes = byteList.buffer.asByteData();
 
     int offset = 30;

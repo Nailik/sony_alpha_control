@@ -6,17 +6,17 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Runner", "Runner.vcxproj", "{5A827760-CF8B-408A-99A3-B6C0AD2271E7}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6419BF13-6ECD-4CD2-9E85-E566A1F03F8F} = {6419BF13-6ECD-4CD2-9E85-E566A1F03F8F}
-		{50D413AD-74E6-471C-8F13-C062A920498A} = {50D413AD-74E6-471C-8F13-C062A920498A}
+		{0F66B0A3-8AFE-456B-BE20-8C8C6C2BE484} = {0F66B0A3-8AFE-456B-BE20-8C8C6C2BE484}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Flutter Build", "FlutterBuild.vcxproj", "{6419BF13-6ECD-4CD2-9E85-E566A1F03F8F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "flutterusb", "Flutter\ephemeral\.plugin_symlinks\flutterusb\windows\plugin.vcxproj", "{50D413AD-74E6-471C-8F13-C062A920498A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Flutter Plugins", "Flutter Plugins", "{5C2E738A-1DD3-445A-AAC8-EEB9648DD07C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "flutter_usb", "Flutter\ephemeral\.plugin_symlinks\flutter_usb\windows\plugin.vcxproj", "{0F66B0A3-8AFE-456B-BE20-8C8C6C2BE484}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6419BF13-6ECD-4CD2-9E85-E566A1F03F8F} = {6419BF13-6ECD-4CD2-9E85-E566A1F03F8F}
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Flutter Plugins", "Flutter Plugins", "{5C2E738A-1DD3-445A-AAC8-EEB9648DD07C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,12 +37,12 @@ Global
 		{6419BF13-6ECD-4CD2-9E85-E566A1F03F8F}.Profile|x64.Build.0 = Profile|x64
 		{6419BF13-6ECD-4CD2-9E85-E566A1F03F8F}.Release|x64.ActiveCfg = Release|x64
 		{6419BF13-6ECD-4CD2-9E85-E566A1F03F8F}.Release|x64.Build.0 = Release|x64
-		{50D413AD-74E6-471C-8F13-C062A920498A}.Debug|x64.ActiveCfg = Debug|x64
-		{50D413AD-74E6-471C-8F13-C062A920498A}.Debug|x64.Build.0 = Debug|x64
-		{50D413AD-74E6-471C-8F13-C062A920498A}.Profile|x64.ActiveCfg = Profile|x64
-		{50D413AD-74E6-471C-8F13-C062A920498A}.Profile|x64.Build.0 = Profile|x64
-		{50D413AD-74E6-471C-8F13-C062A920498A}.Release|x64.ActiveCfg = Release|x64
-		{50D413AD-74E6-471C-8F13-C062A920498A}.Release|x64.Build.0 = Release|x64
+		{0F66B0A3-8AFE-456B-BE20-8C8C6C2BE484}.Debug|x64.ActiveCfg = Debug|x64
+		{0F66B0A3-8AFE-456B-BE20-8C8C6C2BE484}.Debug|x64.Build.0 = Debug|x64
+		{0F66B0A3-8AFE-456B-BE20-8C8C6C2BE484}.Profile|x64.ActiveCfg = Profile|x64
+		{0F66B0A3-8AFE-456B-BE20-8C8C6C2BE484}.Profile|x64.Build.0 = Profile|x64
+		{0F66B0A3-8AFE-456B-BE20-8C8C6C2BE484}.Release|x64.ActiveCfg = Release|x64
+		{0F66B0A3-8AFE-456B-BE20-8C8C6C2BE484}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,6 +51,6 @@ Global
 		SolutionGuid = {B8A69CB0-A974-4774-9EBD-1E5EECACD186}
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{50D413AD-74E6-471C-8F13-C062A920498A} = {5C2E738A-1DD3-445A-AAC8-EEB9648DD07C}
+		{0F66B0A3-8AFE-456B-BE20-8C8C6C2BE484} = {5C2E738A-1DD3-445A-AAC8-EEB9648DD07C}
 	EndGlobalSection
 EndGlobal
