@@ -226,10 +226,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "47db72371ce72d394b70c322d3219c4eeb7fbad2"
+      resolved-ref: a3ef8201f7bffd1e3a66970d9287d8916b73918f
       url: "https://github.com/Nailik/flutter_usb.git"
     source: git
-    version: "0.0.3"
+    version: "0.0.7"
   flutter_web_plugins:
     dependency: transitive
     description: flutter

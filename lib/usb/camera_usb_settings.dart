@@ -30,7 +30,7 @@ class CameraUsbSettings extends CameraSettings {
 
   analyzeSettingsAvailable(Response response) {
     if (!isValidResponse(response)) return;
-    var bytes = response.inData.toByteList().asByteData();
+    var bytes = Uint8List.fromList(response.inData).buffer.asByteData();
 
     int offset = 30;
     //30
@@ -239,9 +239,11 @@ class CameraUsbSettings extends CameraSettings {
             offset += 2;
             if (setting.subValue.usbValue == 1 &&
                 setting.settingsId == SettingsId.ShutterSpeed) {
-              setting.value = ShutterSpeedValue(setting.value.usbValue.toDouble());
-            }else{
-              setting.value = ShutterSpeedValue(setting.subValue.usbValue.toDouble() / 10.0);
+              setting.value =
+                  ShutterSpeedValue(setting.value.usbValue.toDouble());
+            } else {
+              setting.value = ShutterSpeedValue(
+                  setting.subValue.usbValue.toDouble() / 10.0);
             }
           } else {
             setting.value =
