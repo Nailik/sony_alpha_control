@@ -226,7 +226,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "8b5c33a7e10d4672b6aac7682050a436908b6ed1"
+      resolved-ref: "36454c934fd86a980a97b793e64400395bb1d93f"
       url: "https://github.com/Nailik/flutter_usb.git"
     source: git
     version: "0.0.2"

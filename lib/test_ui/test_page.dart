@@ -32,8 +32,6 @@ class _TestsPageState extends State<TestsPage> {
                 child: Consumer<CameraSettings>(
                   builder: (context, model, _) => ListView(
                     children: <Widget>[
-                      getTwoFunctionRow("func1", "func2", () => print("func1"),
-                          () => print("func2")),
                       //states
                       getStateRow(SettingsId.ShootingMode),
                       getStateRow(SettingsId.AutoFocusState),
@@ -76,19 +74,6 @@ class _TestsPageState extends State<TestsPage> {
             )));
   }
 
-  Widget getTwoFunctionRow(
-      String f1, String f2, Function func1, Function func2) {
-    return Card(
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-        Expanded(
-          child: ListTile(title: Text(f1), onTap: func1),
-        ),
-        Expanded(
-          child: ListTile(title: Text(f2), onTap: func2),
-        )
-      ]),
-    );
-  }
 
   //getSettingsRow(SettingsId.FileFormat),
 
