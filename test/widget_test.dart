@@ -7,8 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'file:///C:/Users/kilia/Documents/Projects/sony_alpha_control/lib/test_ui/main.dart';
-
+import 'package:sonyalphacontrol/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

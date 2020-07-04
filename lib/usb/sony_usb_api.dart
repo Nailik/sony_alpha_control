@@ -18,6 +18,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
@@ -55,7 +56,7 @@ class SonyUsbApi extends ApiInterface {
   Future<bool> connectToCamera(SonyCameraDevice device) async {
     SonyCameraUsbDevice usbDevice = device as SonyCameraUsbDevice;
     await FlutterUsb.connectToUsbDevice(usbDevice.device);
-    await FlutterUsb.sendCommand(Command(Commands.Connect));
+    await FlutterUsb.sendCommand(Commands.getSettingsXCommand(OpCodeId.Connect, 1, 3, 0, 3, 0, length: 38));
     return true;
   }
 

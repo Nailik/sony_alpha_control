@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
-import 'package:flutter_usb/Command.dart';
 import 'package:flutter_usb/Response.dart';
 import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/camera_settings.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
@@ -16,11 +16,13 @@ class CameraUsbSettings extends CameraSettings {
 
   @override
   Future<bool> update() async {
-    var response =
-        await FlutterUsb.sendCommand(Command(Commands.settingswhatavailable));
+    //TODO init extra?
+    var response = await FlutterUsb.sendCommand(
+        Commands.getSettingsXCommand(OpCodeId.SettingsList, 0xC8, 1, 0, 3, 0));
     analyzeSettingsAvailable(response);
-    response = await FlutterUsb.sendCommand(
-        Command(Commands.readcurrentsettings, outDataLength: 4000));
+    response = await FlutterUsb.sendCommand(Commands.getSettingsXCommand(
+        OpCodeId.Settings, 0, 0, 0, 3, 0,
+        outDataLength: 4000));
     analyzeSettings(response);
 
     notifyListeners();
@@ -77,10 +79,9 @@ class CameraUsbSettings extends CameraSettings {
       }
 
       if (setting.settingsId.name == "ISO") {
-        print(setting.settingsId.name);
-      } else {
-        print("other");
+        ///print(setting.settingsId.name);
       }
+
       //TODO check if i know this settings id
       var dataType = bytes.getUint16(offset, Endian.little);
       offset += 2;
