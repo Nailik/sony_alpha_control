@@ -33,6 +33,8 @@ class _TestsPageState extends State<TestsPage> {
                 child: Consumer<CameraSettings>(
                   builder: (context, model, _) => ListView(
                     children: <Widget>[
+                      getSettingsRow(SettingsId.UnkD2C7),
+                      getSettingsRow(SettingsId.UnkD2C5),
                       //states
                       getStateRow(SettingsId.ShootingMode),
                       getStateRow(SettingsId.AutoFocusState),

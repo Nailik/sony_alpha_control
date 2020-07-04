@@ -132,11 +132,17 @@ class SonyUsbApi extends ApiInterface {
       case SettingsId.UnkD222:
       case SettingsId.UnkD22E:
       case SettingsId.UnkD236:
-      case SettingsId.UnkD2C5:
-      case SettingsId.UnkD2C7:
       case SettingsId.UnkD2D3:
       case SettingsId.UnkD2D4:
         return false;
+      case SettingsId.UnkD2C5:
+        return (await FlutterUsb.sendCommand(Command(
+            Commands.getCommandMainSettingI16(SettingsId.UnkD2C5, value))))
+            .isValidResponse();
+      case SettingsId.UnkD2C7:
+        return (await FlutterUsb.sendCommand(Command(
+            Commands.getCommandMainSettingI16(SettingsId.UnkD2C7, value))))
+            .isValidResponse(); //TODO I32, subsettingss??
       case SettingsId.Unknown:
         return false;
       case SettingsId.FocusMagnifier:

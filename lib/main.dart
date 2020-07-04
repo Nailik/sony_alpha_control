@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initPlatformState() async {
-    await SonyApi.initialize();
+    await SonyApi.initialize(wifi: false);
 
     setState(() {
       _initialized = true;

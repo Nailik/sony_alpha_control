@@ -142,13 +142,10 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.AEL:
         return IntValue(usbValue);
       case SettingsId.UnkD2C5:
-        print("UnkD2C5 $usbValue");
-        // TODO called multiple
-        break;
+        return IntValue(usbValue);
       case SettingsId.UnkD2C7:
         print("UnkD2C7 $usbValue");
-        // TODO called multiple
-        break;
+        return IntValue(usbValue);
       case SettingsId.RecordVideo:
         return BoolValue(usbValue == 2);
       case SettingsId.FEL:

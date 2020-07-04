@@ -33,7 +33,7 @@ enum SettingsId {
   WhiteBalanceColorTemp,
   WhiteBalanceGM,
   AspectRatio,
-  UnkD212,
+  UnkD212, //	/* poll camera until it is ready */
 
   /// <summary>
   /// Green focus state icon (circle / rings icon)
@@ -112,6 +112,10 @@ enum SettingsId {
   UnkD2C5,
 // gphoto calls this "StillImage"
   UnkD2C7,
+  //value current: 1, valkues:
+  // //1 starts a capture
+  // 2 also starts captuer
+  //one of those started hold half shutter
 
   /// <summary>
   /// Start / stop recording videos
