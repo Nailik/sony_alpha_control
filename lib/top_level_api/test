@@ -10,6 +10,12 @@
 ShootingMode
 AutoFocusState
 BatteryInfo
+LiveViewState -- test
+SensorCrop
+FocusMagnifierState -- not available
+UseLiveViewDisplayEffect -- not available? maybe only when live view on
+Zoom -- not available? on usb?
+PhotoTransferQueue
 
 //functions
 RecordVideoState (start/stop) | RecordVideo
@@ -31,25 +37,15 @@ AEL_State | AEL
 PictureEffect
 ISO
 FEL_State | FEL
-FocusArea
-FocusMagnifierPhase
-FocusMagnifier
-FocusMagnifierPosition
-FocusAreaSpot
-FocusMagnifierRequest | FocusMagnifierResetRequest | FocusMagnifierMoveUpRequest
-| FocusMagnifierMoveDownRequest | FocusMagnifierMoveLeftRequest | FocusMagnifierMoveRightRequest
-FocusDistance
-FocusModeToggleRequest??
+FocusArea | FocusAreaSpot -- not available
+FocusMagnifier | FocusMagnifierPhase | FocusMagnifierPosition  -- not available
+FocusMagnifierRequest | FocusMagnifierResetRequest | FocusMagnifierMoveUpRequest  -- not available
+| FocusMagnifierMoveDownRequest | FocusMagnifierMoveLeftRequest | FocusMagnifierMoveRightRequest  -- not available
+FocusDistance  -- not available
+FocusModeToggleRequest -- af/mf not available when switch? -> therefore response
 
-LiveViewInfo | PhotoInfo
+LiveViewInfo | PhotoInfo -> only for requests
 
-//other
-PhotoTransferQueue
 
 //TODO
-Zoom
-SensorCrop
-LiveViewState
-UseLiveViewDisplayEffect
-FocusMagnifierState
-FocusModeToggleResponse
+FocusModeToggleResponse ??

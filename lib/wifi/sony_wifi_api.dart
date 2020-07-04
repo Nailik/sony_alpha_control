@@ -10,6 +10,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_area_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_direction_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_phase_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
@@ -420,6 +421,18 @@ class SonyWifiApi extends ApiInterface {
   @override
   Future<bool> setFlashValue(int value, SonyCameraDevice device) {
     // TODO: implement setFlashValue
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<SettingsItem<FocusModeToggleValue>> getFocusModeToggle(SonyCameraDevice device) {
+    // TODO: implement getFocusModeToggle
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setFocusModeToggle(FocusModeToggleId value, SonyCameraDevice device) {
+    // TODO: implement setFocusModeToggle
     throw UnimplementedError();
   }
 

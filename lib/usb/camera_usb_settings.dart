@@ -78,10 +78,6 @@ class CameraUsbSettings extends CameraSettings {
         settings.add(setting);
       }
 
-      if (setting.settingsId.name == "ISO") {
-        ///print(setting.settingsId.name);
-      }
-
       //TODO check if i know this settings id
       var dataType = bytes.getUint16(offset, Endian.little);
       offset += 2;

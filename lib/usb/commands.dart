@@ -188,8 +188,7 @@ class Commands {
 
   static Uint8List getCommandMainSettingI16_2(
       SettingsId settingsId, var value1, var value2) {
-    return getCommandSetting(
-        OpCodeId.MainSetting, settingsId, value1, value2, 2, 2);
+    return getCommandSetting(OpCodeId.MainSetting, settingsId, value1, value2, 2, 2);
   }
 
   static Uint8List getCommandSettingI16(

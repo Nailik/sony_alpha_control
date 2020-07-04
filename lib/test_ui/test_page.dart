@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sonyalphacontrol/top_level_api/camera_settings.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
@@ -36,6 +37,12 @@ class _TestsPageState extends State<TestsPage> {
                       getStateRow(SettingsId.ShootingMode),
                       getStateRow(SettingsId.AutoFocusState),
                       getStateRow(SettingsId.BatteryInfo),
+                      getStateRow(SettingsId.LiveViewState),
+                      getStateRow(SettingsId.SensorCrop),
+                      getStateRow(SettingsId.FocusMagnifierState),
+                      getStateRow(SettingsId.UseLiveViewDisplayEffect),
+                      getStateRow(SettingsId.PhotoTransferQueue),
+                      getStateRow(SettingsId.Zoom),
                       //functions
                       getVideoRow(),
                       getImageRow(),
@@ -55,6 +62,8 @@ class _TestsPageState extends State<TestsPage> {
                       getSettingsRow(SettingsId.PictureEffect),
                       getSettingsRow(SettingsId.ISO),
                       getFelRow(),
+                      getFocusAreaRow(),
+                      getFocusModeRow()
                     ],
                   ),
                 )),
@@ -73,7 +82,6 @@ class _TestsPageState extends State<TestsPage> {
               ],
             )));
   }
-
 
   //getSettingsRow(SettingsId.FileFormat),
 
@@ -337,59 +345,113 @@ class _TestsPageState extends State<TestsPage> {
     );
   }
 
-
   Widget getAelRow() {
+    return Card(
+      child: IntrinsicHeight(
+          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Expanded(
+          child: ListTile(
+              title: Text(SettingsId.AEL_State.name),
+              subtitle: Text(device.cameraSettings
+                      .getItem(SettingsId.AEL_State)
+                      ?.value
+                      ?.name ??
+                  "")),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text("On"), onTap: () => SonyApi.api.setAel(true, device)),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text("Off"),
+              onTap: () => SonyApi.api.setAel(false, device)),
+        )
+      ])),
+    );
+  }
+
+  Widget getFocusAreaRow() {
     return Card(
       child: IntrinsicHeight(
           child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             Expanded(
               child: ListTile(
-                  title: Text(SettingsId.AEL_State.name),
+                  title: Text(SettingsId.FocusArea.name),
                   subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.AEL_State)
+                      .getItem(SettingsId.FocusArea)
                       ?.value
                       ?.name ??
-                      "")),
+                      "NotAvailable"),
+                  onTap: () => dialog(
+                      device.cameraSettings.getItem(SettingsId.FocusArea),
+                      context)),
             ),
             Expanded(
-              child: ListTile(
-                  title: Text("On"),
-                  onTap: () => SonyApi.api.setAel(true, device)),
-            ),
-            Expanded(
-              child: ListTile(
-                  title: Text("Off"),
-                  onTap: () => SonyApi.api.setAel(false, device)),
-            )
+                child: ListTile(
+                  title: Text(SettingsId.FocusAreaSpot.name),
+                  subtitle: Text(device.cameraSettings
+                      .getItem(SettingsId.FocusAreaSpot)
+                      ?.value
+                      ?.name ??
+                      "NotAvailable"),
+                )),
           ])),
     );
   }
 
 
-  Widget getFelRow() {
+  Widget getFocusModeRow() {
     return Card(
       child: IntrinsicHeight(
           child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             Expanded(
               child: ListTile(
-                  title: Text(SettingsId.FEL_State.name),
+                  title: Text(SettingsId.FocusMode.name),
                   subtitle: Text(device.cameraSettings
+                      .getItem(SettingsId.FocusMode)
+                      ?.value
+                      ?.name ??
+                      "NotAvailable"),
+                  onTap: () => dialog(
+                      device.cameraSettings.getItem(SettingsId.FocusMode),
+                      context)),
+            ),
+            Expanded(
+              child: ListTile(
+                  title: Text("AF"), onTap: () => SonyApi.api.setFocusModeToggle(FocusModeToggleId.Auto, device)),
+            ),
+            Expanded(
+              child: ListTile(
+                  title: Text("MF"), onTap: () => SonyApi.api.setFocusModeToggle(FocusModeToggleId.Manual, device)),
+            )
+          ])),
+    );
+  }
+
+  Widget getFelRow() {
+    return Card(
+      child: IntrinsicHeight(
+          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Expanded(
+          child: ListTile(
+              title: Text(SettingsId.FEL_State.name),
+              subtitle: Text(device.cameraSettings
                       .getItem(SettingsId.FEL_State)
                       ?.value
                       ?.name ??
-                      "")),
-            ),
-            Expanded(
-              child: ListTile(
-                  title: Text("On"),
-                  onTap: () => SonyApi.api.setFel(true, device)),
-            ),
-            Expanded(
-              child: ListTile(
-                  title: Text("Off"),
-                  onTap: () => SonyApi.api.setFel(false, device)),
-            )
-          ])),
+                  "NotAvailable")),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text("On"), onTap: () => SonyApi.api.setFel(true, device)),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text("Off"),
+              onTap: () => SonyApi.api.setFel(false, device)),
+        )
+      ])),
     );
   }
 
@@ -404,7 +466,7 @@ class _TestsPageState extends State<TestsPage> {
                       .getItem(SettingsId.FNumber)
                       ?.value
                       ?.name ??
-                  "")),
+                  "NotAvailable")),
         ),
         Expanded(
           child: ListTile(

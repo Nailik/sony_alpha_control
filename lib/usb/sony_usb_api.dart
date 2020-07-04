@@ -588,6 +588,7 @@ class SonyUsbApi extends ApiInterface {
               SettingsId.FocusMode, value.usbValue))))
           .isValidResponse();
 
+  @override
   Future<bool> setFocusModeToggle(
           FocusModeToggleId value, SonyCameraDevice device) async =>
       (await FlutterUsb.sendCommand(Command(Commands.getCommandMainSettingI16(
@@ -778,6 +779,12 @@ imagename "DSC01548.ARW" (mit arw!!)
   @override
   Future<SettingsItem<IntValue>> getFlashValue(SonyCameraDevice device) {
     //
+  }
+
+  @override
+  Future<SettingsItem<FocusModeToggleValue>> getFocusModeToggle(SonyCameraDevice device) {
+    // TODO: implement getFocusModeToggle
+    throw UnimplementedError();
   }
 }
 

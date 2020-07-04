@@ -7,6 +7,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/dro_hdr_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/flash_mode_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/focus_area_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_phase_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
@@ -66,7 +67,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.ShutterSpeed:
         return IntValue(usbValue);
       case SettingsId.UnkD20E:
-        // TODO: Handle this case.
+        // TODO called often
         break;
       case SettingsId.WhiteBalanceColorTemp:
         return IntValue(usbValue);
@@ -75,24 +76,21 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.AspectRatio:
         return AspectRatioValue.fromUSBValue(usbValue);
       case SettingsId.UnkD212:
-        // TODO: Handle this case.
+        // TODO:  called once
+        print("UnkD212 $usbValue");
         break;
       case SettingsId.AutoFocusState:
         return AutoFocusStateValue.fromUSBValue(usbValue);
       case SettingsId.Zoom:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.PhotoTransferQueue:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue & 0xFF); //32769
       case SettingsId.AEL_State:
         return BoolValue(usbValue == 2);
       case SettingsId.BatteryInfo:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.SensorCrop:
-        // TODO: Handle this case.
-        break;
+        return BoolValue(usbValue == 2);
       case SettingsId.PictureEffect:
         return PictureEffectValue.fromUSBValue(usbValue);
       case SettingsId.WhiteBalanceAB:
@@ -104,18 +102,18 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.FEL_State:
         return BoolValue(usbValue == 2);
       case SettingsId.LiveViewState:
-        // TODO: Handle this case.
-        break;
+        return BoolValue(usbValue == 2);
       case SettingsId.UnkD222:
         // TODO: Handle this case.
+        print("UnkD222 $usbValue");
         break;
       case SettingsId.FocusArea:
-        // TODO: Handle this case.
-        break;
+        return FocusAreaValue.fromUSBValue(usbValue);
       case SettingsId.FocusMagnifierPhase:
         return FocusMagnifierPhaseValue.fromUSBValue(usbValue);
       case SettingsId.UnkD22E:
         // TODO: Handle this case.
+        print("UnkD22E $usbValue");
         break;
       case SettingsId.FocusMagnifier:
         // TODO: Handle this case.
@@ -124,37 +122,35 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
         // TODO: Handle this case.
         break;
       case SettingsId.UseLiveViewDisplayEffect:
-        // TODO: Handle this case.
-        break;
+        return BoolValue(usbValue == 2);
       case SettingsId.FocusAreaSpot:
         // TODO: Handle this case.
         break;
       case SettingsId.FocusMagnifierState:
-        // TODO: Handle this case.
-        break;
+        return BoolValue(usbValue == 2);
       case SettingsId.FocusModeToggleResponse:
         // TODO: Handle this case.
         break;
       case SettingsId.UnkD236:
+        print("UnkD236 $usbValue");
         // TODO: Handle this case.
         break;
       case SettingsId.HalfPressShutter:
-        // TODO: Handle this case.
-        break;
+        return BoolValue(usbValue == 2);
       case SettingsId.CapturePhoto:
-        // TODO: Handle this case.
-        break;
+        return BoolValue(usbValue == 2);
       case SettingsId.AEL:
         return IntValue(usbValue);
       case SettingsId.UnkD2C5:
-        // TODO: Handle this case.
+        print("UnkD2C5 $usbValue");
+        // TODO called multiple
         break;
       case SettingsId.UnkD2C7:
-        // TODO: Handle this case.
+        print("UnkD2C7 $usbValue");
+        // TODO called multiple
         break;
       case SettingsId.RecordVideo:
-        // TODO: Handle this case.
-        break;
+        return BoolValue(usbValue == 2);
       case SettingsId.FEL:
         return BoolValue(usbValue == 2);
       case SettingsId.FocusMagnifierRequest:

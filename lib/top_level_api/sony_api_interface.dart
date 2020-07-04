@@ -9,6 +9,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_area_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_direction_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_phase_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
@@ -132,6 +133,9 @@ abstract class ApiInterface {
 
   Future<SettingsItem<FocusModeValue>> getFocusMode(SonyCameraDevice device);
   Future<bool> setFocusMode(FocusModeId value, SonyCameraDevice device);
+
+  Future<SettingsItem<FocusModeToggleValue>> getFocusModeToggle(SonyCameraDevice device);
+  Future<bool> setFocusModeToggle(FocusModeToggleId value, SonyCameraDevice device);
 
 // TODO: If the steps value is larger than 7 then use a loop?
   Future<bool> setFocusDistance(int value, SonyCameraDevice device);

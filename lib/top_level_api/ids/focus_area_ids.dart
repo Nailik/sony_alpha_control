@@ -29,7 +29,7 @@ extension FocusAreaIdExtension on FocusAreaId {
         return 0x0002;
       case FocusAreaId.Center:
         return 0x0003;
-      case FocusAreaId.FlexibleSpotS:
+      case FocusAreaId.FlexibleSpotS: //s
         return 0x0101;
       case FocusAreaId.FlexibleSpotM:
         return 0x0102;
@@ -39,7 +39,7 @@ extension FocusAreaIdExtension on FocusAreaId {
         return 0x0104;
       case FocusAreaId.LockOnAF_Wide:
         return 0x0201;
-      case FocusAreaId.LockOnAF_Zone:
+      case FocusAreaId.LockOnAF_Zone: //zone
         return 0x0202;
       case FocusAreaId.LockOnAF_Center:
         return 0x0203;
