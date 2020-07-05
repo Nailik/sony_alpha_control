@@ -33,6 +33,8 @@ import 'package:sonyalphacontrol/usb/sony_camera_usb_device.dart';
 
 import 'commands.dart';
 
+//TODO 0000   10 00 00 00 04 00 03 c2 ff ff ff ff 1d d2 00 00 -> URB_INTERRUPT in when sth changed
+//TODO register for event notifications
 class SonyUsbApi extends ApiInterface {
   var _initialized = false;
 
@@ -255,20 +257,26 @@ class SonyUsbApi extends ApiInterface {
     await pressShutter(ShutterPressType.Both, device);
     await releaseShutter(ShutterPressType.Both, device);
     //read photo
+    downloadImages(device);
+
+    return true;
+  }
+
+  downloadImages(SonyCameraDevice device) async{
     await device.cameraSettings.update();
     var item = device.cameraSettings.settings.firstWhere(
-        (element) => element.settingsId == SettingsId.PhotoTransferQueue);
+            (element) => element.settingsId == SettingsId.PhotoTransferQueue);
 
-    if (item != null) {
-      int numPhotos = item.value.usbValue & 0xFF;
-      bool photoAvailableForTransfer =
-          ((item.value.usbValue >> 8) & 0xFF) == 0x80;
-      print("numPhotos $numPhotos");
-      if (photoAvailableForTransfer) {
-        for (int i = 0; i < numPhotos; i++) {
-          var image = await GetImage(false);
-        }
-      }
+    int numPhotos = item.value.usbValue & 0xFF;
+    bool photoAvailableForTransfer =
+        ((item.value.usbValue >> 8) & 0xFF) == 0x80;
+
+    print("numPhotos RAW ${item.value.usbValue} available ${item.value.usbValue}");
+    print("numPhotos $numPhotos available $photoAvailableForTransfer");
+
+    if(numPhotos >= 1) {
+        var image = await GetImage(false);
+        downloadImages(device);
     }
   }
 
@@ -699,9 +707,8 @@ class SonyUsbApi extends ApiInterface {
     int nameLength = bytes.getUint8(82);
     int CharSize = 2;
     int totalLength = nameLength * CharSize;
-    var namebytes = response.inData.toByteList().sublist(83, 83 + totalLength);
-    var name = new String.fromCharCodes(namebytes);
-
+    Uint8List namebytes = response.inData.toByteList().sublist(83, 83 + totalLength);
+    var name = String.fromCharCodes(namebytes).replaceAll(RegExp(r"\x00"),""); //replace "NUL" characters
     print(name);
 
     //TODO in chunks, very slow at the moment? loading slow or json slow?
@@ -709,11 +716,13 @@ class SonyUsbApi extends ApiInterface {
         liveView, false,
         imageSizeInBytes: imageSizeInBytes));
 
+    print("validresponse on get image ${response.isValidResponse()}");
     if (!response.isValidResponse()) return null;
     var buffer = response.inData.toByteList().buffer;
     bytes = buffer.asByteData();
 
     if (liveView) {
+      print("liveView $liveView");
       int unkBufferSize = bytes.getUint32(30, Endian.little);
       int liveViewBufferSize = bytes.getUint32(34, Endian.little);
       var unkBuff = ByteData.view(buffer, 38, unkBufferSize - 8);
@@ -722,6 +731,7 @@ class SonyUsbApi extends ApiInterface {
           .toByteList()
           .sublist(start, buffer.lengthInBytes - start);
     } else {
+      print("no live view");
       //10 27 00 00 d4 05 00 00
       //10 27 00 00 27 0c 00 00
       //10 27 00 00 71 18 00 00
@@ -753,11 +763,12 @@ imagename "DSC01548.ARW" (mit arw!!)
 
        */
       Uint8List data =
-          response.inData.toByteList().sublist(30, buffer.lengthInBytes - 30);
+          response.inData.toByteList().sublist(30);
 
       print("saveFile $name");
       File file = new File("C:\\Users\\kilia\\Desktop\\$name");
       file.writeAsBytesSync(data);
+      print("finished saveFile ${file.path}");
       return data;
     }
   }

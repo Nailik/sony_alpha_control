@@ -84,7 +84,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.Zoom:
         return IntValue(usbValue);
       case SettingsId.PhotoTransferQueue:
-        return IntValue(usbValue & 0xFF); //32769
+        return IntValue(usbValue); //32769  & 0xFF
       case SettingsId.AEL_State:
         return BoolValue(usbValue == 2);
       case SettingsId.BatteryInfo:

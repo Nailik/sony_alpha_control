@@ -377,57 +377,60 @@ class _TestsPageState extends State<TestsPage> {
     return Card(
       child: IntrinsicHeight(
           child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            Expanded(
-              child: ListTile(
-                  title: Text(SettingsId.FocusArea.name),
-                  subtitle: Text(device.cameraSettings
+        Expanded(
+          child: ListTile(
+              title: Text(SettingsId.FocusArea.name),
+              subtitle: Text(device.cameraSettings
                       .getItem(SettingsId.FocusArea)
                       ?.value
                       ?.name ??
-                      "NotAvailable"),
-                  onTap: () => dialog(
-                      device.cameraSettings.getItem(SettingsId.FocusArea),
-                      context)),
-            ),
-            Expanded(
-                child: ListTile(
-                  title: Text(SettingsId.FocusAreaSpot.name),
-                  subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.FocusAreaSpot)
-                      ?.value
-                      ?.name ??
-                      "NotAvailable"),
-                )),
-          ])),
+                  "NotAvailable"),
+              onTap: () => dialog(
+                  device.cameraSettings.getItem(SettingsId.FocusArea),
+                  context)),
+        ),
+        Expanded(
+            child: ListTile(
+          title: Text(SettingsId.FocusAreaSpot.name),
+          subtitle: Text(device.cameraSettings
+                  .getItem(SettingsId.FocusAreaSpot)
+                  ?.value
+                  ?.name ??
+              "NotAvailable"),
+        )),
+      ])),
     );
   }
-
 
   Widget getFocusModeRow() {
     return Card(
       child: IntrinsicHeight(
           child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            Expanded(
-              child: ListTile(
-                  title: Text(SettingsId.FocusMode.name),
-                  subtitle: Text(device.cameraSettings
+        Expanded(
+          child: ListTile(
+              title: Text(SettingsId.FocusMode.name),
+              subtitle: Text(device.cameraSettings
                       .getItem(SettingsId.FocusMode)
                       ?.value
                       ?.name ??
-                      "NotAvailable"),
-                  onTap: () => dialog(
-                      device.cameraSettings.getItem(SettingsId.FocusMode),
-                      context)),
-            ),
-            Expanded(
-              child: ListTile(
-                  title: Text("AF"), onTap: () => SonyApi.api.setFocusModeToggle(FocusModeToggleId.Auto, device)),
-            ),
-            Expanded(
-              child: ListTile(
-                  title: Text("MF"), onTap: () => SonyApi.api.setFocusModeToggle(FocusModeToggleId.Manual, device)),
-            )
-          ])),
+                  "NotAvailable"),
+              onTap: () => dialog(
+                  device.cameraSettings.getItem(SettingsId.FocusMode),
+                  context)),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text("AF"),
+              onTap: () => SonyApi.api
+                  .setFocusModeToggle(FocusModeToggleId.Auto, device)),
+        ),
+        Expanded(
+          child: ListTile(
+              title: Text("MF"),
+              onTap: () => SonyApi.api
+                  .setFocusModeToggle(FocusModeToggleId.Manual, device)),
+        )
+      ])),
     );
   }
 
@@ -536,6 +539,9 @@ class _TestsPageState extends State<TestsPage> {
                     SonyApi.api.releaseShutter(ShutterPressType.Both, device)),
           )
         ])),
+        ListTile(
+            title: Text("capture photo"),
+            onTap: () => SonyApi.api.capturePhoto(device)),
       ],
     ));
   }
