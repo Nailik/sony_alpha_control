@@ -33,6 +33,7 @@ dependencies:
   http:
   provider:
   cross_connectivity:
+  flutter_isolate: ^1.0.0+14
   file_chooser:
     git:
       url: git://github.com/google/flutter-desktop-embedding.git

@@ -6,7 +6,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
-import 'package:sonyalphacontrol/top_level_api/sony_api_interface.dart';
+import 'package:sonyalphacontrol/top_level_api/sony_camera_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
 
 class TestsPage extends StatefulWidget {
@@ -80,7 +80,7 @@ class TestsPageState extends State<TestsPage> {
                   child: Text("reload"),
                   color: Colors.blue,
                   onPressed: () {
-                    SonyApi.updateSettings();
+                    device.updateSettings();
                   },
                 )
               ],
@@ -222,7 +222,7 @@ class TestsPageState extends State<TestsPage> {
       list.add(
         new SimpleDialogOption(
           onPressed: () {
-            SonyApi.setSettingsRaw(data.settingsId, value.usbValue);
+            device.api.setSettingsRaw(data.settingsId, value.usbValue);
           },
           child: Text(value?.name ?? "t"),
         ),
@@ -256,17 +256,16 @@ class TestsPageState extends State<TestsPage> {
                       ?.name ??
                   ""),
               onTap: () => dialog(
-                  device.cameraSettings.getItem(SettingsId.FlashValue), context)),
+                  device.cameraSettings.getItem(SettingsId.FlashValue),
+                  context)),
         ),
         Expanded(
           child: ListTile(
-              title: Text("Up"),
-              onTap: () => SonyApi.api.setFlashValue(1, device)),
+              title: Text("Up"), onTap: () => device.api.setFlashValue(1)),
         ),
         Expanded(
           child: ListTile(
-              title: Text("Down"),
-              onTap: () => SonyApi.api.setFlashValue(-1, device)),
+              title: Text("Down"), onTap: () => device.api.setFlashValue(-1)),
         )
       ])),
     );
@@ -288,12 +287,12 @@ class TestsPageState extends State<TestsPage> {
         Expanded(
           child: ListTile(
               title: Text("Start Record"),
-              onTap: () => SonyApi.api.startRecordingVideo(device)),
+              onTap: () => device.api.startRecordingVideo()),
         ),
         Expanded(
           child: ListTile(
               title: Text("Stop Record"),
-              onTap: () => SonyApi.api.stopRecordingVideo(device)),
+              onTap: () => device.api.stopRecordingVideo()),
         )
       ])),
     );
@@ -311,12 +310,11 @@ class TestsPageState extends State<TestsPage> {
                       "")),
         ),
         Expanded(
-          child: ListTile(
-              title: Text("Up"), onTap: () => SonyApi.api.setEV(1, device)),
+          child: ListTile(title: Text("Up"), onTap: () => device.api.setEV(1)),
         ),
         Expanded(
-          child: ListTile(
-              title: Text("Down"), onTap: () => SonyApi.api.setEV(-1, device)),
+          child:
+              ListTile(title: Text("Down"), onTap: () => device.api.setEV(-1)),
         )
       ])),
     );
@@ -337,13 +335,11 @@ class TestsPageState extends State<TestsPage> {
         ),
         Expanded(
           child: ListTile(
-              title: Text("Up"),
-              onTap: () => SonyApi.api.setShutterSpeed(1, device)),
+              title: Text("Up"), onTap: () => device.api.setShutterSpeed(1)),
         ),
         Expanded(
           child: ListTile(
-              title: Text("Down"),
-              onTap: () => SonyApi.api.setShutterSpeed(-1, device)),
+              title: Text("Down"), onTap: () => device.api.setShutterSpeed(-1)),
         )
       ])),
     );
@@ -363,13 +359,12 @@ class TestsPageState extends State<TestsPage> {
                   "")),
         ),
         Expanded(
-          child: ListTile(
-              title: Text("On"), onTap: () => SonyApi.api.setAel(true, device)),
+          child:
+              ListTile(title: Text("On"), onTap: () => device.api.setAel(true)),
         ),
         Expanded(
           child: ListTile(
-              title: Text("Off"),
-              onTap: () => SonyApi.api.setAel(false, device)),
+              title: Text("Off"), onTap: () => device.api.setAel(false)),
         )
       ])),
     );
@@ -423,14 +418,14 @@ class TestsPageState extends State<TestsPage> {
         Expanded(
           child: ListTile(
               title: Text("AF"),
-              onTap: () => SonyApi.api
-                  .setFocusModeToggle(FocusModeToggleId.Auto, device)),
+              onTap: () =>
+                  device.api.setFocusModeToggle(FocusModeToggleId.Auto)),
         ),
         Expanded(
           child: ListTile(
               title: Text("MF"),
-              onTap: () => SonyApi.api
-                  .setFocusModeToggle(FocusModeToggleId.Manual, device)),
+              onTap: () =>
+                  device.api.setFocusModeToggle(FocusModeToggleId.Manual)),
         )
       ])),
     );
@@ -450,13 +445,12 @@ class TestsPageState extends State<TestsPage> {
                   "NotAvailable")),
         ),
         Expanded(
-          child: ListTile(
-              title: Text("On"), onTap: () => SonyApi.api.setFel(true, device)),
+          child:
+              ListTile(title: Text("On"), onTap: () => device.api.setFel(true)),
         ),
         Expanded(
           child: ListTile(
-              title: Text("Off"),
-              onTap: () => SonyApi.api.setFel(false, device)),
+              title: Text("Off"), onTap: () => device.api.setFel(false)),
         )
       ])),
     );
@@ -477,13 +471,11 @@ class TestsPageState extends State<TestsPage> {
         ),
         Expanded(
           child: ListTile(
-              title: Text("Up"),
-              onTap: () => SonyApi.api.setFNumber(1, device)),
+              title: Text("Up"), onTap: () => device.api.setFNumber(1)),
         ),
         Expanded(
           child: ListTile(
-              title: Text("Down"),
-              onTap: () => SonyApi.api.setFNumber(-1, device)),
+              title: Text("Down"), onTap: () => device.api.setFNumber(-1)),
         )
       ])),
     );
@@ -499,14 +491,12 @@ class TestsPageState extends State<TestsPage> {
           Expanded(
             child: ListTile(
                 title: Text("HalfPressShutter"),
-                onTap: () =>
-                    SonyApi.api.pressShutter(ShutterPressType.Half, device)),
+                onTap: () => device.api.pressShutter(ShutterPressType.Half)),
           ),
           Expanded(
             child: ListTile(
                 title: Text("release HalfPressShutter"),
-                onTap: () =>
-                    SonyApi.api.releaseShutter(ShutterPressType.Half, device)),
+                onTap: () => device.api.releaseShutter(ShutterPressType.Half)),
           )
         ])),
         IntrinsicHeight(
@@ -515,14 +505,12 @@ class TestsPageState extends State<TestsPage> {
           Expanded(
             child: ListTile(
                 title: Text("FullPressShutter"),
-                onTap: () =>
-                    SonyApi.api.pressShutter(ShutterPressType.Full, device)),
+                onTap: () => device.api.pressShutter(ShutterPressType.Full)),
           ),
           Expanded(
             child: ListTile(
                 title: Text("release FullPressShutter"),
-                onTap: () =>
-                    SonyApi.api.releaseShutter(ShutterPressType.Full, device)),
+                onTap: () => device.api.releaseShutter(ShutterPressType.Full)),
           )
         ])),
         IntrinsicHeight(
@@ -531,14 +519,12 @@ class TestsPageState extends State<TestsPage> {
           Expanded(
             child: ListTile(
                 title: Text("BothPressShutter"),
-                onTap: () =>
-                    SonyApi.api.pressShutter(ShutterPressType.Both, device)),
+                onTap: () => device.api.pressShutter(ShutterPressType.Both)),
           ),
           Expanded(
             child: ListTile(
                 title: Text("release BothPressShutter"),
-                onTap: () =>
-                    SonyApi.api.releaseShutter(ShutterPressType.Both, device)),
+                onTap: () => device.api.releaseShutter(ShutterPressType.Both)),
           )
         ])),
         IntrinsicHeight(
@@ -547,7 +533,7 @@ class TestsPageState extends State<TestsPage> {
           Expanded(
             child: ListTile(
                 title: Text("capture photo"),
-                onTap: () => SonyApi.api.capturePhoto(device)),
+                onTap: () => device.api.capturePhoto()),
           ),
           Expanded(
               child: ListTile(
