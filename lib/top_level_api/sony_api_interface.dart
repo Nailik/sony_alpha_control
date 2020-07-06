@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:sonyalphacontrol/top_level_api/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
@@ -71,6 +72,8 @@ abstract class ApiInterface {
   Future<bool> setSettingsRaw(SettingsId id, int value, SonyCameraDevice device);
 
   Future<bool> capturePhoto(SonyCameraDevice device); //TODO return foto?
+  Future<bool> getPhotoAvailable(SonyCameraDevice device);
+  Future<CameraImageRequest> requestPhotoAvailable(SonyCameraDevice device, bool liveView);
 
   Future<bool> pressShutter(ShutterPressType shutterPressType, SonyCameraDevice device); //TODO half and full
   Future<bool> releaseShutter(ShutterPressType shutterPressType, SonyCameraDevice device);
@@ -166,7 +169,7 @@ abstract class ApiInterface {
   Future<SettingsItem<FocusMagnifierPhaseValue>> getFocusMagnifierPhase(SonyCameraDevice device);
   Future<bool> setFocusMagnifierPhase(FocusMagnifierPhaseId value, SonyCameraDevice device);
 
-  Future<double> getFocusMagnifier(SonyCameraDevice device);
+  Future<SettingsItem<DoubleValue>> getFocusMagnifier(SonyCameraDevice device);
   Future<bool> setFocusMagnifier(double value, SonyCameraDevice device); //steps?
 
 

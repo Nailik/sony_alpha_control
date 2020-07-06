@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:flutter_usb/Command.dart';
 import 'package:flutter_usb/Response.dart';
 import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/camera_settings.dart';
@@ -16,12 +17,14 @@ class CameraUsbSettings extends CameraSettings {
 
   @override
   Future<bool> update() async {
-    //TODO init extra?
-    var response = await FlutterUsb.sendCommand(
-        Commands.getSettingsXCommand(OpCodeId.SettingsList, 0xC8, 1, 0, 3, 0));
+
+    var response = await FlutterUsb.sendCommand(Command(
+        Commands.getCommandSetting(
+            OpCodeId.SettingsList, SettingsId.AvailableSettings, 1, 0, 3, 0)));
     analyzeSettingsAvailable(response);
-    response = await FlutterUsb.sendCommand(Commands.getSettingsXCommand(
-        OpCodeId.Settings, 0, 0, 0, 3, 0,
+    response = await FlutterUsb.sendCommand(Command(
+        Commands.getCommandSetting(
+            OpCodeId.Settings, SettingsId.CameraInfo, 0, 0, 3, 0),
         outDataLength: 4000));
     analyzeSettings(response);
 

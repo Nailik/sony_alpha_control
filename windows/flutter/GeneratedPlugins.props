@@ -5,10 +5,10 @@
   <PropertyGroup/>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>flutter\ephemeral\.plugin_symlinks\flutter_usb\windows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>flutter\ephemeral\.plugin_symlinks\file_chooser\windows;flutter\ephemeral\.plugin_symlinks\flutter_usb\windows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>flutter_usb_plugin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>file_chooser_plugin.lib;flutter_usb_plugin.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup/>

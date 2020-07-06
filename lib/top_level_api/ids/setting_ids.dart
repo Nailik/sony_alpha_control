@@ -17,7 +17,7 @@ enum SettingsId {
   /// The camera drive mode (single shooting, continuous shooting, etc)
   /// </summary>
   DriveMode,
-  Flash,
+  FlashValue,
 
   /// <summary>
   /// DRO/Auto HDR (Dynamic-Range Optimizer / Auto High Dynamic Range)
@@ -152,6 +152,10 @@ enum SettingsId {
   UnkD2D4,
   LiveViewInfo,
   PhotoInfo,
+  ///for the available camera settings
+  AvailableSettings,
+  ///for the current camera settings
+  CameraInfo,
   Unknown
 }
 
@@ -178,7 +182,7 @@ extension SettingsIdExtension on SettingsId {
         return 0x5010;
       case SettingsId.DriveMode:
         return 0x5013;
-      case SettingsId.Flash:
+      case SettingsId.FlashValue:
         return 0xD200;
       case SettingsId.DroHdr:
         return 0xD201;
@@ -280,6 +284,10 @@ extension SettingsIdExtension on SettingsId {
         return 0xC002;
       case SettingsId.PhotoInfo: //0c00
         return 0xC001;
+      case SettingsId.AvailableSettings:
+        return 0x00C8;
+      case SettingsId.CameraInfo:
+        return 0x00;
       case SettingsId.Unknown:
         return -1;
       default:

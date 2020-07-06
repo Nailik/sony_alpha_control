@@ -7,6 +7,7 @@ abstract class CameraSettings extends ChangeNotifier {
 
   Future<bool> update();
 
+  //TODO getter future, da wenn current value "leer" evtl nochmal requesten?
   SettingsItem getItem(SettingsId settingsId) {
     return settings.firstWhere((element) => element.settingsId == settingsId,
         orElse: () => null);

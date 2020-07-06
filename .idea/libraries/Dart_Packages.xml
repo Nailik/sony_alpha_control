@@ -205,6 +205,13 @@
             </list>
           </value>
         </entry>
+        <entry key="file_chooser">
+          <value>
+            <list>
+              <option value="$USER_HOME$/AppData/Roaming/Pub/Cache/git/flutter-desktop-embedding-4df20370025fd8c84adcba605e7a7fee8760687b/plugins/file_chooser/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="fixnum">
           <value>
             <list>
@@ -587,6 +594,7 @@
     </properties>
     <CLASSES>
       <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/git/WiFiFlutter-2e0646419cad65e8316a9aab61b98806916b1897/lib" />
+      <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/git/flutter-desktop-embedding-4df20370025fd8c84adcba605e7a7fee8760687b/plugins/file_chooser/lib" />
       <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/git/flutter_usb-a3ef8201f7bffd1e3a66970d9287d8916b73918f/lib" />
       <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/_fe_analyzer_shared-5.0.0/lib" />
       <root url="file://$USER_HOME$/AppData/Roaming/Pub/Cache/hosted/pub.dartlang.org/analyzer-0.39.11/lib" />

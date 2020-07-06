@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cross_connectivity/cross_connectivity.dart';
+import 'package:sonyalphacontrol/top_level_api/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
@@ -133,12 +134,6 @@ class SonyWifiApi extends ApiInterface {
   @override
   Future<SettingsItem<PointValue>> getFocusAreaSpot(SonyCameraDevice device) {
     // TODO: implement getFocusAreaSpot
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<double> getFocusMagnifier(SonyCameraDevice device) {
-    // TODO: implement getFocusMagnifier
     throw UnimplementedError();
   }
 
@@ -433,6 +428,24 @@ class SonyWifiApi extends ApiInterface {
   @override
   Future<bool> setFocusModeToggle(FocusModeToggleId value, SonyCameraDevice device) {
     // TODO: implement setFocusModeToggle
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> getPhotoAvailable(SonyCameraDevice device) {
+    // TODO: implement getPhotoAvailable
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<CameraImageRequest> requestPhotoAvailable(SonyCameraDevice device, bool liveView) {
+    // TODO: implement requestPhotoAvailable
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<SettingsItem<DoubleValue>> getFocusMagnifier(SonyCameraDevice device) {
+    // TODO: implement getFocusMagnifier
     throw UnimplementedError();
   }
 

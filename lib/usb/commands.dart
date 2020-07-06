@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter_usb/Command.dart';
@@ -6,25 +7,6 @@ import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 
 class Commands {
   static var index = 3;
-
-  static Command getSettingsXCommand(OpCodeId opcode, int value, int value2,
-      int value3, int value4, int value5,
-      {int outDataLength = 1024, length = 40}) {
-    Uint8List list = CommandT.createCommand(length);
-    list.writeUInt16(opcode.usbValue);
-    list.goTo(10);
-    list.writeUInt16(value);
-    list.goTo(30);
-    list.writeUInt8(value2);
-    list.goTo(31);
-    list.writeUInt8(value3);
-    list.goTo(34);
-    list.writeUInt8(value4);
-    list.writeUInt8(value5);
-
-    return Command(list,
-        outDataLength: outDataLength); //TODO image size in bytes
-  }
 
   static Uint8List getCommandMainSettingI32(SettingsId settingsId, var value) {
     return getCommandSettingI32(OpCodeId.MainSetting, settingsId, value);
@@ -54,7 +36,8 @@ class Commands {
 
   static Uint8List getCommandMainSettingI16_2(
       SettingsId settingsId, var value1, var value2) {
-    return getCommandSetting(OpCodeId.MainSetting, settingsId, value1, value2, 2, 2);
+    return getCommandSetting(
+        OpCodeId.MainSetting, settingsId, value1, value2, 2, 2);
   }
 
   static Uint8List getCommandSettingI16(
@@ -67,63 +50,87 @@ class Commands {
     print("index $index");
 
     Uint8List list = CommandT.createCommand(40);
-    list.writeUInt16(opCodeId.usbValue);
-    list.goTo(10);
-    list.writeUInt16(settingsId.usbValue);
-    list.goTo(30);
-    list.writeUInt8(1);
-    list.goTo(34);
-    list.writeUInt8(4);
-    list.goTo(38);
+    if (Platform.isWindows) {
+      //wia is used
+      list.writeUInt16(opCodeId.usbValue);
+      list.goTo(10);
+      list.writeUInt16(settingsId.usbValue);
+      list.goTo(30);
+      list.writeUInt8(1);
+      list.goTo(34);
+      if (settingsId == SettingsId.AvailableSettings ||
+          settingsId == SettingsId.CameraInfo) {
+        list.writeUInt8(3);
+      } else {
+        list.writeUInt8(4);
+      }
+      list.goTo(38);
 
-    addValueToCommand(list, value1, value1DataSize);
-    addValueToCommand(list, value2, value2DataSize);
+      addValueToCommand(list, value1, value1DataSize);
+      addValueToCommand(list, value2, value2DataSize);
+    } else if (Platform.isAndroid) {
+      print("index $index");
+
+      //2 lists
+      //Uint8List list = CommandT.createCommand(10);
+      //start with length
+      list.writeUInt8(10);
+      //skip 3
+      list.goTo(4);
+      //write part
+      list.writeUInt8(1);
+      //skip 1
+      list.writeUInt8(0);
+      //write opcode
+      list.writeUInt16(opCodeId.usbValue);
+      //write index
+      list.writeUInt8(index);
+      //skip 3
+      list.goTo(12);
+      //write settings id
+      list.writeUInt16(settingsId.usbValue);
+
+      Uint8List list2 = CommandT.createCommand(0x0e);
+      //start with length
+      list.writeUInt8(0x0e);
+      //skip 3
+      list.goTo(4);
+      //write part
+      list.writeUInt8(2);
+      //skip 1
+      list.writeUInt8(0);
+      //write opcode
+      list.writeUInt16(opCodeId.usbValue);
+      //write index
+      list.writeUInt8(index);
+      //skip 3
+      list.goTo(12);
+      //write settings value
+      addValueToCommand(list, value1, value1DataSize); //write 8 or 16 bit value
+      addValueToCommand(list, value2, value2DataSize); //todo longer?
+    }
 
     return list;
   }
 
-  static Uint8List getCommandSettingAndroid(OpCodeId opCodeId, SettingsId settingsId,
-      int value1, int value2, int value1DataSize, int value2DataSize) {
-    print("index $index");
+  //0xC801
+  static Command getSettingsXCommand(OpCodeId opcode, int value, int value2,
+      int value3, int value4, int value5,
+      {int outDataLength = 1024, length = 40}) {
+    Uint8List list = CommandT.createCommand(length);
+    list.writeUInt16(opcode.usbValue);
+    list.goTo(10);
+    list.writeUInt16(value);
+    list.goTo(30);
+    list.writeUInt8(value2);
+    list.goTo(31);
+    list.writeUInt8(value3);
+    list.goTo(34);
+    list.writeUInt8(value4);
+    list.writeUInt8(value5);
 
-    //2 lists
-    Uint8List list = CommandT.createCommand(10);
-    //start with length
-    list.writeUInt8(10);
-    //skip 3
-    list.goTo(4);
-    //write part
-    list.writeUInt8(1);
-    //skip 1
-    list.writeUInt8(0);
-    //write opcode
-    list.writeUInt16(opCodeId.usbValue);
-    //write index
-    list.writeUInt8(index);
-    //skip 3
-    list.goTo(12);
-    //write settings id
-    list.writeUInt16(settingsId.usbValue);
-
-    Uint8List list2 = CommandT.createCommand(0x0e);
-    //start with length
-    list.writeUInt8(0x0e);
-    //skip 3
-    list.goTo(4);
-    //write part
-    list.writeUInt8(2);
-    //skip 1
-    list.writeUInt8(0);
-    //write opcode
-    list.writeUInt16(opCodeId.usbValue);
-    //write index
-    list.writeUInt8(index);
-    //skip 3
-    list.goTo(12);
-    //write settings value
-    addValueToCommand(list, value1, value1DataSize); //write 8 or 16 bit value
-
-    return list;
+    return Command(list,
+        outDataLength: outDataLength); //TODO image size in bytes
   }
 
   static addValueToCommand(Uint8List list, int value, int valueDataSize) {

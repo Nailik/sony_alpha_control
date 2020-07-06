@@ -58,7 +58,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
         return IntValue(usbValue);
       case SettingsId.DriveMode:
         return DriveModeValue.fromUSBValue(usbValue);
-      case SettingsId.Flash:
+      case SettingsId.FlashValue:
         return IntValue(usbValue);
       case SettingsId.DroHdr:
         return DroHdrValue.fromUSBValue(usbValue);

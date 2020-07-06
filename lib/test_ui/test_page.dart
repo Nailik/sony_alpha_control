@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:file_chooser/file_chooser.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sonyalphacontrol/top_level_api/camera_settings.dart';
@@ -15,13 +15,15 @@ class TestsPage extends StatefulWidget {
   const TestsPage({Key key, this.device}) : super(key: key);
 
   @override
-  _TestsPageState createState() => _TestsPageState(device);
+  TestsPageState createState() => TestsPageState(device);
 }
 
-class _TestsPageState extends State<TestsPage> {
+class TestsPageState extends State<TestsPage> {
+  static ValueNotifier<String> path = ValueNotifier("Empty");
+
   final SonyCameraDevice device;
 
-  _TestsPageState(this.device);
+  TestsPageState(this.device);
 
   @override
   Widget build(BuildContext context) {
@@ -247,14 +249,14 @@ class _TestsPageState extends State<TestsPage> {
         ),
         Expanded(
           child: ListTile(
-              title: Text(SettingsId.Flash.name),
+              title: Text(SettingsId.FlashValue.name),
               subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.Flash)
+                      .getItem(SettingsId.FlashValue)
                       ?.value
                       ?.name ??
                   ""),
               onTap: () => dialog(
-                  device.cameraSettings.getItem(SettingsId.Flash), context)),
+                  device.cameraSettings.getItem(SettingsId.FlashValue), context)),
         ),
         Expanded(
           child: ListTile(
@@ -539,9 +541,26 @@ class _TestsPageState extends State<TestsPage> {
                     SonyApi.api.releaseShutter(ShutterPressType.Both, device)),
           )
         ])),
-        ListTile(
-            title: Text("capture photo"),
-            onTap: () => SonyApi.api.capturePhoto(device)),
+        IntrinsicHeight(
+            child:
+                Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          Expanded(
+            child: ListTile(
+                title: Text("capture photo"),
+                onTap: () => SonyApi.api.capturePhoto(device)),
+          ),
+          Expanded(
+              child: ListTile(
+                  title: Text("select folder"),
+                  subtitle: ValueListenableBuilder(
+                      //ChangeNotifierProvider.value is not working
+                      valueListenable: path,
+                      builder: (_, __, ___) => Text(path.value.toString())),
+                  onTap: () =>
+                      showOpenPanel(canSelectDirectories: true).then((value) {
+                        path.value = value.paths[0].toString();
+                      })))
+        ])),
       ],
     ));
   }

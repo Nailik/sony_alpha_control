@@ -8,7 +8,7 @@ import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  FlutterUsb.enableLogger();
+  FlutterUsb.enableLogger(maxLogLengthNew: 30);
   runApp(MyApp());
 }
 

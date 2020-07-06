@@ -5,6 +5,8 @@ import 'dart:typed_data';
 import 'package:flutter_usb/Command.dart';
 import 'package:flutter_usb/Response.dart';
 import 'package:flutter_usb/flutter_usb.dart';
+import 'package:sonyalphacontrol/test_ui/test_page.dart';
+import 'package:sonyalphacontrol/top_level_api/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
@@ -57,8 +59,12 @@ class SonyUsbApi extends ApiInterface {
   @override
   Future<bool> connectToCamera(SonyCameraDevice device) async {
     SonyCameraUsbDevice usbDevice = device as SonyCameraUsbDevice;
-    await FlutterUsb.connectToUsbDevice(usbDevice.device);
-    await FlutterUsb.sendCommand(Commands.getSettingsXCommand(OpCodeId.Connect, 1, 3, 0, 3, 0, length: 38));
+    var str = await FlutterUsb.connectToUsbDevice(usbDevice.device);
+    print("str $str");
+    var response = await FlutterUsb.sendCommand(Commands.getSettingsXCommand(
+        OpCodeId.Connect, 1, 3, 0, 3, 0,
+        length: 38));
+    print("response $response");
     return true;
   }
 
@@ -84,7 +90,7 @@ class SonyUsbApi extends ApiInterface {
         return setEV(value, device);
       case SettingsId.DriveMode:
         return setDriveMode(getDriveModeId(value), device);
-      case SettingsId.Flash:
+      case SettingsId.FlashValue:
         return setFlashValue(value, device);
       case SettingsId.DroHdr:
         return setDroHdr(getDroHdrId(value), device);
@@ -139,11 +145,11 @@ class SonyUsbApi extends ApiInterface {
         return false;
       case SettingsId.UnkD2C5:
         return (await FlutterUsb.sendCommand(Command(
-            Commands.getCommandMainSettingI16(SettingsId.UnkD2C5, value))))
+                Commands.getCommandMainSettingI16(SettingsId.UnkD2C5, value))))
             .isValidResponse();
       case SettingsId.UnkD2C7:
         return (await FlutterUsb.sendCommand(Command(
-            Commands.getCommandMainSettingI16(SettingsId.UnkD2C7, value))))
+                Commands.getCommandMainSettingI16(SettingsId.UnkD2C7, value))))
             .isValidResponse(); //TODO I32, subsettingss??
       case SettingsId.Unknown:
         return false;
@@ -206,6 +212,12 @@ class SonyUsbApi extends ApiInterface {
       case SettingsId.PhotoInfo:
         // TODO: Handle this case.
         break;
+      case SettingsId.AvailableSettings:
+        // TODO: Handle this case.
+        break;
+      case SettingsId.CameraInfo:
+        // TODO: Handle this case.
+        break;
     }
     return false;
   }
@@ -256,53 +268,114 @@ class SonyUsbApi extends ApiInterface {
   Future<bool> capturePhoto(SonyCameraDevice device) async {
     await pressShutter(ShutterPressType.Both, device);
     await releaseShutter(ShutterPressType.Both, device);
-    //read photo
-    downloadImages(device);
+
+    //wait until available
+    sleep(Duration(milliseconds: 10));
+
+    //wait until available
+    //TODO getImage better, faster?
+    var imageRequest = await requestPhotoAvailable(device, false);
+    print(imageRequest);
+
+    while (!imageRequest.available) {
+      sleep(Duration(milliseconds: 10));
+      imageRequest = await requestPhotoAvailable(device, false);
+      print(imageRequest);
+    }
+
+    //download
+    while (imageRequest.available) {
+      var image = await getImage(false);
+      imageRequest = await requestPhotoAvailable(device, false);
+      print(imageRequest);
+    }
 
     return true;
   }
 
-  downloadImages(SonyCameraDevice device) async{
-    await device.cameraSettings.update();
-    var item = device.cameraSettings.settings.firstWhere(
-            (element) => element.settingsId == SettingsId.PhotoTransferQueue);
+  Future<Uint8List> getImage(bool liveView) async {
+    var response =
+        await FlutterUsb.sendCommand(Commands.getImageCommand(liveView, true));
+    if (!response.isValidResponse()) {
+      print("getImageCommand Invalid");
+      //TODO retry?
+      return null;
+    }
 
-    int numPhotos = item.value.usbValue & 0xFF;
-    bool photoAvailableForTransfer =
-        ((item.value.usbValue >> 8) & 0xFF) == 0x80;
+    var bytes = response.inData.toByteList().buffer.asByteData();
+    int numImages = bytes.getUint16(32, Endian.little);
 
-    print("numPhotos RAW ${item.value.usbValue} available ${item.value.usbValue}");
-    print("numPhotos $numPhotos available $photoAvailableForTransfer");
+    if (numImages != 1) {
+      //>> 8) & 0xFF) == 0x80;
+      print("No Image Available"); //TODO not num images but available
+      return null;
+    }
 
-    if(numPhotos >= 1) {
-        var image = await GetImage(false);
-        downloadImages(device);
+    int imageInfoUnk = bytes.getUint32(34, Endian.little);
+    int imageSizeInBytes = bytes.getUint32(38, Endian.little);
+
+    if (imageSizeInBytes <= 0) {
+      print("imageSize Invalid $imageSizeInBytes");
+      return null;
+    }
+
+    //TODO sublist or only the rest of bytes?
+    var name = String.fromCharCodes(response.inData
+            .toByteList()
+            .sublist(83, 83 + (bytes.getUint8(82) * 2)))
+        .replaceAll(RegExp(r"\x00"), ""); //replace "NUL" characters
+    print(name);
+
+    //TODo make faster
+    response = await FlutterUsb.sendCommand(Commands.getImageCommand(
+        liveView, false,
+        imageSizeInBytes: imageSizeInBytes));
+
+    if (!response.isValidResponse()) {
+      print("getImageCommand2 Invalid");
+      return null;
+    }
+
+    var buffer = response.inData.toByteList().buffer;
+    bytes = buffer.asByteData();
+
+    if (liveView) {
+      print("liveView $liveView");
+      int unkBufferSize = bytes.getUint32(30, Endian.little);
+      int liveViewBufferSize = bytes.getUint32(34, Endian.little);
+      var unkBuff = ByteData.view(buffer, 38, unkBufferSize - 8);
+      var start = 38 + unkBufferSize - 8;
+      return response.inData
+          .toByteList()
+          .sublist(start, buffer.lengthInBytes - start);
+    } else {
+      print("no live view");
+      Uint8List data = response.inData.toByteList().sublist(30);
+
+      print("saveFile ${TestsPageState.path.value.toString()}$name");
+      File file = new File("${TestsPageState.path.value.toString()}\\$name");
+      file.writeAsBytes(data);
+      print("finished saveFile ${file.path}");
+      return data;
     }
   }
 
   @override
-  Future<SettingsItem<BoolValue>> getAel(SonyCameraDevice device) {
-    bool value = device.cameraSettings.settings
-            .firstWhere((element) => element.settingsId == SettingsId.AEL_State)
-            .value
-            .usbValue !=
-        2;
-    //TODO
-  }
+  Future<SettingsItem<BoolValue>> getAel(SonyCameraDevice device) async =>
+      device.cameraSettings.settings.firstWhere((element) =>
+          element.settingsId ==
+          SettingsId.AEL_State); //TODO differenc ael and ael state?
 
   @override
   Future<SettingsItem<AspectRatioValue>> getAspectRatio(
-      SonyCameraDevice device) async {
-    return device.cameraSettings.settings
-        .firstWhere((element) => element.settingsId == SettingsId.AEL_State);
-  }
+          SonyCameraDevice device) async =>
+      device.cameraSettings.settings.firstWhere(
+          (element) => element.settingsId == SettingsId.AspectRatio);
 
   @override
   Future<SettingsItem<AutoFocusStateValue>> getAutoFocusState(
-      SonyCameraDevice device) {
-    // TODO: implement getAutoFocusState
-    throw UnimplementedError();
-  }
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.AutoFocusState);
 
   @override
   Future<int> getBatteryPercentage(SonyCameraDevice device) async {
@@ -313,146 +386,109 @@ class SonyUsbApi extends ApiInterface {
   }
 
   @override
-  Future<SettingsItem<DriveModeValue>> getDriveMode(SonyCameraDevice device) {
-    // TODO: implement getDriveMode
-    throw UnimplementedError();
-  }
+  Future<SettingsItem<DriveModeValue>> getDriveMode(
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.DriveMode);
 
   @override
-  Future<SettingsItem<DroHdrValue>> getDroHdr(SonyCameraDevice device) {
-    // TODO: implement getDroHdr
-    throw UnimplementedError();
-  }
+  Future<SettingsItem<DroHdrValue>> getDroHdr(SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.DroHdr);
 
   @override
-  Future<SettingsItem<DoubleValue>> getEV(SonyCameraDevice device) {
-    // TODO: implement getEV
-    throw UnimplementedError();
-  }
+  Future<SettingsItem<DoubleValue>> getEV(SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.EV);
 
   @override
-  Future<SettingsItem<IntValue>> getFNumber(SonyCameraDevice device) {
-    // TODO: implement getFNumber
-    throw UnimplementedError();
-  }
+  Future<SettingsItem<IntValue>> getFNumber(SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.FNumber);
 
   @override
-  Future<SettingsItem<BoolValue>> getFel(SonyCameraDevice device) {
-    // TODO: implement getFel
-    throw UnimplementedError();
-  }
+  Future<SettingsItem<BoolValue>> getFel(SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.FEL);
 
   @override
-  Future<SettingsItem<FlashModeValue>> getFlashMode(SonyCameraDevice device) {
-    // TODO: implement getFlashMode
-    throw UnimplementedError();
-  }
+  Future<SettingsItem<FlashModeValue>> getFlashMode(
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.FlashMode);
 
   @override
-  Future<SettingsItem<FocusAreaValue>> getFocusArea(SonyCameraDevice device) {
-    // TODO: implement getFocusArea
-    throw UnimplementedError();
-  }
+  Future<SettingsItem<FocusAreaValue>> getFocusArea(
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.FocusArea);
 
   @override
-  Future<SettingsItem<PointValue>> getFocusAreaSpot(SonyCameraDevice device) {
-    // TODO: implement getFocusAreaSpot
-    throw UnimplementedError();
-  }
+  Future<SettingsItem<PointValue>> getFocusAreaSpot(
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.FocusAreaSpot);
 
   @override
-  Future<double> getFocusMagnifier(SonyCameraDevice device) {
-    // TODO: implement getFocusMagnifier
-    throw UnimplementedError();
-  }
+  Future<SettingsItem<DoubleValue>> getFocusMagnifier(
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.FocusMagnifier);
 
-  @override
+  @override //TODO SettingsId.FocusMagnifierDirection?
   Future<SettingsItem<FocusMagnifierDirectionValue>> getFocusMagnifierDirection(
-      SonyCameraDevice device) {
-    // TODO: implement getFocusMagnifierDirection
-    throw UnimplementedError();
-  }
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.FocusMagnifier);
 
   @override
   Future<SettingsItem<FocusMagnifierPhaseValue>> getFocusMagnifierPhase(
-      SonyCameraDevice device) {
-    // TODO: implement getFocusMagnifierPhase
-    throw UnimplementedError();
-  }
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.FocusMagnifierPhase);
 
   @override
-  Future<SettingsItem<FocusModeValue>> getFocusMode(SonyCameraDevice device) {
-    // TODO: implement getFocusMode
-    throw UnimplementedError();
-  }
+  Future<SettingsItem<FocusModeValue>> getFocusMode(
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.FocusMode);
 
   @override
   Future<SettingsItem<ImageFileFormatValue>> getImageFileFormat(
-      SonyCameraDevice device) {
-    // TODO: implement getImageFileFormat
-    throw UnimplementedError();
-  }
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.FileFormat);
 
   @override
-  Future<SettingsItem<IntValue>> getIso(SonyCameraDevice device) {
-    // TODO: implement getIso
-    throw UnimplementedError();
-  }
+  Future<SettingsItem<IntValue>> getIso(SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.ISO);
 
   @override
   Future<SettingsItem<MeteringModeValue>> getMeteringMode(
-      SonyCameraDevice device) {
-    // TODO: implement getMeteringMode
-    throw UnimplementedError();
-  }
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.MeteringMode);
 
   @override
   Future<SettingsItem<PictureEffectValue>> getPictureEffect(
-      SonyCameraDevice device) {
-    // TODO: implement getPictureEffect
-    throw UnimplementedError();
-  }
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.PictureEffect);
 
   @override
   Future<SettingsItem<ShootingModeValue>> getShootingMode(
-      SonyCameraDevice device) {
-    // TODO: implement getShootingMode
-    throw UnimplementedError();
-  }
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.ShootingMode);
 
   @override
-  Future<SettingsItem<IntValue>> getShutterSpeed(SonyCameraDevice device) {
-    // TODO: implement getShutterSpeed
-    throw UnimplementedError();
-  }
+  Future<SettingsItem<IntValue>> getShutterSpeed(
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.FocusMagnifier);
 
   @override
   Future<SettingsItem<WhiteBalanceValue>> getWhiteBalance(
-      SonyCameraDevice device) {
-    // TODO: implement getWhiteBalance
-    throw UnimplementedError();
-  }
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.WhiteBalance);
 
   @override
   Future<SettingsItem<WhiteBalanceAbValue>> getWhiteBalanceAb(
-      SonyCameraDevice device) {
-    // TODO: implement getWhiteBalanceAb
-    throw UnimplementedError();
-  }
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.WhiteBalanceAB);
 
   @override
   Future<SettingsItem<IntValue>> getWhiteBalanceColorTemp(
-      SonyCameraDevice device) {
-    // TODO: implement getWhiteBalanceColorTemp
-    throw UnimplementedError();
-  }
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.WhiteBalanceColorTemp);
 
   @override
   Future<SettingsItem<WhiteBalanceGmValue>> getWhiteBalanceGm(
-      SonyCameraDevice device) {
-    // TODO: implement getWhiteBalanceGm
-    throw UnimplementedError();
-  }
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.WhiteBalanceGM);
 
   @override
   Future<bool> setAel(bool value, SonyCameraDevice device) {
@@ -526,7 +562,7 @@ class SonyUsbApi extends ApiInterface {
   @override
   Future<bool> setFlashValue(int value, SonyCameraDevice device) async =>
       (await FlutterUsb.sendCommand(Command(
-              Commands.getCommandMainSettingI16(SettingsId.Flash, value))))
+              Commands.getCommandMainSettingI16(SettingsId.FlashValue, value))))
           .isValidResponse();
 
   @override
@@ -682,97 +718,6 @@ class SonyUsbApi extends ApiInterface {
               Commands.getCommandMainSettingI16(SettingsId.RecordVideo, 1))))
           .isValidResponse();
 
-  Future<Uint8List> GetImage(bool liveView) async {
-    var response =
-        await FlutterUsb.sendCommand(Commands.getImageCommand(liveView, true));
-
-    print("response valid ${response.isValidResponse()}");
-    if (!response.isValidResponse()) return null;
-
-    var bytes = response.inData.toByteList().buffer.asByteData();
-    int numImages = bytes.getUint16(32, Endian.little);
-
-    print("images $numImages");
-    if (numImages != 1) return null;
-
-    int imageInfoUnk = bytes.getUint32(34, Endian.little);
-    int imageSizeInBytes = bytes.getUint32(38, Endian.little); //24 630 528
-    //2 643 449
-    //24 000 000
-    //26 883 8912
-
-    if (imageSizeInBytes <= 0) return null;
-    print("images $imageSizeInBytes");
-
-    int nameLength = bytes.getUint8(82);
-    int CharSize = 2;
-    int totalLength = nameLength * CharSize;
-    Uint8List namebytes = response.inData.toByteList().sublist(83, 83 + totalLength);
-    var name = String.fromCharCodes(namebytes).replaceAll(RegExp(r"\x00"),""); //replace "NUL" characters
-    print(name);
-
-    //TODO in chunks, very slow at the moment? loading slow or json slow?
-    response = await FlutterUsb.sendCommand(Commands.getImageCommand(
-        liveView, false,
-        imageSizeInBytes: imageSizeInBytes));
-
-    print("validresponse on get image ${response.isValidResponse()}");
-    if (!response.isValidResponse()) return null;
-    var buffer = response.inData.toByteList().buffer;
-    bytes = buffer.asByteData();
-
-    if (liveView) {
-      print("liveView $liveView");
-      int unkBufferSize = bytes.getUint32(30, Endian.little);
-      int liveViewBufferSize = bytes.getUint32(34, Endian.little);
-      var unkBuff = ByteData.view(buffer, 38, unkBufferSize - 8);
-      var start = 38 + unkBufferSize - 8;
-      return response.inData
-          .toByteList()
-          .sublist(start, buffer.lengthInBytes - start);
-    } else {
-      print("no live view");
-      //10 27 00 00 d4 05 00 00
-      //10 27 00 00 27 0c 00 00
-      //10 27 00 00 71 18 00 00
-      //10 27 00 00 78 02 00 00
-      //10 27 00 00 c3 00 00 00
-      //10 27 00 00 61 02 00 00
-      //10 27 00 00 16 1d 00 00
-      //10 27 00 00 27 00 9a 82
-      //05 00 01 00 00
-
-      //05 d4 = 20692
-      //d4 05 = 54352
-
-      //2c 07 = 9996
-      //2190540839
-
-      //ohne 10 ...
-
-      /*
-      Größe: 2779555
-bild abfrage:
-09 10 00 00 00 00 00 00 00 00 01 C0 FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 03 00 00 00
-ergebnis:
-01 20 00 00 00 ...
-
-photoqueue value 32770 -> 2 photos (raw + jpg?)
-
-imagename "DSC01548.ARW" (mit arw!!)
-
-       */
-      Uint8List data =
-          response.inData.toByteList().sublist(30);
-
-      print("saveFile $name");
-      File file = new File("C:\\Users\\kilia\\Desktop\\$name");
-      file.writeAsBytesSync(data);
-      print("finished saveFile ${file.path}");
-      return data;
-    }
-  }
-
   @override
   Future<RecordVideoStateValue> getRecordingVideoState(
           SonyCameraDevice device) async =>
@@ -782,10 +727,9 @@ imagename "DSC01548.ARW" (mit arw!!)
           .value as RecordVideoStateValue;
 
   @override
-  Future<SettingsItem<ImageSizeValue>> getImageSize(SonyCameraDevice device) {
-    // TODO: implement getImageSize
-    throw UnimplementedError();
-  }
+  Future<SettingsItem<ImageSizeValue>> getImageSize(
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.ImageSize);
 
   @override
   Future<bool> setImageSize(ImageSizeId value, SonyCameraDevice device) async =>
@@ -794,14 +738,42 @@ imagename "DSC01548.ARW" (mit arw!!)
           .isValidResponse();
 
   @override
-  Future<SettingsItem<IntValue>> getFlashValue(SonyCameraDevice device) {
-    //
-  }
+  Future<SettingsItem<IntValue>> getFlashValue(SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.FlashValue);
 
   @override
-  Future<SettingsItem<FocusModeToggleValue>> getFocusModeToggle(SonyCameraDevice device) {
-    // TODO: implement getFocusModeToggle
-    throw UnimplementedError();
+  Future<SettingsItem<FocusModeToggleValue>> getFocusModeToggle(
+          SonyCameraDevice device) async =>
+      device.cameraSettings.getItem(SettingsId.FocusModeToggleResponse);
+
+  /*
+    int numPhotos = item.value.usbValue & 0xFF;
+    bool photoAvailableForTransfer =
+        ((item.value.usbValue >> 8) & 0xFF) == 0x80;
+   */
+  @override
+  Future<bool> getPhotoAvailable(SonyCameraDevice device) async =>
+      ((device.cameraSettings
+                  .getItem(SettingsId.PhotoTransferQueue)
+                  .value
+                  .usbValue >>
+              8) &
+          0xFF) ==
+      0x80;
+
+  @override
+  Future<CameraImageRequest> requestPhotoAvailable(
+      SonyCameraDevice device, bool liveView) async {
+    var response =
+        await FlutterUsb.sendCommand(Commands.getImageCommand(liveView, true));
+
+    var bytes = response.inData.toByteList().buffer.asByteData();
+    int numImages = bytes.getUint16(32, Endian.little); //not num but true/false
+    int imageInfoUnk = bytes.getUint32(34, Endian.little); //TODO type?
+    int imageSizeInBytes = bytes.getUint32(38, Endian.little);
+
+    return CameraImageRequest(
+        (((numImages >> 8) & 0xFF) == 0x80), imageInfoUnk, imageSizeInBytes);
   }
 }
 
