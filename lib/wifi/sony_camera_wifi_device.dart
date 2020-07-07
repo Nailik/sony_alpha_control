@@ -1,11 +1,12 @@
 
 import 'package:sonyalphacontrol/top_level_api/sony_camera_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
+import 'package:sonyalphacontrol/wifi/wifi_camera_xml.dart';
 
 import 'camera_wifi_settings.dart';
 
 class SonyCameraWifiDevice extends SonyCameraDevice {
-  SonyCameraWifiDevice(String name, WifiCameraInfo info)
+  SonyCameraWifiDevice(String name, WifiCameraXML info)
       : super(name, new CameraWifiSettings());
 
   @override

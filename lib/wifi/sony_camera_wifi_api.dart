@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:cross_connectivity/cross_connectivity.dart';
 import 'package:sonyalphacontrol/top_level_api/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
@@ -26,34 +25,12 @@ import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
 import 'package:sonyalphacontrol/wifi/sony_camera_wifi_device.dart';
-import 'package:sonyalphacontrol/wifi/wifi_connector.dart';
 
 class SonyCameraWifiApi extends CameraApiInterface {
-  var _initialized = false;
+
+  SonyCameraWifiDevice get device => cameraDevice;
 
   SonyCameraWifiApi(SonyCameraDevice cameraDevice) : super(cameraDevice);
-
-  @override
-  // TODO: implement initialized
-  bool get initialized => _initialized;
-
-  @override
-  Future<bool> initialize() async {
-    //nothing to initialize?
-    _initialized = true;
-    return _initialized;
-  }
-
-  @override
-  Future<List<SonyCameraWifiDevice>> getAvailableCameras() async {
-    var connectivityStatus = await Connectivity().checkConnectivity();
-   // if(connectivityStatus == ConnectivityStatus.wifi){
-    SonyCameraWifiDevice ionfo = await WifiConnector.getCamera();
-      //we now its wifi so there can be some cameras
-      //ping the device and check if it's there
-  //  }
-    return new List<SonyCameraWifiDevice>();
-  }
 
   @override
   Future<List<CameraImage>> capturePhoto() {
@@ -66,10 +43,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
     // TODO: implement connectCamera
     throw UnimplementedError();
   }
-
-  @override
-  // TODO: implement device
-  SonyCameraDevice get device => throw UnimplementedError();
 
   @override
   Future<SettingsItem<BoolValue>> getAel() {

@@ -2,7 +2,6 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter_usb/Command.dart';
-import 'package:flutter_usb/Response.dart';
 import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
@@ -18,7 +17,6 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
@@ -30,6 +28,7 @@ import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
 import 'package:sonyalphacontrol/usb/downloader.dart';
+import 'package:sonyalphacontrol/usb/response_validation.dart';
 import 'package:sonyalphacontrol/usb/sony_camera_usb_device.dart';
 
 import 'commands.dart';
@@ -37,11 +36,9 @@ import 'commands.dart';
 //TODO 0000   10 00 00 00 04 00 03 c2 ff ff ff ff 1d d2 00 00 -> URB_INTERRUPT in when sth changed
 //TODO register for event notifications
 class SonyCameraUsbApi extends CameraApiInterface {
-
   SonyCameraUsbDevice get device => cameraDevice;
 
   SonyCameraUsbApi(SonyCameraDevice device) : super(device);
-
 
   Future<bool> setSettings(
       SettingsId settingsId, int value, SonyCameraUsbDevice device) async {
@@ -630,15 +627,5 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
     return CameraImageRequest(
         numImages == 1, imageInfoUnk, imageSizeInBytes, name);
-  }
-}
-
-extension ResponseValidation on Response {
-  bool isSuccess() {
-    return true;
-  }
-
-  bool isValidResponse() {
-    return inData[0] == 1 && inData[1] == 0x20;
   }
 }

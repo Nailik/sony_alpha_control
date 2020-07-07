@@ -3,7 +3,7 @@
 
 
  */
-import 'dart:collection';
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -32,37 +32,28 @@ class WifiConnector {
         WiFiForIoTPlugin.forceWifiUsage(true);
       }
 
-      await new HttpClient()
+      final completer = Completer<SonyCameraWifiDevice>();
+      final contents = StringBuffer();
+
+      new HttpClient()
           .getUrl(Uri.parse(cameraInfo.location))
           .then((HttpClientRequest request) => request.close())
-          .then((HttpClientResponse response) =>
-              response.transform(new Utf8Decoder()).listen((data) {
-                Xml2Json xml2Json = new Xml2Json();
-                xml2Json.parse(data);
-                var jsonString = xml2Json.toParker();
-                var d = Root.fromJson(jsonDecode(jsonString)["root"]);
-                print(d);
-              }));
+          .then((HttpClientResponse response) {
+        return response.transform(new Utf8Decoder()).listen((data) {
+          contents.write(data);
+        }, onDone: () {
+          Xml2Json xml2Json = new Xml2Json();
+          xml2Json.parse(contents.toString());
+          var jsonString = xml2Json.toParker();
+          var d = Root.fromJson(jsonDecode(jsonString)["root"]);
+          completer
+              .complete(SonyCameraWifiDevice(d.device.friendlyName, d.device));
+        });
+      });
 
-      /*
-            //read xml
-            val xml = readFromUrl(cameraDevice.location)
-
-            Timber.d("fetch%s", xml)
-            //parse device
-            val device = parseXmlString(xml, cameraDevice)
-
-            //parse other shit
-            for(service in device.serviceList){
-                if(stopped)return null
-                if(!service.SCPDURL.isNullOrBlank()) {
-                    //TODO try catch
-                    parseService(readFromUrl(device.baseUrl + service.SCPDURL), service)
-                }
-            }
-            return device
-     */
+      return completer.future;
     }
+    return null;
   }
 
   static Future<WifiCameraInfo> ssdpRequest() async {
@@ -128,7 +119,7 @@ class _SsdMessageProcessor {
   }
 
   static String _findValue(String message, String key) {
-    //(?mis) multiline, insensitive, singleline (dot matches new line charakters)
+//(?mis) multiline, insensitive, singleline (dot matches new line charakters)
     RegExpMatch regExp = new RegExp(".*^$key:\\s?([^\\r]+).*",
             multiLine: true, caseSensitive: false, dotAll: true)
         .firstMatch(message);

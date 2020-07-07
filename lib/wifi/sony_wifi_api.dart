@@ -1,25 +1,27 @@
 import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
+import 'package:sonyalphacontrol/wifi/wifi_connector.dart';
 
 class SonyWifiApi extends SonyApiInterface {
-  @override
-  Future<bool> connectCamera(SonyCameraDevice sonyCameraDevice) {
-    // TODO: implement connectCamera
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<SonyCameraDevice>> getAvailableCameras() async {
-    // TODO: implement getAvailableCameras
-    return List();
-  }
-
-  @override
-  Future<bool> initialize() async{
-    // TODO: implement initialize
-  }
+  var _initialized = false;
 
   @override
   // TODO: implement initialized
-  bool get initialized => false;
+  bool get initialized => _initialized;
+
+  @override
+  Future<bool> initialize() async {
+    _initialized = true;
+    return _initialized;
+  }
+
+  @override
+  Future<List<SonyCameraDevice>> getAvailableCameras() async =>
+      {await WifiConnector.getCamera()}.toList();
+
+  @override
+  Future<bool> connectCamera(SonyCameraDevice sonyCameraDevice) async {
+    //TODO connect
+    return true;
+  }
 }

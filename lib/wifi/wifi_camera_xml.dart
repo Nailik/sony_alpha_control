@@ -24,8 +24,8 @@ class Root {
 
 @JsonSerializable()
 class SpecVersion {
-  int major;
-  int minor;
+  String major;
+  String minor;
 
   SpecVersion(this.major, this.minor);
 
@@ -57,7 +57,7 @@ class WifiCameraXML {
 
   List<CameraService> serviceListNode;
   @JsonKey(name: 'av:X_ScalarWebAPI_DeviceInfo')
-  List<CameraWebApi> scalarWebApiDeviceInfo;
+  CameraWebApi scalarWebApiDeviceInfo;
 
   WifiCameraXML(this.deviceType,
       this.friendlyName,
@@ -111,7 +111,7 @@ class CameraService {
 @JsonSerializable()
 class CameraWebApi {
   @JsonKey(name: 'av:X_ScalarWebAPI_Version')
-  double version;
+  String version;
   @JsonKey(name: 'av:X_ScalarWebAPI_ServiceList')
   CameraWebApiServiceList serviceList;
 

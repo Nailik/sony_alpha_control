@@ -24,8 +24,8 @@ Map<String, dynamic> _$RootToJson(Root instance) => <String, dynamic>{
 
 SpecVersion _$SpecVersionFromJson(Map<String, dynamic> json) {
   return SpecVersion(
-    json['major'] as int,
-    json['minor'] as int,
+    json['major'] as String,
+    json['minor'] as String,
   );
 }
 
@@ -53,10 +53,10 @@ WifiCameraXML _$WifiCameraXMLFromJson(Map<String, dynamic> json) {
             ? null
             : CameraService.fromJson(e as Map<String, dynamic>))
         ?.toList(),
-  )..scalarWebApiDeviceInfo = (json['av:X_ScalarWebAPI_DeviceInfo'] as List)
-      ?.map((e) =>
-          e == null ? null : CameraWebApi.fromJson(e as Map<String, dynamic>))
-      ?.toList();
+  )..scalarWebApiDeviceInfo = json['av:X_ScalarWebAPI_DeviceInfo'] == null
+      ? null
+      : CameraWebApi.fromJson(
+          json['av:X_ScalarWebAPI_DeviceInfo'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$WifiCameraXMLToJson(WifiCameraXML instance) =>
@@ -97,7 +97,7 @@ Map<String, dynamic> _$CameraServiceToJson(CameraService instance) =>
 
 CameraWebApi _$CameraWebApiFromJson(Map<String, dynamic> json) {
   return CameraWebApi(
-    (json['av:X_ScalarWebAPI_Version'] as num)?.toDouble(),
+    json['av:X_ScalarWebAPI_Version'] as String,
     json['av:X_ScalarWebAPI_ServiceList'] == null
         ? null
         : CameraWebApiServiceList.fromJson(
