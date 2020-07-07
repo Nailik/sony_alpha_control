@@ -17,8 +17,11 @@ class Downloader {
   static SonyCameraDevice device;
 
   static Future<List<CameraImage>> download() async {
+    fetchPhotos( (device as SonyCameraUsbDevice).device.toJson());
+    /*
     var result = await FlutterIsolate.spawn(fetchPhotos, (device as SonyCameraUsbDevice).device.toJson());
     print(result);
+    */
     return null;
   //  return compute(fetchPhotos, (device as SonyCameraUsbDevice).device.toJson());
   }
@@ -72,10 +75,14 @@ Future<CameraImage> getImage(SonyCameraDevice device, {bool liveView = false, St
   var request = await device.api.requestPhotoAvailable();
   print(request);
 
+  var millis = new DateTime.now().millisecondsSinceEpoch;
+
+  print("staGetImage $millis");
   Response response = await FlutterUsb.sendCommand(Commands.getImageCommand(
       liveView, false,
       imageSizeInBytes: request.size));
 
+  print("endGetImage ${new DateTime.now().millisecondsSinceEpoch - millis}");
   // TODO if (!response.isValidResponse()) {
   //     print("getImageCommand2 Invalid");
   //   return null;
