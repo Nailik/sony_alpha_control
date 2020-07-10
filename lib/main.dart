@@ -2,13 +2,14 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/test_ui/test_page.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //FlutterUsb.enableLogger(maxLogLengthNew: 30);
+  FlutterUsb.enableLogger(maxLogLengthNew: 42);
   runApp(MyApp());
 }
 

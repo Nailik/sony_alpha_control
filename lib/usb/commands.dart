@@ -23,6 +23,9 @@ class Commands {
     if (value2DataSize != 0) {
       length += 2;
     }
+    if(opCodeId == OpCodeId.Connect && settingsId == SettingsId.Connect){
+      length = 38;
+    }
 
     Uint8List list = CommandT.createCommand(length);
     if (Platform.isWindows) {
