@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:sonyalphacontrol/test_ui/test_page.dart';
@@ -31,7 +32,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initPlatformState() async {
-    await SonyApi.initialize(usb: false, wifi: true);
+    await SonyApi.initialize(usb: true, wifi: true);
 
     setState(() {
       _initialized = true;
@@ -93,6 +94,7 @@ class _MyAppState extends State<MyApp> {
       onTap: () async {
         await SonyApi.connectCamera(device);
         await device.updateSettings();
+        await device.api.setFocusAreaSpot(Point(6,8));
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => TestsPage(device: device)),

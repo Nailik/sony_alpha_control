@@ -131,6 +131,22 @@ set focus mode:
 
 
 
+
+
+
+//opcode: 0x9207, settingsId: 0xD232, value 1: 8, value 2: 6, value1datasize: 2,value2DataSize: 6
+
+
+| length |          | part |    | opcode | id |          | settingsid |
+    10   | 00 00 00 | 01   | 00 | 07 92  | 18 | 00 00 00 | 32 d2      | 00 00
+| length |          | part |    | opcode | id |          | value1     | value2
+    10   | 00 00 00 | 02   | 00 | 07 92  | 18 | 00 00 00 | 08 00      | 06 00
+
+
+2 length 10 oder e5 (für 8)
+
+
+
 /*
 windowsTest() async {
     //connect

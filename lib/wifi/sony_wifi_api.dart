@@ -16,8 +16,13 @@ class SonyWifiApi extends SonyApiInterface {
   }
 
   @override
-  Future<List<SonyCameraDevice>> getAvailableCameras() async =>
-      {await WifiConnector.getCamera()}.toList();
+  Future<List<SonyCameraDevice>> getAvailableCameras() async {
+    var list = await WifiConnector.getCamera();
+    if (list != null) {
+      return {list}.toList();
+    }
+    return List<SonyCameraDevice>();
+  }
 
   @override
   Future<bool> connectCamera(SonyCameraDevice sonyCameraDevice) async {

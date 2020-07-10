@@ -17,25 +17,36 @@ class CameraUsbSettings extends CameraSettings {
 
   @override
   Future<bool> update() async {
-
-    var response = await FlutterUsb.sendCommand(Command(
-        Commands.getCommandSetting(
-            OpCodeId.SettingsList, SettingsId.AvailableSettings, 1, 0, 3, 0)));
+    var response = await Commands.getCommandSetting(
+            SettingsId.AvailableSettings, opCodeId: OpCodeId.SettingsList,
+            value1: 1,
+            value2: 0,
+            value1DataSize: 3,
+            value2DataSize: 0).send();
     analyzeSettingsAvailable(response);
-    response = await FlutterUsb.sendCommand(Command(
-        Commands.getCommandSetting(
-            OpCodeId.Settings, SettingsId.CameraInfo, 0, 0, 3, 0),
-        outDataLength: 4000));
+
+    response = await Commands.getCommandSetting(
+            SettingsId.CameraInfo, opCodeId: OpCodeId.Settings,
+            value1: 0,
+            value2: 0,
+            value1DataSize: 3,
+            value2DataSize: 0,
+            outDataLength: 4000).send();
+
     analyzeSettings(response);
 
     notifyListeners();
 
-    return true;
+    return
+    true;
   }
 
   analyzeSettingsAvailable(Response response) {
     if (!isValidResponse(response)) return;
-    var bytes = Uint8List.fromList(response.inData).buffer.asByteData();
+    var bytes = Uint8List
+        .fromList(response.inData)
+        .buffer
+        .asByteData();
 
     int offset = 30;
     //30
@@ -74,7 +85,7 @@ class CameraUsbSettings extends CameraSettings {
       offset += 2;
 
       SettingsItem setting = settings.singleWhere(
-          (it) => it.settingsId.usbValue == settingsId,
+              (it) => it.settingsId.usbValue == settingsId,
           orElse: () => null);
       if (setting == null) {
         setting = new SettingsItem(getSettingsId(settingsId));
@@ -97,7 +108,7 @@ class CameraUsbSettings extends CameraSettings {
               offset += 3;
               break;
             default:
-              //unkown
+            //unkown
               break;
           }
           break;
@@ -108,11 +119,11 @@ class CameraUsbSettings extends CameraSettings {
           var subDataType = bytes.getUint8(offset);
           offset++;
           switch (subDataType) {
-            //white balance ab //-7 + 7 (0,5)
+          //white balance ab //-7 + 7 (0,5)
             case 1:
-              //TODO white balance ab
-              //min = 180
-              //max = 1600
+            //TODO white balance ab
+            //min = 180
+            //max = 1600
               var min = bytes.getUint8(offset);
               offset += 1;
               var max = bytes.getUint8(offset);
@@ -153,7 +164,7 @@ class CameraUsbSettings extends CameraSettings {
               }
               break;
             default:
-              //unkown
+            //unkown
               break;
           }
 
@@ -182,7 +193,7 @@ class CameraUsbSettings extends CameraSettings {
                   .sort((a, b) => a.usbValue.compareTo(b.usbValue));
               break;
             default:
-              //unkown
+            //unkown
               break;
           }
 
@@ -223,7 +234,7 @@ class CameraUsbSettings extends CameraSettings {
               }
               break;
             default:
-              //unkown
+            //unkown
               break;
           }
 
@@ -254,7 +265,7 @@ class CameraUsbSettings extends CameraSettings {
           offset++;
           switch (subDataType) {
             case 1:
-              //TODO?
+            //TODO?
               var min = bytes.getUint32(offset, Endian.little);
               offset += 4;
               var max = bytes.getUint32(offset, Endian.little);
@@ -273,13 +284,13 @@ class CameraUsbSettings extends CameraSettings {
               }
               break;
             default:
-              //unkown
+            //unkown
               break;
           }
 
           break;
         default:
-          //TODO log unkown
+        //TODO log unkown
           break;
       }
     }

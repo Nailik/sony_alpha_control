@@ -1,6 +1,6 @@
-import 'package:flutter_usb/Response.dart';
 import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
 import 'package:sonyalphacontrol/usb/commands.dart';
@@ -29,9 +29,16 @@ class SonyUsbApi extends SonyApiInterface {
   Future<bool> connectCamera(SonyCameraDevice device) async {
     var str = await FlutterUsb.connectToUsbDevice(
         (device as SonyCameraUsbDevice).device);
-    Response response = await FlutterUsb.sendCommand(
-        Commands.getSettingsXCommand(OpCodeId.Connect, 1, 3, 0, 3, 0,
-            length: 38));
+
+    //TODO length 38?
+    var response = await Commands.getCommandSetting(SettingsId.Connect,
+            opCodeId: OpCodeId.Connect,
+            value1: 3,
+            value2: 0,
+            value1DataSize: 3,
+            value2DataSize: 0)
+        .send();
+
     return response.isValidResponse();
   }
 }

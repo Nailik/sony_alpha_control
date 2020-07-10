@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:flutter_usb/Response.dart';
 import 'package:flutter_usb/UsbDevice.dart';
 import 'package:flutter_usb/flutter_usb.dart';
@@ -17,19 +15,20 @@ class Downloader {
   static SonyCameraDevice device;
 
   static Future<List<CameraImage>> download() async {
-    fetchPhotos( (device as SonyCameraUsbDevice).device.toJson());
+    fetchPhotos((device as SonyCameraUsbDevice).device.toJson());
     /*
     var result = await FlutterIsolate.spawn(fetchPhotos, (device as SonyCameraUsbDevice).device.toJson());
     print(result);
     */
     return null;
-  //  return compute(fetchPhotos, (device as SonyCameraUsbDevice).device.toJson());
+    //  return compute(fetchPhotos, (device as SonyCameraUsbDevice).device.toJson());
   }
 }
+
 //TODO pass sony camera device as json?
 Future<List<CameraImage>> fetchPhotos(Map<String, dynamic> deviceJson) async {
-
-  SonyCameraUsbDevice device = SonyCameraUsbDevice(UsbDevice.fromJson(deviceJson));
+  SonyCameraUsbDevice device =
+      SonyCameraUsbDevice(UsbDevice.fromJson(deviceJson));
   //wait until available
   //  sleep(Duration(milliseconds: 100));
 
@@ -71,16 +70,17 @@ Future<List<CameraImage>> fetchPhotos(Map<String, dynamic> deviceJson) async {
   return imageList;
 }
 
-Future<CameraImage> getImage(SonyCameraDevice device, {bool liveView = false, String filePath}) async {
+Future<CameraImage> getImage(SonyCameraDevice device,
+    {bool liveView = false, String filePath}) async {
   var request = await device.api.requestPhotoAvailable();
   print(request);
 
   var millis = new DateTime.now().millisecondsSinceEpoch;
 
   print("staGetImage $millis");
-  Response response = await FlutterUsb.sendCommand(Commands.getImageCommand(
-      liveView, false,
-      imageSizeInBytes: request.size));
+  Response response = await Commands.getImageCommand(liveView, false,
+          imageSizeInBytes: request.size)
+      .send();
 
   print("endGetImage ${new DateTime.now().millisecondsSinceEpoch - millis}");
   // TODO if (!response.isValidResponse()) {

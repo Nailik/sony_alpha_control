@@ -156,6 +156,7 @@ enum SettingsId {
   AvailableSettings,
   ///for the current camera settings
   CameraInfo,
+  Connect,
   Unknown
 }
 
@@ -288,6 +289,8 @@ extension SettingsIdExtension on SettingsId {
         return 0x00C8;
       case SettingsId.CameraInfo:
         return 0x00;
+      case SettingsId.Connect:
+        return 0x01;
       case SettingsId.Unknown:
         return -1;
       default:

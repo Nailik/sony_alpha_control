@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:flutter_usb/Command.dart';
 import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
@@ -17,6 +16,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
@@ -116,13 +116,19 @@ class SonyCameraUsbApi extends CameraApiInterface {
       case SettingsId.UnkD2D4:
         return false;
       case SettingsId.UnkD2C5:
+        /*
         return (await FlutterUsb.sendCommand(Command(
                 Commands.getCommandMainSettingI16(SettingsId.UnkD2C5, value))))
             .isValidResponse();
+        */
+        return false;
       case SettingsId.UnkD2C7:
+        /*
         return (await FlutterUsb.sendCommand(Command(
                 Commands.getCommandMainSettingI16(SettingsId.UnkD2C7, value))))
             .isValidResponse(); //TODO I32, subsettingss??
+         */
+        return false;
       case SettingsId.Unknown:
         return false;
       case SettingsId.FocusMagnifier:
@@ -206,25 +212,19 @@ class SonyCameraUsbApi extends CameraApiInterface {
   Future<bool> doShutter(ShutterPressType shutterPressType, bool press) async {
     switch (shutterPressType) {
       case ShutterPressType.Half:
-        return (await FlutterUsb.sendCommand(Command(
-                Commands.getCommandMainSettingI16(
-                    SettingsId.HalfPressShutter, press ? 2 : 1))))
-            .isValidResponse();
       case ShutterPressType.Full:
-        return (await FlutterUsb.sendCommand(Command(
-                Commands.getCommandMainSettingI16(
-                    SettingsId.CapturePhoto, press ? 2 : 1))))
+        return (await Commands.getCommandSetting(
+                    shutterPressType == ShutterPressType.Half
+                        ? SettingsId.HalfPressShutter
+                        : SettingsId.CapturePhoto,
+                    opCodeId: OpCodeId.MainSetting,
+                    value1: press ? 2 : 1)
+                .send())
             .isValidResponse();
       case ShutterPressType.Both:
-        if ((await FlutterUsb.sendCommand(Command(
-                Commands.getCommandMainSettingI16(
-                    SettingsId.HalfPressShutter, press ? 2 : 1))))
-            .isValidResponse()) {
-          return (await FlutterUsb.sendCommand(Command(
-                  Commands.getCommandMainSettingI16(
-                      SettingsId.CapturePhoto, press ? 2 : 1))))
-              .isValidResponse();
-        }
+        return await doShutter(ShutterPressType.Half, press)
+            ? await doShutter(ShutterPressType.Full, press)
+            : false;
     }
     return false;
   }
@@ -356,135 +356,159 @@ class SonyCameraUsbApi extends CameraApiInterface {
       device.cameraSettings.getItem(SettingsId.WhiteBalanceGM);
 
   @override
-  Future<bool> setAel(bool value) {
-    if (value) {
-      //enable ael?
-      FlutterUsb.sendCommand(
-          Command(Commands.getCommandMainSettingI16(SettingsId.AEL, 1)));
-      FlutterUsb.sendCommand(
-          Command(Commands.getCommandMainSettingI16(SettingsId.AEL, 2)));
-    } else {
-      FlutterUsb.sendCommand(
-          Command(Commands.getCommandMainSettingI16(SettingsId.AEL, 2)));
-      FlutterUsb.sendCommand(
-          Command(Commands.getCommandMainSettingI16(SettingsId.AEL, 1)));
-    }
+  Future<bool> setAel(bool value) async {
+    return (await Commands.getCommandSetting(SettingsId.AEL,
+                    opCodeId: OpCodeId.MainSetting, value1: value ? 1 : 2)
+                .send())
+            .isValidResponse()
+        ? await setAel(!value)
+        : false;
   }
 
   @override
   Future<bool> setAspectRatio(AspectRatioId value) async =>
-      (await FlutterUsb.sendCommand(Command(Commands.getCommandSubSettingU8(
-              SettingsId.AspectRatio, value.usbValue))))
+      (await Commands.getCommandSetting(SettingsId.AspectRatio,
+                  opCodeId: OpCodeId.SubSetting,
+                  value1: value.usbValue,
+                  value1DataSize: 1)
+              .send())
           .isValidResponse();
 
   @override
   Future<bool> setDriveMode(DriveModeId value) async =>
-      (await FlutterUsb.sendCommand(Command(Commands.getCommandSubSettingI16(
-              SettingsId.DriveMode, value.usbValue))))
+      (await Commands.getCommandSetting(SettingsId.DriveMode,
+                  value1: value.usbValue)
+              .send())
           .isValidResponse();
 
   @override
   Future<bool> setDroHdr(DroHdrId value) async =>
-      (await FlutterUsb.sendCommand(Command(Commands.getCommandSubSettingI16(
-              SettingsId.DroHdr, value.usbValue))))
+      (await Commands.getCommandSetting(SettingsId.DroHdr,
+                  value1: value.usbValue)
+              .send())
           .isValidResponse();
 
   @override
-  Future<bool> setEV(int value) async => (await FlutterUsb.sendCommand(
-          Command(Commands.getCommandMainSettingI16(SettingsId.EV, value))))
-      .isValidResponse();
+  Future<bool> setEV(int value) async =>
+      (await Commands.getCommandSetting(SettingsId.EV,
+                  opCodeId: OpCodeId.MainSetting, value1: value)
+              .send())
+          .isValidResponse();
 
   @override
   Future<bool> setFNumber(int value) async =>
-      (await FlutterUsb.sendCommand(Command(
-              Commands.getCommandMainSettingI16(SettingsId.FNumber, value))))
+      (await Commands.getCommandSetting(SettingsId.FNumber,
+                  opCodeId: OpCodeId.MainSetting, value1: value)
+              .send())
           .isValidResponse();
 
   @override
-  Future<bool> setFel(bool value) {
-    if (value) {
-      //enable fel?
-      FlutterUsb.sendCommand(
-          Command(Commands.getCommandMainSettingI16(SettingsId.FEL, 1)));
-      FlutterUsb.sendCommand(
-          Command(Commands.getCommandMainSettingI16(SettingsId.FEL, 2)));
-    } else {
-      FlutterUsb.sendCommand(
-          Command(Commands.getCommandMainSettingI16(SettingsId.FEL, 2)));
-      FlutterUsb.sendCommand(
-          Command(Commands.getCommandMainSettingI16(SettingsId.FEL, 1)));
-    }
+  Future<bool> setFel(bool value) async {
+    return (await Commands.getCommandSetting(SettingsId.FEL,
+                    opCodeId: OpCodeId.MainSetting, value1: value ? 1 : 2)
+                .send())
+            .isValidResponse()
+        ? await setAel(!value)
+        : false;
   }
 
   @override
   Future<bool> setFlashMode(FlashModeId value) async =>
-      (await FlutterUsb.sendCommand(Command(Commands.getCommandSubSettingI16(
-              SettingsId.FlashMode, value.usbValue))))
+      (await Commands.getCommandSetting(SettingsId.FlashMode,
+                  value1: value.usbValue)
+              .send())
           .isValidResponse();
 
   @override
   Future<bool> setFlashValue(int value) async =>
-      (await FlutterUsb.sendCommand(Command(
-              Commands.getCommandMainSettingI16(SettingsId.FlashValue, value))))
+      (await Commands.getCommandSetting(SettingsId.FlashValue,
+                  opCodeId: OpCodeId.MainSetting, value1: value)
+              .send())
           .isValidResponse();
 
   @override
   Future<bool> setFocusArea(FocusAreaId value) async =>
-      (await FlutterUsb.sendCommand(Command(Commands.getCommandSubSettingI16(
-              SettingsId.FocusArea, value.usbValue))))
+      (await Commands.getCommandSetting(SettingsId.FocusArea,
+                  opCodeId: OpCodeId.SubSetting, value1: value.usbValue)
+              .send())
           .isValidResponse();
 
   @override
   Future<bool> setFocusAreaSpot(Point<num> value) async =>
-      (await FlutterUsb.sendCommand(Command(Commands.getCommandMainSettingI16_2(
-              SettingsId.FocusAreaSpot, value.y, value.x))))
+      (await Commands.getCommandSetting(SettingsId.FocusAreaSpot,
+                  opCodeId: OpCodeId.MainSetting,
+                  value1: value.y,
+                  value2: value.x,
+                  value1DataSize: 2,
+                  value2DataSize: 2)
+              .send())
           .isValidResponse();
 
   @override
   Future<bool> setFocusDistance(int value) async =>
-      (await FlutterUsb.sendCommand(Command(Commands.getCommandMainSettingI16(
-              SettingsId.FocusDistance, value))))
+      (await Commands.getCommandSetting(SettingsId.FocusDistance,
+                  opCodeId: OpCodeId.MainSetting, value1: value)
+              .send())
           .isValidResponse();
 
   @override
-  Future<bool> setFocusMagnifier(double value) {
+  Future<bool> setFocusMagnifier(double value) async {
     for (int i = 0; i < value; i++) {
-      FlutterUsb.sendCommand(Command(Commands.getCommandMainSettingI16(
-          SettingsId.FocusMagnifierRequest, 2)));
-      FlutterUsb.sendCommand(Command(Commands.getCommandMainSettingI16(
-          SettingsId.FocusMagnifierRequest, 1)));
+      if ((await Commands.getCommandSetting(SettingsId.FocusMagnifierRequest,
+                  opCodeId: OpCodeId.MainSetting, value1: 2)
+              .send())
+          .isValidResponse()) {
+        if ((await Commands.getCommandSetting(SettingsId.FocusMagnifierRequest,
+                    opCodeId: OpCodeId.MainSetting, value1: 1)
+                .send())
+            .isValidResponse()) {
+          //next when successful
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
     }
+    return true; //when everything finished it's successful
   }
 
   @override
   Future<bool> setFocusMagnifierDirection(
-      FocusMagnifierDirectionId value, int steps) {
-    SettingsId opcode;
+      FocusMagnifierDirectionId value, int steps) async {
+    SettingsId settingsId;
     switch (value) {
       case FocusMagnifierDirectionId.Left:
-        opcode = SettingsId.FocusMagnifierMoveLeftRequest;
+        settingsId = SettingsId.FocusMagnifierMoveLeftRequest;
         break;
       case FocusMagnifierDirectionId.Right:
-        opcode = SettingsId.FocusMagnifierMoveRightRequest;
+        settingsId = SettingsId.FocusMagnifierMoveRightRequest;
         break;
       case FocusMagnifierDirectionId.Up:
-        opcode = SettingsId.FocusMagnifierMoveUpRequest;
+        settingsId = SettingsId.FocusMagnifierMoveUpRequest;
         break;
       case FocusMagnifierDirectionId.Down:
-        opcode = SettingsId.FocusMagnifierMoveDownRequest;
+        settingsId = SettingsId.FocusMagnifierMoveDownRequest;
         break;
       case FocusMagnifierDirectionId.Unknown:
-        opcode = null;
+        settingsId = null;
         break;
     }
-    if (opcode != null) {
+    if (settingsId != null) {
       for (int i = 0; i < steps; i++) {
-        FlutterUsb.sendCommand(
-            Command(Commands.getCommandMainSettingI16(opcode, 2)));
-        FlutterUsb.sendCommand(
-            Command(Commands.getCommandMainSettingI16(opcode, 1)));
+        if ((await Commands.getCommandSetting(settingsId,
+                        opCodeId: OpCodeId.MainSetting, value1: 2)
+                    .send())
+                .isValidResponse() ==
+            false) return false;
+        if ((await Commands.getCommandSetting(settingsId,
+                        opCodeId: OpCodeId.MainSetting, value1: 1)
+                    .send())
+                .isValidResponse() ==
+            false) return false;
       }
     }
+    return true;
   }
 
   @override
@@ -495,79 +519,97 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   @override
   Future<bool> setFocusMode(FocusModeId value) async =>
-      (await FlutterUsb.sendCommand(Command(Commands.getCommandSubSettingI16(
-              SettingsId.FocusMode, value.usbValue))))
+      (await Commands.getCommandSetting(SettingsId.FocusMode,
+                  value1: value.usbValue)
+              .send())
           .isValidResponse();
 
   @override
   Future<bool> setFocusModeToggle(FocusModeToggleId value) async =>
-      (await FlutterUsb.sendCommand(Command(Commands.getCommandMainSettingI16(
-              SettingsId.FocusModeToggleRequest, value.usbValue))))
+      (await Commands.getCommandSetting(SettingsId.FocusModeToggleRequest,
+                  opCodeId: OpCodeId.MainSetting, value1: value.usbValue)
+              .send())
           .isValidResponse();
 
   @override
   Future<bool> setImageFileFormat(ImageFileFormatId value) async =>
-      (await FlutterUsb.sendCommand(Command(Commands.getCommandSubSettingI16(
-              SettingsId.FileFormat, value.usbValue))))
+      (await Commands.getCommandSetting(SettingsId.FileFormat,
+                  value1: value.usbValue)
+              .send())
           .isValidResponse();
 
   @override
-  Future<bool> setIso(int value) async => (await FlutterUsb.sendCommand(
-          Command(Commands.getCommandMainSettingI32(SettingsId.ISO, value))))
-      .isValidResponse();
+  Future<bool> setIso(int value) async =>
+      (await Commands.getCommandSetting(SettingsId.ISO,
+                  opCodeId: OpCodeId.MainSetting,
+                  value1: value,
+                  value1DataSize: 4)
+              .send())
+          .isValidResponse();
 
   @override
   Future<bool> setMeteringMode(MeteringModeId value) async =>
-      (await FlutterUsb.sendCommand(Command(Commands.getCommandSubSettingI16(
-              SettingsId.MeteringMode, value.usbValue))))
+      (await Commands.getCommandSetting(SettingsId.MeteringMode,
+                  value1: value.usbValue)
+              .send())
           .isValidResponse();
 
   @override
   Future<bool> setPictureEffect(PictureEffectId value) async =>
-      (await FlutterUsb.sendCommand(Command(Commands.getCommandSubSettingI16(
-              SettingsId.PictureEffect, value.usbValue))))
+      (await Commands.getCommandSetting(SettingsId.PictureEffect,
+                  value1: value.usbValue)
+              .send())
           .isValidResponse();
 
   @override
   Future<bool> setShutterSpeed(int value) async =>
-      (await FlutterUsb.sendCommand(Command(Commands.getCommandMainSettingI32(
-              SettingsId.ShutterSpeed, value))))
+      (await Commands.getCommandSetting(SettingsId.ShutterSpeed,
+                  opCodeId: OpCodeId.MainSetting,
+                  value1: value,
+                  value1DataSize: 4)
+              .send())
           .isValidResponse();
 
   @override
   Future<bool> setWhiteBalance(WhiteBalanceId value) async =>
-      (await FlutterUsb.sendCommand(Command(Commands.getCommandSubSettingI16(
-              SettingsId.WhiteBalance, value.usbValue))))
+      (await Commands.getCommandSetting(SettingsId.WhiteBalance,
+                  value1: value.usbValue)
+              .send())
           .isValidResponse();
 
   @override
   Future<bool> setWhiteBalanceAb(WhiteBalanceAbId value) async =>
-      (await FlutterUsb.sendCommand(Command(Commands.getCommandSubSettingI16(
-              SettingsId.WhiteBalanceAB, value.usbValue))))
+      (await Commands.getCommandSetting(SettingsId.WhiteBalanceAB,
+                  value1: value.usbValue)
+              .send())
           .isValidResponse();
 
   @override
   Future<bool> setWhiteBalanceColorTemp(int value) async =>
-      (await FlutterUsb.sendCommand(Command(Commands.getCommandSubSettingI16(
-              SettingsId.WhiteBalanceColorTemp, value))))
+      (await Commands.getCommandSetting(SettingsId.WhiteBalanceColorTemp,
+                  value1: value)
+              .send())
           .isValidResponse();
 
   @override
   Future<bool> setWhiteBalanceGm(WhiteBalanceGmId value) async =>
-      (await FlutterUsb.sendCommand(Command(Commands.getCommandSubSettingI16(
-              SettingsId.WhiteBalanceGM, value.usbValue))))
+      (await Commands.getCommandSetting(SettingsId.WhiteBalanceGM,
+                  value1: value.usbValue)
+              .send())
           .isValidResponse();
 
   @override
   Future<bool> startRecordingVideo() async =>
-      (await FlutterUsb.sendCommand(Command(
-              Commands.getCommandMainSettingI16(SettingsId.RecordVideo, 2))))
+      (await Commands.getCommandSetting(SettingsId.RecordVideo,
+                  opCodeId: OpCodeId.MainSetting, value1: 2)
+              .send())
           .isValidResponse();
 
   @override
   Future<bool> stopRecordingVideo() async =>
-      (await FlutterUsb.sendCommand(Command(
-              Commands.getCommandMainSettingI16(SettingsId.RecordVideo, 1))))
+      (await Commands.getCommandSetting(SettingsId.RecordVideo,
+                  opCodeId: OpCodeId.MainSetting, value1: 1)
+              .send())
           .isValidResponse();
 
   @override
@@ -583,8 +625,9 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   @override
   Future<bool> setImageSize(ImageSizeId value) async =>
-      (await FlutterUsb.sendCommand(Command(Commands.getCommandSubSettingI16(
-              SettingsId.ImageSize, value.usbValue))))
+      (await Commands.getCommandSetting(SettingsId.ImageSize,
+                  value1: value.usbValue)
+              .send())
           .isValidResponse();
 
   @override
@@ -613,8 +656,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
   @override
   Future<CameraImageRequest> requestPhotoAvailable(
       {bool liveView = false}) async {
-    var response =
-        await FlutterUsb.sendCommand(Commands.getImageCommand(liveView, true));
+    var response = await Commands.getImageCommand(liveView, true).send();
 
     var bytes = response.inData.toByteList().buffer.asByteData();
     int numImages = bytes.getUint16(32, Endian.little); //not num but true/false
