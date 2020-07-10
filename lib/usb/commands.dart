@@ -23,7 +23,7 @@ class Commands {
     if (value2DataSize != 0) {
       length += 2;
     }
-    if(opCodeId == OpCodeId.Connect && settingsId == SettingsId.Connect){
+    if (opCodeId == OpCodeId.Connect && settingsId == SettingsId.Connect) {
       length = 38;
     }
 
@@ -52,7 +52,7 @@ class Commands {
       addValueToCommand(list, value1, value1DataSize);
       addValueToCommand(list, value2, value2DataSize);
 
-      return SonyCommand(Command(list));
+      return SonyCommand(Command(list, outDataLength: outDataLength));
     } else if (Platform.isAndroid) {
       //2 lists
       //Uint8List list = CommandT.createCommand(10);
@@ -194,7 +194,13 @@ class SonyCommand {
   Command command1;
   Command command2;
 
-  SonyCommand(this.command1, {this.command2: null});
+  SonyCommand(this.command1, {this.command2});
 
-  Future<Response> send() async => await FlutterUsb.sendCommand(command1);
+  Future<Response> send() async {
+    var response = await FlutterUsb.sendCommand(command1);
+    if (command2 != null) {
+      response = await FlutterUsb.sendCommand(command2);
+    }
+    return response;
+  }
 }

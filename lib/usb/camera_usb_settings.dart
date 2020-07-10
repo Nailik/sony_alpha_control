@@ -26,13 +26,6 @@ class CameraUsbSettings extends CameraSettings {
     analyzeSettingsAvailable(response);
 
 
-
-    response = await FlutterUsb.sendCommand(Command(
-        Commands.getCommandSetting(
-            OpCodeId.Settings, SettingsId.CameraInfo, 0, 0, 3, 0),
-        outDataLength: 4000));
-
-    /*
     response = await Commands.getCommandSetting(
             SettingsId.CameraInfo, opCodeId: OpCodeId.Settings,
             value1: 0,
@@ -40,7 +33,6 @@ class CameraUsbSettings extends CameraSettings {
             value1DataSize: 3,
             value2DataSize: 0,
             outDataLength: 4000).send();
-     */
 
     analyzeSettings(response);
 
