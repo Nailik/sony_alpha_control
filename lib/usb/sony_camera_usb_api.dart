@@ -361,7 +361,10 @@ class SonyCameraUsbApi extends CameraApiInterface {
                     opCodeId: OpCodeId.MainSetting, value1: value ? 1 : 2)
                 .send())
             .isValidResponse()
-        ? await setAel(!value)
+        ? (await Commands.getCommandSetting(SettingsId.AEL,
+                    opCodeId: OpCodeId.MainSetting, value1: value ? 2 : 1)
+                .send())
+            .isValidResponse()
         : false;
   }
 
@@ -408,7 +411,10 @@ class SonyCameraUsbApi extends CameraApiInterface {
                     opCodeId: OpCodeId.MainSetting, value1: value ? 1 : 2)
                 .send())
             .isValidResponse()
-        ? await setAel(!value)
+        ? (await Commands.getCommandSetting(SettingsId.FEL,
+                    opCodeId: OpCodeId.MainSetting, value1: value ? 2 : 1)
+                .send())
+            .isValidResponse()
         : false;
   }
 

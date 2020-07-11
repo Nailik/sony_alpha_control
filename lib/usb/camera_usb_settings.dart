@@ -1,8 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_usb/Command.dart';
 import 'package:flutter_usb/Response.dart';
 import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/camera_settings.dart';
@@ -22,11 +20,13 @@ class CameraUsbSettings extends CameraSettings {
     print("updateCameraSettings USB");
 
     var response = await Commands.getCommandSetting(
-            SettingsId.AvailableSettings, opCodeId: OpCodeId.SettingsList,
+            SettingsId.AvailableSettings,
+            opCodeId: OpCodeId.SettingsList,
             value1: 0,
             value2: 0,
             value1DataSize: 0,
-            value2DataSize: 0).send();
+            value2DataSize: 0)
+        .send();
 
     print("updateCameraSettings analyzeSettingsAvailable USB");
     //1, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -37,14 +37,14 @@ class CameraUsbSettings extends CameraSettings {
     //299...
     analyzeSettingsAvailable(response);
 
-
-    response = await Commands.getCommandSetting(
-            SettingsId.CameraInfo, opCodeId: OpCodeId.Settings,
+    response = await Commands.getCommandSetting(SettingsId.CameraInfo,
+            opCodeId: OpCodeId.Settings,
             value1: 0,
             value2: 0,
             value1DataSize: 0,
             value2DataSize: 0,
-            outDataLength: 4000).send();
+            outDataLength: 4000)
+        .send();
 
     print("updateCameraSettings analyzeSettings USB");
 
@@ -52,25 +52,21 @@ class CameraUsbSettings extends CameraSettings {
     //37, 0, 0, 0, 0, 0, 0, 0, 4, 80, 2, 0, 1, 1, 2, 16, 2, 5, 0,
     try {
       analyzeSettings(response);
-    } catch(e){
+    } catch (e) {
       print(e);
     }
 
     notifyListeners();
 
-    return
-    true;
+    return true;
   }
 
   analyzeSettingsAvailable(Response response) {
     if (!isValidResponse(response)) return;
-    var bytes = Uint8List
-        .fromList(response.inData)
-        .buffer
-        .asByteData();
+    var bytes = Uint8List.fromList(response.inData).buffer.asByteData();
 
     int offset = 30; //TODO maybe only wia offset?
-    if(Platform.isAndroid){
+    if (Platform.isAndroid) {
       offset = 12;
     }
     //30
@@ -94,15 +90,14 @@ class CameraUsbSettings extends CameraSettings {
   }
 
   analyzeSettings(Response response) {
-
     print("updateCameraSettings analyzeSettings even if not valid USB");
-   // if (!isValidResponse(response)) return;
+    // if (!isValidResponse(response)) return;
 
     var byteList = response.inData.toByteList();
     var bytes = byteList.buffer.asByteData();
 
     int offset = 30; //TODO maybe only wia offset?
-    if(Platform.isAndroid){
+    if (Platform.isAndroid) {
       offset = 12;
     }
     var numSettings = bytes.getUint32(offset, Endian.little); //37
@@ -116,7 +111,7 @@ class CameraUsbSettings extends CameraSettings {
 
       print("read ID $settingsId and that is ${getSettingsId(settingsId)}");
       SettingsItem setting = settings.singleWhere(
-              (it) => it.settingsId.usbValue == settingsId,
+          (it) => it.settingsId.usbValue == settingsId,
           orElse: () => null);
       if (setting == null) {
         setting = new SettingsItem(getSettingsId(settingsId));
@@ -139,7 +134,7 @@ class CameraUsbSettings extends CameraSettings {
               offset += 3;
               break;
             default:
-            //unkown
+              //unkown
               break;
           }
           break;
@@ -150,11 +145,8 @@ class CameraUsbSettings extends CameraSettings {
           var subDataType = bytes.getUint8(offset);
           offset++;
           switch (subDataType) {
-          //white balance ab //-7 + 7 (0,5)
+            //white balance ab //-7 + 7 (0,5)
             case 1:
-            //TODO white balance ab
-            //min = 180
-            //max = 1600
               var min = bytes.getUint8(offset);
               offset += 1;
               var max = bytes.getUint8(offset);
@@ -195,7 +187,7 @@ class CameraUsbSettings extends CameraSettings {
               }
               break;
             default:
-            //unkown
+              //unkown
               break;
           }
 
@@ -224,7 +216,7 @@ class CameraUsbSettings extends CameraSettings {
                   .sort((a, b) => a.usbValue.compareTo(b.usbValue));
               break;
             default:
-            //unkown
+              //unkown
               break;
           }
 
@@ -265,7 +257,7 @@ class CameraUsbSettings extends CameraSettings {
               }
               break;
             default:
-            //unkown
+              //unkown
               break;
           }
 
@@ -273,20 +265,13 @@ class CameraUsbSettings extends CameraSettings {
         case 6:
           offset += 6;
           if (setting.hasSubValue()) {
-            setting.value =
-                setting.fromUsb(bytes.getUint16(offset, Endian.little));
+            var value = bytes.getUint16(offset, Endian.little);
             offset += 2;
-            setting.subValue =
-                setting.fromUsb(bytes.getUint16(offset, Endian.little));
+            var subValue = bytes.getUint16(offset, Endian.little);
             offset += 2;
-            if (setting.subValue.usbValue == 1 &&
-                setting.settingsId == SettingsId.ShutterSpeed) {
-              setting.value =
-                  ShutterSpeedValue(setting.value.usbValue.toDouble());
-            } else {
-              setting.value = ShutterSpeedValue(
-                  setting.subValue.usbValue.toDouble() / 10.0);
-            }
+
+            setting.value = setting.fromUsb(value, subValue: subValue);
+            setting.subValue = setting.fromUsb(subValue);
           } else {
             setting.value =
                 setting.fromUsb(bytes.getUint32(offset, Endian.little));
@@ -296,7 +281,7 @@ class CameraUsbSettings extends CameraSettings {
           offset++;
           switch (subDataType) {
             case 1:
-            //TODO?
+              //TODO?
               var min = bytes.getUint32(offset, Endian.little);
               offset += 4;
               var max = bytes.getUint32(offset, Endian.little);
@@ -315,13 +300,13 @@ class CameraUsbSettings extends CameraSettings {
               }
               break;
             default:
-            //unkown
+              //unkown
               break;
           }
 
           break;
         default:
-        //TODO log unkown
+          //TODO log unkown
           break;
       }
     }

@@ -38,7 +38,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
         settingsId == SettingsId.ShutterSpeed);
   }
 
-  SettingsValue fromUsb(int usbValue) {
+  SettingsValue fromUsb(int usbValue, {int subValue = 1}) {
     switch (settingsId) {
       case SettingsId.FileFormat:
         return ImageFileFormatValue.fromUSBValue(usbValue);
@@ -65,10 +65,10 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.ImageSize:
         return ImageSizeValue.fromUSBValue(usbValue);
       case SettingsId.ShutterSpeed:
-        return IntValue(usbValue);
+        return ShutterSpeedValue(usbValue.toDouble(), subValue);
       case SettingsId.UnkD20E:
-        // TODO called often
-        break;
+        print("UnkD20E $usbValue");
+        return IntValue(usbValue);
       case SettingsId.WhiteBalanceColorTemp:
         return IntValue(usbValue);
       case SettingsId.WhiteBalanceGM:
@@ -76,9 +76,8 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.AspectRatio:
         return AspectRatioValue.fromUSBValue(usbValue);
       case SettingsId.UnkD212:
-        // TODO:  called once
         print("UnkD212 $usbValue");
-        break;
+        return IntValue(usbValue);
       case SettingsId.AutoFocusState:
         return AutoFocusStateValue.fromUSBValue(usbValue);
       case SettingsId.Zoom:
@@ -98,43 +97,36 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.RecordVideoState:
         return RecordVideoStateValue.fromUSBValue(usbValue);
       case SettingsId.ISO:
-        return IntValue(usbValue);
+        return IsoValue(usbValue.toDouble());
       case SettingsId.FEL_State:
         return BoolValue(usbValue == 2);
       case SettingsId.LiveViewState:
         return BoolValue(usbValue == 2);
       case SettingsId.UnkD222:
-        // TODO: Handle this case.
         print("UnkD222 $usbValue");
-        break;
+        return IntValue(usbValue);
       case SettingsId.FocusArea:
         return FocusAreaValue.fromUSBValue(usbValue);
       case SettingsId.FocusMagnifierPhase:
         return FocusMagnifierPhaseValue.fromUSBValue(usbValue);
       case SettingsId.UnkD22E:
-        // TODO: Handle this case.
         print("UnkD22E $usbValue");
-        break;
+        return IntValue(usbValue);
       case SettingsId.FocusMagnifier:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.FocusMagnifierPosition:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.UseLiveViewDisplayEffect:
         return BoolValue(usbValue == 2);
       case SettingsId.FocusAreaSpot:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.FocusMagnifierState:
         return BoolValue(usbValue == 2);
       case SettingsId.FocusModeToggleResponse:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.UnkD236:
         print("UnkD236 $usbValue");
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.HalfPressShutter:
         return BoolValue(usbValue == 2);
       case SettingsId.CapturePhoto:
@@ -142,6 +134,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.AEL:
         return IntValue(usbValue);
       case SettingsId.UnkD2C5:
+        print("UnkD2C5 $usbValue");
         return IntValue(usbValue);
       case SettingsId.UnkD2C7:
         print("UnkD2C7 $usbValue");
@@ -151,44 +144,40 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.FEL:
         return BoolValue(usbValue == 2);
       case SettingsId.FocusMagnifierRequest:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.FocusMagnifierResetRequest:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.FocusMagnifierMoveUpRequest:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.FocusMagnifierMoveDownRequest:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.FocusMagnifierMoveLeftRequest:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.FocusMagnifierMoveRightRequest:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.FocusDistance:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.FocusModeToggleRequest:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.UnkD2D3:
-        // TODO: Handle this case.
-        break;
+        print("UnkD2D3 $usbValue");
+        return IntValue(usbValue);
       case SettingsId.UnkD2D4:
-        // TODO: Handle this case.
-        break;
+        print("UnkD2D4 $usbValue");
+        return IntValue(usbValue);
       case SettingsId.LiveViewInfo:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.PhotoInfo:
-        // TODO: Handle this case.
-        break;
+        return IntValue(usbValue);
       case SettingsId.Unknown:
-        // TODO: Handle this case.
-        break;
+        print("Unknown $usbValue");
+        return IntValue(usbValue);
+      case SettingsId.AvailableSettings:
+        return IntValue(usbValue);
+      case SettingsId.CameraInfo:
+        return IntValue(usbValue);
+      case SettingsId.Connect:
+        return IntValue(usbValue);
     }
   }
 }
@@ -233,14 +222,29 @@ class DoubleValue extends SettingsValue<double> {
 }
 
 class ShutterSpeedValue extends DoubleValue {
-  ShutterSpeedValue(double id) : super(id);
+  var subValue;
+
+  ShutterSpeedValue(double id, this.subValue) : super(id);
 
   @override
   String get name {
-    if(id > 1.0){
-      return "1/$id".replaceAll(".0", "");
+    if (subValue == 1) {
+      return "1/${id.toInt()}";
     }
-    return "$id\"";
+    return "0.$subValue\"";
+  }
+}
+
+class IsoValue extends DoubleValue {
+  IsoValue(double id) : super(id);
+
+  @override
+  String get name {
+    var multiFrame = id > (2 * 0xFFFFFF) ? "MultiFrame RM Hoch"  :
+    id > 0xFFFFFF ? "MultiFrame RM Standard" : "";
+    var auto = id == 0xFFFFFF || id == (2 * 0xFFFFFF) + 1 || id == (3 * 0xFFFFFF) + 2 ? "Auto" : "";
+    var value = id % 0xFFFFFF - id ~/ 0xFFFFFF;
+    return "${auto.isEmpty ? value : auto} $multiFrame";
   }
 }
 

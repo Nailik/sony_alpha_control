@@ -17,7 +17,24 @@ enum PictureEffectId {
   PartialColor_Blue,
   PartialColor_Yellow,
   HighContrastMono,
-  RichToneMono,
+  Soft_Lo,
+  Soft_Mid,
+  Soft_Hi,
+  Painting_Lo,
+  Painting_Mid,
+  Painting_Hi,
+  Rich_BW,
+  Miniature_Auto,
+  Miniature_Top,
+  Miniature_Horizontal,
+  Miniature_Bottom,
+  Miniature_Right,
+  Miniature_Mid,
+  Miniature_Left,
+  Water_Color,
+  Illustration_Lo,
+  Illustration_Mid,
+  Illustration_Hi,
   Unknown
 }
 
@@ -58,8 +75,42 @@ extension PictureEffectIdExtension on PictureEffectId {
         return 0x8053;
       case PictureEffectId.HighContrastMono:
         return 0x8060;
-      case PictureEffectId.RichToneMono:
+      case PictureEffectId.Soft_Lo:
+        return 0x8070;
+      case PictureEffectId.Soft_Mid:
+        return 0x8071;
+      case PictureEffectId.Soft_Hi:
+        return 0x8072;
+      case PictureEffectId.Painting_Lo:
+        return 0x8080;
+      case PictureEffectId.Painting_Mid:
+        return 0x8081;
+      case PictureEffectId.Painting_Hi:
+        return 0x8082;
+      case PictureEffectId.Rich_BW: //Mono
         return 0x8090;
+      case PictureEffectId.Miniature_Auto:
+        return 0x80A0;
+      case PictureEffectId.Miniature_Top:
+        return 0x80A1;
+      case PictureEffectId.Miniature_Horizontal:
+        return 0x80A2;
+      case PictureEffectId.Miniature_Bottom:
+        return 0x80A3;
+      case PictureEffectId.Miniature_Right:
+        return 0x80A4;
+      case PictureEffectId.Miniature_Mid:
+        return 0x80A5;
+      case PictureEffectId.Miniature_Left:
+        return 0x80A6;
+      case PictureEffectId.Water_Color:
+        return 0x80B0;
+      case PictureEffectId.Illustration_Lo:
+        return 0x80C0;
+      case PictureEffectId.Illustration_Mid:
+        return 0x80C1;
+      case PictureEffectId.Illustration_Hi:
+        return 0x80C2;
       case PictureEffectId.Unknown:
         return -1;
       default:

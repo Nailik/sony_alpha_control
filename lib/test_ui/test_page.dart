@@ -64,7 +64,7 @@ class TestsPageState extends State<TestsPage> {
                       getSettingsRow(SettingsId.AspectRatio),
                       getAelRow(),
                       getSettingsRow(SettingsId.PictureEffect),
-                      getSettingsRow(SettingsId.ISO),
+                      getIsoRow(),
                       getFelRow(),
                       getFocusAreaRow(),
                       getFocusModeRow()
@@ -426,6 +426,30 @@ class TestsPageState extends State<TestsPage> {
               title: Text("MF"),
               onTap: () =>
                   device.api.setFocusModeToggle(FocusModeToggleId.Manual)),
+        )
+      ])),
+    );
+  }
+
+  Widget getIsoRow() {
+    return Card(
+      child: IntrinsicHeight(
+          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Expanded(
+          child: ListTile(
+              title: Text(SettingsId.ISO.name),
+              subtitle: Text(
+                  device.cameraSettings.getItem(SettingsId.ISO)?.value?.name ??
+                      "NotAvailable"),
+              onTap: () async => dialog(
+                  device.cameraSettings.getItem(SettingsId.ISO), context)),
+        ),
+        Expanded(
+          child: ListTile(title: Text("Up"), onTap: () => device.api.setIso(1)),
+        ),
+        Expanded(
+          child:
+              ListTile(title: Text("Down"), onTap: () => device.api.setIso(-1)),
         )
       ])),
     );
