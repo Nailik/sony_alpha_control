@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> {
       onTap: () async {
         await SonyApi.connectCamera(device);
         await device.updateSettings();
-        await device.api.setFocusAreaSpot(Point(6,8));
+     //   await device.api.setFocusAreaSpot(Point(6,8));
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => TestsPage(device: device)),

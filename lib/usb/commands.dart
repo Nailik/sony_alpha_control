@@ -8,7 +8,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 
 class Commands {
-  static var index = 3;
+  static var index = 1;
 
 //omost often used values as default
   static SonyCommand getCommandSetting(SettingsId settingsId,
@@ -18,17 +18,17 @@ class Commands {
       int value1DataSize = 2,
       int value2DataSize = 0,
       int outDataLength = 1024}) {
-    var length = 40;
-    //if we have a second value the command needs to be little bit longer
-    if (value2DataSize != 0) {
-      length += 2;
-    }
-    if (opCodeId == OpCodeId.Connect && settingsId == SettingsId.Connect) {
-      length = 38;
-    }
-
-    Uint8List list = CommandT.createCommand(length);
     if (Platform.isWindows) {
+      var length = 40;
+      //if we have a second value the command needs to be little bit longer
+      if (value2DataSize != 0) {
+        length += 2;
+      }
+      if (opCodeId == OpCodeId.Connect && settingsId == SettingsId.Connect) {
+        length = 38;
+      }
+
+      Uint8List list = CommandT.createCommand(length);
       //wia is used
       list.writeUInt16(opCodeId.usbValue);
       list.goTo(10);
@@ -54,14 +54,27 @@ class Commands {
 
       return SonyCommand(Command(list, outDataLength: outDataLength));
     } else if (Platform.isAndroid) {
+
+      Uint8List list = CommandT.createCommand(16);
+      //TODO not always 2 lists
+      //0000   10 00 00 00 01 00 07 92 08 00 00 00 07 50 00 00
+      //0000   0e 00 00 00 02 00 07 92 08 00 00 00 01 00
+
+      //0000   10 00 00 00 01 00 05 92 09 00 00 00 04 50 00 00
+      //0000   0e 00 00 00 02 00 05 92 09 00 00 00 02 00
+
+      //0000   10 00 00 00 01 00 05 92 0a 00 00 00 04 50 00 00
+      //0000   0e 00 00 00 02 00 05 92 0a 00 00 00 10 00
+      //maxbe not two lists when only one value?
+
       //2 lists
       //Uint8List list = CommandT.createCommand(10);
       //start with length
-      list.writeUInt8(10);
+      list.writeUInt8(0x10);
       //skip 3
       list.goTo(4);
       //write part
-      list.writeUInt8(1);
+      list.writeUInt8(1); //TODO maybe value?!
       //skip 1
       list.writeUInt8(0);
       //write opcode
@@ -75,10 +88,15 @@ class Commands {
 
       var length = 0x0e;
       if (value2DataSize != 0) {
-        list.writeUInt8(10);
+        length += 2;
       }
 
-      Uint8List list2 = CommandT.createCommand(length);
+      if(value1DataSize == 0 && value2DataSize == 0){
+        //only one command, eg when reading settings
+        return SonyCommand(Command(list, outDataLength: outDataLength));
+      }
+
+      Uint8List list2 = CommandT.createCommand(16);
       //start with length
       if (value2DataSize != 0) {
         list2.writeUInt8(length);
@@ -197,10 +215,12 @@ class SonyCommand {
   SonyCommand(this.command1, {this.command2});
 
   Future<Response> send() async {
-    var response = await FlutterUsb.sendCommand(command1);
+    print("send SonyCommand two? ${command2 != null}");
     if (command2 != null) {
-      response = await FlutterUsb.sendCommand(command2);
+      command1.outDataLength = 0;
+      await FlutterUsb.sendCommand(command1);
+      return await FlutterUsb.sendCommand(command2);
     }
-    return response;
+    return await FlutterUsb.sendCommand(command1);
   }
 }

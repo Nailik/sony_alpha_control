@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_usb/Command.dart';
 import 'package:flutter_usb/Response.dart';
 import 'package:flutter_usb/flutter_usb.dart';
@@ -17,12 +19,22 @@ class CameraUsbSettings extends CameraSettings {
 
   @override
   Future<bool> update() async {
+    print("updateCameraSettings USB");
+
     var response = await Commands.getCommandSetting(
             SettingsId.AvailableSettings, opCodeId: OpCodeId.SettingsList,
-            value1: 1,
+            value1: 0,
             value2: 0,
-            value1DataSize: 3,
+            value1DataSize: 0,
             value2DataSize: 0).send();
+
+    print("updateCameraSettings analyzeSettingsAvailable USB");
+    //1, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+    // 200, 0, 31, 0, 0, 0, 4, 80, 5, 80, 7, 80, 10
+
+    //on android
+    //98, 0, 0, 0, 2, 0, 2, 146, 4, 0, 0, 0,
+    //299...
     analyzeSettingsAvailable(response);
 
 
@@ -30,11 +42,19 @@ class CameraUsbSettings extends CameraSettings {
             SettingsId.CameraInfo, opCodeId: OpCodeId.Settings,
             value1: 0,
             value2: 0,
-            value1DataSize: 3,
+            value1DataSize: 0,
             value2DataSize: 0,
             outDataLength: 4000).send();
 
-    analyzeSettings(response);
+    print("updateCameraSettings analyzeSettings USB");
+
+    //1, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    //37, 0, 0, 0, 0, 0, 0, 0, 4, 80, 2, 0, 1, 1, 2, 16, 2, 5, 0,
+    try {
+      analyzeSettings(response);
+    } catch(e){
+      print(e);
+    }
 
     notifyListeners();
 
@@ -49,7 +69,10 @@ class CameraUsbSettings extends CameraSettings {
         .buffer
         .asByteData();
 
-    int offset = 30;
+    int offset = 30; //TODO maybe only wia offset?
+    if(Platform.isAndroid){
+      offset = 12;
+    }
     //30
     var unk = bytes.getInt16(offset, Endian.little); //200
     offset += 2; //bc we read uint16 (über response.index ...)
@@ -71,11 +94,17 @@ class CameraUsbSettings extends CameraSettings {
   }
 
   analyzeSettings(Response response) {
-    if (!isValidResponse(response)) return;
+
+    print("updateCameraSettings analyzeSettings even if not valid USB");
+   // if (!isValidResponse(response)) return;
+
     var byteList = response.inData.toByteList();
     var bytes = byteList.buffer.asByteData();
 
-    int offset = 30;
+    int offset = 30; //TODO maybe only wia offset?
+    if(Platform.isAndroid){
+      offset = 12;
+    }
     var numSettings = bytes.getUint32(offset, Endian.little); //37
     offset += 4;
     var unk = bytes.getUint32(offset, Endian.little); //always 0?
@@ -85,6 +114,7 @@ class CameraUsbSettings extends CameraSettings {
       var settingsId = bytes.getUint16(offset, Endian.little);
       offset += 2;
 
+      print("read ID $settingsId and that is ${getSettingsId(settingsId)}");
       SettingsItem setting = settings.singleWhere(
               (it) => it.settingsId.usbValue == settingsId,
           orElse: () => null);

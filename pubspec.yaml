@@ -24,7 +24,9 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_usb:
-    git: https://github.com/Nailik/flutter_usb.git
+    git:
+      url: https://github.com/Nailik/flutter_usb.git
+      ref: '9119d56'
   wifi_iot:
     git: https://github.com/alternadom/WiFiFlutter.git
   xml2json:
@@ -33,7 +35,7 @@ dependencies:
   http:
   provider:
   cross_connectivity:
-  flutter_isolate: ^1.0.0+14
+  flutter_isolate:
   file_chooser:
     git:
       url: git://github.com/google/flutter-desktop-embedding.git
