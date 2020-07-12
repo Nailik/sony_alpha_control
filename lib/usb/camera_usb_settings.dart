@@ -17,7 +17,6 @@ class CameraUsbSettings extends CameraSettings {
 
   @override
   Future<bool> update() async {
-    print("updateCameraSettings USB");
 
     var response = await Commands.getCommandSetting(
             SettingsId.AvailableSettings,
@@ -27,8 +26,6 @@ class CameraUsbSettings extends CameraSettings {
             value1DataSize: 0,
             value2DataSize: 0)
         .send();
-
-    print("updateCameraSettings analyzeSettingsAvailable USB");
     //1, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     // 200, 0, 31, 0, 0, 0, 4, 80, 5, 80, 7, 80, 10
 
@@ -45,8 +42,6 @@ class CameraUsbSettings extends CameraSettings {
             value2DataSize: 0,
             outDataLength: 4000)
         .send();
-
-    print("updateCameraSettings analyzeSettings USB");
 
     //1, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     //37, 0, 0, 0, 0, 0, 0, 0, 4, 80, 2, 0, 1, 1, 2, 16, 2, 5, 0,
@@ -90,7 +85,6 @@ class CameraUsbSettings extends CameraSettings {
   }
 
   analyzeSettings(Response response) {
-    print("updateCameraSettings analyzeSettings even if not valid USB");
     // if (!isValidResponse(response)) return;
 
     var byteList = response.inData.toByteList();
@@ -109,7 +103,6 @@ class CameraUsbSettings extends CameraSettings {
       var settingsId = bytes.getUint16(offset, Endian.little);
       offset += 2;
 
-      print("read ID $settingsId and that is ${getSettingsId(settingsId)}");
       SettingsItem setting = settings.singleWhere(
           (it) => it.settingsId.usbValue == settingsId,
           orElse: () => null);
