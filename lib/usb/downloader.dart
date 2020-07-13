@@ -9,7 +9,7 @@ import 'package:sonyalphacontrol/top_level_api/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
 import 'package:sonyalphacontrol/usb/sony_camera_usb_device.dart';
 
-import 'commands.dart';
+import 'usb_commands.dart';
 
 class Downloader {
   static SonyCameraDevice device;
@@ -78,7 +78,7 @@ Future<CameraImage> getImage(SonyCameraDevice device,
   var millis = new DateTime.now().millisecondsSinceEpoch;
 
   print("staGetImage $millis");
-  Response response = await Commands.getImageCommand(liveView, false,
+  Response response = await UsbCommands.getImageCommand(liveView, false,
           imageSizeInBytes: request.size)
       .send();
 

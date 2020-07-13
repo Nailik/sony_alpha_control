@@ -9,7 +9,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
 
-import 'commands.dart';
+import 'usb_commands.dart';
 
 class CameraUsbSettings extends CameraSettings {
   List<int> mainSettings = new List();
@@ -18,7 +18,7 @@ class CameraUsbSettings extends CameraSettings {
   @override
   Future<bool> update() async {
 
-    var response = await Commands.getCommandSetting(
+    var response = await UsbCommands.getCommandSetting(
             SettingsId.AvailableSettings,
             opCodeId: OpCodeId.SettingsList,
             value1: 0,
@@ -34,7 +34,7 @@ class CameraUsbSettings extends CameraSettings {
     //299...
     analyzeSettingsAvailable(response);
 
-    response = await Commands.getCommandSetting(SettingsId.CameraInfo,
+    response = await UsbCommands.getCommandSetting(SettingsId.CameraInfo,
             opCodeId: OpCodeId.Settings,
             value1: 0,
             value2: 0,

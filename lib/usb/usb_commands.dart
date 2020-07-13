@@ -7,7 +7,7 @@ import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 
-class Commands {
+class UsbCommands {
   static var index = 1;
 
 //omost often used values as default
@@ -178,7 +178,7 @@ extension CommandT on Uint8List {
   static int position = 0;
 
   static Uint8List createCommand(int f) {
-    Commands.index++;
+    UsbCommands.index++;
 
     position = 0;
     return Uint8List(f);

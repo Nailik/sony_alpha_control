@@ -31,7 +31,7 @@ import 'package:sonyalphacontrol/usb/downloader.dart';
 import 'package:sonyalphacontrol/usb/response_validation.dart';
 import 'package:sonyalphacontrol/usb/sony_camera_usb_device.dart';
 
-import 'commands.dart';
+import 'usb_commands.dart';
 
 //TODO 0000   10 00 00 00 04 00 03 c2 ff ff ff ff 1d d2 00 00 -> URB_INTERRUPT in when sth changed
 //TODO register for event notifications
@@ -213,7 +213,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
     switch (shutterPressType) {
       case ShutterPressType.Half:
       case ShutterPressType.Full:
-        return (await Commands.getCommandSetting(
+        return (await UsbCommands.getCommandSetting(
                     shutterPressType == ShutterPressType.Half
                         ? SettingsId.HalfPressShutter
                         : SettingsId.CapturePhoto,
@@ -357,11 +357,11 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   @override
   Future<bool> setAel(bool value) async {
-    return (await Commands.getCommandSetting(SettingsId.AEL,
+    return (await UsbCommands.getCommandSetting(SettingsId.AEL,
                     opCodeId: OpCodeId.MainSetting, value1: value ? 1 : 2)
                 .send())
             .isValidResponse()
-        ? (await Commands.getCommandSetting(SettingsId.AEL,
+        ? (await UsbCommands.getCommandSetting(SettingsId.AEL,
                     opCodeId: OpCodeId.MainSetting, value1: value ? 2 : 1)
                 .send())
             .isValidResponse()
@@ -370,7 +370,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   @override
   Future<bool> setAspectRatio(AspectRatioId value) async =>
-      (await Commands.getCommandSetting(SettingsId.AspectRatio,
+      (await UsbCommands.getCommandSetting(SettingsId.AspectRatio,
                   opCodeId: OpCodeId.SubSetting,
                   value1: value.usbValue,
                   value1DataSize: 1)
@@ -379,39 +379,39 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   @override
   Future<bool> setDriveMode(DriveModeId value) async =>
-      (await Commands.getCommandSetting(SettingsId.DriveMode,
+      (await UsbCommands.getCommandSetting(SettingsId.DriveMode,
                   value1: value.usbValue)
               .send())
           .isValidResponse();
 
   @override
   Future<bool> setDroHdr(DroHdrId value) async =>
-      (await Commands.getCommandSetting(SettingsId.DroHdr,
+      (await UsbCommands.getCommandSetting(SettingsId.DroHdr,
                   value1: value.usbValue)
               .send())
           .isValidResponse();
 
   @override
   Future<bool> setEV(int value) async =>
-      (await Commands.getCommandSetting(SettingsId.EV,
+      (await UsbCommands.getCommandSetting(SettingsId.EV,
                   opCodeId: OpCodeId.MainSetting, value1: value)
               .send())
           .isValidResponse();
 
   @override
   Future<bool> setFNumber(int value) async =>
-      (await Commands.getCommandSetting(SettingsId.FNumber,
+      (await UsbCommands.getCommandSetting(SettingsId.FNumber,
                   opCodeId: OpCodeId.MainSetting, value1: value)
               .send())
           .isValidResponse();
 
   @override
   Future<bool> setFel(bool value) async {
-    return (await Commands.getCommandSetting(SettingsId.FEL,
+    return (await UsbCommands.getCommandSetting(SettingsId.FEL,
                     opCodeId: OpCodeId.MainSetting, value1: value ? 1 : 2)
                 .send())
             .isValidResponse()
-        ? (await Commands.getCommandSetting(SettingsId.FEL,
+        ? (await UsbCommands.getCommandSetting(SettingsId.FEL,
                     opCodeId: OpCodeId.MainSetting, value1: value ? 2 : 1)
                 .send())
             .isValidResponse()
@@ -420,28 +420,28 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   @override
   Future<bool> setFlashMode(FlashModeId value) async =>
-      (await Commands.getCommandSetting(SettingsId.FlashMode,
+      (await UsbCommands.getCommandSetting(SettingsId.FlashMode,
                   value1: value.usbValue)
               .send())
           .isValidResponse();
 
   @override
   Future<bool> setFlashValue(int value) async =>
-      (await Commands.getCommandSetting(SettingsId.FlashValue,
+      (await UsbCommands.getCommandSetting(SettingsId.FlashValue,
                   opCodeId: OpCodeId.MainSetting, value1: value)
               .send())
           .isValidResponse();
 
   @override
   Future<bool> setFocusArea(FocusAreaId value) async =>
-      (await Commands.getCommandSetting(SettingsId.FocusArea,
+      (await UsbCommands.getCommandSetting(SettingsId.FocusArea,
                   opCodeId: OpCodeId.SubSetting, value1: value.usbValue)
               .send())
           .isValidResponse();
 
   @override
   Future<bool> setFocusAreaSpot(Point<num> value) async =>
-      (await Commands.getCommandSetting(SettingsId.FocusAreaSpot,
+      (await UsbCommands.getCommandSetting(SettingsId.FocusAreaSpot,
                   opCodeId: OpCodeId.MainSetting,
                   value1: value.y,
                   value2: value.x,
@@ -452,7 +452,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   @override
   Future<bool> setFocusDistance(int value) async =>
-      (await Commands.getCommandSetting(SettingsId.FocusDistance,
+      (await UsbCommands.getCommandSetting(SettingsId.FocusDistance,
                   opCodeId: OpCodeId.MainSetting, value1: value)
               .send())
           .isValidResponse();
@@ -460,11 +460,11 @@ class SonyCameraUsbApi extends CameraApiInterface {
   @override
   Future<bool> setFocusMagnifier(double value) async {
     for (int i = 0; i < value; i++) {
-      if ((await Commands.getCommandSetting(SettingsId.FocusMagnifierRequest,
+      if ((await UsbCommands.getCommandSetting(SettingsId.FocusMagnifierRequest,
                   opCodeId: OpCodeId.MainSetting, value1: 2)
               .send())
           .isValidResponse()) {
-        if ((await Commands.getCommandSetting(SettingsId.FocusMagnifierRequest,
+        if ((await UsbCommands.getCommandSetting(SettingsId.FocusMagnifierRequest,
                     opCodeId: OpCodeId.MainSetting, value1: 1)
                 .send())
             .isValidResponse()) {
@@ -502,12 +502,12 @@ class SonyCameraUsbApi extends CameraApiInterface {
     }
     if (settingsId != null) {
       for (int i = 0; i < steps; i++) {
-        if ((await Commands.getCommandSetting(settingsId,
+        if ((await UsbCommands.getCommandSetting(settingsId,
                         opCodeId: OpCodeId.MainSetting, value1: 2)
                     .send())
                 .isValidResponse() ==
             false) return false;
-        if ((await Commands.getCommandSetting(settingsId,
+        if ((await UsbCommands.getCommandSetting(settingsId,
                         opCodeId: OpCodeId.MainSetting, value1: 1)
                     .send())
                 .isValidResponse() ==
@@ -525,28 +525,28 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   @override
   Future<bool> setFocusMode(FocusModeId value) async =>
-      (await Commands.getCommandSetting(SettingsId.FocusMode,
+      (await UsbCommands.getCommandSetting(SettingsId.FocusMode,
                   value1: value.usbValue)
               .send())
           .isValidResponse();
 
   @override
   Future<bool> setFocusModeToggle(FocusModeToggleId value) async =>
-      (await Commands.getCommandSetting(SettingsId.FocusModeToggleRequest,
+      (await UsbCommands.getCommandSetting(SettingsId.FocusModeToggleRequest,
                   opCodeId: OpCodeId.MainSetting, value1: value.usbValue)
               .send())
           .isValidResponse();
 
   @override
   Future<bool> setImageFileFormat(ImageFileFormatId value) async =>
-      (await Commands.getCommandSetting(SettingsId.FileFormat,
+      (await UsbCommands.getCommandSetting(SettingsId.FileFormat,
                   value1: value.usbValue)
               .send())
           .isValidResponse();
 
   @override
   Future<bool> setIso(int value) async =>
-      (await Commands.getCommandSetting(SettingsId.ISO,
+      (await UsbCommands.getCommandSetting(SettingsId.ISO,
                   opCodeId: OpCodeId.MainSetting,
                   value1: value,
                   value1DataSize: 4)
@@ -555,21 +555,21 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   @override
   Future<bool> setMeteringMode(MeteringModeId value) async =>
-      (await Commands.getCommandSetting(SettingsId.MeteringMode,
+      (await UsbCommands.getCommandSetting(SettingsId.MeteringMode,
                   value1: value.usbValue)
               .send())
           .isValidResponse();
 
   @override
   Future<bool> setPictureEffect(PictureEffectId value) async =>
-      (await Commands.getCommandSetting(SettingsId.PictureEffect,
+      (await UsbCommands.getCommandSetting(SettingsId.PictureEffect,
                   value1: value.usbValue)
               .send())
           .isValidResponse();
 
   @override
   Future<bool> setShutterSpeed(int value) async =>
-      (await Commands.getCommandSetting(SettingsId.ShutterSpeed,
+      (await UsbCommands.getCommandSetting(SettingsId.ShutterSpeed,
                   opCodeId: OpCodeId.MainSetting,
                   value1: value,
                   value1DataSize: 4)
@@ -578,42 +578,42 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   @override
   Future<bool> setWhiteBalance(WhiteBalanceId value) async =>
-      (await Commands.getCommandSetting(SettingsId.WhiteBalance,
+      (await UsbCommands.getCommandSetting(SettingsId.WhiteBalance,
                   value1: value.usbValue)
               .send())
           .isValidResponse();
 
   @override
   Future<bool> setWhiteBalanceAb(WhiteBalanceAbId value) async =>
-      (await Commands.getCommandSetting(SettingsId.WhiteBalanceAB,
+      (await UsbCommands.getCommandSetting(SettingsId.WhiteBalanceAB,
                   value1: value.usbValue)
               .send())
           .isValidResponse();
 
   @override
   Future<bool> setWhiteBalanceColorTemp(int value) async =>
-      (await Commands.getCommandSetting(SettingsId.WhiteBalanceColorTemp,
+      (await UsbCommands.getCommandSetting(SettingsId.WhiteBalanceColorTemp,
                   value1: value)
               .send())
           .isValidResponse();
 
   @override
   Future<bool> setWhiteBalanceGm(WhiteBalanceGmId value) async =>
-      (await Commands.getCommandSetting(SettingsId.WhiteBalanceGM,
+      (await UsbCommands.getCommandSetting(SettingsId.WhiteBalanceGM,
                   value1: value.usbValue)
               .send())
           .isValidResponse();
 
   @override
   Future<bool> startRecordingVideo() async =>
-      (await Commands.getCommandSetting(SettingsId.RecordVideo,
+      (await UsbCommands.getCommandSetting(SettingsId.RecordVideo,
                   opCodeId: OpCodeId.MainSetting, value1: 2)
               .send())
           .isValidResponse();
 
   @override
   Future<bool> stopRecordingVideo() async =>
-      (await Commands.getCommandSetting(SettingsId.RecordVideo,
+      (await UsbCommands.getCommandSetting(SettingsId.RecordVideo,
                   opCodeId: OpCodeId.MainSetting, value1: 1)
               .send())
           .isValidResponse();
@@ -631,7 +631,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   @override
   Future<bool> setImageSize(ImageSizeId value) async =>
-      (await Commands.getCommandSetting(SettingsId.ImageSize,
+      (await UsbCommands.getCommandSetting(SettingsId.ImageSize,
                   value1: value.usbValue)
               .send())
           .isValidResponse();
@@ -662,7 +662,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
   @override
   Future<CameraImageRequest> requestPhotoAvailable(
       {bool liveView = false}) async {
-    var response = await Commands.getImageCommand(liveView, true).send();
+    var response = await UsbCommands.getImageCommand(liveView, true).send();
 
     var bytes = response.inData.toByteList().buffer.asByteData();
     int numImages = bytes.getUint16(32, Endian.little); //not num but true/false

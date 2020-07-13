@@ -6,9 +6,9 @@ import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
-import 'package:sonyalphacontrol/usb/commands.dart';
 import 'package:sonyalphacontrol/usb/response_validation.dart';
 import 'package:sonyalphacontrol/usb/sony_camera_usb_device.dart';
+import 'package:sonyalphacontrol/usb/usb_commands.dart';
 
 class SonyUsbApi extends SonyApiInterface {
   var _initialized = false;
@@ -32,11 +32,11 @@ class SonyUsbApi extends SonyApiInterface {
   Future<bool> connectCamera(SonyCameraDevice device) async {
     var str = await FlutterUsb.connectToUsbDevice(
         (device as SonyCameraUsbDevice).device);
-
-    if(Platform.isAndroid){
+    //TODO check str
+    if (Platform.isAndroid) {
       //send these two commands before the actual connect command  (not needed on windows, done by wia)
 //sender.send(byteArrayOf(0x10, 0, 0, 0, 1, 0, 2, 0x10, 0, 0, 0, 0, 1, 0, 0, 0))
-    // sender.send(byteArrayOf(0x12, 0, 0, 0, 2, 0, 1, 0x92.toByte(), 3, 0, 0, 0, 1, 0, 0, 0, 0, 0))
+      // sender.send(byteArrayOf(0x12, 0, 0, 0, 2, 0, 1, 0x92.toByte(), 3, 0, 0, 0, 1, 0, 0, 0, 0, 0))
       var list = CommandT.createCommand(0x10);
       list.writeUInt8(0x10);
       list.goTo(4);
@@ -47,8 +47,8 @@ class SonyUsbApi extends SonyApiInterface {
       list.goTo(12);
       list.writeUInt8(1);
 
-     var r= await SonyCommand(Command(list)).send();
-     print(r);
+      var r = await SonyCommand(Command(list)).send();
+      print(r);
 /*
       0000   0c 00 00 00 01 00 04 10 02 00 00 00
       */
@@ -65,20 +65,20 @@ class SonyUsbApi extends SonyApiInterface {
       await SonyCommand(Command(list)).send();
       print("return true android connection no idea what result is correct");
       return true;
-    }else if(Platform.isWindows){
-
-      return (await Commands.getCommandSetting(SettingsId.Connect,
-          opCodeId: OpCodeId.Connect,
-          value1: 3,
-          value2: 0,
-          value1DataSize: 3,
-          value2DataSize: 0)
-          .send()).isValidResponse();
+    } else if (Platform.isWindows) {
+      return (await UsbCommands.getCommandSetting(SettingsId.Connect,
+                  opCodeId: OpCodeId.Connect,
+                  value1: 3,
+                  value2: 0,
+                  value1DataSize: 3,
+                  value2DataSize: 0)
+              .send())
+          .isValidResponse();
     }
 
+    return false;
   }
 }
-
 
 //send
 //[16, 0, 0, 0, 1, 0, 2, 16, 0, 0, 0, 0, 1, 0, 0, 0]
@@ -99,6 +99,5 @@ class SonyUsbApi extends SonyApiInterface {
 
 //get
 //[20, 0, 0, 0, 2, 0, 1, -110, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
 
 //0a 00 00 00 01 00 09 92 06 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00

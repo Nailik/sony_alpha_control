@@ -39,12 +39,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> connectCamera() {
-    // TODO: implement connectCamera
-    throw UnimplementedError();
-  }
-
-  @override
   Future<SettingsItem<BoolValue>> getAel() {
     // TODO: implement getAel
     throw UnimplementedError();
