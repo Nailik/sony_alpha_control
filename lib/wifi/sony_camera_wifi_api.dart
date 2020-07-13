@@ -24,6 +24,9 @@ import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
+import 'package:sonyalphacontrol/wifi/enums/sony_api_method_set.dart';
+import 'package:sonyalphacontrol/wifi/enums/sony_web_api_service_type.dart';
+import 'package:sonyalphacontrol/wifi/enums/web_api_version.dart';
 import 'package:sonyalphacontrol/wifi/sony_camera_wifi_device.dart';
 
 class SonyCameraWifiApi extends CameraApiInterface {
@@ -422,6 +425,16 @@ class SonyCameraWifiApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
+
+  //special things
+  Future<SonyApiMethodSet> serverInformationApi(WebApiVersion version, SonyWebApiServiceType serviceType){
+
+  }
+
+  //camera settings?
+  Future<Event> getSettings(WebApiVersion version, bool longPolling){
+
+  }
 
 
 }

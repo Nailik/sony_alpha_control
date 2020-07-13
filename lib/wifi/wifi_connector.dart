@@ -82,6 +82,7 @@ class WifiConnector {
     } on SocketException catch (e) {
       socket = null;
       print(e);
+      return null;
       //camera not connected
     }
     //  }

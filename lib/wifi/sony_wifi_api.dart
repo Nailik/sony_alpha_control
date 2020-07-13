@@ -26,6 +26,17 @@ class SonyWifiApi extends SonyApiInterface {
 
   @override
   Future<bool> connectCamera(SonyCameraDevice sonyCameraDevice) async {
+    /*
+
+        apiCallMulti = ApiCallMulti.create()
+                .add(CameraApi.serverInformationApi.getMethodTypes(
+                        WebApiVersion.V_1_0,
+                        SonyWebApiServiceType.CAMERA))
+                .add(CameraApi.eventNotificationApi.getEvent(WebApiVersion.V_1_0, false))
+
+                then    startCamera(connectionCallback, cameraDevice)
+                or startOpenConnectionAfterChangeCameraState
+     */
     //TODO connect
     return true;
   }

@@ -7,7 +7,8 @@ abstract class CameraSettings extends ChangeNotifier {
 
   Future<bool> update();
 
-  //TODO getter future, da wenn current value "leer" evtl nochmal requesten?
+  //TODO getter future, da wenn current value "leer" evtl nochmal requesten? (vtl einstellbar falls nie ?)
+  //TODO update mit boolean request -> falls immer geupdttet werden soll
   SettingsItem getItem(SettingsId settingsId) {
     return settings.firstWhere((element) => element.settingsId == settingsId,
         orElse: () => null);
