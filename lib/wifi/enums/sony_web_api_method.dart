@@ -1,3 +1,5 @@
+import 'package:json_annotation/json_annotation.dart';
+
 enum SonyWebApiMethod {
   GET_SUPPORTED,
   GET_AVAILABLE,
@@ -584,7 +586,7 @@ extension SonyWebApiMethodExtension on SonyWebApiMethod {
     }
   }
 
-  SonyWebApiMethod fromWifiValue(String value) {
+  static SonyWebApiMethod fromWifiValue(String value) {
     switch (value) {
       case "getSupported":
         return SonyWebApiMethod.GET_SUPPORTED;
@@ -972,4 +974,16 @@ extension SonyWebApiMethodExtension on SonyWebApiMethod {
         return SonyWebApiMethod.UNKOWN;
     }
   }
+}
+
+class SonyWebApiMethodConverter
+    implements JsonConverter<SonyWebApiMethod, String> {
+  const SonyWebApiMethodConverter();
+
+  @override
+  SonyWebApiMethod fromJson(String json) =>
+      SonyWebApiMethodExtension.fromWifiValue(json);
+
+  @override
+  String toJson(SonyWebApiMethod value) => value.wifiValue;
 }

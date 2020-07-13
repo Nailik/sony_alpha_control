@@ -432,7 +432,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   //camera settings?
-  Future<Event> getSettings(WebApiVersion version, bool longPolling){
+  Future<String> getSettings(WebApiVersion version, bool longPolling){
 
   }
 
