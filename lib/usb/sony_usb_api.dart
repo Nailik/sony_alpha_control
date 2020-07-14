@@ -47,7 +47,7 @@ class SonyUsbApi extends SonyApiInterface {
       list.goTo(12);
       list.writeUInt8(1);
 
-      var r = await SonyCommand(Command(list)).send();
+      var r = await SonyUsbCommand(Command(list)).send();
       print(r);
 /*
       0000   0c 00 00 00 01 00 04 10 02 00 00 00
@@ -62,7 +62,7 @@ class SonyUsbApi extends SonyApiInterface {
       list.goTo(12);
       list.writeUInt8(1);
 
-      await SonyCommand(Command(list)).send();
+      await SonyUsbCommand(Command(list)).send();
       print("return true android connection no idea what result is correct");
       return true;
     } else if (Platform.isWindows) {

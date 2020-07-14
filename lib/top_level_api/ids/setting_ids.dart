@@ -159,7 +159,49 @@ enum SettingsId {
   ///for the current camera settings
   CameraInfo,
   Connect,
-  Unknown
+
+
+
+  ///wifi only *****************************************************
+  StorageInformation,
+  BeepMode,
+  CameraFunction,
+  MovieQuality,
+  SteadyMode,
+  ViewAngle,
+  PostViewImageSize,
+  SelfTimer,
+  SilentShootingSettings,
+  ProgramShift,
+  ContShootingMode,
+  ContShootingSpeed,
+  FlipSetting,
+  IntervalTime,
+  ColorSetting,
+  MovieFileFormat,
+  InfraredRemoteControl,
+  TvColorSystem,
+  TrackingFocus,
+  AutoPowerOff,
+  LoopRecordingTime,
+  AudioRecording,
+  WindNoiseReduction,
+  BulbShooting,
+  AudioRecordingSetting,
+  CameraSetup,
+  DateTimeSetting,
+  DeleteContents,
+  IntervalStillRecording,
+  LiveView,
+  LiveViewSize,
+  LoopRecording,
+  RemotePlayback,
+  ZoomSetting,
+
+  Unknown,
+
+
+
 }
 
 extension SettingsIdExtension on SettingsId {
@@ -302,196 +344,202 @@ extension SettingsIdExtension on SettingsId {
 
   String get wifiValue {
     switch (this) {
+      case SettingsId.StorageInformation:
+        return "storageInformation";
+      case SettingsId.BeepMode:
+        return "beepMode";
+      case SettingsId.CameraFunction:
+        return "cameraFunction";
+      case SettingsId.MovieQuality:
+        return "movieQuality";
+      case SettingsId.SteadyMode:
+        return "steadyMode";
+      case SettingsId.ViewAngle:
+        return "viewAngle";
+      case SettingsId.PostViewImageSize:
+        return "postviewImageSize";
+      case SettingsId.SelfTimer:
+        return "selfTimer";
+      case SettingsId.SilentShootingSettings:
+        return "silentShootingSetting";
+      case SettingsId.ProgramShift:
+        return "programShift";
+      case SettingsId.ContShootingMode:
+        return "contShootingMode";
+      case SettingsId.ContShootingSpeed:
+        return "contShootingSpeed";
+      case SettingsId.FlipSetting:
+        return "flipSetting";
+      case SettingsId.IntervalTime:
+        return "intervalTime";
+      case SettingsId.ColorSetting:
+        return "colorSetting";
+      case SettingsId.MovieFileFormat:
+        return "movieFileFormat";
+      case SettingsId.InfraredRemoteControl:
+        return "infraredRemoteControl";
+      case SettingsId.TvColorSystem:
+        return "tvColorSystem";
+      case SettingsId.TrackingFocus:
+        return "trackingFocus";
+      case SettingsId.AutoPowerOff:
+        return "autoPowerOff";
+      case SettingsId.LoopRecordingTime:
+        return "loopRecTime";
+      case SettingsId.AudioRecording:
+        return "audioRecording";
+      case SettingsId.WindNoiseReduction:
+        return "windNoiseReduction";
+      case SettingsId.BulbShooting:
+        return "bulbShooting";
+      case SettingsId.AudioRecordingSetting:
+        return "audioRecordingSetting";
+      case SettingsId.CameraSetup:
+        return "recMode";
+      case SettingsId.DateTimeSetting:
+        return "dateTimeSetting";
+      case SettingsId.DeleteContents:
+        return "deleteContent";
+      case SettingsId.IntervalStillRecording:
+        return "intervalStillRecording";
+      case SettingsId.LiveView:
+        return "liveView";
+      case SettingsId.LiveViewSize:
+        return "liveviewSize";
+      case SettingsId.LoopRecording:
+        return "loopRecording";
+      case SettingsId.RemotePlayback:
+        return "remotePlayback";
+      case SettingsId.ZoomSetting:
+        return "zoomSetting";
       case SettingsId.FileFormat:
-        // TODO: Handle this case.
-        break;
+        return "stillQuality";
       case SettingsId.WhiteBalance:
-        return "WhiteBalance";
+        return "whiteBalance";
       case SettingsId.FNumber:
-        // TODO: Handle this case.
-        break;
+        return "fNumber";
       case SettingsId.FocusMode:
-        // TODO: Handle this case.
-        break;
+        return "focusMode";
       case SettingsId.MeteringMode:
-        // TODO: Handle this case.
-        break;
+        return "exposureMode";
       case SettingsId.FlashMode:
-        return "FocusMode"; //set.. get...
+        return "flashMode"; //set.. get...
       case SettingsId.ShootingMode:
-        // TODO: Handle this case.
-        break;
+        return "shootMode";
       case SettingsId.EV:
-        // TODO: Handle this case.
-        break;
+        return "exposureCompensation";
       case SettingsId.DriveMode:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.FlashValue:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.DroHdr:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.ImageSize:
-        // TODO: Handle this case.
-        break;
+        return "stillSize";
       case SettingsId.ShutterSpeed:
-        // TODO: Handle this case.
-        break;
+        return "shutterSpeed";
       case SettingsId.UnkD20E:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.WhiteBalanceColorTemp:
-        // TODO: Handle this case.
-        break;
+        return "whiteBalance";
       case SettingsId.WhiteBalanceGM:
-        // TODO: Handle this case.
-        break;
+        return "whiteBalance";
       case SettingsId.AspectRatio:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.UnkD212:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.AutoFocusState:
-        // TODO: Handle this case.
-        break;
+        return ""; //inside liveview info maybe extract and save?
       case SettingsId.Zoom:
-        // TODO: Handle this case.
-        break;
+        return "zoom";
       case SettingsId.PhotoTransferQueue:
-        // TODO: Handle this case.
-        break;
+        return "transferringImages";
       case SettingsId.AEL_State:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.BatteryInfo:
-        // TODO: Handle this case.
-        break;
+        return "batteryInfo";
       case SettingsId.SensorCrop:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.PictureEffect:
-        // TODO: Handle this case.
-        break;
+        return "sceneSelection";
       case SettingsId.WhiteBalanceAB:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.RecordVideoState:
-        // TODO: Handle this case.
-        break;
+        return "movieRecording";
       case SettingsId.ISO:
-        // TODO: Handle this case.
-        break;
+        return "isoSpeedRate";
       case SettingsId.FEL_State:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.LiveViewState:
-        // TODO: Handle this case.
-        break;
+        return "liveView";
       case SettingsId.UnkD222:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.FocusArea:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.FocusMagnifierPhase:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.UnkD22E:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.FocusMagnifier:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.FocusMagnifierPosition:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.UseLiveViewDisplayEffect:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.FocusAreaSpot:
-        // TODO: Handle this case.
-        break;
+        return "touchAFPosition";
       case SettingsId.FocusMagnifierState:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.FocusModeToggleResponse:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.UnkD236:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.HalfPressShutter:
-        // TODO: Handle this case.
-        break;
+        return "halfPressShutter";
       case SettingsId.CapturePhoto:
-        // TODO: Handle this case.
-        break;
+        return "stillCapture";
       case SettingsId.AEL:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.UnkD2C5:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.UnkD2C7:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.RecordVideo:
-        // TODO: Handle this case.
-        break;
+        return "movieRecording";
       case SettingsId.FEL:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.FocusMagnifierRequest:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.FocusMagnifierResetRequest:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.FocusMagnifierMoveUpRequest:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.FocusMagnifierMoveDownRequest:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.FocusMagnifierMoveLeftRequest:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.FocusMagnifierMoveRightRequest:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.FocusDistance:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.FocusModeToggleRequest:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.UnkD2D3:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.UnkD2D4:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.LiveViewInfo:
-        // TODO: Handle this case.
-        break;
+        return "liveviewFrame";
       case SettingsId.PhotoInfo:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.AvailableSettings:
-        // TODO: Handle this case.
-        break;
+        return "eventNotification";
       case SettingsId.CameraInfo:
-        // TODO: Handle this case.
-        break;
+        return "serverInformation";
       case SettingsId.Connect:
-        // TODO: Handle this case.
-        break;
+        return "";
       case SettingsId.Unknown:
-        // TODO: Handle this case.
-        break;
+        return "";
       default:
         return "";
     }

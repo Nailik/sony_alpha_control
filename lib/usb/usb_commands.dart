@@ -11,7 +11,7 @@ class UsbCommands {
   static var index = 1;
 
 //omost often used values as default
-  static SonyCommand getCommandSetting(SettingsId settingsId,
+  static SonyUsbCommand getCommandSetting(SettingsId settingsId,
       {OpCodeId opCodeId = OpCodeId.SubSetting,
       int value1 = 0,
       int value2 = 0,
@@ -52,7 +52,7 @@ class UsbCommands {
       addValueToCommand(list, value1, value1DataSize);
       addValueToCommand(list, value2, value2DataSize);
 
-      return SonyCommand(Command(list, outDataLength: outDataLength));
+      return SonyUsbCommand(Command(list, outDataLength: outDataLength));
     } else if (Platform.isAndroid) {
 
       Uint8List list = CommandT.createCommand(16);
@@ -93,7 +93,7 @@ class UsbCommands {
 
       if(value1DataSize == 0 && value2DataSize == 0){
         //only one command, eg when reading settings
-        return SonyCommand(Command(list, outDataLength: outDataLength));
+        return SonyUsbCommand(Command(list, outDataLength: outDataLength));
       }
 
       Uint8List list2 = CommandT.createCommand(16);
@@ -121,7 +121,7 @@ class UsbCommands {
       addValueToCommand(
           list2, value2, value2DataSize); //write max 16 bit value at moment
 
-      return SonyCommand(Command(list),
+      return SonyUsbCommand(Command(list),
           command2: Command(list2, outDataLength: outDataLength));
     }
 
@@ -148,7 +148,7 @@ class UsbCommands {
 
   //0000   10 00 00 00 01 00 09 10 52 06 00 00 01 c0 ff ff //10 09 getImageData //photo info c0 01
 
-  static SonyCommand getImageCommand(bool liveView, bool info,
+  static SonyUsbCommand getImageCommand(bool liveView, bool info,
       {int imageSizeInBytes = 1024}) {
     if (imageSizeInBytes != 1024) {
       imageSizeInBytes += 32;
@@ -170,7 +170,7 @@ class UsbCommands {
     list.goTo(34);
     list.writeUInt8(3);
 
-    return SonyCommand(Command(list, outDataLength: imageSizeInBytes));
+    return SonyUsbCommand(Command(list, outDataLength: imageSizeInBytes));
   }
 }
 
@@ -208,11 +208,11 @@ extension CommandT on Uint8List {
   }
 }
 
-class SonyCommand {
+class SonyUsbCommand {
   Command command1;
   Command command2;
 
-  SonyCommand(this.command1, {this.command2});
+  SonyUsbCommand(this.command1, {this.command2});
 
   Future<Response> send() async {
     print("send SonyCommand two? ${command2 != null}");
