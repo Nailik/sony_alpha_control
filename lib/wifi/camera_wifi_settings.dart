@@ -5,6 +5,6 @@ class CameraWifiSettings extends CameraSettings {
   @override
   Future<bool> update() {
     // TODO: implement update
-    throw UnimplementedError();
+    //throw UnimplementedError();
   }
 }

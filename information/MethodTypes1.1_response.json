@@ -1,0 +1,50 @@
+{
+  "results": [
+    [
+      "getEvent",
+      [
+        "bool"
+      ],
+      [
+        "{\"type\":\"string\", \"names\":\"string*\"}",
+        "{\"type\":\"string\", \"cameraStatus\":\"string\"}",
+        "{\"type\":\"string\", \"zoomPosition\":\"int\", \"zoomNumberBox\":\"int\", \"zoomIndexCurrentBox\":\"int\", \"zoomPositionCurrentBox\":\"int\"}",
+        "{\"type\":\"string\", \"liveviewStatus\":\"bool\"}",
+        "{\"type\":\"string\", \"liveviewOrientation\":\"string\"}",
+        "{\"type\":\"string\", \"takePictureUrl\":\"string*\"}*",
+        "{\"type\":\"string\", \"continuousError\":\"string\", \"isContinued\":\"bool\"}*",
+        "{\"type\":\"string\", \"triggeredError\":\"string*\"}",
+        "{\"type\":\"string\", \"sceneRecognition\":\"string\", \"steadyRecognition\":\"string\", \"motionRecognition\":\"string\"}",
+        "{\"type\":\"string\", \"formatResult\":\"string\"}",
+        "{\"type\":\"string\", \"storageID\":\"string\", \"recordTarget\":\"bool\", \"numberOfRecordableImages\":\"int\", \"recordableTime\":\"int\", \"storageDescription\":\"string\"}*",
+        "{\"type\":\"string\", \"currentBeepMode\":\"string\", \"beepModeCandidates\":\"string*\"}",
+        "{\"type\":\"string\", \"currentCameraFunction\":\"string\", \"cameraFunctionCandidates\":\"string*\"}",
+        "{\"type\":\"string\", \"currentMovieQuality\":\"string\", \"movieQualityCandidates\":\"string*\"}",
+        "{\"type\":\"string\", \"checkAvailability\":\"bool\", \"currentAspect\":\"string\", \"currentSize\":\"string\"}",
+        "{\"type\":\"string\", \"cameraFunctionResult\":\"string\"}",
+        "{\"type\":\"string\", \"currentSteadyMode\":\"string\", \"steadyModeCandidates\":\"string*\"}",
+        "{\"type\":\"string\", \"currentViewAngle\":\"int\", \"viewAngleCandidates\":\"int*\"}",
+        "{\"type\":\"string\", \"currentExposureMode\":\"string\", \"exposureModeCandidates\":\"string*\"}",
+        "{\"type\":\"string\", \"currentPostviewImageSize\":\"string\", \"postviewImageSizeCandidates\":\"string*\"}",
+        "{\"type\":\"string\", \"currentSelfTimer\":\"int\", \"selfTimerCandidates\":\"int*\"}",
+        "{\"type\":\"string\", \"currentShootMode\":\"string\", \"shootModeCandidates\":\"string*\"}",
+        "{\"type\":\"string\", \"currentAELock\":\"bool\", \"aeLockCandidates\":\"bool*\"}",
+        "{\"type\":\"string\", \"checkAvailability\":\"bool\", \"currentBracketShootMode\":\"string\", \"currentBracketShootModeOption\":\"string\"}",
+        "{\"type\":\"string\", \"checkAvailability\":\"bool\", \"currentCreativeStyle\":\"string\", \"currentCreativeStyleContrast\":\"int\", \"currentCreativeStyleSaturation\":\"int\", \"currentCreativeStyleSharpness\":\"int\"}",
+        "{\"type\":\"string\", \"currentExposureCompensation\":\"int\", \"maxExposureCompensation\":\"int\", \"minExposureCompensation\":\"int\", \"stepIndexOfExposureCompensation\":\"int\"}",
+        "{\"type\":\"string\", \"currentFlashMode\":\"string\", \"flashModeCandidates\":\"string*\"}",
+        "{\"type\":\"string\", \"currentFNumber\":\"string\", \"fNumberCandidates\":\"string*\"}",
+        "{\"type\":\"string\", \"currentFocusMode\":\"string\", \"focusModeCandidates\":\"string*\"}",
+        "{\"type\":\"string\", \"currentIsoSpeedRate\":\"string\", \"isoSpeedRateCandidates\":\"string*\"}",
+        "{\"type\":\"string\", \"checkAvailability\":\"bool\", \"currentPictureEffect\":\"string\", \"currentPictureEffectOption\":\"string\"}",
+        "{\"type\":\"string\", \"isShifted\":\"bool\"}",
+        "{\"type\":\"string\", \"currentShutterSpeed\":\"string\", \"shutterSpeedCandidates\":\"string*\"}",
+        "{\"type\":\"string\", \"checkAvailability\":\"bool\", \"currentWhiteBalanceMode\":\"string\", \"currentColorTemperature\":\"int\"}",
+        "{\"type\":\"string\", \"currentSet\":\"bool\", \"currentTouchCoordinates\":\"double*\"}",
+        "{\"type\":\"string\", \"focusStatus\":\"string\"}"
+      ],
+      "1.1"
+    ]
+  ],
+  "id": 2
+}

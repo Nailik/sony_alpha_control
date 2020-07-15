@@ -1,0 +1,8 @@
+{
+  "id": 9,
+  "method": "getMethodTypes",
+  "version": "1.8",
+  "params": [
+    "1.8"
+  ]
+}

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_method.dart';
@@ -33,23 +34,33 @@ class WifiCommand {
 
   WifiCommand(this.id, this.method, this.version, this.params, {this.service});
 
-  static WifiCommand createCommand(SonyWebApiMethod method, SettingsId apiGroup,
-          service, WebApiVersion version, List<dynamic> params) =>
+  static WifiCommand createCommand(
+          SonyWebApiMethod method, SettingsId apiGroup, service,
+          {WebApiVersion version = WebApiVersion.V_1_0,
+          List<dynamic> params = const []}) =>
       WifiCommand(
-          0, method.wifiValue + apiGroup.wifiValue.startCap, version, params, service: service);
+          0, method.wifiValue + apiGroup.wifiValue.startCap, version, params,
+          service: service);
 
   //{"id":7,"method":"getVersions","params":[],"version":"1.0"}
-  Future<WifiResponse> send(SonyCameraWifiDevice device) async {
+  Future<WifiResponse> send(SonyCameraWifiDevice device,
+      {timeout: 8000}) async {
     //url
     //request json
     var url =
         "${device.findCameraWebAPiService(service).url}/${service.wifiValue}";
     id = WifiCommands.id; //update id right before creating json and sending
     var json = jsonEncode(this);
-
-    final response = await http.post(url, body: json);
-    print(response.body);
-    return WifiResponse();
+    try {
+      final response = await http
+          .post(url, body: json)
+          .timeout(Duration(milliseconds: timeout));
+      print("request response");
+      return WifiResponse(json, response.body);
+    } on ClientException catch (error) {
+      print("ClientException request");
+      return WifiResponse("", "");
+    }
   }
 
   factory WifiCommand.fromJson(Map<String, dynamic> json) =>
@@ -58,7 +69,12 @@ class WifiCommand {
   Map<String, dynamic> toJson() => _$WifiCommandToJson(this);
 }
 
-class WifiResponse {}
+class WifiResponse {
+  String request;
+  String response;
+
+  WifiResponse(this.request, this.response);
+}
 
 extension StringExtension on String {
   String get startCap => "${this[0].toUpperCase()}${this.substring(1)}";

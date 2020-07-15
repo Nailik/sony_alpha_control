@@ -34,6 +34,7 @@ dependencies:
   convert:
   http:
   provider:
+  path_provider: ^1.6.11
   cross_connectivity:
   flutter_isolate:
   file_chooser:

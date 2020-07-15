@@ -1,8 +1,3 @@
-// find the address
-/*
-
-
- */
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -62,8 +57,22 @@ class WifiConnector {
     //when not on camera cannot access?
     try {
       if (socket == null) {
-        socket =
-            await RawDatagramSocket.bind(InternetAddress("192.168.122.191"), 0); //TODO
+        int i = 100;
+        while (socket == null) {
+          try {
+            socket = await RawDatagramSocket.bind(
+                InternetAddress("192.168.122.$i"), 0); //TODO
+            print("created socket with 192.168.122.$i");
+          } on Exception catch (e) {
+            print("failed socket with 192.168.122.$i");
+            i++;
+            socket = null;
+            if (i > 255) {
+              print("failed creating socket");
+              return null;
+            }
+          }
+        }
       }
 
       socket.send(request.codeUnits, InternetAddress(SSDP_ADDRESS), SSDP_PORT);
@@ -87,8 +96,6 @@ class WifiConnector {
     }
     //  }
   }
-
-
 }
 
 class _SsdMessageProcessor {
@@ -150,7 +157,7 @@ class _SsdMessageProcessor {
       if (arr != null) {
         return arr[0];
       }
-      return null;
     }
+    return null;
   }
 }

@@ -1,0 +1,8 @@
+{
+  "id": 12,
+  "method": "getEvent",
+  "version": "1.0",
+  "params": [
+    false
+  ]
+}

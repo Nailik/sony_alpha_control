@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:path_provider/path_provider.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
@@ -35,21 +38,52 @@ class SonyWifiApi extends SonyApiInterface {
   //{"id":6,"method":"startRecMode","params":[],"version":"1.0"}
   //{"id":7,"method":"getVersions","params":[],"version":"1.0"}
   //{"id":9,"method":"getEvent","params":[false],"version":"1.4"}
+  //TODO doesnt work when avontent is missing
+  // .add(CameraApi.serverInformationApi.getVersions(SonyWebApiServiceType.AV_CONTENT))
+
   @override
   Future<bool> connectCamera(SonyCameraDevice sonyCameraDevice) async {
-    //SonyWebApiMethod GET
-    //SettingsId versions
-    //ServiceType -> für url
-    //WebApiVersion  1.0
-    //params []
-    WifiCommand.createCommand(SonyWebApiMethod.GET, SettingsId.Versions,
-        SonyWebApiServiceType.CAMERA, WebApiVersion.V_1_0, []).send(sonyCameraDevice)
-        .then((value) => print(value));
+    WebApiVersion.values.forEach((version) async {
+      await WifiCommand.createCommand(SonyWebApiMethod.GET,
+              SettingsId.MethodTypes, SonyWebApiServiceType.CAMERA,
+              version: version, params: [version.wifiValue])
+          .send(sonyCameraDevice)
+          .then(
+              (value) => writeToText("MethodTypes${version.wifiValue}", value));
+    });
+
+    await WifiCommand.createCommand(SonyWebApiMethod.GET,
+            SettingsId.AvailableSettings, SonyWebApiServiceType.CAMERA,
+            params: [false])
+        .send(sonyCameraDevice)
+        .then((value) => writeToText("AvailableSettings", value));
+
+    await WifiCommand.createCommand(SonyWebApiMethod.GET,
+            SettingsId.AvailableSettings, SonyWebApiServiceType.CAMERA,
+            version: WebApiVersion.V_1_4, params: [false])
+        .send(sonyCameraDevice, timeout: 60000)
+        .then((value) => writeToText("AvailableSettings", value));
+
+    await WifiCommand.createCommand(SonyWebApiMethod.GET,
+            SettingsId.AvailableApiList, SonyWebApiServiceType.CAMERA)
+        .send(sonyCameraDevice)
+        .then((value) => writeToText("AvailableApiList", value));
+
+    await WifiCommand.createCommand(SonyWebApiMethod.GET, SettingsId.Versions,
+            SonyWebApiServiceType.CAMERA)
+        .send(sonyCameraDevice)
+        .then((value) => writeToText("Versions", value));
+
+    await WifiCommand.createCommand(SonyWebApiMethod.START,
+            SettingsId.CameraSetup, SonyWebApiServiceType.CAMERA)
+        .send(sonyCameraDevice)
+        .then((value) => writeToText("CameraSetup", value));
+
     //   var versions = await sonyCameraDevice.wifiApi.
 
     //var sonyApiMethodSet = await sonyCameraDevice.wifiApi.serverInformationApi(
     //    WebApiVersion.V_1_0, SonyWebApiServiceType.CAMERA);
-  //  print(sonyApiMethodSet);
+    //  print(sonyApiMethodSet);
     /*
         apiCallMulti = ApiCallMulti.create()
                 .add(CameraApi.serverInformationApi.getMethodTypes(
@@ -62,5 +96,13 @@ class SonyWifiApi extends SonyApiInterface {
      */
     //TODO connect
     return true;
+  }
+
+  writeToText(String fileName, WifiResponse text) async {
+    Directory directory = await getApplicationDocumentsDirectory();
+    var file = File('${directory.path}/${fileName}_request.json');
+    await file.writeAsString(text.request);
+    file = File('${directory.path}/${fileName}_response.json');
+    await file.writeAsString(text.response);
   }
 }

@@ -165,6 +165,10 @@ enum SettingsId {
   ///wifi only *****************************************************
   StorageInformation,
   Versions,
+  MethodTypes,
+  AvailableApiList,
+  ApplicationInfo,
+  SupportedCameraFunction,
   BeepMode,
   CameraFunction,
   MovieQuality,
@@ -349,6 +353,14 @@ extension SettingsIdExtension on SettingsId {
         return "storageInformation";
       case SettingsId.Versions:
         return "versions";
+      case SettingsId.MethodTypes:
+        return "methodTypes";
+      case SettingsId.AvailableApiList:
+        return "availableApiList";
+      case SettingsId.ApplicationInfo:
+        return "applicationInfo";
+      case SettingsId.SupportedCameraFunction:
+        return "supportedCameraFunction";
       case SettingsId.BeepMode:
         return "beepMode";
       case SettingsId.CameraFunction:
@@ -500,7 +512,7 @@ extension SettingsIdExtension on SettingsId {
       case SettingsId.HalfPressShutter:
         return "halfPressShutter";
       case SettingsId.CapturePhoto:
-        return "stillCapture";
+        return "actTakePicture";
       case SettingsId.AEL:
         return "";
       case SettingsId.UnkD2C5:
@@ -536,11 +548,11 @@ extension SettingsIdExtension on SettingsId {
       case SettingsId.PhotoInfo:
         return "";
       case SettingsId.AvailableSettings:
-        return "eventNotification";
+        return "event";
       case SettingsId.CameraInfo:
         return "serverInformation";
       case SettingsId.Connect:
-        return "event";
+        return "";
       case SettingsId.Unknown:
         return "";
       default:

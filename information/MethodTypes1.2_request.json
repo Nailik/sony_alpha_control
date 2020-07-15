@@ -1,0 +1,8 @@
+{
+  "id": 3,
+  "method": "getMethodTypes",
+  "version": "1.2",
+  "params": [
+    "1.2"
+  ]
+}
