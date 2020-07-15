@@ -63,7 +63,7 @@ class WifiConnector {
     try {
       if (socket == null) {
         socket =
-            await RawDatagramSocket.bind(InternetAddress("192.168.122.131"), 0);
+            await RawDatagramSocket.bind(InternetAddress("192.168.122.191"), 0); //TODO
       }
 
       socket.send(request.codeUnits, InternetAddress(SSDP_ADDRESS), SSDP_PORT);

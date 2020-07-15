@@ -164,6 +164,7 @@ enum SettingsId {
 
   ///wifi only *****************************************************
   StorageInformation,
+  Versions,
   BeepMode,
   CameraFunction,
   MovieQuality,
@@ -346,6 +347,8 @@ extension SettingsIdExtension on SettingsId {
     switch (this) {
       case SettingsId.StorageInformation:
         return "storageInformation";
+      case SettingsId.Versions:
+        return "versions";
       case SettingsId.BeepMode:
         return "beepMode";
       case SettingsId.CameraFunction:
@@ -537,7 +540,7 @@ extension SettingsIdExtension on SettingsId {
       case SettingsId.CameraInfo:
         return "serverInformation";
       case SettingsId.Connect:
-        return "";
+        return "event";
       case SettingsId.Unknown:
         return "";
       default:

@@ -1,3 +1,5 @@
+import 'package:json_annotation/json_annotation.dart';
+
 enum WebApiVersion {
   V_1_0,
   V_1_1,
@@ -37,4 +39,40 @@ extension WebApiVersionExtension on WebApiVersion {
         return "";
     }
   }
+
+  static WebApiVersion fromWifiValue(String value) {
+    switch (value) {
+      case "1.0":
+        return WebApiVersion.V_1_0;
+      case "1.1":
+        return WebApiVersion.V_1_1;
+      case "1.2":
+        return WebApiVersion.V_1_2;
+      case "1.3":
+        return WebApiVersion.V_1_3;
+      case "1.4":
+        return WebApiVersion.V_1_4;
+      case "1.5":
+        return WebApiVersion.V_1_5;
+      case "1.6":
+        return WebApiVersion.V_1_6;
+      case "1.7":
+        return WebApiVersion.V_1_7;
+      case "1.8":
+        return WebApiVersion.V_1_8;
+      default:
+        return WebApiVersion.UNKNOWN;
+    }
+  }
+}
+
+class WebApiVersionConverter implements JsonConverter<WebApiVersion, String> {
+  const WebApiVersionConverter();
+
+  @override
+  WebApiVersion fromJson(String json) =>
+      WebApiVersionExtension.fromWifiValue(json);
+
+  @override
+  String toJson(WebApiVersion value) => value.wifiValue;
 }

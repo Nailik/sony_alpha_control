@@ -25,9 +25,11 @@ import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_api_method_set.dart';
+import 'package:sonyalphacontrol/wifi/enums/sony_web_api_method.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_service_type.dart';
 import 'package:sonyalphacontrol/wifi/enums/web_api_version.dart';
 import 'package:sonyalphacontrol/wifi/sony_camera_wifi_device.dart';
+import 'package:sonyalphacontrol/wifi/wifi_commands.dart';
 
 class SonyCameraWifiApi extends CameraApiInterface {
 
@@ -428,7 +430,18 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   //special things
   Future<SonyApiMethodSet> serverInformationApi(WebApiVersion version, SonyWebApiServiceType serviceType){
+   // WifiCommand(SonyWebApiMethod.GET, SettingsId.Connect, SonyWebApiServiceType.CAMERA, version, null);
+    /*
 
+        apiCallMulti = ApiCallMulti.create()
+                .add(CameraApi.serverInformationApi.getMethodTypes(
+                        WebApiVersion.V_1_0,
+                        SonyWebApiServiceType.CAMERA))
+                .add(CameraApi.eventNotificationApi.getEvent(WebApiVersion.V_1_0, false))
+
+                then    startCamera(connectionCallback, cameraDevice)
+                or startOpenConnectionAfterChangeCameraState
+     */
   }
 
   //camera settings?
