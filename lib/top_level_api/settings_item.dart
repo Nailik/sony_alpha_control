@@ -37,59 +37,60 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
         settingsId == SettingsId.FocusMagnifierPosition ||
         settingsId == SettingsId.ShutterSpeed);
   }
-
+//SettingsIdExtension.getSettingsIdWifi(value["type"].toString(
   SettingsValue fromWifi(value) {
-    switch (SettingsIdExtension.getSettingsIdWifi(value["type"].toString())) {
+    switch (settingsId) {
       case SettingsId.AvailableApiList:
-        //List of calls
-        break;
+        return StringValue(value);
       case SettingsId.CameraStatus:
-        break;
+        return StringValue(value);
       case SettingsId.ZoomStatus:
-        break;
+        return StringValue(value);
       case SettingsId.LiveViewState:
-        break;
+        return BoolValue(value);
       case SettingsId.StorageInformation:
-        break;
+        return StringValue(value);
       case SettingsId.CameraFunction:
-        break;
+        return StringValue(value);
       case SettingsId.EV: //exposureCompensation
-        break;
+        return StringValue(value);
       case SettingsId.PostViewImageSize:
-        break;
+        return StringValue(value);
       case SettingsId.SelfTimer:
-        break;
+        return StringValue(value);
       case SettingsId.ShootingMode:
-        break;
+        return StringValue(value);
       case SettingsId.MeteringMode: //exposureMode
-        break;
+        return StringValue(value);
       case SettingsId.FlashMode:
-        break;
+        return StringValue(value);
       case SettingsId.FNumber:
-        break;
+        return StringValue(value);
       case SettingsId.FocusMode:
-        break;
+        return StringValue(value);
       case SettingsId.ISO:
-        break;
+        return StringValue(value);
       case SettingsId.ProgramShift:
-        break;
+        return StringValue(value);
       case SettingsId.ShutterSpeed:
-        break;
+        return StringValue(value);
       case SettingsId.WhiteBalance:
-        break;
+        return StringValue(value);
       case SettingsId.FocusAreaSpot: //touchAFPosition
-        break;
+        return StringValue(value);
       case SettingsId.AutoFocusState:
-        break;
+        return StringValue(value);
       case SettingsId.ZoomSetting:
-        break;
+        return StringValue(value);
       case SettingsId.ContShootingMode:
-        break;
+        return StringValue(value);
       case SettingsId.ContShootingSpeed:
-        break;
+        return StringValue(value);
       case SettingsId.BatteryInfo:
-        break;
+        return StringValue(value);
       case SettingsId.SilentShooting:
+        return StringValue(value);
+      default:
         break;
     }
   }
@@ -238,6 +239,19 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
         return null;
     }
   }
+}
+
+class StringValue extends SettingsValue<String> {
+  StringValue(String id) : super(id);
+
+  @override
+  String get name => id.toString();
+
+  @override
+  int get usbValue => throw UnimplementedError();
+
+  @override
+  String get wifiValue => id;
 }
 
 class BoolValue extends SettingsValue<bool> {
