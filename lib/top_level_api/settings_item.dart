@@ -38,6 +38,62 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
         settingsId == SettingsId.ShutterSpeed);
   }
 
+  SettingsValue fromWifi(value) {
+    switch (SettingsIdExtension.getSettingsIdWifi(value["type"].toString())) {
+      case SettingsId.AvailableApiList:
+        //List of calls
+        break;
+      case SettingsId.CameraStatus:
+        break;
+      case SettingsId.ZoomStatus:
+        break;
+      case SettingsId.LiveViewState:
+        break;
+      case SettingsId.StorageInformation:
+        break;
+      case SettingsId.CameraFunction:
+        break;
+      case SettingsId.EV: //exposureCompensation
+        break;
+      case SettingsId.PostViewImageSize:
+        break;
+      case SettingsId.SelfTimer:
+        break;
+      case SettingsId.ShootingMode:
+        break;
+      case SettingsId.MeteringMode: //exposureMode
+        break;
+      case SettingsId.FlashMode:
+        break;
+      case SettingsId.FNumber:
+        break;
+      case SettingsId.FocusMode:
+        break;
+      case SettingsId.ISO:
+        break;
+      case SettingsId.ProgramShift:
+        break;
+      case SettingsId.ShutterSpeed:
+        break;
+      case SettingsId.WhiteBalance:
+        break;
+      case SettingsId.FocusAreaSpot: //touchAFPosition
+        break;
+      case SettingsId.AutoFocusState:
+        break;
+      case SettingsId.ZoomSetting:
+        break;
+      case SettingsId.ContShootingMode:
+        break;
+      case SettingsId.ContShootingSpeed:
+        break;
+      case SettingsId.BatteryInfo:
+        break;
+      case SettingsId.SilentShooting:
+        break;
+    }
+  }
+
   SettingsValue fromUsb(int usbValue, {int subValue = 1}) {
     switch (settingsId) {
       case SettingsId.FileFormat:
@@ -178,6 +234,8 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
         return IntValue(usbValue);
       case SettingsId.Connect:
         return IntValue(usbValue);
+      default:
+        return null;
     }
   }
 }
@@ -240,9 +298,13 @@ class IsoValue extends DoubleValue {
 
   @override
   String get name {
-    var multiFrame = id > (2 * 0xFFFFFF) ? "MultiFrame RM Hoch"  :
-    id > 0xFFFFFF ? "MultiFrame RM Standard" : "";
-    var auto = id == 0xFFFFFF || id == (2 * 0xFFFFFF) + 1 || id == (3 * 0xFFFFFF) + 2 ? "Auto" : "";
+    var multiFrame = id > (2 * 0xFFFFFF)
+        ? "MultiFrame RM Hoch"
+        : id > 0xFFFFFF ? "MultiFrame RM Standard" : "";
+    var auto =
+        id == 0xFFFFFF || id == (2 * 0xFFFFFF) + 1 || id == (3 * 0xFFFFFF) + 2
+            ? "Auto"
+            : "";
     var value = id % 0xFFFFFF - id ~/ 0xFFFFFF;
     return "${auto.isEmpty ? value : auto} $multiFrame";
   }

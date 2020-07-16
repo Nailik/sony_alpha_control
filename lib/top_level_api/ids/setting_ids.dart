@@ -160,15 +160,14 @@ enum SettingsId {
   CameraInfo,
   Connect,
 
-
-
   ///wifi only *****************************************************
+  CameraStatus,
+  ZoomStatus,
   StorageInformation,
   Versions,
   MethodTypes,
   AvailableApiList,
   ApplicationInfo,
-  SupportedCameraFunction,
   BeepMode,
   CameraFunction,
   MovieQuality,
@@ -177,6 +176,7 @@ enum SettingsId {
   PostViewImageSize,
   SelfTimer,
   SilentShootingSettings,
+  SilentShooting,
   ProgramShift,
   ContShootingMode,
   ContShootingSpeed,
@@ -198,15 +198,12 @@ enum SettingsId {
   DeleteContents,
   IntervalStillRecording,
   LiveView,
+  LiveViewWithSize,
   LiveViewSize,
   LoopRecording,
   RemotePlayback,
   ZoomSetting,
-
   Unknown,
-
-
-
 }
 
 extension SettingsIdExtension on SettingsId {
@@ -349,40 +346,90 @@ extension SettingsIdExtension on SettingsId {
 
   String get wifiValue {
     switch (this) {
-      case SettingsId.StorageInformation:
-        return "storageInformation";
+      case SettingsId.CameraStatus:
+        return "cameraStatus";
+
       case SettingsId.Versions:
         return "versions";
       case SettingsId.MethodTypes:
         return "methodTypes";
-      case SettingsId.AvailableApiList:
-        return "availableApiList";
       case SettingsId.ApplicationInfo:
         return "applicationInfo";
-      case SettingsId.SupportedCameraFunction:
-        return "supportedCameraFunction";
-      case SettingsId.BeepMode:
-        return "beepMode";
+      case SettingsId.AvailableApiList:
+        return "apiList";
+      case SettingsId.AvailableSettings:
+        return "event";
+      case SettingsId.CapturePhoto:
+        return "takePicture";
+      case SettingsId.CameraSetup:
+        return "recMode";
+      case SettingsId.LiveViewState:
+        return "liveviewStatus";
+      case SettingsId.LiveView:
+        return "liveView";
+      case SettingsId.LiveViewWithSize:
+        return "liveviewWithSize";
+      case SettingsId.LiveViewSize:
+        return "liveviewSize";
       case SettingsId.CameraFunction:
         return "cameraFunction";
-      case SettingsId.MovieQuality:
-        return "movieQuality";
-      case SettingsId.SteadyMode:
-        return "steadyMode";
-      case SettingsId.ViewAngle:
-        return "viewAngle";
-      case SettingsId.PostViewImageSize:
-        return "postviewImageSize";
+      case SettingsId.Zoom:
+        return "zoom";
+      case SettingsId.ZoomStatus:
+        return "zoomInformation";
+      case SettingsId.HalfPressShutter:
+        return "halfPressShutter";
       case SettingsId.SelfTimer:
         return "selfTimer";
-      case SettingsId.SilentShootingSettings:
-        return "silentShootingSetting";
-      case SettingsId.ProgramShift:
-        return "programShift";
       case SettingsId.ContShootingMode:
         return "contShootingMode";
       case SettingsId.ContShootingSpeed:
         return "contShootingSpeed";
+      case SettingsId.MeteringMode:
+        return "exposureMode";
+      case SettingsId.EV:
+        return "exposureCompensation";
+      case SettingsId.FNumber:
+        return "fNumber";
+      case SettingsId.ISO:
+        return "isoSpeedRate";
+      case SettingsId.PostViewImageSize:
+        return "postviewImageSize";
+      case SettingsId.ProgramShift:
+        return "programShift";
+      case SettingsId.ShootingMode:
+        return "shootMode";
+      case SettingsId.ShutterSpeed:
+        return "shutterSpeed";
+      case SettingsId.FocusAreaSpot:
+        return "touchAFPosition";
+      case SettingsId.WhiteBalance:
+      case SettingsId.WhiteBalanceColorTemp:
+      case SettingsId.WhiteBalanceGM:
+        return "whiteBalance";
+      case SettingsId.FlashMode:
+        return "flashMode";
+      case SettingsId.FocusMode:
+        return "focusMode";
+      case SettingsId.ZoomSetting:
+        return "zoomSetting";
+      case SettingsId.StorageInformation:
+        return "storageInformation";
+      case SettingsId.LiveViewInfo:
+        return "liveviewFrame";
+      case SettingsId.SilentShootingSettings:
+        return "silentShootingSetting";
+      case SettingsId.SilentShooting:
+        return "silentShooting";
+
+      case SettingsId.SteadyMode:
+        return "steadyMode";
+      case SettingsId.BeepMode:
+        return "beepMode";
+      case SettingsId.MovieQuality:
+        return "movieQuality";
+      case SettingsId.ViewAngle:
+        return "viewAngle";
       case SettingsId.FlipSetting:
         return "flipSetting";
       case SettingsId.IntervalTime:
@@ -409,84 +456,54 @@ extension SettingsIdExtension on SettingsId {
         return "bulbShooting";
       case SettingsId.AudioRecordingSetting:
         return "audioRecordingSetting";
-      case SettingsId.CameraSetup:
-        return "recMode";
       case SettingsId.DateTimeSetting:
         return "dateTimeSetting";
       case SettingsId.DeleteContents:
         return "deleteContent";
       case SettingsId.IntervalStillRecording:
         return "intervalStillRecording";
-      case SettingsId.LiveView:
-        return "liveView";
-      case SettingsId.LiveViewSize:
-        return "liveviewSize";
       case SettingsId.LoopRecording:
         return "loopRecording";
       case SettingsId.RemotePlayback:
         return "remotePlayback";
-      case SettingsId.ZoomSetting:
-        return "zoomSetting";
       case SettingsId.FileFormat:
         return "stillQuality";
-      case SettingsId.WhiteBalance:
-        return "whiteBalance";
-      case SettingsId.FNumber:
-        return "fNumber";
-      case SettingsId.FocusMode:
-        return "focusMode";
-      case SettingsId.MeteringMode:
-        return "exposureMode";
-      case SettingsId.FlashMode:
-        return "flashMode"; //set.. get...
-      case SettingsId.ShootingMode:
-        return "shootMode";
-      case SettingsId.EV:
-        return "exposureCompensation";
+      case SettingsId.RecordVideo:
+        return "movieRecording";
+      case SettingsId.ImageSize:
+        return "stillSize";
+      case SettingsId.PhotoTransferQueue:
+        return "transferringImages";
+      case SettingsId.PictureEffect:
+        return "sceneSelection";
+      case SettingsId.BatteryInfo:
+        return "batteryInfo";
+      case SettingsId.RecordVideoState:
+        return "movieRecording";
+      case SettingsId.CameraInfo:
+        return "serverInformation";
       case SettingsId.DriveMode:
         return "";
       case SettingsId.FlashValue:
         return "";
       case SettingsId.DroHdr:
         return "";
-      case SettingsId.ImageSize:
-        return "stillSize";
-      case SettingsId.ShutterSpeed:
-        return "shutterSpeed";
       case SettingsId.UnkD20E:
         return "";
-      case SettingsId.WhiteBalanceColorTemp:
-        return "whiteBalance";
-      case SettingsId.WhiteBalanceGM:
-        return "whiteBalance";
       case SettingsId.AspectRatio:
         return "";
       case SettingsId.UnkD212:
         return "";
       case SettingsId.AutoFocusState:
-        return ""; //inside liveview info maybe extract and save?
-      case SettingsId.Zoom:
-        return "zoom";
-      case SettingsId.PhotoTransferQueue:
-        return "transferringImages";
+        return "focusStatus";
       case SettingsId.AEL_State:
         return "";
-      case SettingsId.BatteryInfo:
-        return "batteryInfo";
       case SettingsId.SensorCrop:
         return "";
-      case SettingsId.PictureEffect:
-        return "sceneSelection";
       case SettingsId.WhiteBalanceAB:
         return "";
-      case SettingsId.RecordVideoState:
-        return "movieRecording";
-      case SettingsId.ISO:
-        return "isoSpeedRate";
       case SettingsId.FEL_State:
         return "";
-      case SettingsId.LiveViewState:
-        return "liveView";
       case SettingsId.UnkD222:
         return "";
       case SettingsId.FocusArea:
@@ -501,26 +518,18 @@ extension SettingsIdExtension on SettingsId {
         return "";
       case SettingsId.UseLiveViewDisplayEffect:
         return "";
-      case SettingsId.FocusAreaSpot:
-        return "touchAFPosition";
       case SettingsId.FocusMagnifierState:
         return "";
       case SettingsId.FocusModeToggleResponse:
         return "";
       case SettingsId.UnkD236:
         return "";
-      case SettingsId.HalfPressShutter:
-        return "halfPressShutter";
-      case SettingsId.CapturePhoto:
-        return "actTakePicture";
       case SettingsId.AEL:
         return "";
       case SettingsId.UnkD2C5:
         return "";
       case SettingsId.UnkD2C7:
         return "";
-      case SettingsId.RecordVideo:
-        return "movieRecording";
       case SettingsId.FEL:
         return "";
       case SettingsId.FocusMagnifierRequest:
@@ -543,14 +552,8 @@ extension SettingsIdExtension on SettingsId {
         return "";
       case SettingsId.UnkD2D4:
         return "";
-      case SettingsId.LiveViewInfo:
-        return "liveviewFrame";
       case SettingsId.PhotoInfo:
         return "";
-      case SettingsId.AvailableSettings:
-        return "event";
-      case SettingsId.CameraInfo:
-        return "serverInformation";
       case SettingsId.Connect:
         return "";
       case SettingsId.Unknown:
@@ -558,7 +561,12 @@ extension SettingsIdExtension on SettingsId {
       default:
         return "";
     }
-    return "";
+  }
+
+  static SettingsId getSettingsIdWifi(String wifiValue) {
+    return SettingsId.values.firstWhere(
+        (element) => element.wifiValue == wifiValue,
+        orElse: () => SettingsId.Unknown);
   }
 }
 

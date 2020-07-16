@@ -3,6 +3,8 @@ import 'package:json_annotation/json_annotation.dart';
 enum SonyWebApiMethod {
   GET,
   SET,
+  GET_AVAILABLE,
+  GET_SUPPORTED,
   ACT,
   AWAIT,
   START,
@@ -20,6 +22,10 @@ extension SonyWebApiMethodExtension on SonyWebApiMethod {
     switch (this) {
       case SonyWebApiMethod.GET:
         return "get";
+      case SonyWebApiMethod.GET_AVAILABLE:
+        return "getAvailable";
+      case SonyWebApiMethod.GET_SUPPORTED:
+        return "getSupported";
       case SonyWebApiMethod.SET:
         return "set";
       case SonyWebApiMethod.ACT:

@@ -17,7 +17,6 @@ class CameraUsbSettings extends CameraSettings {
 
   @override
   Future<bool> update() async {
-
     var response = await UsbCommands.getCommandSetting(
             SettingsId.AvailableSettings,
             opCodeId: OpCodeId.SettingsList,

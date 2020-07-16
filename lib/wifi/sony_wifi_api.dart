@@ -43,36 +43,43 @@ class SonyWifiApi extends SonyApiInterface {
 
   @override
   Future<bool> connectCamera(SonyCameraDevice sonyCameraDevice) async {
-    WebApiVersion.values.forEach((version) async {
-      await WifiCommand.createCommand(SonyWebApiMethod.GET,
-              SettingsId.MethodTypes, SonyWebApiServiceType.CAMERA,
-              version: version, params: [version.wifiValue])
-          .send(sonyCameraDevice)
-          .then(
-              (value) => writeToText("MethodTypes${version.wifiValue}", value));
-    });
-
-    await WifiCommand.createCommand(SonyWebApiMethod.GET,
-            SettingsId.AvailableSettings, SonyWebApiServiceType.CAMERA,
-            params: [false])
+    await WifiCommand.createCommand(SonyWebApiMethod.GET, SettingsId.Versions,
+            SonyWebApiServiceType.CAMERA)
         .send(sonyCameraDevice)
-        .then((value) => writeToText("AvailableSettings", value));
+        .then((value) => writeToText("Versions", value));
+    await Future<void>.delayed(Duration(seconds: 1));
+
+    await WifiCommand.createCommand(SonyWebApiMethod.GET,
+            SettingsId.MethodTypes, SonyWebApiServiceType.CAMERA,
+            params: [WebApiVersion.V_1_4.wifiValue])
+        .send(sonyCameraDevice)
+        .then((value) =>
+            writeToText("MethodTypes${WebApiVersion.V_1_4.wifiValue}", value));
+    await Future<void>.delayed(Duration(seconds: 1));
 
     await WifiCommand.createCommand(SonyWebApiMethod.GET,
             SettingsId.AvailableSettings, SonyWebApiServiceType.CAMERA,
-            version: WebApiVersion.V_1_4, params: [false])
-        .send(sonyCameraDevice, timeout: 60000)
-        .then((value) => writeToText("AvailableSettings", value));
+            params: [true])
+        .send(sonyCameraDevice, timeout: 80000)
+        .then((value) => writeToText(
+            "AvailableSettings${WebApiVersion.V_1_4.wifiValue}", value));
+    await Future<void>.delayed(Duration(seconds: 1));
+
+    await WifiCommand.createCommand(SonyWebApiMethod.GET_SUPPORTED,
+            SettingsId.CameraFunction, SonyWebApiServiceType.CAMERA)
+        .send(sonyCameraDevice)
+        .then((value) => writeToText("AvailableFunctions", value));
+
+    await WifiCommand.createCommand(SonyWebApiMethod.GET_AVAILABLE,
+            SettingsId.CameraFunction, SonyWebApiServiceType.CAMERA)
+        .send(sonyCameraDevice)
+        .then((value) => writeToText("SupportedFunctions", value));
 
     await WifiCommand.createCommand(SonyWebApiMethod.GET,
             SettingsId.AvailableApiList, SonyWebApiServiceType.CAMERA)
         .send(sonyCameraDevice)
         .then((value) => writeToText("AvailableApiList", value));
-
-    await WifiCommand.createCommand(SonyWebApiMethod.GET, SettingsId.Versions,
-            SonyWebApiServiceType.CAMERA)
-        .send(sonyCameraDevice)
-        .then((value) => writeToText("Versions", value));
+    await Future<void>.delayed(Duration(seconds: 1));
 
     await WifiCommand.createCommand(SonyWebApiMethod.START,
             SettingsId.CameraSetup, SonyWebApiServiceType.CAMERA)
