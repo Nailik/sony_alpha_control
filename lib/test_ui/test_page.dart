@@ -29,6 +29,10 @@ class TestsPageState extends State<TestsPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
+            appBar: AppBar(
+              leading: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
+            ),
             backgroundColor: Colors.blueGrey,
             body: ChangeNotifierProvider<CameraSettings>(
                 create: (context) => SonyApi.connectedCamera.cameraSettings,

@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initPlatformState() async {
-    await SonyApi.initialize(usb: false, wifi: true);
+    await SonyApi.initialize(usb: true, wifi: false);
 
     setState(() {
       _initialized = true;
@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
-            title: const Text('Plugin example app'),
+            title: const Text('Plugin example app'), leading: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
           ),
           body: deviceList(),
           bottomNavigationBar: Column(

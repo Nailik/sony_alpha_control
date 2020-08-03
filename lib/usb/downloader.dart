@@ -39,14 +39,16 @@ Future<List<CameraImage>> fetchPhotos(Map<String, dynamic> deviceJson) async {
   print(photoAvailable);
 
   int d = 0;
-  sleep(Duration(milliseconds: 500));
+  await Future.delayed(Duration(milliseconds: 500));
+  // sleep(Duration(milliseconds: 500));
 
   while (!photoAvailable) {
     if (d >= 5) {
       print("Could not get image available: $photoAvailable");
       return null;
     }
-    sleep(Duration(milliseconds: 500));
+    await Future.delayed(Duration(milliseconds: 500));
+    //sleep(Duration(milliseconds: 500));
     await device.updateSettings();
     photoAvailable = await device.api.getPhotoAvailable();
     print(photoAvailable);
@@ -60,6 +62,7 @@ Future<List<CameraImage>> fetchPhotos(Map<String, dynamic> deviceJson) async {
   }
 
   var imageList = List<CameraImage>();
+
   photoAvailable = await device.api.getPhotoAvailable();
   while (photoAvailable) {
     imageList.add(await getImage(device));
@@ -67,6 +70,7 @@ Future<List<CameraImage>> fetchPhotos(Map<String, dynamic> deviceJson) async {
     photoAvailable = await device.api.getPhotoAvailable();
     print(photoAvailable);
   }
+
   return imageList;
 }
 
@@ -78,6 +82,7 @@ Future<CameraImage> getImage(SonyCameraDevice device,
   var millis = new DateTime.now().millisecondsSinceEpoch;
 
   print("staGetImage $millis");
+
   Response response = await UsbCommands.getImageCommand(liveView, false,
           imageSizeInBytes: request.size)
       .send();

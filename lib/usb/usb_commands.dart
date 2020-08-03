@@ -54,7 +54,6 @@ class UsbCommands {
 
       return SonyUsbCommand(Command(list, outDataLength: outDataLength));
     } else if (Platform.isAndroid) {
-
       Uint8List list = CommandT.createCommand(16);
       //TODO not always 2 lists
       //0000   10 00 00 00 01 00 07 92 08 00 00 00 07 50 00 00
@@ -91,7 +90,7 @@ class UsbCommands {
         length += 2;
       }
 
-      if(value1DataSize == 0 && value2DataSize == 0){
+      if (value1DataSize == 0 && value2DataSize == 0) {
         //only one command, eg when reading settings
         return SonyUsbCommand(Command(list, outDataLength: outDataLength));
       }
@@ -218,9 +217,14 @@ class SonyUsbCommand {
     print("send SonyCommand two? ${command2 != null}");
     if (command2 != null) {
       command1.outDataLength = 0;
-      await FlutterUsb.sendCommand(command1);
-      return await FlutterUsb.sendCommand(command2);
+      var re = await FlutterUsb.sendCommand(command1);
+      print("send SonyCommand re $re");
+      re = await FlutterUsb.sendCommand(command2);
+      print("send SonyCommand re2 $re");
+      return re;
     }
-    return await FlutterUsb.sendCommand(command1);
+    var re = await FlutterUsb.sendCommand(command1);
+    print("send SonyCommand re $re");
+    return re;
   }
 }

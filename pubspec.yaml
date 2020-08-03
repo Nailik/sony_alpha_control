@@ -26,7 +26,7 @@ dependencies:
   flutter_usb:
     git:
       url: https://github.com/Nailik/flutter_usb.git
-      ref: '9119d56'
+      ref: 'd99726b'
   wifi_iot:
     git: https://github.com/alternadom/WiFiFlutter.git
   xml2json:
