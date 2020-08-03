@@ -5,7 +5,6 @@ import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_method.dart';
-import 'package:sonyalphacontrol/wifi/enums/sony_web_api_service_type.dart';
 import 'package:sonyalphacontrol/wifi/enums/web_api_version.dart';
 import 'package:sonyalphacontrol/wifi/wifi_commands.dart';
 import 'package:sonyalphacontrol/wifi/wifi_connector.dart';
@@ -43,47 +42,45 @@ class SonyWifiApi extends SonyApiInterface {
 
   @override
   Future<bool> connectCamera(SonyCameraDevice sonyCameraDevice) async {
-    await WifiCommand.createCommand(SonyWebApiMethod.GET, SettingsId.Versions,
-            SonyWebApiServiceType.CAMERA)
-        .send(sonyCameraDevice)
+    await WifiCommand.createCommand(SonyWebApiMethod.GET, SettingsId.Versions)
+        .sendForResponse(sonyCameraDevice)
         .then((value) => writeToText("Versions", value));
     await Future<void>.delayed(Duration(seconds: 1));
 
-    await WifiCommand.createCommand(SonyWebApiMethod.GET,
-            SettingsId.MethodTypes, SonyWebApiServiceType.CAMERA,
+    await WifiCommand.createCommand(
+            SonyWebApiMethod.GET, SettingsId.MethodTypes,
             params: [WebApiVersion.V_1_4.wifiValue])
-        .send(sonyCameraDevice)
+        .sendForResponse(sonyCameraDevice)
         .then((value) =>
             writeToText("MethodTypes${WebApiVersion.V_1_4.wifiValue}", value));
     await Future<void>.delayed(Duration(seconds: 1));
 
-    await WifiCommand.createCommand(SonyWebApiMethod.GET,
-            SettingsId.AvailableSettings, SonyWebApiServiceType.CAMERA,
-            params: [true])
-        .send(sonyCameraDevice, timeout: 80000)
+    await WifiCommand.createCommand(
+            SonyWebApiMethod.GET, SettingsId.AvailableSettings, params: [true])
+        .sendForResponse(sonyCameraDevice, timeout: 80000)
         .then((value) => writeToText(
             "AvailableSettings${WebApiVersion.V_1_4.wifiValue}", value));
     await Future<void>.delayed(Duration(seconds: 1));
 
-    await WifiCommand.createCommand(SonyWebApiMethod.GET_SUPPORTED,
-            SettingsId.CameraFunction, SonyWebApiServiceType.CAMERA)
-        .send(sonyCameraDevice)
+    await WifiCommand.createCommand(
+            SonyWebApiMethod.GET_SUPPORTED, SettingsId.CameraFunction)
+        .sendForResponse(sonyCameraDevice)
         .then((value) => writeToText("AvailableFunctions", value));
 
-    await WifiCommand.createCommand(SonyWebApiMethod.GET_AVAILABLE,
-            SettingsId.CameraFunction, SonyWebApiServiceType.CAMERA)
-        .send(sonyCameraDevice)
+    await WifiCommand.createCommand(
+            SonyWebApiMethod.GET_AVAILABLE, SettingsId.CameraFunction)
+        .sendForResponse(sonyCameraDevice)
         .then((value) => writeToText("SupportedFunctions", value));
 
-    await WifiCommand.createCommand(SonyWebApiMethod.GET,
-            SettingsId.AvailableApiList, SonyWebApiServiceType.CAMERA)
-        .send(sonyCameraDevice)
+    await WifiCommand.createCommand(
+            SonyWebApiMethod.GET, SettingsId.AvailableApiList)
+        .sendForResponse(sonyCameraDevice)
         .then((value) => writeToText("AvailableApiList", value));
     await Future<void>.delayed(Duration(seconds: 1));
 
-    await WifiCommand.createCommand(SonyWebApiMethod.START,
-            SettingsId.CameraSetup, SonyWebApiServiceType.CAMERA)
-        .send(sonyCameraDevice)
+    await WifiCommand.createCommand(
+            SonyWebApiMethod.START, SettingsId.CameraSetup)
+        .sendForResponse(sonyCameraDevice)
         .then((value) => writeToText("CameraSetup", value));
 
     //   var versions = await sonyCameraDevice.wifiApi.

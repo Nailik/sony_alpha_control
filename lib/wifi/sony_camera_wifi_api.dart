@@ -24,6 +24,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
+import 'package:sonyalphacontrol/wifi/enums/force_update.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_method.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_service_type.dart';
@@ -32,10 +33,29 @@ import 'package:sonyalphacontrol/wifi/sony_camera_wifi_device.dart';
 import 'package:sonyalphacontrol/wifi/wifi_commands.dart';
 
 class SonyCameraWifiApi extends CameraApiInterface {
-
   SonyCameraWifiDevice get device => cameraDevice;
 
   SonyCameraWifiApi(SonyCameraDevice cameraDevice) : super(cameraDevice);
+
+  //special things
+  Future<SonyApiMethodSet> serverInformationApi(
+      WebApiVersion version, SonyWebApiServiceType serviceType) {
+    // WifiCommand(SonyWebApiMethod.GET, SettingsId.Connect, SonyWebApiServiceType.CAMERA, version, null);
+    /*
+
+        apiCallMulti = ApiCallMulti.create()
+                .add(CameraApi.serverInformationApi.getMethodTypes(
+                        WebApiVersion.V_1_0,
+                        SonyWebApiServiceType.CAMERA))
+                .add(CameraApi.eventNotificationApi.getEvent(WebApiVersion.V_1_0, false))
+
+                then    startCamera(connectionCallback, cameraDevice)
+                or startOpenConnectionAfterChangeCameraState
+     */
+  }
+
+  //camera settings?
+  Future<String> getSettings(WebApiVersion version, bool longPolling) {}
 
   @override
   Future<List<CameraImage>> capturePhoto() {
@@ -128,7 +148,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<SettingsItem<FocusMagnifierDirectionValue>> getFocusMagnifierDirection() {
+  Future<SettingsItem<FocusMagnifierDirectionValue>>
+      getFocusMagnifierDirection() {
     // TODO: implement getFocusMagnifierDirection
     throw UnimplementedError();
   }
@@ -187,11 +208,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
-  @override
-  Future<RecordVideoStateValue> getRecordingVideoState() {
-    // TODO: implement getRecordingVideoState
-    throw UnimplementedError();
-  }
+
 
   @override
   Future<SettingsItem<ShootingModeValue>> getShootingMode() {
@@ -326,7 +343,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> setFocusMagnifierDirection(FocusMagnifierDirectionId value, int steps) {
+  Future<bool> setFocusMagnifierDirection(
+      FocusMagnifierDirectionId value, int steps) {
     // TODO: implement setFocusMagnifierDirection
     throw UnimplementedError();
   }
@@ -427,27 +445,108 @@ class SonyCameraWifiApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
+  /// This API provides a function to start audio recording.
+  ///
+  ///
+  /// This API instructs the server side to start audio recording.
+  /// When this API is called and the server starts audio recording,
+  /// the camera status will change as follows.
+  /// The camera status can be obtained by [EventNotificationApi.getEvent].
+  ///
+  ///
+  /// [Client calls this]
+  ///
+  ///
+  /// Camera status: [CameraShootingStatusParam.IDLE] <br></br>
+  /// -> [CameraShootingStatusParam.AudioWaitRecStart] <br></br>
+  /// -> [CameraShootingStatusParam.AudioRecording].
+  ///
+  ///
+  /// After the recording has started, the client may stop the recording.
+  /// To stop the recording, [.stopAudioRec] must be called,
+  /// and the camera status will change as follows.
+  ///
+  ///
+  /// [Client calls [.stopAudioRec]]
+  ///
+  ///
+  /// Camera status: [CameraShootingStatusParam.AudioRecording]
+  /// -> [CameraShootingStatusParam.AudioWaitRecStop]
+  /// -> [CameraShootingStatusParam.AudioSaving]
+  /// -> [CameraShootingStatusParam.IDLE].
+  ///
+  ///
+  /// Note that this sequence is the example of typical case.
+  ///
+  ///
+  /// The client should check the [EventNotificationApi.getEvent]
+  /// parameter ([Event.cameraStatus]) and check if it is [CameraShootingStatusParam.IDLE]
+  /// before calling this.
+  ///
+  ///
+  /// This API is only available when the shoot mode is [ShootModeParam.Audio].
+  ///
+  ///
+  /// Note that the server may disable the liveview function when the
+  /// shoot mode is [ShootModeParam.Audio].
+  /// The client should check liveview availability by [Event.liveViewStatus] of
+  /// [EventNotificationApi.getEvent].
+  /// The APIs availability will also be changed.
+  /// The client should check the APIs availability by available API list.
+  /// When the client switches the shoot mode from [ShootModeParam.Audio] to others,
+  /// the client can restart the liveview by calling [LiveViewApi.startLiveView].
+  ///
+  ///
+  /// @return see [ApiCallSet]
+  @override
+  Future<bool> startRecordingAudio() => WifiCommand.createCommand(
+          SonyWebApiMethod.START, SettingsId.AudioRecording)
+      .send(device);
 
-  //special things
-  Future<SonyApiMethodSet> serverInformationApi(WebApiVersion version, SonyWebApiServiceType serviceType){
-   // WifiCommand(SonyWebApiMethod.GET, SettingsId.Connect, SonyWebApiServiceType.CAMERA, version, null);
-    /*
+  /// This API provides a function to stop audio recording.
+  ///
+  ///
+  /// This API is only available when the shoot mode is [ShootModeParam.Audio].
+  /// Even if this API is successful, the server may not be ready to start the next recording.
+  /// The next recording is prohibited until the client could make sure,
+  /// that the server is ready to start the next recording, through the
+  /// [EventNotificationApi.getEvent] callback parameter [Event.cameraStatus].
+  ///
+  ///
+  /// @return see [ApiCallSet]
+  @override
+  Future<bool> stopRecordingAudio() => WifiCommand.createCommand(
+          SonyWebApiMethod.STOP, SettingsId.AudioRecording)
+      .send(device);
 
-        apiCallMulti = ApiCallMulti.create()
-                .add(CameraApi.serverInformationApi.getMethodTypes(
-                        WebApiVersion.V_1_0,
-                        SonyWebApiServiceType.CAMERA))
-                .add(CameraApi.eventNotificationApi.getEvent(WebApiVersion.V_1_0, false))
+  /// This API provides a function to set a value of audio recording setting.
+  ///
+  ///
+  /// Even if the response is successful, the setting may not be finished on the server.
+  /// Therefore, the client can check [Event.audioRecordingSetting] result in
+  /// [EventNotificationApi.getEvent] callback to recognize the timing of a change
+  /// in the parameter of the server.
+  ///
+  ///
+  /// @param audioRecordingSetting Audio recording setting
+  /// (See Audio recording setting parameters of Parameter description)
+  /// @return see [ApiCallSet]
+  @override
+  Future<bool> setRecordingAudio(String audioRecordingSetting) =>
+      WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.AudioRecording,
+          params: [audioRecordingSetting]).send(device);
 
-                then    startCamera(connectionCallback, cameraDevice)
-                or startOpenConnectionAfterChangeCameraState
-     */
+  @override
+  Future<SettingsItem<StringValue>> getRecordingAudio() {
+    // TODO: implement setFocusMode
+    throw UnimplementedError();
   }
 
-  //camera settings?
-  Future<String> getSettings(WebApiVersion version, bool longPolling){
-
+  @override
+  Future<RecordVideoStateValue> getRecordingVideoState({update = ForceUpdate.Off}) {
+    // TODO: implement getRecordingVideoState
+    throw UnimplementedError();
   }
-
-
+    //  WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.AudioRecording,
+        //  params: [audioRecordingSetting]).send(device);
 }

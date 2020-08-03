@@ -30,6 +30,7 @@ import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
 import 'package:sonyalphacontrol/usb/downloader.dart';
 import 'package:sonyalphacontrol/usb/response_validation.dart';
 import 'package:sonyalphacontrol/usb/sony_camera_usb_device.dart';
+import 'package:sonyalphacontrol/wifi/enums/force_update.dart';
 
 import 'usb_commands.dart';
 
@@ -196,6 +197,8 @@ class SonyCameraUsbApi extends CameraApiInterface {
         break;
       case SettingsId.CameraInfo:
         // TODO: Handle this case.
+        break;
+      default:
         break;
     }
     return false;
@@ -464,8 +467,10 @@ class SonyCameraUsbApi extends CameraApiInterface {
                   opCodeId: OpCodeId.MainSetting, value1: 2)
               .send())
           .isValidResponse()) {
-        if ((await UsbCommands.getCommandSetting(SettingsId.FocusMagnifierRequest,
-                    opCodeId: OpCodeId.MainSetting, value1: 1)
+        if ((await UsbCommands.getCommandSetting(
+                    SettingsId.FocusMagnifierRequest,
+                    opCodeId: OpCodeId.MainSetting,
+                    value1: 1)
                 .send())
             .isValidResponse()) {
           //next when successful
@@ -619,7 +624,8 @@ class SonyCameraUsbApi extends CameraApiInterface {
           .isValidResponse();
 
   @override
-  Future<RecordVideoStateValue> getRecordingVideoState() async =>
+  Future<RecordVideoStateValue> getRecordingVideoState(
+          {update = ForceUpdate.Off}) async =>
       device.cameraSettings.settings
           .firstWhere(
               (element) => element.settingsId == SettingsId.RecordVideoState)
@@ -675,5 +681,29 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
     return CameraImageRequest(
         numImages == 1, imageInfoUnk, imageSizeInBytes, name);
+  }
+
+  @override
+  Future<bool> startRecordingAudio() {
+    // TODO: implement startRecordingAudio
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> stopRecordingAudio() {
+    // TODO: implement stopRecordingAudio
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<SettingsItem<StringValue>> getRecordingAudio() {
+    // TODO: implement getRecordingAudio
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setRecordingAudio(String audioRecordingSetting) {
+    // TODO: implement setRecordingAudio
+    throw UnimplementedError();
   }
 }

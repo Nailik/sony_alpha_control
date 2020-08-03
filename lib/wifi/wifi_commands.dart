@@ -34,16 +34,35 @@ class WifiCommand {
 
   WifiCommand(this.id, this.method, this.version, this.params, {this.service});
 
-  static WifiCommand createCommand(
-          SonyWebApiMethod method, SettingsId apiGroup, service,
-          {WebApiVersion version = WebApiVersion.V_1_0, //TOp supported version?
+  static WifiCommand createCommand(SonyWebApiMethod method, SettingsId apiGroup,
+          {SonyWebApiServiceType service = SonyWebApiServiceType.CAMERA,
+          WebApiVersion version = WebApiVersion.V_1_0, //TOp supported version?
           List<dynamic> params = const []}) =>
       WifiCommand(
           0, method.wifiValue + apiGroup.wifiValue.startCap, version, params,
           service: service);
 
   //{"id":7,"method":"getVersions","params":[],"version":"1.0"}
-  Future<WifiResponse> send(SonyCameraWifiDevice device,
+  Future<bool> send(SonyCameraWifiDevice device, {timeout: 80000}) async {
+    //url
+    //request json
+    var url =
+        "${device.findCameraWebAPiService(service).url}/${service.wifiValue}";
+    id = WifiCommands.id; //update id right before creating json and sending
+    var json = jsonEncode(this);
+    try {
+      final response = await http
+          .post(url, body: json)
+          .timeout(Duration(milliseconds: timeout));
+      print("request response");
+      return true;
+    } on ClientException catch (error) {
+      print("ClientException request");
+      return false;
+    }
+  }
+
+  Future<WifiResponse> sendForResponse(SonyCameraWifiDevice device,
       {timeout: 80000}) async {
     //url
     //request json
