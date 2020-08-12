@@ -4,7 +4,10 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_usb/flutter_usb.dart';
-import 'package:sonyalphacontrol/top_level_api/camera_image.dart';
+import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dart';
+import 'package:sonyalphacontrol/top_level_api/device/camera_image.dart';
+import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
@@ -26,15 +29,12 @@ import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
-import 'package:sonyalphacontrol/top_level_api/sony_camera_api_interface.dart';
-import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
-import 'package:sonyalphacontrol/usb/downloader.dart';
-import 'package:sonyalphacontrol/usb/response_validation.dart';
-import 'package:sonyalphacontrol/usb/sony_camera_usb_device.dart';
+import 'package:sonyalphacontrol/usb/commands/downloader.dart';
+import 'package:sonyalphacontrol/usb/commands/response_validation.dart';
+import 'package:sonyalphacontrol/usb/device/sony_camera_usb_device.dart';
 import 'package:sonyalphacontrol/wifi/enums/force_update.dart';
 
-import 'usb_commands.dart';
+import '../commands/usb_commands.dart';
 
 //TODO 0000   10 00 00 00 04 00 03 c2 ff ff ff ff 1d d2 00 00 -> URB_INTERRUPT in when sth changed
 //TODO register for event notifications

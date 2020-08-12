@@ -37,6 +37,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
         settingsId == SettingsId.FocusMagnifierPosition ||
         settingsId == SettingsId.ShutterSpeed);
   }
+
 //SettingsIdExtension.getSettingsIdWifi(value["type"].toString(
   SettingsValue fromWifi(value) {
     switch (settingsId) {

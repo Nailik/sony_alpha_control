@@ -4,12 +4,12 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_method.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_service_type.dart';
 import 'package:sonyalphacontrol/wifi/enums/web_api_version.dart';
-import 'package:sonyalphacontrol/wifi/sony_camera_wifi_device.dart';
 
-part 'wifi_commands.g.dart';
+part '../wifi_commands.g.dart';
 
 class WifiCommands {
   //TOdo in json
@@ -82,10 +82,19 @@ class WifiCommand {
     }
   }
 
-  factory WifiCommand.fromJson(Map<String, dynamic> json) =>
-      _$WifiCommandFromJson(json);
+  factory WifiCommand.fromJson(Map<String, dynamic> json) => WifiCommand(
+        json['id'] as int,
+        json['method'] as String,
+        const WebApiVersionConverter().fromJson(json['version'] as String),
+        json['params'] as List,
+      );
 
-  Map<String, dynamic> toJson() => _$WifiCommandToJson(this);
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'id': this.id,
+        'method': this.method,
+        'version': const WebApiVersionConverter().toJson(this.version),
+        'params': this.params,
+      };
 }
 
 class WifiResponse {

@@ -1,4 +1,4 @@
-import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 ///
 /// Warmth bias used by GM (green-magenta)

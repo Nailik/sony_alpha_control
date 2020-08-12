@@ -1,14 +1,13 @@
 import 'package:file_chooser/file_chooser.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sonyalphacontrol/top_level_api/camera_settings.dart';
+import 'package:sonyalphacontrol/top_level_api/api/sony_api.dart';
+import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dart';
+import 'package:sonyalphacontrol/top_level_api/device/camera_settings.dart';
+import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
-import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
-import 'package:sonyalphacontrol/top_level_api/sony_camera_api_interface.dart';
-import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
-import 'package:video_player/video_player.dart';
 
 class TestsPage extends StatefulWidget {
   final SonyCameraDevice device;

@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:sonyalphacontrol/wifi/sony_camera_wifi_device.dart';
-import 'package:sonyalphacontrol/wifi/wifi_camera_xml.dart';
+import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
+import 'package:sonyalphacontrol/wifi/xml/root.dart';
 import 'package:wifi_iot/wifi_iot.dart';
 import 'package:xml2json/xml2json.dart';
 

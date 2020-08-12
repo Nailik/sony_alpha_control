@@ -147,7 +147,6 @@ class UsbCommands {
 
   //0000   10 00 00 00 01 00 09 10 52 06 00 00 01 c0 ff ff //10 09 getImageData //photo info c0 01
 
-
   //0000   10 00 00 00 01 00 08 10 0b 00 00 00 02 c0 ff ff
   //0000   10 00 00 00 01 00 09 10 0c 00 00 00 02 c0 ff ff
   static SonyUsbCommand getImageCommand(bool liveView, bool info,
@@ -176,20 +175,24 @@ class UsbCommands {
       list.writeUInt8(3);
     } else if (Platform.isAndroid) {
       list = CommandT.createCommand(16);
-      list.writeUInt16(0x10);//10
+      list.writeUInt16(0x10); //10
       list.goTo(4);
-      list.writeUInt8(1);//01
+      list.writeUInt8(1); //01
       list.goTo(6);
       list.writeUInt16(opcode.usbValue); //08 -> 09
       list.writeUInt8(settingsId.index); //0b (11) -> 0c (12)
       list.goTo(12);
-      list.writeUInt16(settingsId.usbValue);  //02 c0
+      list.writeUInt16(settingsId.usbValue); //02 c0
       list.writeUInt8(0xFF);
       list.writeUInt8(0xFF);
     }
 
     Uint8List end = Uint8List.fromList([0xFF, 0xD9]);
-    return SonyUsbCommand(Command(list, outDataLength: imageSizeInBytes, sendTimeout: 100, receiveTimeout: 50, endIdentifier: end));
+    return SonyUsbCommand(Command(list,
+        outDataLength: imageSizeInBytes,
+        sendTimeout: 100,
+        receiveTimeout: 50,
+        endIdentifier: end));
     //imageSizeInBytes -> 0124
     //imageSizeInBytes -> 307200
 
@@ -200,7 +203,6 @@ class UsbCommands {
     // 00 39 00 39 00 39 00 2E 00 4A 00 50 00 47 00 00 00 00 00 00}
 
     //0000   10 00 00 00 04 00 03 c2 ff ff ff ff 04 50 00 00
-
 
     //10 00 00 00 01 00 08 10 0b 00 00 00 02 c0 ff ff
   }

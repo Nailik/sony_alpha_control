@@ -1,7 +1,8 @@
-import 'package:sonyalphacontrol/top_level_api/camera_settings.dart';
-import 'package:sonyalphacontrol/top_level_api/sony_camera_api_interface.dart';
-import 'package:sonyalphacontrol/usb/sony_camera_usb_api.dart';
-import 'package:sonyalphacontrol/wifi/sony_camera_wifi_api.dart';
+import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dart';
+import 'package:sonyalphacontrol/usb/api/sony_camera_usb_api.dart';
+import 'package:sonyalphacontrol/wifi/api/sony_camera_wifi_api.dart';
+
+import 'camera_settings.dart';
 
 abstract class SonyCameraDevice {
   final String name;

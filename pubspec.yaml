@@ -30,7 +30,6 @@ dependencies:
   wifi_iot:
     git: https://github.com/alternadom/WiFiFlutter.git
   xml2json:
-  json_annotation:
   convert:
   http:
   provider:

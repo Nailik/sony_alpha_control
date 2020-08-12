@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
+import 'package:sonyalphacontrol/top_level_api/api/sony_api.dart';
+import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
-import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
+import 'package:sonyalphacontrol/wifi/commands/wifi_command.dart';
+import 'package:sonyalphacontrol/wifi/commands/wifi_connector.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_method.dart';
 import 'package:sonyalphacontrol/wifi/enums/web_api_version.dart';
-import 'package:sonyalphacontrol/wifi/wifi_commands.dart';
-import 'package:sonyalphacontrol/wifi/wifi_connector.dart';
 
 class SonyWifiApi extends SonyApiInterface {
   var _initialized = false;

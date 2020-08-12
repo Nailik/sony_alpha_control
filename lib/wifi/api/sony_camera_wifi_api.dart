@@ -1,7 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:sonyalphacontrol/top_level_api/camera_image.dart';
+import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dart';
+import 'package:sonyalphacontrol/top_level_api/device/camera_image.dart';
+import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
@@ -22,16 +25,13 @@ import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
-import 'package:sonyalphacontrol/top_level_api/sony_camera_api_interface.dart';
-import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
+import 'package:sonyalphacontrol/wifi/commands/wifi_command.dart';
+import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
 import 'package:sonyalphacontrol/wifi/enums/force_update.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_method.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_service_type.dart';
 import 'package:sonyalphacontrol/wifi/enums/web_api_version.dart';
-import 'package:sonyalphacontrol/wifi/sony_camera_wifi_device.dart';
-import 'package:sonyalphacontrol/wifi/wifi_commands.dart';
 
 class SonyCameraWifiApi extends CameraApiInterface {
   SonyCameraWifiDevice get device => cameraDevice;
@@ -208,8 +208,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
     // TODO: implement getPictureEffect
     throw UnimplementedError();
   }
-
-
 
   @override
   Future<SettingsItem<ShootingModeValue>> getShootingMode() {
@@ -544,7 +542,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<RecordVideoStateValue> getRecordingVideoState({update = ForceUpdate.Off}) {
+  Future<RecordVideoStateValue> getRecordingVideoState(
+      {update = ForceUpdate.Off}) {
     // TODO: implement getRecordingVideoState
     throw UnimplementedError();
   }
@@ -554,6 +553,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
     // TODO: implement streamLiveView
     throw UnimplementedError();
   }
-    //  WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.AudioRecording,
-        //  params: [audioRecordingSetting]).send(device);
+//  WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.AudioRecording,
+//  params: [audioRecordingSetting]).send(device);
 }

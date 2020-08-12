@@ -5,9 +5,9 @@ import 'package:flutter_usb/Response.dart';
 import 'package:flutter_usb/UsbDevice.dart';
 import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/test_ui/test_page.dart';
-import 'package:sonyalphacontrol/top_level_api/camera_image.dart';
-import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
-import 'package:sonyalphacontrol/usb/sony_camera_usb_device.dart';
+import 'package:sonyalphacontrol/top_level_api/device/camera_image.dart';
+import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
+import 'package:sonyalphacontrol/usb/device/sony_camera_usb_device.dart';
 
 import 'usb_commands.dart';
 
@@ -118,7 +118,7 @@ Future<CameraImage> getImage(SonyCameraDevice device,
   if (liveView) {
     try {
       print("Frame liveView ${DateTime.now().millisecondsSinceEpoch - mills}");
-      if (bytes.lengthInBytes < offset+4) {
+      if (bytes.lengthInBytes < offset + 4) {
         print("Frame empty");
         return null;
       }
@@ -139,7 +139,7 @@ Future<CameraImage> getImage(SonyCameraDevice device,
       print("Frame unkBuff ${DateTime.now().millisecondsSinceEpoch - mills}");
       var start = offset + unkBufferSize - 8;
       print(
-          "Frame start $start ${DateTime.now().millisecondsSinceEpoch - mills} end: ${bytelist.sublist(bytelist.length-20)} ind of 0xFF ${bytelist.lastIndexOf(0xFF)} 0xD9  ${bytelist.lastIndexOf(0xD9)}");
+          "Frame start $start ${DateTime.now().millisecondsSinceEpoch - mills} end: ${bytelist.sublist(bytelist.length - 20)} ind of 0xFF ${bytelist.lastIndexOf(0xFF)} 0xD9  ${bytelist.lastIndexOf(0xD9)}");
       return CameraImage("", bytelist.sublist(start));
     } on Exception catch (e) {
       print("Frame error $e");

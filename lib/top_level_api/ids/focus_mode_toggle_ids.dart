@@ -1,4 +1,4 @@
-import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 /// <summary>
 /// Used to switch between MF/AF without modifying the current AF setting

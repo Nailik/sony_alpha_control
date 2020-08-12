@@ -1,20 +1,17 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-class CameraImage{
-
+class CameraImage {
   String name;
   Uint8List data;
   File file; //file may be null
 
   CameraImage(this.name, this.data, {this.file});
-
 }
 
-class CameraImageRequest{
-
+class CameraImageRequest {
   bool available;
-  int type;//45313 = ARW, 14337 = JPEG
+  int type; //45313 = ARW, 14337 = JPEG
   int size;
   String name;
 

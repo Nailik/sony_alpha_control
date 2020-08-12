@@ -1,4 +1,4 @@
-import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 /// <summary>
 /// DRO/Auto HDR (Dynamic-Range Optimizer / Auto High Dynamic Range)

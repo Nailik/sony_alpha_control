@@ -1,7 +1,8 @@
-import 'package:sonyalphacontrol/top_level_api/sony_camera_api_interface.dart';
-import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
+import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dart';
+import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_service_type.dart';
-import 'package:sonyalphacontrol/wifi/wifi_camera_xml.dart';
+import 'package:sonyalphacontrol/wifi/xml/camera_web_api_service.dart';
+import 'package:sonyalphacontrol/wifi/xml/wifi_camera_xml.dart';
 
 import 'camera_wifi_settings.dart';
 

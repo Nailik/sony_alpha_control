@@ -11,6 +11,7 @@ class SonyApiMethodSet {
 
   factory SonyApiMethodSet.fromJson(Map<String, dynamic> json) =>
       _$SonyApiMethodSetFromJson(json);
+
   Map<String, dynamic> toJson() => _$SonyApiMethodSetToJson(this);
 }
 
@@ -22,7 +23,8 @@ class WebApiMethod {
   List<String> responseTypes;
   String version;
 
-  WebApiMethod(this.apiName, this.parameterTypes, this.responseTypes, this.version);
+  WebApiMethod(
+      this.apiName, this.parameterTypes, this.responseTypes, this.version);
 
   @override
   String toString() =>
@@ -30,5 +32,6 @@ class WebApiMethod {
 
   factory WebApiMethod.fromJson(Map<String, dynamic> json) =>
       _$WebApiMethodFromJson(json);
+
   Map<String, dynamic> toJson() => _$WebApiMethodToJson(this);
 }

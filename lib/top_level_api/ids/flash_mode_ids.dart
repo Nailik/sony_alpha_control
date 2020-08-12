@@ -1,4 +1,4 @@
-import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum FlashModeId {
   AutoFlash,
@@ -15,6 +15,7 @@ enum FlashModeId {
   RearWL,
   Unknown
 }
+
 extension FlashModeIdExtension on FlashModeId {
   String get name => toString().split('.')[1];
 
@@ -56,7 +57,7 @@ extension FlashModeIdExtension on FlashModeId {
 
 FlashModeId getFlashModeId(int usbValue) {
   return FlashModeId.values.firstWhere(
-          (element) => element.usbValue == usbValue,
+      (element) => element.usbValue == usbValue,
       orElse: () => FlashModeId.Unknown);
 }
 

@@ -1,15 +1,13 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/test_ui/test_page.dart';
-import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
-import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
+import 'package:sonyalphacontrol/top_level_api/api/sony_api.dart';
+import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
- // FlutterUsb.enableLogger(maxLogLengthNew: 42);
+  // FlutterUsb.enableLogger(maxLogLengthNew: 42);
   runApp(MyApp());
 }
 
@@ -45,7 +43,9 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
-            title: const Text('Plugin example app'), leading: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
+            title: const Text('Plugin example app'),
+            leading: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
           ),
           body: deviceList(),
           bottomNavigationBar: Column(
@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> {
       onTap: () async {
         await SonyApi.connectCamera(device);
         await device.updateSettings();
-     //   await device.api.setFocusAreaSpot(Point(6,8));
+        //   await device.api.setFocusAreaSpot(Point(6,8));
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => TestsPage(device: device)),
