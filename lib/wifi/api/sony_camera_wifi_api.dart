@@ -38,26 +38,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   SonyCameraWifiApi(SonyCameraDevice cameraDevice) : super(cameraDevice);
 
-  //special things
-  Future<SonyApiMethodSet> serverInformationApi(
-      WebApiVersion version, SonyWebApiServiceType serviceType) {
-    // WifiCommand(SonyWebApiMethod.GET, SettingsId.Connect, SonyWebApiServiceType.CAMERA, version, null);
-    /*
-
-        apiCallMulti = ApiCallMulti.create()
-                .add(CameraApi.serverInformationApi.getMethodTypes(
-                        WebApiVersion.V_1_0,
-                        SonyWebApiServiceType.CAMERA))
-                .add(CameraApi.eventNotificationApi.getEvent(WebApiVersion.V_1_0, false))
-
-                then    startCamera(connectionCallback, cameraDevice)
-                or startOpenConnectionAfterChangeCameraState
-     */
-  }
-
-  //camera settings?
-  Future<String> getSettings(WebApiVersion version, bool longPolling) {}
-
   @override
   Future<List<CameraImage>> capturePhoto() {
     // TODO: implement capturePhoto
@@ -355,10 +335,9 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> setFocusMode(FocusModeId value) {
-    // TODO: implement setFocusMode
-    throw UnimplementedError();
-  }
+  Future<bool> setFocusMode(FocusModeId value) =>
+      WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.FocusMode)
+          .send(device);
 
   @override
   Future<bool> setFocusModeToggle(FocusModeToggleId value) {
@@ -379,16 +358,14 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> setIso(int value) {
-    // TODO: implement setIso
-    throw UnimplementedError();
-  }
+  Future<bool> setIso(int value) =>
+      WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.ISO,
+          params: [value]).send(device);
 
   @override
-  Future<bool> setMeteringMode(MeteringModeId value) {
-    // TODO: implement setMeteringMode
-    throw UnimplementedError();
-  }
+  Future<bool> setMeteringMode(MeteringModeId value) =>
+      WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.MeteringMode,
+          params: [value.wifiValue]).send(device);
 
   @override
   Future<bool> setPictureEffect(PictureEffectId value) {
@@ -403,16 +380,14 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> setShutterSpeed(int value) {
-    // TODO: implement setShutterSpeed
-    throw UnimplementedError();
-  }
+  Future<bool> setShutterSpeed(int value) =>
+      WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.ShutterSpeed,
+          params: [value]).send(device);
 
   @override
-  Future<bool> setWhiteBalance(WhiteBalanceId value) {
-    // TODO: implement setWhiteBalance
-    throw UnimplementedError();
-  }
+  Future<bool> setWhiteBalance(WhiteBalanceId value) =>
+      WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.WhiteBalance,
+          params: [value.wifiValue]).send(device);
 
   @override
   Future<bool> setWhiteBalanceAb(WhiteBalanceAbId value) {
@@ -433,16 +408,14 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> startRecordingVideo() {
-    // TODO: implement startRecordingVideo
-    throw UnimplementedError();
-  }
+  Future<bool> startRecordingVideo() =>
+      WifiCommand.createCommand(SonyWebApiMethod.START, SettingsId.RecordVideo)
+          .send(device);
 
   @override
-  Future<bool> stopRecordingVideo() {
-    // TODO: implement stopRecordingVideo
-    throw UnimplementedError();
-  }
+  Future<bool> stopRecordingVideo() =>
+      WifiCommand.createCommand(SonyWebApiMethod.STOP, SettingsId.RecordVideo)
+          .send(device);
 
   /// This API provides a function to start audio recording.
   ///

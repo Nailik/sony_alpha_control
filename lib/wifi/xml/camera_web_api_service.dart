@@ -1,12 +1,18 @@
-class CameraWebAPiService {
+import 'package:sonyalphacontrol/wifi/enums/web_api_version.dart';
+
+class CameraWebApiService {
   String type;
   String url;
   String accessType;
+  List<WebApiVersion> supportedVersions;
 
-  CameraWebAPiService(this.type, this.url, this.accessType);
+  get maxVersion =>
+      supportedVersions.reduce((x, y) => x.index > y.index ? x : y);
 
-  factory CameraWebAPiService.fromJson(Map<String, dynamic> json) =>
-      CameraWebAPiService(
+  CameraWebApiService(this.type, this.url, this.accessType);
+
+  factory CameraWebApiService.fromJson(Map<String, dynamic> json) =>
+      CameraWebApiService(
         json['av:X_ScalarWebAPI_ServiceType'] as String,
         json['av:X_ScalarWebAPI_ActionList_URL'] as String,
         json['av:X_ScalarWebAPI_AccessType'] as String,

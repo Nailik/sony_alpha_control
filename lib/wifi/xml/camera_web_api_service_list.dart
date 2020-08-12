@@ -1,7 +1,7 @@
 import 'camera_web_api_service.dart';
 
 class CameraWebApiServiceList {
-  List<CameraWebAPiService> services;
+  List<CameraWebApiService> services;
 
   CameraWebApiServiceList(this.services);
 
@@ -10,7 +10,7 @@ class CameraWebApiServiceList {
         (json['av:X_ScalarWebAPI_Service'] as List)
             ?.map((e) => e == null
                 ? null
-                : CameraWebAPiService.fromJson(e as Map<String, dynamic>))
+                : CameraWebApiService.fromJson(e as Map<String, dynamic>))
             ?.toList(),
       );
 

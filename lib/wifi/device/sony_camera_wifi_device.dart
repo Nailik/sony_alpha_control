@@ -15,10 +15,9 @@ class SonyCameraWifiDevice extends SonyCameraDevice {
   @override
   InterfaceType get interfaceType => InterfaceType.Wifi_Interface;
 
-  CameraWebAPiService findCameraWebAPiService(SonyWebApiServiceType service) {
-    return info.scalarWebApiDeviceInfo.serviceList.services
-        .firstWhere((element) => element.type == service.wifiValue);
-  }
+  CameraWebApiService getWebApiService(SonyWebApiServiceType service) =>
+      info.scalarWebApiDeviceInfo.serviceList.services
+          .firstWhere((element) => element.type == service.wifiValue);
 }
 
 class WifiCameraInfo {

@@ -109,4 +109,64 @@ class SonyWifiApi extends SonyApiInterface {
     file = File('${directory.path}/${fileName}_response.json');
     await file.writeAsString(text.response);
   }
+
+  //special things
+  Future<SonyApiMethodSet> serverInformationApi(
+      WebApiVersion version, SonyWebApiServiceType serviceType) {
+    // WifiCommand(SonyWebApiMethod.GET, SettingsId.Connect, SonyWebApiServiceType.CAMERA, version, null);
+    /*
+
+        apiCallMulti = ApiCallMulti.create()
+                .add(CameraApi.serverInformationApi.getMethodTypes(
+                        WebApiVersion.V_1_0,
+                        SonyWebApiServiceType.CAMERA))
+                .add(CameraApi.eventNotificationApi.getEvent(WebApiVersion.V_1_0, false))
+
+                then    startCamera(connectionCallback, cameraDevice)
+                or startOpenConnectionAfterChangeCameraState
+     */
+  }
+
+  Future<SettingsItem<BoolValue>> getAvailableApiList() {
+    await WifiCommand.createCommand(
+        SonyWebApiMethod.GET, SettingsId.AvailableApiList)
+        .sendForResponse(sonyCameraDevice)
+        .then((value) => writeToText("AvailableApiList", value));
+    await Future<void>.delayed(Duration(seconds: 1));
+  }
+
+  Future<SettingsItem<BoolValue>> getApplicationInfo() {
+    // TODO: implement getAel
+    throw UnimplementedError();
+  }
+
+  Future<SettingsItem<BoolValue>> getWebApiVersions() {
+    await WifiCommand.createCommand(SonyWebApiMethod.GET, SettingsId.Versions)
+        .sendForResponse(sonyCameraDevice)
+        .then((value) => writeToText("Versions", value));
+    await Future<void>.delayed(Duration(seconds: 1));
+
+  }
+
+  Future<SettingsItem<BoolValue>> getMethodTypes() {
+    await WifiCommand.createCommand(
+        SonyWebApiMethod.GET, SettingsId.MethodTypes,
+        params: [WebApiVersion.V_1_4.wifiValue])
+        .sendForResponse(sonyCameraDevice)
+        .then((value) =>
+        writeToText("MethodTypes${WebApiVersion.V_1_4.wifiValue}", value));
+    await Future<void>.delayed(Duration(seconds: 1));
+  }
+
+
+  Future<SettingsItem<BoolValue>> getSupportedFunctions() {
+    await WifiCommand.createCommand(
+        SonyWebApiMethod.GET, SettingsId.MethodTypes,
+        params: [WebApiVersion.V_1_4.wifiValue])
+        .sendForResponse(sonyCameraDevice)
+        .then((value) =>
+        writeToText("MethodTypes${WebApiVersion.V_1_4.wifiValue}", value));
+    await Future<void>.delayed(Duration(seconds: 1));
+  }
+
 }
