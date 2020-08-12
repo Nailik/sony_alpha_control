@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:sonyalphacontrol/top_level_api/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
@@ -50,6 +51,8 @@ abstract class CameraApiInterface {
 
   List<CameraFunctionItemType> get availableFunctionItems =>
       _availableFunctionItems;
+
+  Stream<Image> streamLiveView(); //steps?
 
   startLiveView() {
     //TODO on usb running within update loop?
@@ -197,7 +200,7 @@ abstract class CameraApiInterface {
 
   Future<SettingsItem<DoubleValue>> getFocusMagnifier();
 
-  Future<bool> setFocusMagnifier(double value); //steps?
+  Future<bool> setFocusMagnifier(double value);
 
   ///when the camera is connected it's possible to read the "Available" items, this represents what the camera can do, not whats currently at the moment is supported
 /*

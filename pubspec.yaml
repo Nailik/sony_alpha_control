@@ -26,7 +26,7 @@ dependencies:
   flutter_usb:
     git:
       url: https://github.com/Nailik/flutter_usb.git
-      ref: 'd99726b'
+      ref: '809d753'
   wifi_iot:
     git: https://github.com/alternadom/WiFiFlutter.git
   xml2json:
@@ -34,6 +34,7 @@ dependencies:
   convert:
   http:
   provider:
+  video_player:
   path_provider: ^1.6.11
   cross_connectivity:
   flutter_isolate:

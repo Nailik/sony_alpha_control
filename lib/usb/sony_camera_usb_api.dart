@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
@@ -670,13 +672,22 @@ class SonyCameraUsbApi extends CameraApiInterface {
       {bool liveView = false}) async {
     var response = await UsbCommands.getImageCommand(liveView, true).send();
 
+    int offset = 32; //TODO maybe only wia offset?
+    if (Platform.isAndroid) {
+      offset = 14;
+    }
+
     var bytes = response.inData.toByteList().buffer.asByteData();
-    int numImages = bytes.getUint16(32, Endian.little); //not num but true/false
-    int imageInfoUnk = bytes.getUint32(34, Endian.little); //TODO type?
-    int imageSizeInBytes = bytes.getUint32(38, Endian.little);
+    int numImages =
+        bytes.getUint16(offset, Endian.little); //not num but true/false
+    offset += 2;
+    int imageInfoUnk = bytes.getUint32(offset, Endian.little); //TODO type?
+    offset += 4;
+    int imageSizeInBytes = bytes.getUint32(offset, Endian.little);
+    offset += 45;
     var name = String.fromCharCodes(response.inData
             .toByteList()
-            .sublist(83, 83 + (bytes.getUint8(82) * 2)))
+            .sublist(offset, offset + (bytes.getUint8(offset - 1) * 2)))
         .replaceAll(RegExp(r"\x00"), ""); //replace "NUL" characters
 
     return CameraImageRequest(
@@ -705,5 +716,18 @@ class SonyCameraUsbApi extends CameraApiInterface {
   Future<bool> setRecordingAudio(String audioRecordingSetting) {
     // TODO: implement setRecordingAudio
     throw UnimplementedError();
+  }
+
+  @override
+  Stream<Image> streamLiveView() async* {
+    while (true) {
+      var mills = DateTime.now().millisecondsSinceEpoch;
+      var imgData = (await getImage(device, liveView: true));
+      if (imgData != null) {
+        var img = Image.memory(imgData.data, key: Key("livviewimage"));
+        print("Frame Took ${DateTime.now().millisecondsSinceEpoch - mills}");
+        yield img;
+      }
+    }
   }
 }

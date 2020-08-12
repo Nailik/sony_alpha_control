@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:sonyalphacontrol/top_level_api/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
@@ -545,6 +546,12 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<RecordVideoStateValue> getRecordingVideoState({update = ForceUpdate.Off}) {
     // TODO: implement getRecordingVideoState
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<Image> streamLiveView() {
+    // TODO: implement streamLiveView
     throw UnimplementedError();
   }
     //  WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.AudioRecording,

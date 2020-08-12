@@ -76,41 +76,83 @@ Future<List<CameraImage>> fetchPhotos(Map<String, dynamic> deviceJson) async {
 
 Future<CameraImage> getImage(SonyCameraDevice device,
     {bool liveView = false, String filePath}) async {
-  var request = await device.api.requestPhotoAvailable();
+/*
+  print("requestPhotoAvailable");
+  var request = await device.api.requestPhotoAvailable(liveView: liveView);
   print(request);
 
   var millis = new DateTime.now().millisecondsSinceEpoch;
 
   print("staGetImage $millis");
+//307200
+*/
 
+  var mills = DateTime.now().millisecondsSinceEpoch;
   Response response = await UsbCommands.getImageCommand(liveView, false,
-          imageSizeInBytes: request.size)
+          imageSizeInBytes: 307200)
       .send();
 
-  print("endGetImage ${new DateTime.now().millisecondsSinceEpoch - millis}");
+  print("Frame Response ${DateTime.now().millisecondsSinceEpoch - mills}");
   // TODO if (!response.isValidResponse()) {
   //     print("getImageCommand2 Invalid");
   //   return null;
   //  }
 
-  var buffer = response.inData.toByteList().buffer;
+  var bytelist = response.inData.toByteList();
+  var buffer = bytelist.buffer;
   var bytes = buffer.asByteData();
 
+  //128 57 00 00 //16
+
+  //{01 20 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  // 00 00 00 00 00 00 00 00 00 00 01 00 01 38 00 00 00 B0 04 00 00 00
+  // 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  // 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 0D 44 00 53 00 43
+  // 00 30 00 39 00 39 00 39 00 39 00 2E 00 4A 00 50 00 47 00 00 00 00
+  // 00 00}
+  int offset = 30; //TODO maybe only wia offset?
+  if (Platform.isAndroid) {
+    offset = 12;
+  }
+
   if (liveView) {
-    int unkBufferSize = bytes.getUint32(30, Endian.little);
-    int liveViewBufferSize = bytes.getUint32(34, Endian.little);
-    var unkBuff = ByteData.view(buffer, 38, unkBufferSize - 8);
-    var start = 38 + unkBufferSize - 8;
-    return CameraImage(
-        request.name, response.inData.toByteList().sublist(start));
+    try {
+      print("Frame liveView ${DateTime.now().millisecondsSinceEpoch - mills}");
+      if (bytes.lengthInBytes < offset+4) {
+        print("Frame empty");
+        return null;
+      }
+      int unkBufferSize = bytes.getUint32(offset, Endian.little);
+      offset += 4;
+      if (unkBufferSize == 0) {
+        print("Frame empty");
+        return null;
+      }
+      print(
+          "Frame unkBufferSize ${DateTime.now().millisecondsSinceEpoch - mills}  size: ${bytes.lengthInBytes} offset: $offset unkBufferSize. $unkBufferSize ");
+      int liveViewBufferSize = bytes.getUint32(offset, Endian.little);
+      offset += 4;
+      print(
+          "Frame liveViewBufferSize ${DateTime.now().millisecondsSinceEpoch - mills}  size: ${bytes.lengthInBytes} offset: $offset unkBufferSize. $unkBufferSize ");
+
+      var unkBuff = ByteData.view(buffer, offset, unkBufferSize - 8);
+      print("Frame unkBuff ${DateTime.now().millisecondsSinceEpoch - mills}");
+      var start = offset + unkBufferSize - 8;
+      print(
+          "Frame start $start ${DateTime.now().millisecondsSinceEpoch - mills} end: ${bytelist.sublist(bytelist.length-20)} ind of 0xFF ${bytelist.lastIndexOf(0xFF)} 0xD9  ${bytelist.lastIndexOf(0xD9)}");
+      return CameraImage("", bytelist.sublist(start));
+    } on Exception catch (e) {
+      print("Frame error $e");
+      return null;
+    }
   } else {
-    Uint8List data = response.inData.toByteList().sublist(30);
+    Uint8List data = bytelist.sublist(offset);
     var file;
     if (filePath != null) {
-      file =
-          new File("${TestsPageState.path.value.toString()}\\${request.name}");
+      file = new File(
+          "${TestsPageState.path.value.toString()}\\${"request.name"}");
       file.writeAsBytes(data);
     }
-    return CameraImage(request.name, data, file: file);
+    return CameraImage("request.name", data, file: file);
   }
 }

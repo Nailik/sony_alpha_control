@@ -8,6 +8,7 @@ import 'package:sonyalphacontrol/top_level_api/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_api.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/sony_camera_device.dart';
+import 'package:video_player/video_player.dart';
 
 class TestsPage extends StatefulWidget {
   final SonyCameraDevice device;
@@ -39,8 +40,6 @@ class TestsPageState extends State<TestsPage> {
                 child: Consumer<CameraSettings>(
                   builder: (context, model, _) => ListView(
                     children: <Widget>[
-                      getSettingsRow(SettingsId.UnkD2C7),
-                      getSettingsRow(SettingsId.UnkD2C5),
                       //states
                       getStateRow(SettingsId.ShootingMode),
                       getStateRow(SettingsId.AutoFocusState),
@@ -54,6 +53,7 @@ class TestsPageState extends State<TestsPage> {
                       //functions
                       getVideoRow(),
                       getImageRow(),
+                      getLiveViewRow(),
                       //settings
                       getImageSizeRow(),
                       getWhiteBalanceRow(),
@@ -71,7 +71,9 @@ class TestsPageState extends State<TestsPage> {
                       getIsoRow(),
                       getFelRow(),
                       getFocusAreaRow(),
-                      getFocusModeRow()
+                      getFocusModeRow(),
+                      getSettingsRow(SettingsId.UnkD2C7),
+                      getSettingsRow(SettingsId.UnkD2C5),
                     ],
                   ),
                 )),
@@ -577,5 +579,47 @@ class TestsPageState extends State<TestsPage> {
         ])),
       ],
     ));
+  }
+
+  Widget getLiveViewRow() {
+    return Card(
+      child: ListTile(
+        title: Text(SettingsId.LiveView.name),
+        subtitle: Text(device.cameraSettings
+                .getItem(SettingsId.LiveViewState)
+                ?.value
+                ?.name ??
+            "NotAvailable"),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => LiveViewPage(device)),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class LiveViewPage extends StatelessWidget {
+  final SonyCameraDevice device;
+
+  LiveViewPage(this.device);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("LiveView")),
+      body: StreamBuilder<Image>(
+        stream: device.api.streamLiveView(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return snapshot.data;
+          } else {
+            return Container();
+          }
+        },
+      ),
+    );
   }
 }
