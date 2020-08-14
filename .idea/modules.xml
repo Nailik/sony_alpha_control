@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/sonyalphacontrol.iml" filepath="$PROJECT_DIR$/sonyalphacontrol.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/sonyalphacontrol_android.iml" filepath="$PROJECT_DIR$/android/sonyalphacontrol_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/sony_alpha_control.iml" filepath="$PROJECT_DIR$/.idea/sony_alpha_control.iml" />
     </modules>
   </component>
 </project>

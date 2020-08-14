@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sonyalphacontrol/top_level_api/api/sony_api.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_method.dart';
@@ -29,9 +32,9 @@ class WifiCommand {
   WifiCommand(this.id, this.method, this.version, this.params, {this.service});
 
   static WifiCommand createCommand(SonyWebApiMethod method, SettingsId apiGroup,
-          {SonyWebApiServiceType service = SonyWebApiServiceType.CAMERA,
-          WebApiVersion version = WebApiVersion.V_1_0, //TOp supported version?
-          List<dynamic> params = const []}) =>
+      {SonyWebApiServiceType service = SonyWebApiServiceType.CAMERA,
+        WebApiVersion version = WebApiVersion.V_1_0, //TOp supported version?
+        List<dynamic> params = const []}) =>
       WifiCommand(
           0, method.wifiValue + apiGroup.wifiValue.startCap, version, params,
           service: service);
@@ -40,8 +43,9 @@ class WifiCommand {
   Future<dynamic> sendR(SonyCameraWifiDevice device, {timeout: 80000}) async {
     //url
     //request json
-    var url =
-        "${device.getWebApiService(service).url}/${service.wifiValue}";
+    var url = "${device
+        .getWebApiService(service)
+        .url}/${service.wifiValue}";
     id = WifiCommands.id; //update id right before creating json and sending
     var json = jsonEncode(this);
     try {
@@ -58,8 +62,9 @@ class WifiCommand {
   Future<bool> send(SonyCameraWifiDevice device, {timeout: 80000}) async {
     //url
     //request json
-    var url =
-        "${device.getWebApiService(service).url}/${service.wifiValue}";
+    var url = "${device
+        .getWebApiService(service)
+        .url}/${service.wifiValue}";
     id = WifiCommands.id; //update id right before creating json and sending
     var json = jsonEncode(this);
     try {
@@ -78,8 +83,9 @@ class WifiCommand {
       {timeout: 80000}) async {
     //url
     //request json
-    var url =
-        "${device.getWebApiService(service).url}/${service.wifiValue}";
+    var url = "${device
+        .getWebApiService(service)
+        .url}/${service.wifiValue}";
     id = WifiCommands.id; //update id right before creating json and sending
     var json = jsonEncode(this);
     try {
@@ -87,6 +93,12 @@ class WifiCommand {
           .post(url, body: json)
           .timeout(Duration(milliseconds: timeout));
       print("request response");
+
+      if (SonyApi.analyze) {
+        //save this
+
+      }
+
       return WifiResponse(json, response.body);
     } on ClientException catch (error) {
       print("ClientException request");
@@ -94,14 +106,29 @@ class WifiCommand {
     }
   }
 
-  factory WifiCommand.fromJson(Map<String, dynamic> json) => WifiCommand(
+  logRequestAndResponse(WifiResponse wifiResponse, String text) async {
+    var dir = Directory(
+        "${(await getApplicationDocumentsDirectory()).path}/wifiLog");
+    var file = File('${dir.path}/${method}_${version}_${params}_.json');
+    file.create(recursive: true);
+    var text = "$method $version $params \n\n "
+        "***************************REQUEST***************************\n\n ${wifiResponse
+        .request}  \n\n "
+        "---------------------------RESPONSE--------------------------\n\n  ${wifiResponse
+        .response}  \n\n ";
+    await file.writeAsString(text);
+  }
+
+  factory WifiCommand.fromJson(Map<String, dynamic> json) =>
+      WifiCommand(
         json['id'] as int,
         json['method'] as String,
         WebApiVersionExtension.fromWifiValue(json['version'] as String),
         json['params'] as List,
       );
 
-  Map<String, dynamic> toJson() => <String, dynamic>{
+  Map<String, dynamic> toJson() =>
+      <String, dynamic>{
         'id': this.id,
         'method': this.method,
         'version': this.version.wifiValue,

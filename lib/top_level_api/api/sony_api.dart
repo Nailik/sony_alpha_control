@@ -8,6 +8,9 @@ import 'package:sonyalphacontrol/wifi/api/sony_wifi_api.dart';
 //TODO
 //connect, init, get devices
 class SonyApi {
+  //this will log the responses of every request
+  static var analyze = false;
+
   static SonyCameraDevice _connectedCamera;
 
   static SonyCameraDevice get connectedCamera => _connectedCamera;
