@@ -6,11 +6,10 @@ import 'package:sonyalphacontrol/wifi/xml/wifi_camera_xml.dart';
 
 import 'camera_wifi_settings.dart';
 
-class SonyCameraWifiDevice extends SonyCameraDevice {
+class SonyCameraWifiDevice extends SonyCameraDevice<> {
   WifiCameraXML info;
 
-  SonyCameraWifiDevice(String name, this.info)
-      : super(name, new CameraWifiSettings());
+  SonyCameraWifiDevice(String name, this.info) : super(name);
 
   @override
   InterfaceType get interfaceType => InterfaceType.Wifi_Interface;
@@ -18,6 +17,9 @@ class SonyCameraWifiDevice extends SonyCameraDevice {
   CameraWebApiService getWebApiService(SonyWebApiServiceType service) =>
       info.scalarWebApiDeviceInfo.serviceList.services
           .firstWhere((element) => element.type == service.wifiValue);
+
+  @override
+  CameraWifiSettings createSettings() => CameraWifiSettings(this);
 }
 
 class WifiCameraInfo {

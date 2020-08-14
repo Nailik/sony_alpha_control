@@ -4,7 +4,7 @@ import 'package:sonyalphacontrol/wifi/api/sony_camera_wifi_api.dart';
 
 import 'camera_settings.dart';
 
-abstract class SonyCameraDevice {
+abstract class SonyCameraDevice<T extends CameraSettings> {
   final String name;
 
   SonyCameraWifiApi _wifiApi;
@@ -14,11 +14,15 @@ abstract class SonyCameraDevice {
 
   get usbApi => _usbApi;
 
-  SonyCameraDevice(this.name, this.cameraSettings);
+  SonyCameraDevice(this.name){
+    this.cameraSettings = createSettings();
+  }
+
+  T createSettings();
 
   InterfaceType get interfaceType;
 
-  final CameraSettings cameraSettings;
+  T cameraSettings;
 
   CameraApiInterface get api {
     switch (interfaceType) {
