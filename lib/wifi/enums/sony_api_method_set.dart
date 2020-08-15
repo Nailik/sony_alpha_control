@@ -7,10 +7,17 @@ class SonyApiMethodSet {
 
   SonyApiMethodSet(this.webApiMethods);
 
-  factory SonyApiMethodSet.fromJson(Map<String, dynamic> json) =>
-      _$SonyApiMethodSetFromJson(json);
+  factory SonyApiMethodSet.fromJson(Map<String, dynamic> json) =>  SonyApiMethodSet(
+    (json['webApiMethods'] as List)
+        ?.map((e) =>
+    e == null ? null : WebApiMethod.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+  );
 
-  Map<String, dynamic> toJson() => _$SonyApiMethodSetToJson(this);
+  Map<String, dynamic> toJson()  =>
+      <String, dynamic>{
+        'webApiMethods': webApiMethods,
+      };
 }
 
 @SonyWebApiMethodConverter()
@@ -29,7 +36,17 @@ class WebApiMethod {
       "apiName: $apiName version: $version \n parameterTypes: \n $parameterTypes \n responseTypes: \n $responseTypes";
 
   factory WebApiMethod.fromJson(Map<String, dynamic> json) =>
-      _$WebApiMethodFromJson(json);
+      WebApiMethod(
+        const SonyWebApiMethodConverter().fromJson(json['apiName'] as String),
+        (json['parameterTypes'] as List)?.map((e) => e as String)?.toList(),
+        (json['responseTypes'] as List)?.map((e) => e as String)?.toList(),
+        json['version'] as String,
+      );
 
-  Map<String, dynamic> toJson() => _$WebApiMethodToJson(this);
+  Map<String, dynamic> toJson() =>  <String, dynamic>{
+    'apiName': const SonyWebApiMethodConverter().toJson(apiName),
+    'parameterTypes': parameterTypes,
+    'responseTypes': responseTypes,
+    'version': version,
+  };
 }
