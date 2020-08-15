@@ -337,7 +337,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> setFocusMode(FocusModeId value) =>
       WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.FocusMode)
-          .send(device);
+          .send(device).then((value) => value.response == "true");
 
   @override
   Future<bool> setFocusModeToggle(FocusModeToggleId value) {
@@ -360,12 +360,12 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> setIso(int value) =>
       WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.ISO,
-          params: [value]).send(device);
+          params: [value]).send(device).then((value) => value.response == "true");
 
   @override
   Future<bool> setMeteringMode(MeteringModeId value) =>
       WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.MeteringMode,
-          params: [value.wifiValue]).send(device);
+          params: [value.wifiValue]).send(device).then((value) => value.response == "true");
 
   @override
   Future<bool> setPictureEffect(PictureEffectId value) {
@@ -382,12 +382,12 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> setShutterSpeed(int value) =>
       WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.ShutterSpeed,
-          params: [value]).send(device);
+          params: [value]).send(device).then((value) => value.response == "true");
 
   @override
   Future<bool> setWhiteBalance(WhiteBalanceId value) =>
       WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.WhiteBalance,
-          params: [value.wifiValue]).send(device);
+          params: [value.wifiValue]).send(device).then((value) => value.response == "true");
 
   @override
   Future<bool> setWhiteBalanceAb(WhiteBalanceAbId value) {
@@ -410,12 +410,12 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> startRecordingVideo() =>
       WifiCommand.createCommand(SonyWebApiMethod.START, SettingsId.RecordVideo)
-          .send(device);
+          .send(device).then((value) => value.response == "true");
 
   @override
   Future<bool> stopRecordingVideo() =>
       WifiCommand.createCommand(SonyWebApiMethod.STOP, SettingsId.RecordVideo)
-          .send(device);
+          .send(device).then((value) => value.response == "true");
 
   /// This API provides a function to start audio recording.
   ///
@@ -473,7 +473,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> startRecordingAudio() => WifiCommand.createCommand(
           SonyWebApiMethod.START, SettingsId.AudioRecording)
-      .send(device);
+      .send(device).then((value) => value.response == "true");
 
   /// This API provides a function to stop audio recording.
   ///
@@ -489,7 +489,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> stopRecordingAudio() => WifiCommand.createCommand(
           SonyWebApiMethod.STOP, SettingsId.AudioRecording)
-      .send(device);
+      .send(device).then((value) => value.response == "true");
 
   /// This API provides a function to set a value of audio recording setting.
   ///
@@ -506,7 +506,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> setRecordingAudio(String audioRecordingSetting) =>
       WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.AudioRecording,
-          params: [audioRecordingSetting]).send(device);
+          params: [audioRecordingSetting]).send(device).then((value) => value.response == "true");
 
   @override
   Future<SettingsItem<StringValue>> getRecordingAudio() {

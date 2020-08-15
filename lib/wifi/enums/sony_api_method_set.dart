@@ -1,8 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_method.dart';
 
-part 'sony_api_method_set.g.dart';
-
 @JsonSerializable()
 class SonyApiMethodSet {
   List<WebApiMethod> webApiMethods;

@@ -39,47 +39,7 @@ class WifiCommand {
           0, method.wifiValue + apiGroup.wifiValue.startCap, version, params,
           service: service);
 
-  //send for result
-  Future<dynamic> sendR(SonyCameraWifiDevice device, {timeout: 80000}) async {
-    //url
-    //request json
-    var url = "${device
-        .getWebApiService(service)
-        .url}/${service.wifiValue}";
-    id = WifiCommands.id; //update id right before creating json and sending
-    var json = jsonEncode(this);
-    try {
-      return await http
-          .post(url, body: json)
-          .timeout(Duration(milliseconds: timeout));
-    } on ClientException catch (error) {
-      print("ClientException request $error");
-      return null;
-    }
-  }
-
-  //{"id":7,"method":"getVersions","params":[],"version":"1.0"}
-  Future<bool> send(SonyCameraWifiDevice device, {timeout: 80000}) async {
-    //url
-    //request json
-    var url = "${device
-        .getWebApiService(service)
-        .url}/${service.wifiValue}";
-    id = WifiCommands.id; //update id right before creating json and sending
-    var json = jsonEncode(this);
-    try {
-      final response = await http
-          .post(url, body: json)
-          .timeout(Duration(milliseconds: timeout));
-      print("request response");
-      return true;
-    } on ClientException catch (error) {
-      print("ClientException request");
-      return false;
-    }
-  }
-
-  Future<WifiResponse> sendForResponse(SonyCameraWifiDevice device,
+  Future<WifiResponse> send(SonyCameraWifiDevice device,
       {timeout: 80000}) async {
     //url
     //request json
@@ -94,21 +54,23 @@ class WifiCommand {
           .timeout(Duration(milliseconds: timeout));
       print("request response");
 
+      var wifiResponse = WifiResponse(json, response.body);
       if (SonyApi.analyze) {
         //save this
-
+        logRequestAndResponse(wifiResponse);
       }
 
-      return WifiResponse(json, response.body);
+      return wifiResponse;
     } on ClientException catch (error) {
       print("ClientException request");
       return WifiResponse("", "");
     }
   }
 
-  logRequestAndResponse(WifiResponse wifiResponse, String text) async {
+  logRequestAndResponse(WifiResponse wifiResponse) async {
     var dir = Directory(
-        "${(await getApplicationDocumentsDirectory()).path}/wifiLog");
+        "${(await getApplicationSupportDirectory()).path}/wifiLog");
+    dir.create(recursive: true);
     var file = File('${dir.path}/${method}_${version}_${params}_.json');
     file.create(recursive: true);
     var text = "$method $version $params \n\n "

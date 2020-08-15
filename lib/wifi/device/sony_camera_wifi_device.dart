@@ -6,7 +6,7 @@ import 'package:sonyalphacontrol/wifi/xml/wifi_camera_xml.dart';
 
 import 'camera_wifi_settings.dart';
 
-class SonyCameraWifiDevice extends SonyCameraDevice<> {
+class SonyCameraWifiDevice extends SonyCameraDevice<CameraWifiSettings> {
   WifiCameraXML info;
 
   SonyCameraWifiDevice(String name, this.info) : super(name);

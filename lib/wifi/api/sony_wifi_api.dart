@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:path_provider/path_provider.dart';
 import 'package:sonyalphacontrol/top_level_api/api/sony_api.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
@@ -59,18 +57,21 @@ class SonyWifiApi extends SonyApiInterface {
 
   Future<List<WebApiVersion>> getWebApiVersions(
       SonyCameraWifiDevice device) async {
-    var json = await WifiCommand.createCommand(
-            SonyWebApiMethod.GET, SettingsId.Versions)
-        .sendForResponse(device);
-    //TODO
-    print(json);
+    var list = List<WebApiVersion>();
+    await WifiCommand.createCommand(SonyWebApiMethod.GET, SettingsId.Versions)
+        .send(device)
+        .then((value) => (jsonDecode(value.response)["result"][0] as List)
+                .forEach((element) {
+              list.add(WebApiVersionExtension.fromWifiValue(element));
+            }));
+    return list;
   }
 
   Future<String> getMethodTypes(
       WebApiVersion webApiVersion, SonyCameraWifiDevice device) async {
     var json = await WifiCommand.createCommand(
         SonyWebApiMethod.GET, SettingsId.MethodTypes,
-        params: [webApiVersion.wifiValue]).sendForResponse(device);
+        params: [webApiVersion.wifiValue]).send(device);
     //TODO
     print(json);
   }
@@ -79,9 +80,9 @@ class SonyWifiApi extends SonyApiInterface {
       SonyCameraWifiDevice device) async {
     var json = await WifiCommand.createCommand(
             SonyWebApiMethod.GET, SettingsId.AvailableApiList)
-        .sendForResponse(device);
+        .send(device);
     //decode
-    var list = jsonDecode(json.response)["result"]["names"];
+    print(json);
     //TODO
   }
 
@@ -89,7 +90,7 @@ class SonyWifiApi extends SonyApiInterface {
       SonyCameraWifiDevice device) async {
     var json = await WifiCommand.createCommand(
         SonyWebApiMethod.GET, SettingsId.AvailableSettings,
-        params: [longPolling]).sendForResponse(device, timeout: 80000);
+        params: [longPolling]).send(device, timeout: 80000);
     //TODO
     print(json);
   }
@@ -98,7 +99,7 @@ class SonyWifiApi extends SonyApiInterface {
       WebApiVersion version, SonyCameraWifiDevice device) async {
     var json = await WifiCommand.createCommand(
             SonyWebApiMethod.GET_SUPPORTED, SettingsId.CameraFunction)
-        .sendForResponse(device);
+        .send(device);
     //TODO
     print(json);
   }
@@ -107,7 +108,7 @@ class SonyWifiApi extends SonyApiInterface {
       WebApiVersion version, SonyCameraWifiDevice device) async {
     var json = await WifiCommand.createCommand(
             SonyWebApiMethod.GET_AVAILABLE, SettingsId.CameraFunction)
-        .sendForResponse(device);
+        .send(device);
     //TODO
     print(json);
   }
@@ -115,7 +116,7 @@ class SonyWifiApi extends SonyApiInterface {
   Future<List<String>> startConnection(SonyCameraWifiDevice device) async {
     var json = await WifiCommand.createCommand(
             SonyWebApiMethod.START, SettingsId.CameraSetup)
-        .sendForResponse(device);
+        .send(device);
     //TODO
     print(json);
   }

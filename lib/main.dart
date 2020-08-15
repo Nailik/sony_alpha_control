@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initPlatformState() async {
-    await SonyApi.initialize(usb: true, wifi: false);
+    await SonyApi.initialize(usb: false, wifi: true);
 
     setState(() {
       _initialized = true;
