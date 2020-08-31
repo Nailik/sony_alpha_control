@@ -1,6 +1,10 @@
+import 'dart:core';
+
 import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
+import 'package:sonyalphacontrol/wifi/enums/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_service_type.dart';
+import 'package:sonyalphacontrol/wifi/enums/web_api_version.dart';
 import 'package:sonyalphacontrol/wifi/xml/camera_web_api_service.dart';
 import 'package:sonyalphacontrol/wifi/xml/wifi_camera_xml.dart';
 
@@ -30,4 +34,11 @@ class WifiCameraInfo {
   String st;
 
   WifiCameraInfo(this.usn, this.uuid, this.location, this.server, this.st);
+}
+
+class WifiCameraFunctionality {
+  final List<WebApiVersion> webApiVersions;
+  final List<WebApiMethod> webApiMethods;
+
+  WifiCameraFunctionality(this.webApiVersions, this.webApiMethods);
 }

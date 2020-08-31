@@ -8,6 +8,8 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="sonyalphacontrol"
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -43,5 +45,8 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <meta-data android:name="io.flutter.network-policy"
+            android:resource="@xml/network_security_config"/>
     </application>
 </manifest>

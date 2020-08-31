@@ -65,3 +65,15 @@ extension WebApiVersionExtension on WebApiVersion {
     }
   }
 }
+
+class WebApiVersionConverter
+    implements JsonConverter<WebApiVersion, String> {
+  const WebApiVersionConverter();
+
+  @override
+  WebApiVersion fromJson(String json) =>
+      WebApiVersionExtension.fromWifiValue(json);
+
+  @override
+  String toJson(WebApiVersion value) => value.wifiValue;
+}

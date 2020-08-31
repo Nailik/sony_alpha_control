@@ -6,6 +6,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/wifi/commands/wifi_command.dart';
 import 'package:sonyalphacontrol/wifi/commands/wifi_connector.dart';
 import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
+import 'package:sonyalphacontrol/wifi/enums/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_method.dart';
 import 'package:sonyalphacontrol/wifi/enums/web_api_version.dart';
 
@@ -33,10 +34,10 @@ class SonyWifiApi extends SonyApiInterface {
 
   @override
   Future<bool> connectCamera(SonyCameraDevice device) async {
-    getWebApiVersions(device);
+    var versions = await getWebApiVersions(device);
     await Future<void>.delayed(Duration(seconds: 1));
 
-    getMethodTypes(WebApiVersion.V_1_4, device);
+    var methods = await getMethodTypes(WebApiVersion.V_1_4, device);
     await Future<void>.delayed(Duration(seconds: 1));
 
     getSettings(WebApiVersion.V_1_4, true, device);
@@ -52,6 +53,8 @@ class SonyWifiApi extends SonyApiInterface {
     await Future<void>.delayed(Duration(seconds: 1));
 
     startConnection(device);
+
+    WifiCameraFunctionality(versions, methods);
     return true;
   }
 
@@ -67,13 +70,19 @@ class SonyWifiApi extends SonyApiInterface {
     return list;
   }
 
-  Future<String> getMethodTypes(
+  Future<List<WebApiMethod>> getMethodTypes(
       WebApiVersion webApiVersion, SonyCameraWifiDevice device) async {
-    var json = await WifiCommand.createCommand(
+
+    var list = List<WebApiMethod>();
+    await WifiCommand.createCommand(
         SonyWebApiMethod.GET, SettingsId.MethodTypes,
-        params: [webApiVersion.wifiValue]).send(device);
+        params: [webApiVersion.wifiValue])
+        .send(device)
+    .then((value) => (jsonDecode(value.response)["results"] as List).forEach((element){
+      list.add(WebApiMethod.fromJson(element as List));
+    }));
     //TODO
-    print(json);
+    return list;
   }
 
   Future<List<MapEntry<String, SettingsId>>> getAvailableApiList(
