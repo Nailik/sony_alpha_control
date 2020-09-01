@@ -28,10 +28,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 import 'package:sonyalphacontrol/wifi/commands/wifi_command.dart';
 import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
 import 'package:sonyalphacontrol/wifi/enums/force_update.dart';
-import 'package:sonyalphacontrol/wifi/enums/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_method.dart';
-import 'package:sonyalphacontrol/wifi/enums/sony_web_api_service_type.dart';
-import 'package:sonyalphacontrol/wifi/enums/web_api_version.dart';
 
 class SonyCameraWifiApi extends CameraApiInterface {
   SonyCameraWifiDevice get device => cameraDevice;

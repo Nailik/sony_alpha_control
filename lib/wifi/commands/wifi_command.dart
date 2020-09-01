@@ -104,7 +104,3 @@ class WifiResponse {
 
   WifiResponse(this.request, this.response);
 }
-
-extension StringExtension on String {
-  String get startCap => "${this[0].toUpperCase()}${this.substring(1)}";
-}

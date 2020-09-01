@@ -1,10 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
 
 enum SonyWebApiMethod {
-  GET,
-  SET,
+  //important that the longer get is before "get" for some other logic
   GET_AVAILABLE,
   GET_SUPPORTED,
+  GET,
+  SET,
   ACT,
   AWAIT,
   START,

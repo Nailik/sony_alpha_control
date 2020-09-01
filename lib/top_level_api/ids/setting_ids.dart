@@ -1,4 +1,6 @@
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
+import 'package:sonyalphacontrol/wifi/enums/sony_web_api_method.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 enum SettingsId {
   /// <summary>
@@ -356,7 +358,7 @@ extension SettingsIdExtension on SettingsId {
       case SettingsId.ApplicationInfo:
         return "applicationInfo";
       case SettingsId.AvailableApiList:
-        return "apiList";
+        return "availableApiList";
       case SettingsId.AvailableSettings:
         return "event";
       case SettingsId.CapturePhoto:
@@ -563,7 +565,7 @@ extension SettingsIdExtension on SettingsId {
     }
   }
 
-  static SettingsId getSettingsIdWifi(String wifiValue) {
+  static SettingsId fromWifiValue(String wifiValue) {
     return SettingsId.values.firstWhere(
         (element) => element.wifiValue == wifiValue,
         orElse: () => SettingsId.Unknown);
@@ -591,4 +593,28 @@ class SettingsIdValue extends SettingsValue<SettingsId> {
 
   @override
   String get name => id.name;
+}
+
+class SettingsIdConverter
+    implements JsonConverter<MapEntry<SettingsId, SonyWebApiMethod>, String> {
+  const SettingsIdConverter();
+
+  @override
+  MapEntry<SettingsId, SonyWebApiMethod> fromJson(String json) {
+    SonyWebApiMethod method = SonyWebApiMethod.values
+        .firstWhere((element) => json.startsWith(element.wifiValue));
+    SettingsId settingsId = SettingsIdExtension.fromWifiValue(
+        json.replaceFirst(method.wifiValue, "").startLow);
+    return MapEntry(settingsId, method);
+  }
+
+  @override
+  String toJson(MapEntry<SettingsId, SonyWebApiMethod> method) =>
+      "${method.value.wifiValue.startCap}${method.key.wifiValue}";
+}
+
+extension StringExtension on String {
+  String get startCap => "${this[0].toUpperCase()}${this.substring(1)}";
+
+  String get startLow => "${this[0].toLowerCase()}${this.substring(1)}";
 }

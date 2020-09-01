@@ -12,6 +12,17 @@ class CameraWifiSettings extends CameraSettings {
 
   @override
   Future<bool> update() {
+    getSettings(WebApiVersion.V_1_4, true, sonyCameraWifiDevice); //current settings
     //camera settings?
+  }
+
+
+  Future<String> getSettings(WebApiVersion version, bool longPolling,
+      SonyCameraWifiDevice device) async {
+    var json = await WifiCommand.createCommand(
+        SonyWebApiMethod.GET, SettingsId.AvailableSettings,
+        params: [longPolling]).send(device, timeout: 80000);
+    //TODO
+    print(json);
   }
 }
