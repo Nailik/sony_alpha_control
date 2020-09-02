@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dart';
+import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_api_method_set.dart';
@@ -43,8 +44,7 @@ class WifiCameraFunctionality {
   final List<WebApiVersion> webApiVersions;
   final List<WebApiMethod> webApiMethods;
   final Map<SettingsId, List<SonyWebApiMethod>> availableApiList;
-  final List<SonyWebApiFunctionType> supportedFunctions;
-  final List<SonyWebApiFunctionType> availableFunctions;
+  final SettingsItem<SettingsValue<SonyWebApiFunctionType>> cameraWebFunctions;
 
-  WifiCameraFunctionality(this.webApiVersions, this.webApiMethods, this.availableApiList, this.supportedFunctions, this.availableFunctions);
+  WifiCameraFunctionality(this.webApiVersions, this.webApiMethods, this.availableApiList, this.cameraWebFunctions);
 }
