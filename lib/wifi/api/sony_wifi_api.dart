@@ -31,7 +31,7 @@ class SonyWifiApi extends SonyApiInterface {
   Future<List<SonyCameraDevice>> getAvailableCameras() async {
     var list = await WifiConnector.getCamera();
     if (list != null) {
-      return {list}.toList();
+      return [list];
     }
     return List<SonyCameraDevice>();
   }
@@ -90,7 +90,6 @@ class SonyWifiApi extends SonyApiInterface {
   }
 
   //currently available functions
-  //TODO SettingsId.AvailableApiList
   Future<  Map<SettingsId, List<SonyWebApiMethod>>> getAvailableApiList(
       SonyCameraWifiDevice device) async {
     var list = Map<SettingsId, List<SonyWebApiMethod>>();
@@ -149,12 +148,11 @@ class SonyWifiApi extends SonyApiInterface {
         list);
   }
 
-  Future<List<String>> startConnection(SonyCameraWifiDevice device) async {
-    var json = await WifiCommand.createCommand(
+  Future<bool> startConnection(SonyCameraWifiDevice device) async {
+    var webResponse = await WifiCommand.createCommand(
             SonyWebApiMethod.START, SettingsId.CameraSetup)
         .send(device);
     //[0] if success
-    //TODO
-    print(json);
+    return jsonDecode(webResponse.response)["0"] == 0;
   }
 }

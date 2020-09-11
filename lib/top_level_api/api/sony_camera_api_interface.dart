@@ -63,7 +63,7 @@ abstract class CameraApiInterface {
   Future<bool> setSettingsRaw(SettingsId id, int value);
 
   Future<List<CameraImage>> capturePhoto(); //TODO return foto?
-  Future<bool> getPhotoAvailable();
+  Future<bool> getPhotoAvailable({update = ForceUpdate.IfNull});
 
   Future<CameraImageRequest> requestPhotoAvailable({bool liveView = false});
 
@@ -76,7 +76,7 @@ abstract class CameraApiInterface {
   Future<bool> stopRecordingVideo();
 
   Future<RecordVideoStateValue> getRecordingVideoState(
-      {update = ForceUpdate.Off});
+      {update = ForceUpdate.IfNull});
 
   Future<bool> startRecordingAudio();
 
@@ -84,107 +84,107 @@ abstract class CameraApiInterface {
 
   Future<bool> setRecordingAudio(String audioRecordingSetting);
 
-  Future<SettingsItem<StringValue>> getRecordingAudio();
+  Future<SettingsItem<StringValue>> getRecordingAudio({update = ForceUpdate.IfNull});
 
-  Future<SettingsItem<IntValue>> getFNumber();
+  Future<SettingsItem<IntValue>> getFNumber({update = ForceUpdate.IfNull});
 
   Future<bool> setFNumber(int value);
 
   Future<SettingsItem<IntValue>> getIso(); //TODO is auto iso?
   Future<bool> setIso(int value); //TODO value or steps?
 
-  Future<SettingsItem<IntValue>> getShutterSpeed();
+  Future<SettingsItem<IntValue>> getShutterSpeed({update = ForceUpdate.IfNull});
 
   Future<bool> setShutterSpeed(int value);
 
-  Future<int> getBatteryPercentage(); //TODO multiple batteries
+  Future<int> getBatteryPercentage({update = ForceUpdate.IfNull}); //TODO multiple batteries
 
   //Auto Exposure Level (lock/unlock)
-  Future<SettingsItem<BoolValue>> getAel();
+  Future<SettingsItem<BoolValue>> getAel({update = ForceUpdate.IfNull});
 
   Future<bool> setAel(bool value);
 
   //Flash Exposure Level (lock/unlock)
-  Future<SettingsItem<BoolValue>> getFel();
+  Future<SettingsItem<BoolValue>> getFel({update = ForceUpdate.IfNull});
 
   Future<bool> setFel(bool value);
 
-  Future<SettingsItem<FocusAreaValue>> getFocusArea();
+  Future<SettingsItem<FocusAreaValue>> getFocusArea({update = ForceUpdate.IfNull});
 
   Future<bool> setFocusArea(FocusAreaId value);
 
-  Future<SettingsItem<PointValue>> getFocusAreaSpot();
+  Future<SettingsItem<PointValue>> getFocusAreaSpot({update = ForceUpdate.IfNull});
 
   Future<bool> setFocusAreaSpot(Point value);
 
-  Future<SettingsItem<AutoFocusStateValue>> getAutoFocusState();
+  Future<SettingsItem<AutoFocusStateValue>> getAutoFocusState({update = ForceUpdate.IfNull});
 
   Future<SettingsItem<DoubleValue>> getEV();
 
   Future<bool> setEV(int value);
 
-  Future<SettingsItem<FlashModeValue>> getFlashMode();
+  Future<SettingsItem<FlashModeValue>> getFlashMode({update = ForceUpdate.IfNull});
 
   Future<bool> setFlashMode(FlashModeId value);
 
-  Future<SettingsItem<IntValue>> getFlashValue();
+  Future<SettingsItem<IntValue>> getFlashValue({update = ForceUpdate.IfNull});
 
   Future<bool> setFlashValue(int value);
 
-  Future<SettingsItem<ImageFileFormatValue>> getImageFileFormat();
+  Future<SettingsItem<ImageFileFormatValue>> getImageFileFormat({update = ForceUpdate.IfNull});
 
   Future<bool> setImageFileFormat(ImageFileFormatId value);
 
-  Future<SettingsItem<PictureEffectValue>> getPictureEffect();
+  Future<SettingsItem<PictureEffectValue>> getPictureEffect({update = ForceUpdate.IfNull});
 
   Future<bool> setPictureEffect(PictureEffectId value);
 
-  Future<SettingsItem<DroHdrValue>> getDroHdr();
+  Future<SettingsItem<DroHdrValue>> getDroHdr({update = ForceUpdate.IfNull});
 
   Future<bool> setDroHdr(DroHdrId value);
 
-  Future<SettingsItem<ImageSizeValue>> getImageSize();
+  Future<SettingsItem<ImageSizeValue>> getImageSize({update = ForceUpdate.IfNull});
 
   Future<bool> setImageSize(ImageSizeId value);
 
-  Future<SettingsItem<AspectRatioValue>> getAspectRatio();
+  Future<SettingsItem<AspectRatioValue>> getAspectRatio({update = ForceUpdate.IfNull});
 
   Future<bool> setAspectRatio(AspectRatioId value);
 
-  Future<SettingsItem<FocusModeValue>> getFocusMode();
+  Future<SettingsItem<FocusModeValue>> getFocusMode({update = ForceUpdate.IfNull});
 
   Future<bool> setFocusMode(FocusModeId value);
 
-  Future<SettingsItem<FocusModeToggleValue>> getFocusModeToggle();
+  Future<SettingsItem<FocusModeToggleValue>> getFocusModeToggle({update = ForceUpdate.IfNull});
 
   Future<bool> setFocusModeToggle(FocusModeToggleId value);
 
 // TODO: If the steps value is larger than 7 then use a loop?
   Future<bool> setFocusDistance(int value);
 
-  Future<SettingsItem<ShootingModeValue>> getShootingMode();
+  Future<SettingsItem<ShootingModeValue>> getShootingMode({update = ForceUpdate.IfNull});
 
-  Future<SettingsItem<WhiteBalanceValue>> getWhiteBalance();
+  Future<SettingsItem<WhiteBalanceValue>> getWhiteBalance({update = ForceUpdate.IfNull});
 
   Future<bool> setWhiteBalance(WhiteBalanceId value);
 
-  Future<SettingsItem<IntValue>> getWhiteBalanceColorTemp();
+  Future<SettingsItem<IntValue>> getWhiteBalanceColorTemp({update = ForceUpdate.IfNull});
 
   Future<bool> setWhiteBalanceColorTemp(int value);
 
-  Future<SettingsItem<WhiteBalanceAbValue>> getWhiteBalanceAb();
+  Future<SettingsItem<WhiteBalanceAbValue>> getWhiteBalanceAb({update = ForceUpdate.IfNull});
 
   Future<bool> setWhiteBalanceAb(WhiteBalanceAbId value);
 
-  Future<SettingsItem<WhiteBalanceGmValue>> getWhiteBalanceGm();
+  Future<SettingsItem<WhiteBalanceGmValue>> getWhiteBalanceGm({update = ForceUpdate.IfNull});
 
   Future<bool> setWhiteBalanceGm(WhiteBalanceGmId value);
 
-  Future<SettingsItem<DriveModeValue>> getDriveMode();
+  Future<SettingsItem<DriveModeValue>> getDriveMode({update = ForceUpdate.IfNull});
 
   Future<bool> setDriveMode(DriveModeId value);
 
-  Future<SettingsItem<MeteringModeValue>> getMeteringMode();
+  Future<SettingsItem<MeteringModeValue>> getMeteringMode({update = ForceUpdate.IfNull});
 
   Future<bool> setMeteringMode(MeteringModeId value);
 
@@ -194,11 +194,11 @@ abstract class CameraApiInterface {
   Future<bool> setFocusMagnifierDirection(
       FocusMagnifierDirectionId value, int steps); //move with steps?
 
-  Future<SettingsItem<FocusMagnifierPhaseValue>> getFocusMagnifierPhase();
+  Future<SettingsItem<FocusMagnifierPhaseValue>> getFocusMagnifierPhase({update = ForceUpdate.IfNull});
 
   Future<bool> setFocusMagnifierPhase(FocusMagnifierPhaseId value);
 
-  Future<SettingsItem<DoubleValue>> getFocusMagnifier();
+  Future<SettingsItem<DoubleValue>> getFocusMagnifier({update = ForceUpdate.IfNull});
 
   Future<bool> setFocusMagnifier(double value);
 
