@@ -1,4 +1,6 @@
 import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dart';
+import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/usb/api/sony_camera_usb_api.dart';
 import 'package:sonyalphacontrol/wifi/api/sony_camera_wifi_api.dart';
 
@@ -14,7 +16,7 @@ abstract class SonyCameraDevice<T extends CameraSettings> {
 
   get usbApi => _usbApi;
 
-  SonyCameraDevice(this.name){
+  SonyCameraDevice(this.name) {
     this.cameraSettings = createSettings();
   }
 

@@ -248,117 +248,12 @@ class SonyCameraUsbApi extends CameraApiInterface {
   }
 
   @override
-  Future<SettingsItem<BoolValue>> getAel() async =>
-      device.cameraSettings.settings.firstWhere((element) =>
-          element.settingsId ==
-          SettingsId.AEL_State); //TODO differenc ael and ael state?
-
-  @override
-  Future<SettingsItem<AspectRatioValue>> getAspectRatio() async => device
-      .cameraSettings.settings
-      .firstWhere((element) => element.settingsId == SettingsId.AspectRatio);
-
-  @override
-  Future<SettingsItem<AutoFocusStateValue>> getAutoFocusState() async =>
-      device.cameraSettings.getItem(SettingsId.AutoFocusState);
-
-  @override
-  Future<int> getBatteryPercentage() async {
+  Future<int> getBatteryPercentage({update = ForceUpdate.Off}) async {
     return device.cameraSettings.settings
         .firstWhere((element) => element.settingsId == SettingsId.BatteryInfo)
         .value
         .usbValue;
   }
-
-  @override
-  Future<SettingsItem<DriveModeValue>> getDriveMode() async =>
-      device.cameraSettings.getItem(SettingsId.DriveMode);
-
-  @override
-  Future<SettingsItem<DroHdrValue>> getDroHdr() async =>
-      device.cameraSettings.getItem(SettingsId.DroHdr);
-
-  @override
-  Future<SettingsItem<DoubleValue>> getEV() async =>
-      device.cameraSettings.getItem(SettingsId.EV);
-
-  @override
-  Future<SettingsItem<IntValue>> getFNumber() async =>
-      device.cameraSettings.getItem(SettingsId.FNumber);
-
-  @override
-  Future<SettingsItem<BoolValue>> getFel() async =>
-      device.cameraSettings.getItem(SettingsId.FEL);
-
-  @override
-  Future<SettingsItem<FlashModeValue>> getFlashMode() async =>
-      device.cameraSettings.getItem(SettingsId.FlashMode);
-
-  @override
-  Future<SettingsItem<FocusAreaValue>> getFocusArea() async =>
-      device.cameraSettings.getItem(SettingsId.FocusArea);
-
-  @override
-  Future<SettingsItem<PointValue>> getFocusAreaSpot() async =>
-      device.cameraSettings.getItem(SettingsId.FocusAreaSpot);
-
-  @override
-  Future<SettingsItem<DoubleValue>> getFocusMagnifier() async =>
-      device.cameraSettings.getItem(SettingsId.FocusMagnifier);
-
-  @override //TODO SettingsId.FocusMagnifierDirection?
-  Future<SettingsItem<FocusMagnifierDirectionValue>>
-      getFocusMagnifierDirection() async =>
-          device.cameraSettings.getItem(SettingsId.FocusMagnifier);
-
-  @override
-  Future<SettingsItem<FocusMagnifierPhaseValue>>
-      getFocusMagnifierPhase() async =>
-          device.cameraSettings.getItem(SettingsId.FocusMagnifierPhase);
-
-  @override
-  Future<SettingsItem<FocusModeValue>> getFocusMode() async =>
-      device.cameraSettings.getItem(SettingsId.FocusMode);
-
-  @override
-  Future<SettingsItem<ImageFileFormatValue>> getImageFileFormat() async =>
-      device.cameraSettings.getItem(SettingsId.FileFormat);
-
-  @override
-  Future<SettingsItem<IntValue>> getIso() async =>
-      device.cameraSettings.getItem(SettingsId.ISO);
-
-  @override
-  Future<SettingsItem<MeteringModeValue>> getMeteringMode() async =>
-      device.cameraSettings.getItem(SettingsId.MeteringMode);
-
-  @override
-  Future<SettingsItem<PictureEffectValue>> getPictureEffect() async =>
-      device.cameraSettings.getItem(SettingsId.PictureEffect);
-
-  @override
-  Future<SettingsItem<ShootingModeValue>> getShootingMode() async =>
-      device.cameraSettings.getItem(SettingsId.ShootingMode);
-
-  @override
-  Future<SettingsItem<IntValue>> getShutterSpeed() async =>
-      device.cameraSettings.getItem(SettingsId.FocusMagnifier);
-
-  @override
-  Future<SettingsItem<WhiteBalanceValue>> getWhiteBalance() async =>
-      device.cameraSettings.getItem(SettingsId.WhiteBalance);
-
-  @override
-  Future<SettingsItem<WhiteBalanceAbValue>> getWhiteBalanceAb() async =>
-      device.cameraSettings.getItem(SettingsId.WhiteBalanceAB);
-
-  @override
-  Future<SettingsItem<IntValue>> getWhiteBalanceColorTemp() async =>
-      device.cameraSettings.getItem(SettingsId.WhiteBalanceColorTemp);
-
-  @override
-  Future<SettingsItem<WhiteBalanceGmValue>> getWhiteBalanceGm() async =>
-      device.cameraSettings.getItem(SettingsId.WhiteBalanceGM);
 
   @override
   Future<bool> setAel(bool value) async {
@@ -634,7 +529,8 @@ class SonyCameraUsbApi extends CameraApiInterface {
           .value as RecordVideoStateValue;
 
   @override
-  Future<SettingsItem<ImageSizeValue>> getImageSize() async =>
+  Future<SettingsItem<ImageSizeValue>> getImageSize(
+          {update = ForceUpdate.Off}) async =>
       device.cameraSettings.getItem(SettingsId.ImageSize);
 
   @override
@@ -644,21 +540,13 @@ class SonyCameraUsbApi extends CameraApiInterface {
               .send())
           .isValidResponse();
 
-  @override
-  Future<SettingsItem<IntValue>> getFlashValue() async =>
-      device.cameraSettings.getItem(SettingsId.FlashValue);
-
-  @override
-  Future<SettingsItem<FocusModeToggleValue>> getFocusModeToggle() async =>
-      device.cameraSettings.getItem(SettingsId.FocusModeToggleResponse);
-
 /*
     int numPhotos = item.value.usbValue & 0xFF;
     bool photoAvailableForTransfer =
         ((item.value.usbValue >> 8) & 0xFF) == 0x80;
    */
   @override
-  Future<bool> getPhotoAvailable() async =>
+  Future<bool> getPhotoAvailable({update = ForceUpdate.Off}) async =>
       ((device.cameraSettings
                   .getItem(SettingsId.PhotoTransferQueue)
                   .value
@@ -707,7 +595,8 @@ class SonyCameraUsbApi extends CameraApiInterface {
   }
 
   @override
-  Future<SettingsItem<StringValue>> getRecordingAudio() {
+  Future<SettingsItem<StringValue>> getRecordingAudio(
+      {update = ForceUpdate.Off}) {
     // TODO: implement getRecordingAudio
     throw UnimplementedError();
   }
