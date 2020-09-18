@@ -20,6 +20,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
+import 'file:///C:/Users/kilia/CloudStation/Dokumente/Projects/sony_alpha_control/lib/top_level_api/ids/camera_function_id.dart';
 
 class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
   SettingsId settingsId;
@@ -52,46 +53,47 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.StorageInformation:
         return StringValue(value);
       case SettingsId.CameraFunction:
-        return StringValue(value);
+        return CameraFunctionValue.fromWifiValue(value);
       case SettingsId.EV: //exposureCompensation
-        return StringValue(value);
+        return IntValue(usbValue);
       case SettingsId.PostViewImageSize:
         return StringValue(value);
       case SettingsId.SelfTimer:
         return StringValue(value);
       case SettingsId.ShootingMode:
-        return StringValue(value);
+        return ShootingModeValue.fromWifiValue(value);
       case SettingsId.MeteringMode: //exposureMode
-        return StringValue(value);
+        return MeteringModeValue.fromWifiValue(value);
       case SettingsId.FlashMode:
-        return StringValue(value);
+        return FlashModeValue.fromWifiValue(value);
       case SettingsId.FNumber:
-        return StringValue(value);
+        return IntValue(usbValue); //durch 100
       case SettingsId.FocusMode:
-        return StringValue(value);
+        return FocusModeValue.fromWifiValue(value);
       case SettingsId.ISO:
         return StringValue(value);
       case SettingsId.ProgramShift:
         return StringValue(value);
       case SettingsId.ShutterSpeed:
-        return StringValue(value);
+        return ShutterSpeedValue(usbValue.toDouble(), subValue);
       case SettingsId.WhiteBalance:
         return StringValue(value);
       case SettingsId.FocusAreaSpot: //touchAFPosition
-        return StringValue(value);
+        return IntValue(usbValue);
       case SettingsId.AutoFocusState:
-        return StringValue(value);
+        return AutoFocusStateValue.fromUSBValue(usbValue);
       case SettingsId.ZoomSetting:
         return StringValue(value);
       case SettingsId.ContShootingMode:
-        return StringValue(value);
+        return ContShootingModeValue.fromWifiValue(value);
       case SettingsId.ContShootingSpeed:
-        return StringValue(value);
+        return ContShootingSpeedValue.fromWifiValue(value);
       case SettingsId.BatteryInfo:
-        return StringValue(value);
+        return IntValue(usbValue);
       case SettingsId.SilentShooting:
-        return StringValue(value);
+        return StringValue(value); //bool value?
       default:
+        return null;
         break;
     }
   }
@@ -103,7 +105,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.WhiteBalance:
         return WhiteBalanceValue.fromUSBValue(usbValue);
       case SettingsId.FNumber:
-        return IntValue(usbValue); //durch 100
+        return IntValue(usbValue);
       case SettingsId.FocusMode:
         return FocusModeValue.fromUSBValue(usbValue);
       case SettingsId.MeteringMode:
@@ -344,6 +346,8 @@ abstract class SettingsValue<T> {
   SettingsValue(this.id);
 
   SettingsValue.fromUSBValue(int usbValue);
+
+  SettingsValue.fromWifiValue(String wifiValue);
 
   int get usbValue;
 
