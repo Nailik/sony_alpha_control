@@ -6,7 +6,7 @@ enum SettingsId {
   /// <summary>
   /// File format / image quality
   /// </summary>
-  FileFormat,
+  FileFormat,//StillQuality
   WhiteBalance,
   FNumber,
   FocusMode,
@@ -205,6 +205,18 @@ enum SettingsId {
   LoopRecording,
   RemotePlayback,
   ZoomSetting,
+  LiveViewOrientation,
+  PostViewUrlSet,
+  ContShootingUrlSet,
+  StillSize,
+  CameraFunctionResult,
+  SceneSelection,
+  IRRemoteControl,
+  TrackingFocusStatus,
+  RecordingTime,
+  NumberOfShots,
+  SilentShootingSetting,
+  BulbCapturingTime,
   Unknown,
 }
 
@@ -367,6 +379,8 @@ extension SettingsIdExtension on SettingsId {
         return "recMode";
       case SettingsId.LiveViewState:
         return "liveviewStatus";
+      case SettingsId.LiveViewOrientation:
+        return "liveviewOrientation";
       case SettingsId.LiveView:
         return "liveView";
       case SettingsId.LiveViewWithSize:

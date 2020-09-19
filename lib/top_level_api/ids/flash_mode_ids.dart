@@ -52,7 +52,28 @@ extension FlashModeIdExtension on FlashModeId {
     }
   }
 
-  String get wifiValue => throw UnimplementedError;
+  String get wifiValue {
+    switch (this) {
+      case FlashModeId.AutoFlash:
+        return "auto";
+      case FlashModeId.FlashOff:
+        return "off";
+      case FlashModeId.FillFlash:
+        return "on";
+      case FlashModeId.AltSlowSync:
+        return "slowSync";
+      case FlashModeId.RearSync:
+        return "rearSync";
+      case FlashModeId.SlowSync:
+        return "slowSync";
+      case FlashModeId.WirelessSync:
+        return "wireless";
+      case FlashModeId.Unknown:
+        return "Unknown";
+      default:
+        return "Unsupported";
+    }
+  }
 
   static FlashModeId getIdFromUsb(int usbValue) =>
       FlashModeId.values.firstWhere((element) => element.usbValue == usbValue,

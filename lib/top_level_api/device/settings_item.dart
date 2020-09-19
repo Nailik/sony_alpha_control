@@ -4,6 +4,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/camera_function_id.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/camera_status_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/dro_hdr_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/flash_mode_ids.dart';
@@ -13,6 +15,8 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/movie_file_format_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/movie_quality_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
@@ -20,7 +24,6 @@ import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
-import 'file:///C:/Users/kilia/CloudStation/Dokumente/Projects/sony_alpha_control/lib/top_level_api/ids/camera_function_id.dart';
 
 class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
   SettingsId settingsId;
@@ -48,20 +51,54 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
 //SettingsIdExtension.getSettingsIdWifi(value["type"].toString(
   SettingsValue fromWifi(String wifiValue, {String wifiSubValue = ""}) {
     switch (settingsId) {
+      case SettingsId.FileFormat: //StillQuality
+        return ImageFileFormatValue.fromWifiValue(wifiValue);
       case SettingsId.AvailableApiList:
-      //TODO return StringValue(wifiValue);
+        return StringValue(wifiValue);
       case SettingsId.CameraStatus:
-      //TODO return StringValue(wifiValue);
+        return CameraStatusValue.fromWifiValue(wifiValue);
       case SettingsId.ZoomStatus:
       //TODO return StringValue(wifiValue);
       case SettingsId.LiveViewState:
-      //TODO return BoolValue(wifiValue);
+        return BoolValue(wifiValue as bool);
+      case SettingsId.LiveViewOrientation:
+        return StringValue(wifiValue); //TODO enum 0,90,180,270
+      case SettingsId.PostViewUrlSet:
+      //TODO
+      case SettingsId.ContShootingUrlSet:
+      //TODO
       case SettingsId.StorageInformation:
       //TODO return StringValue(wifiValue);
+      case SettingsId.BeepMode:
+        return StringValue(wifiValue); //TODO enum
       case SettingsId.CameraFunction:
-      //TODO  return CameraFunctionValue.fromWifiValue(wifiValue);
+        return CameraFunctionValue.fromWifiValue(wifiValue);
       case SettingsId.EV: //exposureCompensation
       //TODO  return IntValue(wifiValue);
+      case SettingsId.MovieQuality:
+        return MovieQualityValue.fromWifiValue(wifiValue);
+      case SettingsId.StillSize:
+      //TODO
+      case SettingsId.CameraFunctionResult:
+      //TODO
+      case SettingsId.SteadyMode:
+      //TODO "off" an "on"
+      case SettingsId.ViewAngle:
+      //TODO 120,70,-1
+      case SettingsId.FlipSetting:
+      //TODO
+      case SettingsId.SceneSelection:
+      //TODO
+      case SettingsId.IntervalTime:
+      //TODO
+      case SettingsId.ColorSetting:
+      //TODO
+      case SettingsId.MovieFileFormat:
+        return MovieFileFormatValue.fromWifiValue(wifiValue);
+      case SettingsId.IRRemoteControl:
+      //TODO
+      case SettingsId.TvColorSystem:
+      //TODO
       case SettingsId.PostViewImageSize:
       //TODO  return StringValue(wifiValue);
       case SettingsId.SelfTimer:
@@ -71,11 +108,11 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.MeteringMode: //exposureMode
       //TODO  return MeteringModeValue.fromWifiValue(wifiValue);
       case SettingsId.FlashMode:
-      //TODO return FlashModeValue.fromWifiValue(wifiValue);
+        return FlashModeValue.fromWifiValue(wifiValue);
       case SettingsId.FNumber:
       //TODO  return IntValue(wifiValue); //durch 100
       case SettingsId.FocusMode:
-      //TODO  return FocusModeValue.fr(wifiValue);
+        return FocusModeValue.fromWifiValue(wifiValue);
       case SettingsId.ISO:
       //TODO  return StringValue(wifiValue);
       case SettingsId.ProgramShift:
@@ -88,16 +125,36 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       //TODO  return IntValue(wifiValue);
       case SettingsId.AutoFocusState:
       //TODO  return AutoFocusStateValue.fromWifiValue(wifiValue);
-      case SettingsId.ZoomSetting:
+      case SettingsId.TrackingFocusStatus:
+      //TODO
+      case SettingsId.TrackingFocus:
+      //TODO
+      case SettingsId.ZoomSetting: //FocusStatus
       //TODO   return StringValue(wifiValue);
       case SettingsId.ContShootingMode:
       //TODO return ContShootingModeValue.fromWifiValue(wifiValue);
       case SettingsId.ContShootingSpeed:
       //TODO  return ContShootingSpeedValue.fromWifiValue(wifiValue);
-      case SettingsId.BatteryInfo:
+      case SettingsId.BatteryInfo: //BatteryInformation
       //TODO   return IntValue(wifiValue);
       case SettingsId.SilentShooting:
       //TODO  return StringValue(wifiValue); //bool value?
+      case SettingsId.RecordingTime:
+      //TODO
+      case SettingsId.NumberOfShots:
+      //TODO
+      case SettingsId.AutoPowerOff:
+      //TODO
+      case SettingsId.LoopRecordingTime:
+      //TODO
+      case SettingsId.AudioRecordingSetting:
+      //TODO
+      case SettingsId.WindNoiseReduction:
+      //TODO
+      case SettingsId.SilentShootingSetting:
+      //TODO
+      case SettingsId.BulbCapturingTime:
+      //TODO
       default:
         return null;
         break;

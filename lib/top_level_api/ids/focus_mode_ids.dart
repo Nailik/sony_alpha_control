@@ -31,7 +31,22 @@ extension FocusModeIdExtension on FocusModeId {
     }
   }
 
-  String get wifiValue => throw UnimplementedError;
+  String get wifiValue {
+    switch (this) {
+      case FocusModeId.MF:
+        return "MF";
+      case FocusModeId.AF_SingleShot:
+        return "AF-S";
+      case FocusModeId.AF_Continuous:
+        return "AF-C";
+      case FocusModeId.DMF:
+        return "DMF";
+      case FocusModeId.Unknown:
+        return "Unknown";
+      default:
+        return "Unsupported";
+    }
+  }
 
   static FocusModeId getIdFromUsb(int usbValue) =>
       FocusModeId.values.firstWhere((element) => element.usbValue == usbValue,

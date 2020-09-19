@@ -4,10 +4,13 @@ enum CameraFunctionId {
   REMOTE_SHOOTING,
   CONTENTS_TRANSFER,
   OTHER_FUNCTION,
-  UNKNOWN
+  Unknown
 }
 
 extension CameraFunctionIdExtension on CameraFunctionId {
+
+  String get name => toString().split('.')[1];
+
   String get wifiValue {
     switch (this) {
       case CameraFunctionId.REMOTE_SHOOTING:
@@ -16,9 +19,10 @@ extension CameraFunctionIdExtension on CameraFunctionId {
         return "Contents Transfer";
       case CameraFunctionId.OTHER_FUNCTION:
         return "Other Function";
-      case CameraFunctionId.UNKNOWN:
+      case CameraFunctionId.Unknown:
+        return "Unknown";
       default:
-        return "";
+        return "Unsupported";
     }
   }
 
@@ -27,7 +31,7 @@ extension CameraFunctionIdExtension on CameraFunctionId {
   static CameraFunctionId getIdFromWifi(String wifiValue) {
     return CameraFunctionId.values.firstWhere(
         (element) => element.wifiValue == wifiValue,
-        orElse: () => CameraFunctionId.UNKNOWN);
+        orElse: () => CameraFunctionId.Unknown);
   }
 }
 
@@ -43,7 +47,7 @@ class CameraFunctionValue extends SettingsValue<CameraFunctionId> {
       CameraFunctionValue(CameraFunctionIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  String get name => id.toString();
+  String get name => id.name;
 
   @override
   int get usbValue => throw UnsupportedError;

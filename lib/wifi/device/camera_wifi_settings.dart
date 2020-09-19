@@ -30,33 +30,28 @@ class CameraWifiSettings extends CameraSettings {
 
     (jsonD["result"] as List<dynamic>)?.forEach((element) {
       if (element != null) {
-        var settingsId = element["type"];
+        var settingsIdWifiValue = element["type"];
 
         SettingsItem setting = settings.singleWhere(
-            (it) => it.settingsId.wifiValue == settingsId,
+            (it) => it.settingsId.wifiValue == settingsIdWifiValue,
             orElse: () => null);
+
         if (setting == null) {
-          setting =
-              new SettingsItem(SettingsIdExtension.getIdFromWifi(settingsId));
+          setting = new SettingsItem(
+              SettingsIdExtension.getIdFromWifi(settingsIdWifiValue));
           settings.add(setting);
         }
 
         switch (setting.settingsId) {
-          case SettingsId.AvailableApiList:
-            //TODO
-            break;
+          case SettingsId.FileFormat:
           case SettingsId.CameraStatus:
-            //TODO
+            //current is only named like the setting, eg: "fileFormat"
+            //available list is named candidate
+            getDefaultSettings(
+                element, setting, settingsIdWifiValue, "candidate");
             break;
-          case SettingsId.LiveViewState:
-            setting.value = setting.fromWifi(element["liveviewStatus"]);
-            break;
-          default:
-            //list with candidates (available) and the current
-            setting.value =
-                setting.fromWifi(element["current${settingsId.startCap}"]);
-            var availableList = element["${settingsId.startCap}Candidates"];
-
+          case SettingsId.AvailableApiList:
+            var availableList = element["names"];
             if (availableList != null) {
               setting.available.clear();
               availableList.forEach((item) {
@@ -64,9 +59,42 @@ class CameraWifiSettings extends CameraSettings {
               });
             }
             break;
+          case SettingsId.LiveViewState:
+          case SettingsId.LiveViewOrientation:
+            //there is only a current value
+            setting.value = setting.fromWifi(element[settingsIdWifiValue]);
+            break;
+          case SettingsId.BeepMode:
+          case SettingsId.CameraFunction:
+          case SettingsId.MovieQuality:
+          case SettingsId.MovieFileFormat:
+          case SettingsId.FlashMode:
+          case SettingsId.FocusMode:
+          default:
+            //current is only named like the current setting, eg: "currentFNumber"
+            //available list is named candidates like fNumberCandidates
+            getDefaultSettings(
+                element,
+                setting,
+                "current${settingsIdWifiValue.startCap}",
+                "${settingsIdWifiValue.startCap}Candidates");
+            break;
         }
       }
     });
+  }
+
+  getDefaultSettings(
+      json, SettingsItem setting, String currentName, String availableName) {
+    setting.value = setting.fromWifi(json[currentName]);
+    var availableList = json[availableName];
+
+    if (availableList != null) {
+      setting.available.clear();
+      availableList.forEach((item) {
+        setting.available.add(setting.fromWifi(item));
+      });
+    }
   }
 }
 

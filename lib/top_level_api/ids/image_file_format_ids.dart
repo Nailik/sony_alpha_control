@@ -31,7 +31,24 @@ extension ImageFileFormatIdExtension on ImageFileFormatId {
     }
   }
 
-  String get wifiValue => throw UnimplementedError;
+  String get wifiValue {
+    switch (this) {
+      case ImageFileFormatId.JpegStandard:
+        return "Standard";
+      case ImageFileFormatId.JpegFine:
+        return "Fine";
+      case ImageFileFormatId.JpegXFine:
+        return "XFine"; //TODO ensure
+      case ImageFileFormatId.Raw:
+        return "RAW"; //TODO ensure
+      case ImageFileFormatId.Raw_JPEG:
+        return "RAW+JPEG";
+      case ImageFileFormatId.Unknown:
+        return "Unkown";
+      default:
+        return "Unsupported";
+    }
+  }
 
   static ImageFileFormatId getIdFromUsb(int usbValue) =>
       ImageFileFormatId.values.firstWhere(
