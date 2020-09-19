@@ -423,7 +423,6 @@ extension SettingsIdExtension on SettingsId {
         return "silentShootingSetting";
       case SettingsId.SilentShooting:
         return "silentShooting";
-
       case SettingsId.SteadyMode:
         return "steadyMode";
       case SettingsId.BeepMode:
@@ -565,25 +564,25 @@ extension SettingsIdExtension on SettingsId {
     }
   }
 
-  static SettingsId fromWifiValue(String wifiValue) {
-    return SettingsId.values.firstWhere(
-        (element) => element.wifiValue == wifiValue,
-        orElse: () => SettingsId.Unknown);
-  }
-}
+  static SettingsId getIdFromUsb(int usbValue) =>
+      SettingsId.values.firstWhere((element) => element.usbValue == usbValue,
+          orElse: () => SettingsId.Unknown);
 
-SettingsId getSettingsId(int usbValue) {
-  return SettingsId.values.firstWhere((element) => element.usbValue == usbValue,
-      orElse: () => SettingsId.Unknown);
+  static SettingsId getIdFromWifi(String wifiValue) =>
+      SettingsId.values.firstWhere((element) => element.wifiValue == wifiValue,
+          orElse: () => SettingsId.Unknown);
 }
 
 class SettingsIdValue extends SettingsValue<SettingsId> {
   SettingsIdValue(SettingsId id) : super(id);
 
   @override
-  factory SettingsIdValue.fromUSBValue(int usbValue) {
-    return SettingsIdValue(getSettingsId(usbValue));
-  }
+  factory SettingsIdValue.fromUSBValue(int usbValue) =>
+      SettingsIdValue(SettingsIdExtension.getIdFromUsb(usbValue));
+
+  @override
+  factory SettingsIdValue.fromWifiValue(String wifiValue) =>
+      SettingsIdValue(SettingsIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;
@@ -603,7 +602,7 @@ class SettingsIdConverter
   MapEntry<SettingsId, SonyWebApiMethod> fromJson(String json) {
     SonyWebApiMethod method = SonyWebApiMethod.values
         .firstWhere((element) => json.startsWith(element.wifiValue));
-    SettingsId settingsId = SettingsIdExtension.fromWifiValue(
+    SettingsId settingsId = SettingsIdExtension.getIdFromWifi(
         json.replaceFirst(method.wifiValue, "").startLow);
     return MapEntry(settingsId, method);
   }

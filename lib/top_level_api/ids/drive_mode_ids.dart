@@ -200,42 +200,27 @@ extension DriveModeIdExtension on DriveModeId {
     }
   }
 
-  String get wifiValue {
-    switch (this) {
-      case DriveModeId.SingleShooting:
-        return 0x0001;
-      case DriveModeId.ContinuousShooting_Hi:
-        return "Hi";
-      case DriveModeId.ContinuousShooting_Mid:
-        return 0x8015;
-      case DriveModeId.ContinuousShooting_Lo:
-        return "Low";
-      case DriveModeId.ContinuousShooting_HiPlus:
-        return 0x8010;
-      case DriveModeId.SelfTimerSingle_2Sec:
-        return 0x8005;
-      case DriveModeId.SelfTimerSingle_5Sec:
-        return 0x8003;
-      case DriveModeId.Unknown:
-        return -1;
-      default:
-        return "Unsupported";
-  };
-}
+  String get wifiValue => throw UnimplementedError; //TODO
 
-DriveModeId getDriveModeId(int usbValue) {
-  return DriveModeId.values.firstWhere(
-      (element) => element.usbValue == usbValue,
-      orElse: () => DriveModeId.Unknown);
+  static DriveModeId getIdFromUsb(int usbValue) =>
+      DriveModeId.values.firstWhere((element) => element.usbValue == usbValue,
+          orElse: () => DriveModeId.Unknown);
+
+  static DriveModeId getIdFromWifi(String wifiValue) =>
+      DriveModeId.values.firstWhere((element) => element.wifiValue == wifiValue,
+          orElse: () => DriveModeId.Unknown);
 }
 
 class DriveModeValue extends SettingsValue<DriveModeId> {
   DriveModeValue(DriveModeId id) : super(id);
 
   @override
-  factory DriveModeValue.fromUSBValue(int usbValue) {
-    return DriveModeValue(getDriveModeId(usbValue));
-  }
+  factory DriveModeValue.fromUSBValue(int usbValue) =>
+      DriveModeValue(DriveModeIdExtension.getIdFromUsb(usbValue));
+
+  @override
+  factory DriveModeValue.fromWifiValue(String wifiValue) =>
+      DriveModeValue(DriveModeIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;

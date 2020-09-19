@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum WhiteBalanceId {
@@ -61,22 +62,27 @@ extension WhiteBalanceIdExtension on WhiteBalanceId {
     }
   }
 
-  String get wifiValue => "";
-}
+  String get wifiValue => throw UnimplementedError;
 
-WhiteBalanceId getWhiteBalanceId(int usbValue) {
-  return WhiteBalanceId.values.firstWhere(
-      (element) => element.usbValue == usbValue,
-      orElse: () => WhiteBalanceId.Unknown);
+  static WhiteBalanceId getIdFromUsb(int usbValue) => WhiteBalanceId.values
+      .firstWhere((element) => element.usbValue == usbValue,
+          orElse: () => WhiteBalanceId.Unknown);
+
+  static WhiteBalanceId getIdFromWifi(String wifiValue) => WhiteBalanceId.values
+      .firstWhere((element) => element.wifiValue == wifiValue,
+          orElse: () => WhiteBalanceId.Unknown);
 }
 
 class WhiteBalanceValue extends SettingsValue<WhiteBalanceId> {
   WhiteBalanceValue(WhiteBalanceId id) : super(id);
 
   @override
-  factory WhiteBalanceValue.fromUSBValue(int usbValue) {
-    return WhiteBalanceValue(getWhiteBalanceId(usbValue));
-  }
+  factory WhiteBalanceValue.fromUSBValue(int usbValue) =>
+      WhiteBalanceValue(WhiteBalanceIdExtension.getIdFromUsb(usbValue));
+
+  @override
+  factory WhiteBalanceValue.fromWifiValue(String wifiValue) =>
+      WhiteBalanceValue(WhiteBalanceIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;

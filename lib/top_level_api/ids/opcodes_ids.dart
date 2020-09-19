@@ -61,21 +61,27 @@ extension OpCodesExtension on OpCodeId {
     }
   }
 
-  String get wifiValue => "";
-}
+  String get wifiValue => throw UnimplementedError;
 
-OpCodeId getOpCodeId(int usbValue) {
-  return OpCodeId.values.firstWhere((element) => element.usbValue == usbValue,
-      orElse: () => OpCodeId.Unknown);
+  static OpCodeId getIdFromUsb(int usbValue) =>
+      OpCodeId.values.firstWhere((element) => element.usbValue == usbValue,
+          orElse: () => OpCodeId.Unknown);
+
+  static OpCodeId getIdFromWifi(String wifiValue) =>
+      OpCodeId.values.firstWhere((element) => element.wifiValue == wifiValue,
+          orElse: () => OpCodeId.Unknown);
 }
 
 class OpCodeValue extends SettingsValue<OpCodeId> {
   OpCodeValue(OpCodeId id) : super(id);
 
   @override
-  factory OpCodeValue.fromUSBValue(int usbValue) {
-    return OpCodeValue(getOpCodeId(usbValue));
-  }
+  factory OpCodeValue.fromUSBValue(int usbValue) =>
+      OpCodeValue(OpCodesExtension.getIdFromUsb(usbValue));
+
+  @override
+  factory OpCodeValue.fromWifiValue(String wifiValue) =>
+      OpCodeValue(OpCodesExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;

@@ -36,7 +36,8 @@ class CameraWifiSettings extends CameraSettings {
             (it) => it.settingsId.wifiValue == settingsId,
             orElse: () => null);
         if (setting == null) {
-          setting = new SettingsItem(getSettingsId(settingsId));
+          setting =
+              new SettingsItem(SettingsIdExtension.getIdFromWifi(settingsId));
           settings.add(setting);
         }
 

@@ -20,22 +20,27 @@ extension ImageSizeIdExtension on ImageSizeId {
     }
   }
 
-  String get wifiValue => "";
-}
+  String get wifiValue => throw UnimplementedError;
 
-ImageSizeId getImageSizeId(int usbValue) {
-  return ImageSizeId.values.firstWhere(
-      (element) => element.usbValue == usbValue,
-      orElse: () => ImageSizeId.Unknown);
+  static ImageSizeId getIdFromUsb(int usbValue) =>
+      ImageSizeId.values.firstWhere((element) => element.usbValue == usbValue,
+          orElse: () => ImageSizeId.Unknown);
+
+  static ImageSizeId getIdFromWifi(String wifiValue) =>
+      ImageSizeId.values.firstWhere((element) => element.wifiValue == wifiValue,
+          orElse: () => ImageSizeId.Unknown);
 }
 
 class ImageSizeValue extends SettingsValue<ImageSizeId> {
   ImageSizeValue(ImageSizeId id) : super(id);
 
   @override
-  factory ImageSizeValue.fromUSBValue(int usbValue) {
-    return ImageSizeValue(getImageSizeId(usbValue));
-  }
+  factory ImageSizeValue.fromUSBValue(int usbValue) =>
+      ImageSizeValue(ImageSizeIdExtension.getIdFromUsb(usbValue));
+
+  @override
+  factory ImageSizeValue.fromWifiValue(String wifiValue) =>
+      ImageSizeValue(ImageSizeIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;

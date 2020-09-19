@@ -191,7 +191,7 @@ abstract class CameraApiInterface {
 // TODO: If the steps value is larger than 7 then use a loop?
   Future<bool> setFocusDistance(int value);
 
-  Future<SettingsItem<ShootingModeValue>> getShootingMode(
+  Future<SettingsItem<DriveModeValue>> getShootingMode(
           {ForceUpdate update}) async =>
       device.cameraSettings.getItem(SettingsId.ShootingMode);
 

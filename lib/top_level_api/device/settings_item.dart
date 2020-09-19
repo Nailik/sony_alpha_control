@@ -49,55 +49,55 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
   SettingsValue fromWifi(String wifiValue, {String wifiSubValue = ""}) {
     switch (settingsId) {
       case SettingsId.AvailableApiList:
-        return StringValue(wifiValue);
+      //TODO return StringValue(wifiValue);
       case SettingsId.CameraStatus:
-        return StringValue(wifiValue);
+      //TODO return StringValue(wifiValue);
       case SettingsId.ZoomStatus:
-        return StringValue(wifiValue);
+      //TODO return StringValue(wifiValue);
       case SettingsId.LiveViewState:
-        return BoolValue(wifiValue);
+      //TODO return BoolValue(wifiValue);
       case SettingsId.StorageInformation:
-        return StringValue(wifiValue);
+      //TODO return StringValue(wifiValue);
       case SettingsId.CameraFunction:
-        return CameraFunctionValue.fromWifiValue(wifiValue);
+      //TODO  return CameraFunctionValue.fromWifiValue(wifiValue);
       case SettingsId.EV: //exposureCompensation
-        return IntValue(wifiValue);
+      //TODO  return IntValue(wifiValue);
       case SettingsId.PostViewImageSize:
-        return StringValue(wifiValue);
+      //TODO  return StringValue(wifiValue);
       case SettingsId.SelfTimer:
-        return StringValue(wifiValue);
+      //TODO  return StringValue(wifiValue);
       case SettingsId.ShootingMode:
-        return ShootingModeValue.fromWifiValue(wifiValue);
+      //TODO  return ShootingModeValue.fromWifiValue(wifiValue);
       case SettingsId.MeteringMode: //exposureMode
-        return MeteringModeValue.fromWifiValue(wifiValue);
+      //TODO  return MeteringModeValue.fromWifiValue(wifiValue);
       case SettingsId.FlashMode:
-        return FlashModeValue.fromWifiValue(wifiValue);
+      //TODO return FlashModeValue.fromWifiValue(wifiValue);
       case SettingsId.FNumber:
-        return IntValue(wifiValue); //durch 100
+      //TODO  return IntValue(wifiValue); //durch 100
       case SettingsId.FocusMode:
-        return FocusModeValue.fr(wifiValue);
+      //TODO  return FocusModeValue.fr(wifiValue);
       case SettingsId.ISO:
-        return StringValue(wifiValue);
+      //TODO  return StringValue(wifiValue);
       case SettingsId.ProgramShift:
-        return StringValue(wifiValue);
+      //TODO  return StringValue(wifiValue);
       case SettingsId.ShutterSpeed:
-        return ShutterSpeedValue(wifiValue.toDouble(), subValue);
+      //TODO return ShutterSpeedValue(wifiValue.toDouble(), subValue);
       case SettingsId.WhiteBalance:
-        return StringValue(wifiValue);
+      //TODO   return StringValue(wifiValue);
       case SettingsId.FocusAreaSpot: //touchAFPosition
-        return IntValue(wifiValue);
+      //TODO  return IntValue(wifiValue);
       case SettingsId.AutoFocusState:
-        return AutoFocusStateValue.fromWifiValue(wifiValue);
+      //TODO  return AutoFocusStateValue.fromWifiValue(wifiValue);
       case SettingsId.ZoomSetting:
-        return StringValue(wifiValue);
+      //TODO   return StringValue(wifiValue);
       case SettingsId.ContShootingMode:
-        return ContShootingModeValue.fromWifiValue(wifiValue);
+      //TODO return ContShootingModeValue.fromWifiValue(wifiValue);
       case SettingsId.ContShootingSpeed:
-        return ContShootingSpeedValue.fromWifiValue(wifiValue);
+      //TODO  return ContShootingSpeedValue.fromWifiValue(wifiValue);
       case SettingsId.BatteryInfo:
-        return IntValue(wifiValue);
+      //TODO   return IntValue(wifiValue);
       case SettingsId.SilentShooting:
-        return StringValue(wifiValue); //bool value?
+      //TODO  return StringValue(wifiValue); //bool value?
       default:
         return null;
         break;
@@ -323,7 +323,9 @@ class IsoValue extends DoubleValue {
   String get name {
     var multiFrame = id > (2 * 0xFFFFFF)
         ? "MultiFrame RM Hoch"
-        : id > 0xFFFFFF ? "MultiFrame RM Standard" : "";
+        : id > 0xFFFFFF
+            ? "MultiFrame RM Standard"
+            : "";
     var auto =
         id == 0xFFFFFF || id == (2 * 0xFFFFFF) + 1 || id == (3 * 0xFFFFFF) + 2
             ? "Auto"

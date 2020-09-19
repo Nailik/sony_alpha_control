@@ -53,22 +53,27 @@ extension MeteringModeIdExtension on MeteringModeId {
     }
   }
 
-  String get wifiValue => "";
-}
+  String get wifiValue => throw UnimplementedError;
 
-MeteringModeId getMeteringModeId(int usbValue) {
-  return MeteringModeId.values.firstWhere(
-      (element) => element.usbValue == usbValue,
-      orElse: () => MeteringModeId.Unknown);
+  static MeteringModeId getIdFromUsb(int usbValue) => MeteringModeId.values
+      .firstWhere((element) => element.usbValue == usbValue,
+          orElse: () => MeteringModeId.Unknown);
+
+  static MeteringModeId getIdFromWifi(String wifiValue) => MeteringModeId.values
+      .firstWhere((element) => element.wifiValue == wifiValue,
+          orElse: () => MeteringModeId.Unknown);
 }
 
 class MeteringModeValue extends SettingsValue<MeteringModeId> {
   MeteringModeValue(MeteringModeId id) : super(id);
 
   @override
-  factory MeteringModeValue.fromUSBValue(int usbValue) {
-    return MeteringModeValue(getMeteringModeId(usbValue));
-  }
+  factory MeteringModeValue.fromUSBValue(int usbValue) =>
+      MeteringModeValue(MeteringModeIdExtension.getIdFromUsb(usbValue));
+
+  @override
+  factory MeteringModeValue.fromWifiValue(String wifiValue) =>
+      MeteringModeValue(MeteringModeIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;

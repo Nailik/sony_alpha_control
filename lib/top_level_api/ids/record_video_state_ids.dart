@@ -20,22 +20,30 @@ extension RecordVideoStateIdExtension on RecordVideoStateId {
     }
   }
 
-  String get wifiValue => "";
-}
+  String get wifiValue => throw UnimplementedError;
 
-RecordVideoStateId getRecordVideoStateId(int usbValue) {
-  return RecordVideoStateId.values.firstWhere(
-      (element) => element.usbValue == usbValue,
-      orElse: () => RecordVideoStateId.Unknown);
+  static RecordVideoStateId getIdFromUsb(int usbValue) =>
+      RecordVideoStateId.values.firstWhere(
+          (element) => element.usbValue == usbValue,
+          orElse: () => RecordVideoStateId.Unknown);
+
+  static RecordVideoStateId getIdFromWifi(String wifiValue) =>
+      RecordVideoStateId.values.firstWhere(
+          (element) => element.wifiValue == wifiValue,
+          orElse: () => RecordVideoStateId.Unknown);
 }
 
 class RecordVideoStateValue extends SettingsValue<RecordVideoStateId> {
   RecordVideoStateValue(RecordVideoStateId id) : super(id);
 
   @override
-  factory RecordVideoStateValue.fromUSBValue(int usbValue) {
-    return RecordVideoStateValue(getRecordVideoStateId(usbValue));
-  }
+  factory RecordVideoStateValue.fromUSBValue(int usbValue) =>
+      RecordVideoStateValue(RecordVideoStateIdExtension.getIdFromUsb(usbValue));
+
+  @override
+  factory RecordVideoStateValue.fromWifiValue(String wifiValue) =>
+      RecordVideoStateValue(
+          RecordVideoStateIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;

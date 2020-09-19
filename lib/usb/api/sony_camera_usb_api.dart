@@ -47,36 +47,36 @@ class SonyCameraUsbApi extends CameraApiInterface {
       SettingsId settingsId, int value, SonyCameraUsbDevice device) async {
     switch (settingsId) {
       case SettingsId.FileFormat:
-        return setImageFileFormat(getImageFileFormatId(value));
+        return setImageFileFormat(ImageFileFormatIdExtension.getIdFromUsb(value));
       case SettingsId.WhiteBalance:
-        return setWhiteBalance(getWhiteBalanceId(value));
+        return setWhiteBalance(WhiteBalanceIdExtension.getIdFromUsb(value));
       case SettingsId.FNumber:
         return setFNumber(value);
       case SettingsId.FocusMode:
-        return setFocusMode(getFocusModeId(value));
+        return setFocusMode(FocusModeIdExtension.getIdFromUsb(value));
       case SettingsId.MeteringMode:
-        return setMeteringMode(getMeteringModeId(value));
+        return setMeteringMode(MeteringModeIdExtension.getIdFromUsb(value));
       case SettingsId.FlashMode:
-        return setFlashMode(getFlashModeId(value));
+        return setFlashMode(FlashModeIdExtension.getIdFromUsb(value));
       case SettingsId.ShootingMode:
         // TODO: Handle this case.
         break;
       case SettingsId.EV:
         return setEV(value);
       case SettingsId.DriveMode:
-        return setDriveMode(getDriveModeId(value));
+        return setDriveMode(DriveModeIdExtension.getIdFromUsb(value));
       case SettingsId.FlashValue:
         return setFlashValue(value);
       case SettingsId.DroHdr:
-        return setDroHdr(getDroHdrId(value));
+        return setDroHdr(DroHdrIdExtension.getIdFromUsb(value));
       case SettingsId.ImageSize:
-        return setImageSize(getImageSizeId(value));
+        return setImageSize(ImageSizeIdExtension.getIdFromUsb(value));
       case SettingsId.ShutterSpeed:
         return setShutterSpeed(value);
       case SettingsId.WhiteBalanceColorTemp:
         return setWhiteBalanceColorTemp(value);
       case SettingsId.WhiteBalanceGM:
-        return setWhiteBalanceGm(getWhiteBalanceGmId(value));
+        return setWhiteBalanceGm(WhiteBalanceGmIdExtension.getIdFromUsb(value));
       case SettingsId.AspectRatio:
         return setAspectRatio(AspectRatioIdExtension.getIdFromUsb(value));
       case SettingsId.UnkD212:
@@ -97,9 +97,9 @@ class SonyCameraUsbApi extends CameraApiInterface {
         // TODO: Handle this case.
         break;
       case SettingsId.PictureEffect:
-        return setPictureEffect(getPictureEffectId(value));
+        return setPictureEffect(PictureEffectIdExtension.getIdFromUsb(value));
       case SettingsId.WhiteBalanceAB:
-        return setWhiteBalanceAb(getWhiteBalanceAbId(value));
+        return setWhiteBalanceAb(WhiteBalanceAbIdExtension.getIdFromUsb(value));
       case SettingsId.ISO:
         return setIso(value);
       case SettingsId.FocusArea:

@@ -31,22 +31,29 @@ extension ImageFileFormatIdExtension on ImageFileFormatId {
     }
   }
 
-  String get wifiValue => "";
-}
+  String get wifiValue => throw UnimplementedError;
 
-ImageFileFormatId getImageFileFormatId(int usbValue) {
-  return ImageFileFormatId.values.firstWhere(
-      (element) => element.usbValue == usbValue,
-      orElse: () => ImageFileFormatId.Unknown);
+  static ImageFileFormatId getIdFromUsb(int usbValue) =>
+      ImageFileFormatId.values.firstWhere(
+          (element) => element.usbValue == usbValue,
+          orElse: () => ImageFileFormatId.Unknown);
+
+  static ImageFileFormatId getIdFromWifi(String wifiValue) =>
+      ImageFileFormatId.values.firstWhere(
+          (element) => element.wifiValue == wifiValue,
+          orElse: () => ImageFileFormatId.Unknown);
 }
 
 class ImageFileFormatValue extends SettingsValue<ImageFileFormatId> {
   ImageFileFormatValue(ImageFileFormatId id) : super(id);
 
   @override
-  factory ImageFileFormatValue.fromUSBValue(int usbValue) {
-    return ImageFileFormatValue(getImageFileFormatId(usbValue));
-  }
+  factory ImageFileFormatValue.fromUSBValue(int usbValue) =>
+      ImageFileFormatValue(ImageFileFormatIdExtension.getIdFromUsb(usbValue));
+
+  @override
+  factory ImageFileFormatValue.fromWifiValue(String wifiValue) =>
+      ImageFileFormatValue(ImageFileFormatIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;

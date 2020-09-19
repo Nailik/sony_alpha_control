@@ -118,22 +118,28 @@ extension PictureEffectIdExtension on PictureEffectId {
     }
   }
 
-  String get wifiValue => "";
-}
+  String get wifiValue => throw UnimplementedError;
 
-PictureEffectId getPictureEffectId(int usbValue) {
-  return PictureEffectId.values.firstWhere(
-      (element) => element.usbValue == usbValue,
-      orElse: () => PictureEffectId.Unknown);
+  static PictureEffectId getIdFromUsb(int usbValue) => PictureEffectId.values
+      .firstWhere((element) => element.usbValue == usbValue,
+          orElse: () => PictureEffectId.Unknown);
+
+  static PictureEffectId getIdFromWifi(String wifiValue) =>
+      PictureEffectId.values.firstWhere(
+          (element) => element.wifiValue == wifiValue,
+          orElse: () => PictureEffectId.Unknown);
 }
 
 class PictureEffectValue extends SettingsValue<PictureEffectId> {
   PictureEffectValue(PictureEffectId id) : super(id);
 
   @override
-  factory PictureEffectValue.fromUSBValue(int usbValue) {
-    return PictureEffectValue(getPictureEffectId(usbValue));
-  }
+  factory PictureEffectValue.fromUSBValue(int usbValue) =>
+      PictureEffectValue(PictureEffectIdExtension.getIdFromUsb(usbValue));
+
+  @override
+  factory PictureEffectValue.fromWifiValue(String wifiValue) =>
+      PictureEffectValue(PictureEffectIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;

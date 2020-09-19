@@ -160,7 +160,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
       _updateIf(update, await super.getPictureEffect(update: update));
 
   @override
-  Future<SettingsItem<ShootingModeValue>> getShootingMode(
+  Future<SettingsItem<DriveModeValue>> getShootingMode(
           {update = ForceUpdate.IfNull}) async =>
       _updateIf(update, await super.getShootingMode(update: update));
 

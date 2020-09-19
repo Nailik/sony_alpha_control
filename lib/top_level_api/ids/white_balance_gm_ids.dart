@@ -64,7 +64,7 @@ enum WhiteBalanceGmId {
   Unknown
 }
 
-extension WhiteBalanceAbIdExtension on WhiteBalanceGmId {
+extension WhiteBalanceGmIdExtension on WhiteBalanceGmId {
   String get name => toString().split('.')[1];
 
   int get usbValue {
@@ -190,22 +190,28 @@ extension WhiteBalanceAbIdExtension on WhiteBalanceGmId {
     }
   }
 
-  String get wifiValue => "";
-}
+  String get wifiValue => throw UnimplementedError;
 
-WhiteBalanceGmId getWhiteBalanceGmId(int usbValue) {
-  return WhiteBalanceGmId.values.firstWhere(
-      (element) => element.usbValue == usbValue,
-      orElse: () => WhiteBalanceGmId.Unknown);
+  static WhiteBalanceGmId getIdFromUsb(int usbValue) => WhiteBalanceGmId.values
+      .firstWhere((element) => element.usbValue == usbValue,
+          orElse: () => WhiteBalanceGmId.Unknown);
+
+  static WhiteBalanceGmId getIdFromWifi(String wifiValue) =>
+      WhiteBalanceGmId.values.firstWhere(
+          (element) => element.wifiValue == wifiValue,
+          orElse: () => WhiteBalanceGmId.Unknown);
 }
 
 class WhiteBalanceGmValue extends SettingsValue<WhiteBalanceGmId> {
   WhiteBalanceGmValue(WhiteBalanceGmId id) : super(id);
 
   @override
-  factory WhiteBalanceGmValue.fromUSBValue(int usbValue) {
-    return WhiteBalanceGmValue(getWhiteBalanceGmId(usbValue));
-  }
+  factory WhiteBalanceGmValue.fromUSBValue(int usbValue) =>
+      WhiteBalanceGmValue(WhiteBalanceGmIdExtension.getIdFromUsb(usbValue));
+
+  @override
+  factory WhiteBalanceGmValue.fromWifiValue(String wifiValue) =>
+      WhiteBalanceGmValue(WhiteBalanceGmIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;

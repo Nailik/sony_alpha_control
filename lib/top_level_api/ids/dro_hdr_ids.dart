@@ -61,21 +61,27 @@ extension DroHdrIdExtension on DroHdrId {
     }
   }
 
-  String get wifiValue => "";
-}
+  String get wifiValue => throw UnimplementedError;
 
-DroHdrId getDroHdrId(int usbValue) {
-  return DroHdrId.values.firstWhere((element) => element.usbValue == usbValue,
-      orElse: () => DroHdrId.Unknown);
+  static DroHdrId getIdFromUsb(int usbValue) =>
+      DroHdrId.values.firstWhere((element) => element.usbValue == usbValue,
+          orElse: () => DroHdrId.Unknown);
+
+  static DroHdrId getIdFromWifi(String wifiValue) =>
+      DroHdrId.values.firstWhere((element) => element.wifiValue == wifiValue,
+          orElse: () => DroHdrId.Unknown);
 }
 
 class DroHdrValue extends SettingsValue<DroHdrId> {
   DroHdrValue(DroHdrId id) : super(id);
 
   @override
-  factory DroHdrValue.fromUSBValue(int usbValue) {
-    return DroHdrValue(getDroHdrId(usbValue));
-  }
+  factory DroHdrValue.fromUSBValue(int usbValue) =>
+      DroHdrValue(DroHdrIdExtension.getIdFromUsb(usbValue));
+
+  @override
+  factory DroHdrValue.fromWifiValue(String wifiValue) =>
+      DroHdrValue(DroHdrIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;

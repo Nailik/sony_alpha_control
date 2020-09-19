@@ -22,13 +22,17 @@ extension FocusMagnifierDirectionIdExtension on FocusMagnifierDirectionId {
     }
   }
 
-  String get wifiValue => "";
-}
+  String get wifiValue => throw UnimplementedError;
 
-FocusMagnifierDirectionId geFocusMagnifierDirectionId(int usbValue) {
-  return FocusMagnifierDirectionId.values.firstWhere(
-      (element) => element.usbValue == usbValue,
-      orElse: () => FocusMagnifierDirectionId.Unknown);
+  static FocusMagnifierDirectionId getIdFromUsb(int usbValue) =>
+      FocusMagnifierDirectionId.values.firstWhere(
+          (element) => element.usbValue == usbValue,
+          orElse: () => FocusMagnifierDirectionId.Unknown);
+
+  static FocusMagnifierDirectionId getIdFromWifi(String wifiValue) =>
+      FocusMagnifierDirectionId.values.firstWhere(
+          (element) => element.wifiValue == wifiValue,
+          orElse: () => FocusMagnifierDirectionId.Unknown);
 }
 
 class FocusMagnifierDirectionValue
@@ -36,9 +40,14 @@ class FocusMagnifierDirectionValue
   FocusMagnifierDirectionValue(FocusMagnifierDirectionId id) : super(id);
 
   @override
-  factory FocusMagnifierDirectionValue.fromUSBValue(int usbValue) {
-    return FocusMagnifierDirectionValue(geFocusMagnifierDirectionId(usbValue));
-  }
+  factory FocusMagnifierDirectionValue.fromUSBValue(int usbValue) =>
+      FocusMagnifierDirectionValue(
+          FocusMagnifierDirectionIdExtension.getIdFromUsb(usbValue));
+
+  @override
+  factory FocusMagnifierDirectionValue.fromWifiValue(String wifiValue) =>
+      FocusMagnifierDirectionValue(
+          FocusMagnifierDirectionIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;

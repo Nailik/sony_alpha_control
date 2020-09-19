@@ -106,7 +106,8 @@ class CameraUsbSettings extends CameraSettings {
           (it) => it.settingsId.usbValue == settingsId,
           orElse: () => null);
       if (setting == null) {
-        setting = new SettingsItem(getSettingsId(settingsId));
+        setting =
+            new SettingsItem(SettingsIdExtension.getIdFromUsb(settingsId));
         settings.add(setting);
       }
 

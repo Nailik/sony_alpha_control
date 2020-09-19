@@ -58,22 +58,28 @@ extension FocusAreaIdExtension on FocusAreaId {
     }
   }
 
-  String get wifiValue => "";
-}
+  String get wifiValue => throw UnimplementedError;
 
-FocusAreaId getFocusAreaId(int usbValue) {
-  return FocusAreaId.values.firstWhere(
-      (element) => element.usbValue == usbValue,
+  static FocusAreaId getIdFromUsb(int usbValue) => FocusAreaId.values
+      .firstWhere((element) => element.usbValue == usbValue,
       orElse: () => FocusAreaId.Unknown);
+
+  static FocusAreaId getIdFromWifi(String wifiValue) =>
+      FocusAreaId.values.firstWhere(
+              (element) => element.wifiValue == wifiValue,
+          orElse: () => FocusAreaId.Unknown);
 }
 
 class FocusAreaValue extends SettingsValue<FocusAreaId> {
   FocusAreaValue(FocusAreaId id) : super(id);
 
   @override
-  factory FocusAreaValue.fromUSBValue(int usbValue) {
-    return FocusAreaValue(getFocusAreaId(usbValue));
-  }
+  factory FocusAreaValue.fromUSBValue(int usbValue) =>
+      FocusAreaValue(FocusAreaIdExtension.getIdFromUsb(usbValue));
+
+  @override
+  factory FocusAreaValue.fromWifiValue(String wifiValue) =>
+      FocusAreaValue(FocusAreaIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;

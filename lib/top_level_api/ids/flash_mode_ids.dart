@@ -52,22 +52,27 @@ extension FlashModeIdExtension on FlashModeId {
     }
   }
 
-  String get wifiValue => "";
-} //8004
+  String get wifiValue => throw UnimplementedError;
 
-FlashModeId getFlashModeId(int usbValue) {
-  return FlashModeId.values.firstWhere(
-      (element) => element.usbValue == usbValue,
-      orElse: () => FlashModeId.Unknown);
+  static FlashModeId getIdFromUsb(int usbValue) =>
+      FlashModeId.values.firstWhere((element) => element.usbValue == usbValue,
+          orElse: () => FlashModeId.Unknown);
+
+  static FlashModeId getIdFromWifi(String wifiValue) =>
+      FlashModeId.values.firstWhere((element) => element.wifiValue == wifiValue,
+          orElse: () => FlashModeId.Unknown);
 }
 
 class FlashModeValue extends SettingsValue<FlashModeId> {
   FlashModeValue(FlashModeId id) : super(id);
 
   @override
-  factory FlashModeValue.fromUSBValue(int usbValue) {
-    return FlashModeValue(getFlashModeId(usbValue));
-  }
+  factory FlashModeValue.fromUSBValue(int usbValue) =>
+      FlashModeValue(FlashModeIdExtension.getIdFromUsb(usbValue));
+
+  @override
+  factory FlashModeValue.fromWifiValue(String wifiValue) =>
+      FlashModeValue(FlashModeIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;

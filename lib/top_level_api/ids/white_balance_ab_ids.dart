@@ -106,22 +106,28 @@ extension WhiteBalanceAbIdExtension on WhiteBalanceAbId {
     }
   }
 
-  String get wifiValue => "";
-}
+  String get wifiValue => throw UnimplementedError;
 
-WhiteBalanceAbId getWhiteBalanceAbId(int usbValue) {
-  return WhiteBalanceAbId.values.firstWhere(
-      (element) => element.usbValue == usbValue,
+  static WhiteBalanceAbId getIdFromUsb(int usbValue) => WhiteBalanceAbId.values
+      .firstWhere((element) => element.usbValue == usbValue,
       orElse: () => WhiteBalanceAbId.Unknown);
+
+  static WhiteBalanceAbId getIdFromWifi(String wifiValue) =>
+      WhiteBalanceAbId.values.firstWhere(
+              (element) => element.wifiValue == wifiValue,
+          orElse: () => WhiteBalanceAbId.Unknown);
 }
 
 class WhiteBalanceAbValue extends SettingsValue<WhiteBalanceAbId> {
   WhiteBalanceAbValue(WhiteBalanceAbId id) : super(id);
 
   @override
-  factory WhiteBalanceAbValue.fromUSBValue(int usbValue) {
-    return WhiteBalanceAbValue(getWhiteBalanceAbId(usbValue));
-  }
+  factory WhiteBalanceAbValue.fromUSBValue(int usbValue) =>
+      WhiteBalanceAbValue(WhiteBalanceAbIdExtension.getIdFromUsb(usbValue));
+
+  @override
+  factory WhiteBalanceAbValue.fromWifiValue(String wifiValue) =>
+      WhiteBalanceAbValue(WhiteBalanceAbIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;

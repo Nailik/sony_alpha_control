@@ -31,22 +31,27 @@ extension FocusModeIdExtension on FocusModeId {
     }
   }
 
-  String get wifiValue => "";
-}
+  String get wifiValue => throw UnimplementedError;
 
-FocusModeId getFocusModeId(int usbValue) {
-  return FocusModeId.values.firstWhere(
-      (element) => element.usbValue == usbValue,
-      orElse: () => FocusModeId.Unknown);
+  static FocusModeId getIdFromUsb(int usbValue) =>
+      FocusModeId.values.firstWhere((element) => element.usbValue == usbValue,
+          orElse: () => FocusModeId.Unknown);
+
+  static FocusModeId getIdFromWifi(String wifiValue) =>
+      FocusModeId.values.firstWhere((element) => element.wifiValue == wifiValue,
+          orElse: () => FocusModeId.Unknown);
 }
 
 class FocusModeValue extends SettingsValue<FocusModeId> {
   FocusModeValue(FocusModeId id) : super(id);
 
   @override
-  factory FocusModeValue.fromUSBValue(int usbValue) {
-    return FocusModeValue(getFocusModeId(usbValue));
-  }
+  factory FocusModeValue.fromUSBValue(int usbValue) =>
+      FocusModeValue(FocusModeIdExtension.getIdFromUsb(usbValue));
+
+  @override
+  factory FocusModeValue.fromWifiValue(String wifiValue) =>
+      FocusModeValue(FocusModeIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;

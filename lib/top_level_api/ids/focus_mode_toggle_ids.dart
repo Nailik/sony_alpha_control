@@ -21,22 +21,29 @@ extension FocusModeToggleIdExtension on FocusModeToggleId {
     }
   }
 
-  String get wifiValue => "";
-}
+  String get wifiValue => throw UnimplementedError;
 
-FocusModeToggleId getFocusModeToggleId(int usbValue) {
-  return FocusModeToggleId.values.firstWhere(
-      (element) => element.usbValue == usbValue,
-      orElse: () => FocusModeToggleId.Unknown);
+  static FocusModeToggleId getIdFromUsb(int usbValue) =>
+      FocusModeToggleId.values
+          .firstWhere((element) => element.usbValue == usbValue,
+          orElse: () => FocusModeToggleId.Unknown);
+
+  static FocusModeToggleId getIdFromWifi(String wifiValue) =>
+      FocusModeToggleId.values.firstWhere(
+              (element) => element.wifiValue == wifiValue,
+          orElse: () => FocusModeToggleId.Unknown);
 }
 
 class FocusModeToggleValue extends SettingsValue<FocusModeToggleId> {
   FocusModeToggleValue(FocusModeToggleId id) : super(id);
 
   @override
-  factory FocusModeToggleValue.fromUSBValue(int usbValue) {
-    return FocusModeToggleValue(getFocusModeToggleId(usbValue));
-  }
+  factory FocusModeToggleValue.fromUSBValue(int usbValue) =>
+      FocusModeToggleValue(FocusModeToggleIdExtension.getIdFromUsb(usbValue));
+
+  @override
+  factory FocusModeToggleValue.fromWifiValue(String wifiValue) =>
+      FocusModeToggleValue(FocusModeToggleIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;
