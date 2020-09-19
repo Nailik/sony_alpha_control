@@ -49,7 +49,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
 
   //TODO zusammengefasstes "teilen" auch in usb -> man wählt das eine aus,
 //SettingsIdExtension.getSettingsIdWifi(value["type"].toString(
-  SettingsValue fromWifi(String wifiValue, {String wifiSubValue = ""}) {
+  SettingsValue fromWifi(String wifiValue) {
     switch (settingsId) {
       case SettingsId.FileFormat: //StillQuality
         return ImageFileFormatValue.fromWifiValue(wifiValue);
@@ -110,15 +110,16 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.FlashMode:
         return FlashModeValue.fromWifiValue(wifiValue);
       case SettingsId.FNumber:
-      //TODO  return IntValue(wifiValue); //durch 100
+        return DoubleValue(wifiValue as double); //durch 100
       case SettingsId.FocusMode:
         return FocusModeValue.fromWifiValue(wifiValue);
       case SettingsId.ISO:
-      //TODO  return StringValue(wifiValue);
+        return IsoValue(
+            wifiValue as double); //TODO test noise reduction, auto ...
       case SettingsId.ProgramShift:
       //TODO  return StringValue(wifiValue);
       case SettingsId.ShutterSpeed:
-      //TODO return ShutterSpeedValue(wifiValue.toDouble(), subValue);
+        return ShutterSpeedValue(wifiValue as double, -1);
       case SettingsId.WhiteBalance:
       //TODO   return StringValue(wifiValue);
       case SettingsId.FocusAreaSpot: //touchAFPosition
@@ -168,7 +169,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.WhiteBalance:
         return WhiteBalanceValue.fromUSBValue(usbValue);
       case SettingsId.FNumber:
-        return IntValue(usbValue);
+        return DoubleValue(usbValue as double); //TODO test
       case SettingsId.FocusMode:
         return FocusModeValue.fromUSBValue(usbValue);
       case SettingsId.MeteringMode:
@@ -366,6 +367,9 @@ class ShutterSpeedValue extends DoubleValue {
 
   @override
   String get name {
+    if (subValue == -1) {
+      return id.toString();
+    }
     if (subValue == 1) {
       return "1/${id.toInt()}";
     }

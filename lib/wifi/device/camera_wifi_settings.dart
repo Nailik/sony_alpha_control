@@ -70,6 +70,9 @@ class CameraWifiSettings extends CameraSettings {
           case SettingsId.MovieFileFormat:
           case SettingsId.FlashMode:
           case SettingsId.FocusMode:
+          case SettingsId.FNumber:
+          case SettingsId.ShutterSpeed:
+          case SettingsId.ISO:
           default:
             //current is only named like the current setting, eg: "currentFNumber"
             //available list is named candidates like fNumberCandidates
