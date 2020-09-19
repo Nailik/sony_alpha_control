@@ -86,7 +86,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.SteadyMode:
         return OnOffValue(wifiValue);
       case SettingsId.ViewAngle:
-      //TODO 120,70,-1
+        return IntValue(wifiValue as int);
       case SettingsId.FlipSetting:
         return OnOffValue(wifiValue);
       case SettingsId.SceneSelection:

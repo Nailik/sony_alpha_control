@@ -536,12 +536,15 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   Future _updateAvailable(SettingsId settingsId) {
     return WifiCommand.createCommand(SonyWebApiMethod.GET_AVAILABLE, settingsId)
-        .send(device); //TODO update available
+        .send(device)
+        .then((wifiResponse) => device.cameraSettings
+            .updateAvailable(settingsId, wifiResponse.response));
   }
 
   Future _updateSupported(SettingsId settingsId) {
     return WifiCommand.createCommand(SonyWebApiMethod.GET_SUPPORTED, settingsId)
-        .send(device);//TODO update supported
+        .send(device)
+        .then((wifiResponse) => device.cameraSettings
+            .updateSupported(settingsId, wifiResponse.response));
   }
-
 }

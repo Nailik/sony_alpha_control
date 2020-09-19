@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:sonyalphacontrol/top_level_api/device/camera_settings.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/wifi/commands/wifi_command.dart';
 import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
@@ -91,6 +89,14 @@ class CameraWifiSettings extends CameraSettings {
     });
   }
 
+  updateAvailable(SettingsId settingsId, String json) {
+    //TODO
+  }
+
+  updateSupported(SettingsId settingsId, String json) {
+    //TODO
+  }
+
   getDefaultSettings(
       json, SettingsItem setting, String currentName, String availableName) {
     setting.value = setting.fromWifi(json[currentName]);
@@ -104,41 +110,3 @@ class CameraWifiSettings extends CameraSettings {
     }
   }
 }
-
-/*
-{"result":[{"type":"availableApiList",
-"names":["getVersions","getMethodTypes",
-"getApplicationInfo","getAvailableApiList","getEvent","getSupportedCameraFunction",
-"startLiveview","stopLiveview","startLiveviewWithSize","stopRecMode",
-"getSupportedSelfTimer","getSupportedContShootingMode","getSupportedContShootingSpeed",
-"getExposureMode","getSupportedExposureMode","getLiveviewSize","getAvailableLiveviewSize",
-"getSupportedLiveviewSize","getPostviewImageSize","getAvailablePostviewImageSize",
-"getSupportedPostviewImageSize","getShootMode","getAvailableShootMode",
-"getSupportedShootMode","getSupportedFocusMode","getSupportedZoomSetting",
-"setLiveviewFrameInfo","getLiveviewFrameInfo"]},
-
-{"cameraStatus":"IDLE","type":"cameraStatus"}
-,null,
-{"type":"liveviewStatus","liveviewStatus":false}
-
-,null,[],[],null,null,null,[],null,
-
-{"cameraFunctionCandidates":["Contents Transfer","Remote Shooting"],
-"type":"cameraFunction","currentCameraFunction":"Remote Shooting"}
-
-,null,null,null,null,null,null,{
-"postviewImageSizeCandidates":["2M"],"type":"postviewImageSize","currentPostviewImageSize":"2M"}
-,null,{"shootModeCandidates":["still"],"type":"shootMode","currentShootMode":"still"}
-,null,null,null,null,null,null,null,null,null,
-{"type":"programShift","isShifted":false},null,null,null],"id":7}
- */
-
-/*
-{"result":[{"type":"availableApiList","names":["getVersions","getMethodTypes","getApplicationInfo","getAvailableApiList","getEvent","getSupportedCameraFunction",
-"stopRecMode","startLiveview","stopLiveview","startLiveviewWithSize","setCameraFunction","getCameraFunction","getAvailableCameraFunction","actHalfPressShutter",
-"cancelHalfPressShutter","getSupportedSelfTimer","getSupportedContShootingMode","getSupportedContShootingSpeed","getExposureMode","getSupportedExposureMode",
-"getLiveviewSize","getAvailableLiveviewSize","getSupportedLiveviewSize","setPostviewImageSize","getPostviewImageSize","getAvailablePostviewImageSize",
-"getSupportedPostviewImageSize","setShootMode","getShootMode","getAvailableShootMode","getSupportedShootMode","getSupportedFocusMode","getSupportedZoomSetting",
-"setLiveviewFrameInfo","getLiveviewFrameInfo"]},
-null,null,null,null,[],[],null,null,null,[],null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"id":8}
- */
