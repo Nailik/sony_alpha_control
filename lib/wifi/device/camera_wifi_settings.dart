@@ -87,6 +87,7 @@ class CameraWifiSettings extends CameraSettings {
         }
       }
     });
+
   }
 
   updateAvailable(SettingsId settingsId, String json) {

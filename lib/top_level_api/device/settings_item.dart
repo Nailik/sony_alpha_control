@@ -32,9 +32,25 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
 
   T value;
   T subValue;
+  List<T> available = new List.unmodifiable({});
+  List<T> supported = new List.unmodifiable({});
 
-  List<T> available = new List();
-  List<T> supported = new List();
+  updateItem(
+      T newValue, T newSubValue, List<T> newAvailable, List<T> newSupported) {
+    bool change = value != newValue ||
+        subValue != newSubValue ||
+        available != newAvailable ||
+        supported != newSupported; //TODO list check all items?
+
+    if (change) {
+      value = newValue;
+      subValue = newSubValue;
+      available = new List.unmodifiable(newAvailable);
+      supported = new List.unmodifiable(newSupported);
+
+      notifyListeners();
+    }
+  }
 
   SettingsItem(this.settingsId);
 
