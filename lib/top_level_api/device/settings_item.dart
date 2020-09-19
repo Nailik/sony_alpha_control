@@ -14,6 +14,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_phase_ids.dar
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/live_view_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/movie_file_format_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/movie_quality_ids.dart';
@@ -24,15 +25,16 @@ import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/zoom_settings_ids.dart';
 
 class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
   SettingsId settingsId;
 
-  SettingsValue value;
-  SettingsValue subValue;
+  T value;
+  T subValue;
 
-  List<SettingsValue> available = new List();
-  List<SettingsValue> supported = new List();
+  List<T> available = new List();
+  List<T> supported = new List();
 
   SettingsItem(this.settingsId);
 
@@ -57,7 +59,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
         return StringValue(wifiValue);
       case SettingsId.CameraStatus:
         return CameraStatusValue.fromWifiValue(wifiValue);
-      case SettingsId.ZoomStatus:
+      case SettingsId.ZoomInformation:
       //TODO return StringValue(wifiValue);
       case SettingsId.LiveViewState:
         return BoolValue(wifiValue as bool);
@@ -65,6 +67,8 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
         return StringValue(wifiValue); //TODO enum 0,90,180,270
       case SettingsId.PostViewUrlSet:
       //TODO
+      case SettingsId.LiveViewSize:
+        return LiveViewSizeValue.fromWifiValue(wifiValue);
       case SettingsId.ContShootingUrlSet:
       //TODO
       case SettingsId.StorageInformation:
@@ -77,16 +81,14 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       //TODO  return IntValue(wifiValue);
       case SettingsId.MovieQuality:
         return MovieQualityValue.fromWifiValue(wifiValue);
-      case SettingsId.StillSize:
-      //TODO
       case SettingsId.CameraFunctionResult:
       //TODO
       case SettingsId.SteadyMode:
-      //TODO "off" an "on"
+        return OnOffValue(wifiValue);
       case SettingsId.ViewAngle:
       //TODO 120,70,-1
       case SettingsId.FlipSetting:
-      //TODO
+        return OnOffValue(wifiValue);
       case SettingsId.SceneSelection:
       //TODO
       case SettingsId.IntervalTime:
@@ -96,7 +98,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.MovieFileFormat:
         return MovieFileFormatValue.fromWifiValue(wifiValue);
       case SettingsId.IRRemoteControl:
-      //TODO
+        return OnOffValue(wifiValue);
       case SettingsId.TvColorSystem:
       //TODO
       case SettingsId.PostViewImageSize:
@@ -129,9 +131,11 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.TrackingFocusStatus:
       //TODO
       case SettingsId.TrackingFocus:
-      //TODO
+        return OnOffValue(wifiValue);
       case SettingsId.ZoomSetting: //FocusStatus
       //TODO   return StringValue(wifiValue);
+      case SettingsId.ZoomSetting: //FocusStatus
+        return ZoomSettingValue.fromWifiValue(wifiValue);
       case SettingsId.ContShootingMode:
       //TODO return ContShootingModeValue.fromWifiValue(wifiValue);
       case SettingsId.ContShootingSpeed:
@@ -331,7 +335,20 @@ class BoolValue extends SettingsValue<bool> {
   int get usbValue => id ? 1 : 0;
 
   @override
-  String get wifiValue => throw UnimplementedError();
+  String get wifiValue => id.toString();
+}
+
+class OnOffValue extends SettingsValue<String> {
+  OnOffValue(String id) : super(id); //"on" or "off"
+
+  @override
+  String get name => id.toString();
+
+  @override
+  int get usbValue => id == "on" ? 1 : 0;
+
+  @override
+  String get wifiValue => id.toString();
 }
 
 class PointValue extends SettingsValue<Point> {
@@ -344,7 +361,7 @@ class PointValue extends SettingsValue<Point> {
   int get usbValue => null;
 
   @override
-  String get wifiValue => throw UnimplementedError();
+  String get wifiValue => id.toString();
 }
 
 class DoubleValue extends SettingsValue<double> {
@@ -354,7 +371,7 @@ class DoubleValue extends SettingsValue<double> {
   String get name => id.toString();
 
   @override
-  int get usbValue => null;
+  int get usbValue => id.toInt();
 
   @override
   String get wifiValue => throw UnimplementedError();
@@ -383,7 +400,7 @@ class IsoValue extends DoubleValue {
   @override
   String get name {
     var multiFrame = id > (2 * 0xFFFFFF)
-        ? "MultiFrame RM Hoch"
+        ? "MultiFrame RM High"
         : id > 0xFFFFFF
             ? "MultiFrame RM Standard"
             : "";
@@ -392,7 +409,7 @@ class IsoValue extends DoubleValue {
             ? "Auto"
             : "";
     var value = id % 0xFFFFFF - id ~/ 0xFFFFFF;
-    return "${auto.isEmpty ? value : auto} $multiFrame";
+    return "${auto.isEmpty ? value : auto} $multiFrame"; //TODO enums for text?
   }
 }
 
@@ -406,7 +423,7 @@ class IntValue extends SettingsValue<int> {
   int get usbValue => id;
 
   @override
-  String get wifiValue => throw UnimplementedError();
+  String get wifiValue => id.toString();
 }
 
 abstract class SettingsValue<T> {

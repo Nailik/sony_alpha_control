@@ -102,13 +102,12 @@ class CameraUsbSettings extends CameraSettings {
       var settingsId = bytes.getUint16(offset, Endian.little);
       offset += 2;
 
-      SettingsItem setting = settings.singleWhere(
-          (it) => it.settingsId.usbValue == settingsId,
-          orElse: () => null);
+      SettingsId settingsIdEnum = SettingsIdExtension.getIdFromUsb(settingsId);
+
+      SettingsItem setting = getItem(settingsIdEnum);
       if (setting == null) {
-        setting =
-            new SettingsItem(SettingsIdExtension.getIdFromUsb(settingsId));
-        settings.add(setting);
+        setting = new SettingsItem(settingsIdEnum);
+        addItem(setting);
       }
 
       //TODO check if i know this settings id

@@ -164,7 +164,7 @@ enum SettingsId {
 
   ///wifi only *****************************************************
   CameraStatus,
-  ZoomStatus,
+  ZoomInformation,
   StorageInformation,
   Versions,
   MethodTypes,
@@ -208,7 +208,6 @@ enum SettingsId {
   LiveViewOrientation,
   PostViewUrlSet,
   ContShootingUrlSet,
-  StillSize,
   CameraFunctionResult,
   SceneSelection,
   IRRemoteControl,
@@ -391,7 +390,7 @@ extension SettingsIdExtension on SettingsId {
         return "cameraFunction";
       case SettingsId.Zoom:
         return "zoom";
-      case SettingsId.ZoomStatus:
+      case SettingsId.ZoomInformation:
         return "zoomInformation";
       case SettingsId.HalfPressShutter:
         return "halfPressShutter";

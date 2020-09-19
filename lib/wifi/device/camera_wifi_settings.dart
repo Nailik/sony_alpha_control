@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:sonyalphacontrol/top_level_api/device/camera_settings.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/wifi/commands/wifi_command.dart';
 import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
@@ -32,14 +34,13 @@ class CameraWifiSettings extends CameraSettings {
       if (element != null) {
         var settingsIdWifiValue = element["type"];
 
-        SettingsItem setting = settings.singleWhere(
-            (it) => it.settingsId.wifiValue == settingsIdWifiValue,
-            orElse: () => null);
+        SettingsId settingsIdEnum =
+            SettingsIdExtension.getIdFromWifi(settingsIdWifiValue);
 
+        SettingsItem setting = getItem(settingsIdEnum);
         if (setting == null) {
-          setting = new SettingsItem(
-              SettingsIdExtension.getIdFromWifi(settingsIdWifiValue));
-          settings.add(setting);
+          setting = new SettingsItem(settingsIdEnum);
+          addItem(setting);
         }
 
         switch (setting.settingsId) {
@@ -58,6 +59,9 @@ class CameraWifiSettings extends CameraSettings {
                 setting.available.add(setting.fromWifi(item));
               });
             }
+            break;
+          case SettingsId.ImageSize:
+          case SettingsId.AspectRatio:
             break;
           case SettingsId.LiveViewState:
           case SettingsId.LiveViewOrientation:

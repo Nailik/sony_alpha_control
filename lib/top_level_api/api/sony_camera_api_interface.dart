@@ -171,8 +171,7 @@ abstract class CameraApiInterface {
 
   Future<SettingsItem<AspectRatioValue>> getAspectRatio(
           {ForceUpdate update}) async =>
-      device.cameraSettings.settings.firstWhere(
-          (element) => element.settingsId == SettingsId.AspectRatio);
+      device.cameraSettings.getItem(SettingsId.AspectRatio);
 
   Future<bool> setAspectRatio(AspectRatioId value);
 

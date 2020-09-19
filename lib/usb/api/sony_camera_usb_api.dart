@@ -249,8 +249,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   @override
   Future<int> getBatteryPercentage({update = ForceUpdate.Off}) async {
-    return device.cameraSettings.settings
-        .firstWhere((element) => element.settingsId == SettingsId.BatteryInfo)
+    return device.cameraSettings.getItem(SettingsId.BatteryInfo)
         .value
         .usbValue;
   }
@@ -523,9 +522,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
   @override
   Future<RecordVideoStateValue> getRecordingVideoState(
           {update = ForceUpdate.Off}) async =>
-      device.cameraSettings.settings
-          .firstWhere(
-              (element) => element.settingsId == SettingsId.RecordVideoState)
+      device.cameraSettings.getItem(SettingsId.RecordVideoState)
           .value as RecordVideoStateValue;
 
   @override
