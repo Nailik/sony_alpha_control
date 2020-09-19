@@ -98,5 +98,11 @@ class CameraWifiSettings extends CameraSettings {
  */
 
 /*
-{"result":[{"type":"availableApiList","names":["getVersions","getMethodTypes","getApplicationInfo","getAvailableApiList","getEvent","getSupportedCameraFunction","stopRecMode","startLiveview","stopLiveview","startLiveviewWithSize","setCameraFunction","getCameraFunction","getAvailableCameraFunction","actHalfPressShutter","cancelHalfPressShutter","getSupportedSelfTimer","getSupportedContShootingMode","getSupportedContShootingSpeed","getExposureMode","getSupportedExposureMode","getLiveviewSize","getAvailableLiveviewSize","getSupportedLiveviewSize","setPostviewImageSize","getPostviewImageSize","getAvailablePostviewImageSize","getSupportedPostviewImageSize","setShootMode","getShootMode","getAvailableShootMode","getSupportedShootMode","getSupportedFocusMode","getSupportedZoomSetting","setLiveviewFrameInfo","getLiveviewFrameInfo"]},null,null,null,null,[],[],null,null,null,[],null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"id":8}
+{"result":[{"type":"availableApiList","names":["getVersions","getMethodTypes","getApplicationInfo","getAvailableApiList","getEvent","getSupportedCameraFunction",
+"stopRecMode","startLiveview","stopLiveview","startLiveviewWithSize","setCameraFunction","getCameraFunction","getAvailableCameraFunction","actHalfPressShutter",
+"cancelHalfPressShutter","getSupportedSelfTimer","getSupportedContShootingMode","getSupportedContShootingSpeed","getExposureMode","getSupportedExposureMode",
+"getLiveviewSize","getAvailableLiveviewSize","getSupportedLiveviewSize","setPostviewImageSize","getPostviewImageSize","getAvailablePostviewImageSize",
+"getSupportedPostviewImageSize","setShootMode","getShootMode","getAvailableShootMode","getSupportedShootMode","getSupportedFocusMode","getSupportedZoomSetting",
+"setLiveviewFrameInfo","getLiveviewFrameInfo"]},
+null,null,null,null,[],[],null,null,null,[],null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"id":8}
  */

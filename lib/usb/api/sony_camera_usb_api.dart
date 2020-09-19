@@ -78,7 +78,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
       case SettingsId.WhiteBalanceGM:
         return setWhiteBalanceGm(getWhiteBalanceGmId(value));
       case SettingsId.AspectRatio:
-        return setAspectRatio(getAspectRatioId(value));
+        return setAspectRatio(AspectRatioIdExtension.getIdFromUsb(value));
       case SettingsId.UnkD212:
         return false;
       case SettingsId.Zoom:

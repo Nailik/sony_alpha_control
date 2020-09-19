@@ -10,6 +10,19 @@ enum DriveModeId {
   ContinuousShooting_Lo,
   ContinuousShooting_HiPlus,
 
+  /*
+  ContinuousShooting_10FPS_1Sec,//10 frames in 1 second
+  ContinuousShooting_8FPS_1Sec,//10 frames in 1.25 seconds
+  ContinuousShooting_,//10 frames in 2 seconds
+  ContinuousShooting_HiPlus,//10 frames in 5 seconds
+
+        const val Single = "Single"
+        const val Continuous = "Continuous"
+        const val SpdPriorityCont = "Spd Priority Cont."
+        const val Burst = "Burst"
+        const val MotionShot = "MotionShot"
+   */
+
 // Self timer (single)
 
   SelfTimerSingle_2Sec,
@@ -187,7 +200,27 @@ extension DriveModeIdExtension on DriveModeId {
     }
   }
 
-  String get wifiValue => "";
+  String get wifiValue {
+    switch (this) {
+      case DriveModeId.SingleShooting:
+        return 0x0001;
+      case DriveModeId.ContinuousShooting_Hi:
+        return "Hi";
+      case DriveModeId.ContinuousShooting_Mid:
+        return 0x8015;
+      case DriveModeId.ContinuousShooting_Lo:
+        return "Low";
+      case DriveModeId.ContinuousShooting_HiPlus:
+        return 0x8010;
+      case DriveModeId.SelfTimerSingle_2Sec:
+        return 0x8005;
+      case DriveModeId.SelfTimerSingle_5Sec:
+        return 0x8003;
+      case DriveModeId.Unknown:
+        return -1;
+      default:
+        return "Unsupported";
+  };
 }
 
 DriveModeId getDriveModeId(int usbValue) {

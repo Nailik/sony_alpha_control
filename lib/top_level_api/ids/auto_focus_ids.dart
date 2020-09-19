@@ -50,22 +50,45 @@ extension AutoFocusStateIdExtension on AutoFocusStateId {
     }
   }
 
-  String get wifiValue => "";
-}
+  String get wifiValue {
+    switch (this) {
+      case AutoFocusStateId.Inactive:
+        return "Not Focusing";
+      case AutoFocusStateId.Focused:
+        return "Focused";
+      case AutoFocusStateId.FocusFailed:
+        return "Failed";
+      case AutoFocusStateId.Searching:
+        return "Focusing";
+      case AutoFocusStateId.FocusedAndSearching:
+        return "Focused And Focusing"; //not supported by wifi api?
+      case AutoFocusStateId.Unknown:
+        return "Unknown";
+      default:
+        return "Unsupported";
+    }
+  }
 
-AutoFocusStateId getAutoFocusStateId(int usbValue) {
-  return AutoFocusStateId.values.firstWhere(
-      (element) => element.usbValue == usbValue,
-      orElse: () => AutoFocusStateId.Unknown);
+  static AutoFocusStateId getIdFromUsb(int usbValue) => AutoFocusStateId.values
+      .firstWhere((element) => element.usbValue == usbValue,
+          orElse: () => AutoFocusStateId.Unknown);
+
+  static AutoFocusStateId getIdFromWifi(String wifiValue) =>
+      AutoFocusStateId.values.firstWhere(
+          (element) => element.wifiValue == wifiValue,
+          orElse: () => AutoFocusStateId.Unknown);
 }
 
 class AutoFocusStateValue extends SettingsValue<AutoFocusStateId> {
   AutoFocusStateValue(AutoFocusStateId id) : super(id);
 
   @override
-  factory AutoFocusStateValue.fromUSBValue(int usbValue) {
-    return AutoFocusStateValue(getAutoFocusStateId(usbValue));
-  }
+  factory AutoFocusStateValue.fromUSBValue(int usbValue) =>
+      AutoFocusStateValue(AutoFocusStateIdExtension.getIdFromUsb(usbValue));
+
+  @override
+  factory AutoFocusStateValue.fromWifiValue(String wifiValue) =>
+      AutoFocusStateValue(AutoFocusStateIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;

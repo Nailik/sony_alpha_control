@@ -39,59 +39,65 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
         settingsId == SettingsId.ShutterSpeed);
   }
 
+  //TODO stillsize(usb) - size and aspect ratio (wifi)
+  //TODO drivemode cont and timer (usb) - single on wifi (different methods) TODO test
+  //TODO cont shooting on wifi - on off via "start cont shooting" (bracket not wupporte?)
+  //TODO cont shooting speed and state together in usb, different in wifi
+
+  //TODO zusammengefasstes "teilen" auch in usb -> man wählt das eine aus,
 //SettingsIdExtension.getSettingsIdWifi(value["type"].toString(
-  SettingsValue fromWifi(value) {
+  SettingsValue fromWifi(String wifiValue, {String wifiSubValue = ""}) {
     switch (settingsId) {
       case SettingsId.AvailableApiList:
-        return StringValue(value);
+        return StringValue(wifiValue);
       case SettingsId.CameraStatus:
-        return StringValue(value);
+        return StringValue(wifiValue);
       case SettingsId.ZoomStatus:
-        return StringValue(value);
+        return StringValue(wifiValue);
       case SettingsId.LiveViewState:
-        return BoolValue(value);
+        return BoolValue(wifiValue);
       case SettingsId.StorageInformation:
-        return StringValue(value);
+        return StringValue(wifiValue);
       case SettingsId.CameraFunction:
-        return CameraFunctionValue.fromWifiValue(value);
+        return CameraFunctionValue.fromWifiValue(wifiValue);
       case SettingsId.EV: //exposureCompensation
-        return IntValue(usbValue);
+        return IntValue(wifiValue);
       case SettingsId.PostViewImageSize:
-        return StringValue(value);
+        return StringValue(wifiValue);
       case SettingsId.SelfTimer:
-        return StringValue(value);
+        return StringValue(wifiValue);
       case SettingsId.ShootingMode:
-        return ShootingModeValue.fromWifiValue(value);
+        return ShootingModeValue.fromWifiValue(wifiValue);
       case SettingsId.MeteringMode: //exposureMode
-        return MeteringModeValue.fromWifiValue(value);
+        return MeteringModeValue.fromWifiValue(wifiValue);
       case SettingsId.FlashMode:
-        return FlashModeValue.fromWifiValue(value);
+        return FlashModeValue.fromWifiValue(wifiValue);
       case SettingsId.FNumber:
-        return IntValue(usbValue); //durch 100
+        return IntValue(wifiValue); //durch 100
       case SettingsId.FocusMode:
-        return FocusModeValue.fromWifiValue(value);
+        return FocusModeValue.fr(wifiValue);
       case SettingsId.ISO:
-        return StringValue(value);
+        return StringValue(wifiValue);
       case SettingsId.ProgramShift:
-        return StringValue(value);
+        return StringValue(wifiValue);
       case SettingsId.ShutterSpeed:
-        return ShutterSpeedValue(usbValue.toDouble(), subValue);
+        return ShutterSpeedValue(wifiValue.toDouble(), subValue);
       case SettingsId.WhiteBalance:
-        return StringValue(value);
+        return StringValue(wifiValue);
       case SettingsId.FocusAreaSpot: //touchAFPosition
-        return IntValue(usbValue);
+        return IntValue(wifiValue);
       case SettingsId.AutoFocusState:
-        return AutoFocusStateValue.fromUSBValue(usbValue);
+        return AutoFocusStateValue.fromWifiValue(wifiValue);
       case SettingsId.ZoomSetting:
-        return StringValue(value);
+        return StringValue(wifiValue);
       case SettingsId.ContShootingMode:
-        return ContShootingModeValue.fromWifiValue(value);
+        return ContShootingModeValue.fromWifiValue(wifiValue);
       case SettingsId.ContShootingSpeed:
-        return ContShootingSpeedValue.fromWifiValue(value);
+        return ContShootingSpeedValue.fromWifiValue(wifiValue);
       case SettingsId.BatteryInfo:
-        return IntValue(usbValue);
+        return IntValue(wifiValue);
       case SettingsId.SilentShooting:
-        return StringValue(value); //bool value?
+        return StringValue(wifiValue); //bool value?
       default:
         return null;
         break;

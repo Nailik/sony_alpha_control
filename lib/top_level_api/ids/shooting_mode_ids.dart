@@ -118,14 +118,35 @@ extension ShootingModeIdExtension on ShootingModeId {
     }
   }
 
-  String get wifiValue => "";
+  String get wifiValue {
+    switch (this) {
+      case ShootingModeId.M://still_manual
+        return "still_Manual Exposure";
+      case ShootingModeId.P://still_manual
+        return "still_Program Auto";
+      case ShootingModeId.A://still_aperature
+        return "still_Aperature Priority";
+      case ShootingModeId.S://still_shutter
+        return "still_Shutter Priority";
+      case ShootingModeId.AUTO:
+        return "still_Intelligent Auto";
+      case ShootingModeId.SUPERIOR_AUTO:
+        return "still_Superior Auto";
+      case ShootingModeId
+  }
+
+  static ShootingModeId getIdFromUsb(int usbValue) => ShootingModeId.values.firstWhere(
+            (element) => element.usbValue == usbValue,
+        orElse: () => ShootingModeId.Unknown);
+
+  //wifi Value = still/movie/audio/intervalstill (Shoot mode)
+  //wifiSubValue = auto/aperature/shutter/manual/intelligent auto/superior auto
+  ShootingModeId getIdFromWifi(String wifiValue, String wifiSubValue) =>
+      ShootingModeId.values.firstWhere(
+              (element) => element.wifiValue == "${wifiValue}_$wifiSubValue",
+          orElse: () => ShootingModeId.Unknown);
 }
 
-ShootingModeId getShootingModeId(int usbValue) {
-  return ShootingModeId.values.firstWhere(
-      (element) => element.usbValue == usbValue,
-      orElse: () => ShootingModeId.Unknown);
-}
 
 class ShootingModeValue extends SettingsValue<ShootingModeId> {
   ShootingModeValue(ShootingModeId id) : super(id);

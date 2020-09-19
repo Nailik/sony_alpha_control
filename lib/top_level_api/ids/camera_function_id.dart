@@ -22,7 +22,9 @@ extension CameraFunctionIdExtension on CameraFunctionId {
     }
   }
 
-  static CameraFunctionId getCameraFunctionId(String wifiValue) {
+  static CameraFunctionId getIdFromUsb(int usbValue) => throw UnsupportedError;
+
+  static CameraFunctionId getIdFromWifi(String wifiValue) {
     return CameraFunctionId.values.firstWhere(
         (element) => element.wifiValue == wifiValue,
         orElse: () => CameraFunctionId.UNKNOWN);
@@ -33,16 +35,18 @@ class CameraFunctionValue extends SettingsValue<CameraFunctionId> {
   CameraFunctionValue(CameraFunctionId id) : super(id);
 
   @override
-  factory CameraFunctionValue.fromWifiValue(String wifiValue) {
-    return CameraFunctionValue(
-        CameraFunctionIdExtension.getCameraFunctionId(wifiValue));
-  }
+  factory CameraFunctionValue.fromUSBValue(int usbValue) =>
+      throw UnsupportedError;
+
+  @override
+  factory CameraFunctionValue.fromWifiValue(String wifiValue) =>
+      CameraFunctionValue(CameraFunctionIdExtension.getIdFromWifi(wifiValue));
 
   @override
   String get name => id.toString();
 
   @override
-  int get usbValue => throw UnimplementedError();
+  int get usbValue => throw UnsupportedError;
 
   @override
   String get wifiValue => id.wifiValue;
