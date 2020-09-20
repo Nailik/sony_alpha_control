@@ -62,6 +62,8 @@ abstract class CameraApiInterface {
   ///usb so far
   Future<bool> setSettingsRaw(SettingsId id, int value);
 
+
+
   Future<List<CameraImage>> capturePhoto(); //TODO return foto?
   Future<bool> getPhotoAvailable({ForceUpdate update});
 
@@ -88,6 +90,7 @@ abstract class CameraApiInterface {
   Future<SettingsItem<IntValue>> getFNumber({ForceUpdate update}) async =>
       device.cameraSettings.getItem(SettingsId.FNumber);
 
+  //value -> up and down (1 or -1)
   Future<bool> setFNumber(int value);
 
   Future<SettingsItem<IntValue>> getIso({ForceUpdate update}) async =>
@@ -164,7 +167,8 @@ abstract class CameraApiInterface {
 
   Future<bool> setDroHdr(DroHdrId value);
 
-  Future<SettingsItem<ImageSizeValue>> getImageSize({ForceUpdate update}) async =>
+  Future<SettingsItem<ImageSizeValue>> getImageSize(
+          {ForceUpdate update}) async =>
       device.cameraSettings.getItem(SettingsId.ImageSize);
 
   Future<bool> setImageSize(ImageSizeId value);
@@ -248,86 +252,6 @@ abstract class CameraApiInterface {
       device.cameraSettings.getItem(SettingsId.FocusMagnifier);
 
   Future<bool> setFocusMagnifier(double value);
-
-  ///when the camera is connected it's possible to read the "Available" items, this represents what the camera can do, not whats currently at the moment is supported
-/*
-  static List<CameraStatusItemType> get availableStatusItems =>
-      api.availableStatusItems;
-
-  static List<CameraSettingsItemType> get availableSettingsItems =>
-      api.availableSettingsItems;
-
-  static List<CameraFunctionItemType> get availableFunctionItems =>
-      api.availableFunctionItems;
-
-  static Future<bool> updateSettings() => api.updateSettings(_connectedCamera);
-
-  ///this loop will update the camera status, current available items and current available settings
-  static Future<bool> startUpdateLoop() =>
-      api.startUpdateLoop(_connectedCamera);
-
-  ///this will start live view loop
-  static Future<bool> startLiveView() => api.startLiveView();
-*/
-
-/*
-audio recording
-audi orecording setting
-auto power off
-beep mode
-bulb shooting
-camera function
-camera setuo
-color setting
-cont shoot mde
-cont shoot speed
-dare time
-delete contentx
-event notification
-exposure compensation
-exposure mode
-flash mode
-flip setting
-f number
-focus mode
-half press shutter
-interval still recording
-interval time
-irremotecontrol
-iso speed rate
-live view
-livewviewframe
-live view size
-loop recording
-loop recording time
-movei file format
-movei waulity
-movie recording
-post view image size
-program shirft
-remove plaback
-scene seleciton
-self timer
-server information
-shoot mode
-shutter speed
-silent shooting setting
-steady mode
-still caputre
-still quality
-still size
-storage infor
-touch af position
-tracking focus
-transferring images
-tv color system
-view angle
-white balance
-wind noise reduction
-zoom
-zoom setting
- */
-
 }
 
 enum InterfaceType { Wifi_Interface, USB_Interface }

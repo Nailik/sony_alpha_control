@@ -40,6 +40,7 @@ class TestsPageState extends State<TestsPage> {
                   builder: (context, model, _) => ListView(
                     children: <Widget>[
                       //states
+                      getFNumberRow(),
                       getStateRow(SettingsId.ShootingMode),
                       getStateRow(SettingsId.AutoFocusState),
                       getStateRow(SettingsId.BatteryInfo),
@@ -56,7 +57,6 @@ class TestsPageState extends State<TestsPage> {
                       //settings
                       getImageSizeRow(),
                       getWhiteBalanceRow(),
-                      getFNumberRow(),
                       getSettingsRow(SettingsId.FocusMode),
                       getSettingsRow(SettingsId.MeteringMode),
                       getFlashRow(),
@@ -92,7 +92,32 @@ class TestsPageState extends State<TestsPage> {
             )));
   }
 
-  //getSettingsRow(SettingsId.FileFormat),
+
+  Widget getFNumberRow() {
+    return Card(
+      child: IntrinsicHeight(
+          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Expanded(
+              child: ListTile(
+                  title: Text(SettingsId.FNumber.name),
+                  subtitle: Text(device.cameraSettings
+                      .getItem(SettingsId.FNumber)
+                      ?.value
+                      ?.name ??
+                      "NotAvailable")),
+            ),
+            Expanded(
+              child: ListTile(
+                  title: Text("Up"), onTap: () => device.api.setFNumber(1)),
+            ),
+            Expanded(
+              child: ListTile(
+                  title: Text("Down"), onTap: () => device.api.setFNumber(-1)),
+            )
+          ])),
+    );
+  }
+
 
   Widget getImageSizeRow() {
     return Card(
@@ -480,31 +505,6 @@ class TestsPageState extends State<TestsPage> {
         Expanded(
           child: ListTile(
               title: Text("Off"), onTap: () => device.api.setFel(false)),
-        )
-      ])),
-    );
-  }
-
-  Widget getFNumberRow() {
-    return Card(
-      child: IntrinsicHeight(
-          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Expanded(
-          child: ListTile(
-              title: Text(SettingsId.FNumber.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.FNumber)
-                      ?.value
-                      ?.name ??
-                  "NotAvailable")),
-        ),
-        Expanded(
-          child: ListTile(
-              title: Text("Up"), onTap: () => device.api.setFNumber(1)),
-        ),
-        Expanded(
-          child: ListTile(
-              title: Text("Down"), onTap: () => device.api.setFNumber(-1)),
         )
       ])),
     );
