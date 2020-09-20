@@ -19,7 +19,6 @@ import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
@@ -64,6 +63,19 @@ abstract class CameraApiInterface {
 
 
 
+
+  //Wifi checked
+  Future<SettingsItem<IntValue>> getFNumber({ForceUpdate update}) async =>
+      device.cameraSettings.getItem(SettingsId.FNumber);
+
+  //value -> up and down (1 or -1)
+  Future<bool> modifyFNumber(int value);
+
+  //only available on wifi
+  Future<bool> setFNumber(DoubleValue value);
+
+  //unchecked
+
   Future<List<CameraImage>> capturePhoto(); //TODO return foto?
   Future<bool> getPhotoAvailable({ForceUpdate update});
 
@@ -86,12 +98,6 @@ abstract class CameraApiInterface {
   Future<bool> setRecordingAudio(String audioRecordingSetting);
 
   Future<SettingsItem<StringValue>> getRecordingAudio({ForceUpdate update});
-
-  Future<SettingsItem<IntValue>> getFNumber({ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.FNumber);
-
-  //value -> up and down (1 or -1)
-  Future<bool> setFNumber(int value);
 
   Future<SettingsItem<IntValue>> getIso({ForceUpdate update}) async =>
       device.cameraSettings.getItem(SettingsId.ISO); //TODO is auto iso?

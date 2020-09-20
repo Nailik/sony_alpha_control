@@ -51,7 +51,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
       case SettingsId.WhiteBalance:
         return setWhiteBalance(WhiteBalanceIdExtension.getIdFromUsb(value));
       case SettingsId.FNumber:
-        return setFNumber(value);
+        return modifyFNumber(value);
       case SettingsId.FocusMode:
         return setFocusMode(FocusModeIdExtension.getIdFromUsb(value));
       case SettingsId.MeteringMode:
@@ -298,11 +298,14 @@ class SonyCameraUsbApi extends CameraApiInterface {
           .isValidResponse();
 
   @override
-  Future<bool> setFNumber(int value) async =>
+  Future<bool> modifyFNumber(int value) async =>
       (await UsbCommands.getCommandSetting(SettingsId.FNumber,
                   opCodeId: OpCodeId.MainSetting, value1: value)
               .send())
           .isValidResponse();
+
+  @override
+  Future<bool> setFNumber(DoubleValue value) async => throw UnsupportedError;
 
   @override
   Future<bool> setFel(bool value) async {

@@ -12,7 +12,10 @@ setRecordingAudio
 getRecordingAudio
 
 getFNumber
+modifyFNumber
 setFNumber
+
+
 getIso
 setIso
 getShutterSpeed

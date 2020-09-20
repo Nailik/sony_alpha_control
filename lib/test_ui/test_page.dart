@@ -92,32 +92,49 @@ class TestsPageState extends State<TestsPage> {
             )));
   }
 
-
+  /*
+  getFNumber
+  modifyFNumber
+  setFNumber
+  */
   Widget getFNumberRow() {
     return Card(
-      child: IntrinsicHeight(
-          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-            Expanded(
-              child: ListTile(
-                  title: Text(SettingsId.FNumber.name),
-                  subtitle: Text(device.cameraSettings
+      child: Column(children: [
+        Expanded(
+          child: ListTile(
+              title: Text(SettingsId.FNumber.name),
+              subtitle: Text(device.cameraSettings
                       .getItem(SettingsId.FNumber)
                       ?.value
                       ?.name ??
-                      "NotAvailable")),
-            ),
-            Expanded(
-              child: ListTile(
-                  title: Text("Up"), onTap: () => device.api.setFNumber(1)),
-            ),
-            Expanded(
-              child: ListTile(
-                  title: Text("Down"), onTap: () => device.api.setFNumber(-1)),
-            )
-          ])),
+                  "NotAvailable")),
+        ),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          Expanded(
+            child: ListTile(
+                title: Text("Up"), onTap: () => device.api.modifyFNumber(1)),
+          ),
+          Expanded(
+            child: ListTile(
+                title: Text("Down"), onTap: () => device.api.modifyFNumber(-1)),
+          )
+        ]),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          Expanded(
+            child: DropdownButton(
+                value: 0,
+                items: device.cameraSettings
+                    .getItem(SettingsId.FNumber)
+                    .available
+                    .map((e) => DropdownMenuItem(
+                        child: Text(e.name), value: e.wifiValue))
+                    .toList(),
+                onChanged: (value) => device.api.setFNumber(value)),
+          ),
+        ]),
+      ]),
     );
   }
-
 
   Widget getImageSizeRow() {
     return Card(

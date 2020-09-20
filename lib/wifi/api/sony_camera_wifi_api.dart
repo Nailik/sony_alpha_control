@@ -41,6 +41,37 @@ class SonyCameraWifiApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
+
+  @override
+  Future<SettingsItem<IntValue>> getFNumber(
+      {update = ForceUpdate.IfNull}) async =>
+      _updateIf(update, await super.getFNumber(update: update));
+
+  @override
+  Future<bool> modifyFNumber(int value) async {
+    var fNumber = await getFNumber();
+    var currentIndex = fNumber.available
+        .indexWhere((element) => element.wifiValue == fNumber.value.wifiValue);
+    if ((currentIndex == 0 && value == -1) ||
+        (currentIndex == fNumber.available.length - 1 && value == 1)) {
+      return false; //would be out of range
+    }
+    var newIndex = currentIndex + value;
+    return WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.FNumber,
+        params: [fNumber.available[newIndex].wifiValue])
+        .send(device)
+        .then((value) => value.response == "[0]");
+  }
+
+  @override
+  Future<bool> setFNumber(DoubleValue value) async {
+    return WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.FNumber,
+        params: [value.wifiValue])
+        .send(device)
+        .then((value) => value.response == "[0]");
+  }
+
+
   @override
   Future<SettingsItem<BoolValue>> getAel({update = ForceUpdate.IfNull}) async =>
       _updateIf(update, await super.getAel(update: update));
@@ -74,11 +105,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
   Future<SettingsItem<DoubleValue>> getEV(
           {update = ForceUpdate.IfNull}) async =>
       _updateIf(update, await super.getEV(update: update));
-
-  @override
-  Future<SettingsItem<IntValue>> getFNumber(
-          {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getFNumber(update: update));
 
   @override
   Future<SettingsItem<BoolValue>> getFel({update = ForceUpdate.IfNull}) async =>
@@ -237,21 +263,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
-  @override
-  Future<bool> setFNumber(int value) async {
-    var fNumber = await getFNumber();
-    var currentIndex = fNumber.available
-        .indexWhere((element) => element.wifiValue == fNumber.value.wifiValue);
-    if ((currentIndex == 0 && value == -1) ||
-        (currentIndex == fNumber.available.length - 1 && value == 1)) {
-      return false; //would be out of range
-    }
-    var newIndex = currentIndex + value;
-    return WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.FNumber,
-            params: [fNumber.available[newIndex].wifiValue])
-        .send(device)
-        .then((value) => value.response == "[0]");
-  }
 
   @override
   Future<bool> setFel(bool value) {
