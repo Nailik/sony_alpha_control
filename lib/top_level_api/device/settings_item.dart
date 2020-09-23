@@ -142,12 +142,12 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.FocusMode:
         return FocusModeValue.fromWifiValue(wifiValue);
       case SettingsId.ISO:
-        return IsoValue.fromWifiValue(wifiValue); //TODO test noise reduction, auto ...
+        return IsoValue.fromWifiValue(
+            wifiValue); //TODO test noise reduction, auto ...
       case SettingsId.ProgramShift:
       //TODO  return StringValue(wifiValue);
       case SettingsId.ShutterSpeed:
-        return ShutterSpeedValue(
-            double.parse(wifiValue.replaceAll(",", ".")), -1);
+        return ShutterSpeedValue.fromWifiValue(wifiValue);
       case SettingsId.WhiteBalance:
       //TODO   return StringValue(wifiValue);
       case SettingsId.FocusAreaSpot: //touchAFPosition
@@ -337,7 +337,8 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
     }
   }
 
-  createListFromWifiJson(List<dynamic> list) => list.map<T>((e) => fromWifi(e)).toList();
+  createListFromWifiJson(List<dynamic> list) =>
+      list.map<T>((e) => fromWifi(e)).toList();
 }
 
 class StringValue extends SettingsValue<String> {
@@ -407,18 +408,39 @@ class DoubleValue extends SettingsValue<double> {
 
 class ShutterSpeedValue extends DoubleValue {
   var subValue;
+  var _name;
 
   ShutterSpeedValue(double id, this.subValue) : super(id);
 
   @override
-  String get name {
+  String get name => _name;
+
+  @override
+  String get wifiValue => _name;  //TODO really parse the id value
+
+  @override
+  factory ShutterSpeedValue.fromWifiValue(String wifiValue) {
+    double value = wifiValue.contains("/")
+        ? double.parse(wifiValue.split("/")[0]) /
+            double.parse(wifiValue.split("/")[1])
+        : wifiValue == "BULB" ? 0xFFFFFF : double.parse(wifiValue.replaceAll("\"", "").replaceAll(",", "."));
+    var it = ShutterSpeedValue(value, 0);
+    it._name = wifiValue;
+    return it;
+  }
+
+  @override
+  factory ShutterSpeedValue.fromUsbValue(double usbValue, double subValue) {
+    //TODO bulb value? even used or just up and down one step?
+    var it = ShutterSpeedValue(usbValue, subValue);
     if (subValue == -1) {
-      return id.toString();
+      it._name = it.id.toString();
+    } else if (subValue == 1) {
+      it._name = "1/${it.id.toInt()}";
+    } else {
+      it._name = "0.$subValue\"";
     }
-    if (subValue == 1) {
-      return "1/${id.toInt()}";
-    }
-    return "0.$subValue\"";
+    return it;
   }
 }
 

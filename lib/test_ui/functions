@@ -20,6 +20,7 @@ setIso
 
 getShutterSpeed
 setShutterSpeed
+
 getBatteryPercentage
 getAel
 setAel

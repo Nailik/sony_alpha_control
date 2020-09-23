@@ -17,12 +17,15 @@ abstract class CameraSettings extends ChangeNotifier {
         (element) => element?.settingsId == settingsId,
         orElse: () => null);
     if (item == null) {
-      switch(settingsId){
+      switch (settingsId) {
         case SettingsId.FNumber:
           item = SettingsItem<DoubleValue>(settingsId);
           break;
         case SettingsId.ISO:
           item = SettingsItem<IsoValue>(settingsId);
+          break;
+        case SettingsId.ShutterSpeed:
+          item = SettingsItem<ShutterSpeedValue>(settingsId);
           break;
       }
       _settings.add(item);

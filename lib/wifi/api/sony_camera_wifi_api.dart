@@ -47,7 +47,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<SettingsItem<DoubleValue>> getFNumber(
           {update = ForceUpdate.IfNull}) async =>
-      await _updateIf<DoubleValue>(update, await super.getFNumber(update: update));
+      await _updateIf<DoubleValue>(
+          update, await super.getFNumber(update: update));
 
   @override
   Future<bool> modifyFNumber(int value) async {
@@ -98,15 +99,23 @@ class SonyCameraWifiApi extends CameraApiInterface {
   /// Shutter Speed
   ///
   @override
-  Future<SettingsItem<IntValue>> getShutterSpeed(
+  Future<SettingsItem<ShutterSpeedValue>> getShutterSpeed(
           {update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getShutterSpeed(update: update));
 
   @override
-  Future<bool> setShutterSpeed(int value) => WifiCommand.createCommand(
-          SonyWebApiMethod.SET, SettingsId.ShutterSpeed, params: [value])
-      .send(device)
-      .then((value) => value.response == "true");
+  Future<bool> setShutterSpeed(ShutterSpeedValue value) async {
+    return await WifiCommand.createCommand(
+        SonyWebApiMethod.SET, SettingsId.ShutterSpeed,
+        params: [value.wifiValue]).send(device).then((result) {
+      if (result.isValid) {
+        SettingsItem<ShutterSpeedValue> item = device.cameraSettings
+            .getItem<ShutterSpeedValue>(SettingsId.ShutterSpeed);
+        item.updateItem(value, item.subValue, item.available, item.supported);
+      }
+      return result.isValid;
+    });
+  }
 
   @override
   Future<SettingsItem<BoolValue>> getAel({update = ForceUpdate.IfNull}) async =>

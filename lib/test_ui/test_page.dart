@@ -43,6 +43,7 @@ class TestsPageState extends State<TestsPage> {
                       //states
                       getFNumberRow(),
                       getIsoRow(),
+                      getShutterSpeed(),
                       /*  getStateRow(SettingsId.ShootingMode),
                       getStateRow(SettingsId.AutoFocusState),
                       getStateRow(SettingsId.BatteryInfo),
@@ -225,6 +226,65 @@ class TestsPageState extends State<TestsPage> {
                                     .toList(),
                                 onChanged: (value) =>
                                     device.api.setIso(value),
+                              ))),
+                    ]),
+              ]),
+            )));
+  }
+
+  Widget getShutterSpeed() {
+    return ChangeNotifierProvider<SettingsItem>(
+        create: (context) =>
+        (device.cameraSettings.getItem(SettingsId.ShutterSpeed)),
+        child: Consumer<SettingsItem>(
+            builder: (context, model, _) => Card(
+              child: Column(children: [
+                ListTile(
+                  title: Text(SettingsId.ShutterSpeed.name),
+                  subtitle: Text(device.cameraSettings
+                      .getItem(SettingsId.ShutterSpeed)
+                      .value
+                      ?.name ??
+                      "NotAvailable"),
+                  onTap: () =>
+                      device.api.getShutterSpeed(update: ForceUpdate.Both),
+                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                          child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: DropdownButton<ShutterSpeedValue>(
+                                hint: Text("available"),
+                                items: device.cameraSettings
+                                    .getItem(SettingsId.ShutterSpeed)
+                                    .available
+                                    .map<DropdownMenuItem<ShutterSpeedValue>>(
+                                        (e) =>
+                                        DropdownMenuItem<ShutterSpeedValue>(
+                                            child: Text(e.name),
+                                            value: e))
+                                    .toList(),
+                                onChanged: (value) =>
+                                    device.api.setShutterSpeed(value),
+                              ))),
+                      Expanded(
+                          child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: DropdownButton<ShutterSpeedValue>(
+                                hint: Text("supported"),
+                                items: device.cameraSettings
+                                    .getItem(SettingsId.ShutterSpeed)
+                                    .supported
+                                    .map<DropdownMenuItem<ShutterSpeedValue>>(
+                                        (e) =>
+                                        DropdownMenuItem<ShutterSpeedValue>(
+                                            child: Text(e.name),
+                                            value: e))
+                                    .toList(),
+                                onChanged: (value) =>
+                                    device.api.setShutterSpeed(value),
                               ))),
                     ]),
               ]),
@@ -475,14 +535,14 @@ class TestsPageState extends State<TestsPage> {
                       ?.name ??
                   "")),
         ),
-        Expanded(
-          child: ListTile(
-              title: Text("Up"), onTap: () => device.api.setShutterSpeed(1)),
-        ),
-        Expanded(
-          child: ListTile(
-              title: Text("Down"), onTap: () => device.api.setShutterSpeed(-1)),
-        )
+     //   Expanded(
+    //      child: ListTile(
+   //           title: Text("Up"), onTap: () => device.api.setShutterSpeed(1)),
+    //    ),
+    //    Expanded(
+    //      child: ListTile(
+    //          title: Text("Down"), onTap: () => device.api.setShutterSpeed(-1)),
+    //    )
       ])),
     );
   }

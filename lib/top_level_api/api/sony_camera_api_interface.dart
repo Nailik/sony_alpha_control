@@ -74,10 +74,16 @@ abstract class CameraApiInterface {
   //TODO value or steps?
   Future<bool> setIso(IsoValue value);
 
-  //TODO is auto iso?
   Future<SettingsItem<IsoValue>> getIso({ForceUpdate update}) async =>
       device.cameraSettings.getItem<IsoValue>(SettingsId.ISO);
-  //unchecked
+
+  Future<SettingsItem<ShutterSpeedValue>> getShutterSpeed({ForceUpdate update}) async =>
+      device.cameraSettings.getItem<ShutterSpeedValue>(SettingsId.ShutterSpeed);
+
+  //TODO up/down like f number
+  Future<bool> setShutterSpeed(ShutterSpeedValue value);
+
+  ///unchecked (wifi) *******************************************
 
   Future<List<CameraImage>> capturePhoto(); //TODO return foto?
   Future<bool> getPhotoAvailable({ForceUpdate update});
@@ -103,10 +109,6 @@ abstract class CameraApiInterface {
   Future<SettingsItem<StringValue>> getRecordingAudio({ForceUpdate update});
 
 
-  Future<SettingsItem<IntValue>> getShutterSpeed({ForceUpdate update}) async =>
-      device.cameraSettings.getItem<IntValue>(SettingsId.ShutterSpeed);
-
-  Future<bool> setShutterSpeed(int value);
 
   Future<int> getBatteryPercentage(
       {ForceUpdate update}); //TODO multiple batteries

@@ -43,7 +43,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   SonyCameraUsbApi(SonyCameraDevice device) : super(device);
 
-  Future<bool> setSettings(
+  Future<bool> setSettings( //TODO instead of int some SettingsValue<dynamic>
       SettingsId settingsId, int value, SonyCameraUsbDevice device) async {
     switch (settingsId) {
       case SettingsId.FileFormat:
@@ -72,7 +72,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
       case SettingsId.ImageSize:
         return setImageSize(ImageSizeIdExtension.getIdFromUsb(value));
       case SettingsId.ShutterSpeed:
-        return setShutterSpeed(value);
+        return setShutterSpeed(ShutterSpeedValue.fromUsbValue(value as double, 0));
       case SettingsId.WhiteBalanceColorTemp:
         return setWhiteBalanceColorTemp(value);
       case SettingsId.WhiteBalanceGM:
@@ -472,10 +472,10 @@ class SonyCameraUsbApi extends CameraApiInterface {
           .isValidResponse();
 
   @override
-  Future<bool> setShutterSpeed(int value) async =>
+  Future<bool> setShutterSpeed(ShutterSpeedValue value) async =>
       (await UsbCommands.getCommandSetting(SettingsId.ShutterSpeed,
                   opCodeId: OpCodeId.MainSetting,
-                  value1: value,
+                  value1: value.usbValue,
                   value1DataSize: 4)
               .send())
           .isValidResponse();
