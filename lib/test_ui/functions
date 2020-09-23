@@ -15,9 +15,9 @@ getFNumber
 modifyFNumber
 setFNumber
 
-
 getIso
 setIso
+
 getShutterSpeed
 setShutterSpeed
 getBatteryPercentage

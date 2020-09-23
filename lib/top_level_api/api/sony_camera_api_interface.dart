@@ -71,6 +71,12 @@ abstract class CameraApiInterface {
   //only available on wifi
   Future<bool> setFNumber(DoubleValue value);
 
+  //TODO value or steps?
+  Future<bool> setIso(IsoValue value);
+
+  //TODO is auto iso?
+  Future<SettingsItem<IsoValue>> getIso({ForceUpdate update}) async =>
+      device.cameraSettings.getItem<IsoValue>(SettingsId.ISO);
   //unchecked
 
   Future<List<CameraImage>> capturePhoto(); //TODO return foto?
@@ -96,12 +102,9 @@ abstract class CameraApiInterface {
 
   Future<SettingsItem<StringValue>> getRecordingAudio({ForceUpdate update});
 
-  Future<SettingsItem<IntValue>> getIso({ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.ISO); //TODO is auto iso?
-  Future<bool> setIso(int value); //TODO value or steps?
 
   Future<SettingsItem<IntValue>> getShutterSpeed({ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.ShutterSpeed);
+      device.cameraSettings.getItem<IntValue>(SettingsId.ShutterSpeed);
 
   Future<bool> setShutterSpeed(int value);
 
@@ -111,86 +114,86 @@ abstract class CameraApiInterface {
   //Auto Exposure Level (lock/unlock)
   Future<SettingsItem<BoolValue>> getAel({update = ForceUpdate.IfNull}) async =>
       device.cameraSettings
-          .getItem(SettingsId.AEL_State); //TODO differenc ael and ael state?
+          .getItem<BoolValue>(SettingsId.AEL_State); //TODO differenc ael and ael state?
 
   Future<bool> setAel(bool value);
 
   //Flash Exposure Level (lock/unlock)
   Future<SettingsItem<BoolValue>> getFel({ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.FEL);
+      device.cameraSettings.getItem<BoolValue>(SettingsId.FEL);
 
   Future<bool> setFel(bool value);
 
   Future<SettingsItem<FocusAreaValue>> getFocusArea(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.FocusArea);
+      device.cameraSettings.getItem<FocusAreaValue>(SettingsId.FocusArea);
 
   Future<bool> setFocusArea(FocusAreaId value);
 
   Future<SettingsItem<PointValue>> getFocusAreaSpot(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.FocusAreaSpot);
+      device.cameraSettings.getItem<PointValue>(SettingsId.FocusAreaSpot);
 
   Future<bool> setFocusAreaSpot(Point value);
 
   Future<SettingsItem<AutoFocusStateValue>> getAutoFocusState(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.AutoFocusState);
+      device.cameraSettings.getItem<AutoFocusStateValue>(SettingsId.AutoFocusState);
 
   Future<SettingsItem<DoubleValue>> getEV({ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.EV);
+      device.cameraSettings.getItem<DoubleValue>(SettingsId.EV);
 
   Future<bool> setEV(int value);
 
   Future<SettingsItem<FlashModeValue>> getFlashMode(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.FlashMode);
+      device.cameraSettings.getItem<FlashModeValue>(SettingsId.FlashMode);
 
   Future<bool> setFlashMode(FlashModeId value);
 
   Future<SettingsItem<IntValue>> getFlashValue({ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.FlashValue);
+      device.cameraSettings.getItem<IntValue>(SettingsId.FlashValue);
 
   Future<bool> setFlashValue(int value);
 
   Future<SettingsItem<ImageFileFormatValue>> getImageFileFormat(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.FileFormat);
+      device.cameraSettings.getItem<ImageFileFormatValue>(SettingsId.FileFormat);
 
   Future<bool> setImageFileFormat(ImageFileFormatId value);
 
   Future<SettingsItem<PictureEffectValue>> getPictureEffect(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.PictureEffect);
+      device.cameraSettings.getItem<PictureEffectValue>(SettingsId.PictureEffect);
 
   Future<bool> setPictureEffect(PictureEffectId value);
 
   Future<SettingsItem<DroHdrValue>> getDroHdr({ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.DroHdr);
+      device.cameraSettings.getItem<DroHdrValue>(SettingsId.DroHdr);
 
   Future<bool> setDroHdr(DroHdrId value);
 
   Future<SettingsItem<ImageSizeValue>> getImageSize(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.ImageSize);
+      device.cameraSettings.getItem<ImageSizeValue>(SettingsId.ImageSize);
 
   Future<bool> setImageSize(ImageSizeId value);
 
   Future<SettingsItem<AspectRatioValue>> getAspectRatio(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.AspectRatio);
+      device.cameraSettings.getItem<AspectRatioValue>(SettingsId.AspectRatio);
 
   Future<bool> setAspectRatio(AspectRatioId value);
 
   Future<SettingsItem<FocusModeValue>> getFocusMode(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.FocusMode);
+      device.cameraSettings.getItem<FocusModeValue>(SettingsId.FocusMode);
 
   Future<bool> setFocusMode(FocusModeId value);
 
   Future<SettingsItem<FocusModeToggleValue>> getFocusModeToggle(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.FocusModeToggleResponse);
+      device.cameraSettings.getItem<FocusModeToggleValue>(SettingsId.FocusModeToggleResponse);
 
   Future<bool> setFocusModeToggle(FocusModeToggleId value);
 
@@ -199,60 +202,60 @@ abstract class CameraApiInterface {
 
   Future<SettingsItem<DriveModeValue>> getShootingMode(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.ShootingMode);
+      device.cameraSettings.getItem<DriveModeValue>(SettingsId.ShootingMode);
 
   Future<SettingsItem<WhiteBalanceValue>> getWhiteBalance(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.WhiteBalance);
+      device.cameraSettings.getItem<WhiteBalanceValue>(SettingsId.WhiteBalance);
 
   Future<bool> setWhiteBalance(WhiteBalanceId value);
 
   Future<SettingsItem<IntValue>> getWhiteBalanceColorTemp(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.WhiteBalanceColorTemp);
+      device.cameraSettings.getItem<IntValue>(SettingsId.WhiteBalanceColorTemp);
 
   Future<bool> setWhiteBalanceColorTemp(int value);
 
   Future<SettingsItem<WhiteBalanceAbValue>> getWhiteBalanceAb(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.WhiteBalanceAB);
+      device.cameraSettings.getItem<WhiteBalanceAbValue>(SettingsId.WhiteBalanceAB);
 
   Future<bool> setWhiteBalanceAb(WhiteBalanceAbId value);
 
   Future<SettingsItem<WhiteBalanceGmValue>> getWhiteBalanceGm(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.WhiteBalanceGM);
+      device.cameraSettings.getItem<WhiteBalanceGmValue>(SettingsId.WhiteBalanceGM);
 
   Future<bool> setWhiteBalanceGm(WhiteBalanceGmId value);
 
   Future<SettingsItem<DriveModeValue>> getDriveMode(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.DriveMode);
+      device.cameraSettings.getItem<DriveModeValue>(SettingsId.DriveMode);
 
   Future<bool> setDriveMode(DriveModeId value);
 
   Future<SettingsItem<MeteringModeValue>> getMeteringMode(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.MeteringMode);
+      device.cameraSettings.getItem<MeteringModeValue>(SettingsId.MeteringMode);
 
   Future<bool> setMeteringMode(MeteringModeId value);
 
   Future<SettingsItem<FocusMagnifierDirectionValue>> getFocusMagnifierDirection(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.FocusMagnifier);
+      device.cameraSettings.getItem<FocusMagnifierDirectionValue>(SettingsId.FocusMagnifier);
 
   Future<bool> setFocusMagnifierDirection(
       FocusMagnifierDirectionId value, int steps); //move with steps?
 
   Future<SettingsItem<FocusMagnifierPhaseValue>> getFocusMagnifierPhase(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.FocusMagnifierPhase);
+      device.cameraSettings.getItem<FocusMagnifierPhaseValue>(SettingsId.FocusMagnifierPhase);
 
   Future<bool> setFocusMagnifierPhase(FocusMagnifierPhaseId value);
 
   Future<SettingsItem<DoubleValue>> getFocusMagnifier(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(SettingsId.FocusMagnifier);
+      device.cameraSettings.getItem<DoubleValue>(SettingsId.FocusMagnifier);
 
   Future<bool> setFocusMagnifier(double value);
 }

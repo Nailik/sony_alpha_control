@@ -31,8 +31,8 @@ class TestsPageState extends State<TestsPage> {
     return MaterialApp(
         home: Scaffold(
             appBar: AppBar(
-              leading: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
+          //    leading: CircularProgressIndicator(
+            //      valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
             ),
             backgroundColor: Colors.blueGrey,
             body: ChangeNotifierProvider<CameraSettings>(
@@ -42,6 +42,7 @@ class TestsPageState extends State<TestsPage> {
                     children: <Widget>[
                       //states
                       getFNumberRow(),
+                      getIsoRow(),
                       /*  getStateRow(SettingsId.ShootingMode),
                       getStateRow(SettingsId.AutoFocusState),
                       getStateRow(SettingsId.BatteryInfo),
@@ -169,6 +170,65 @@ class TestsPageState extends State<TestsPage> {
                         ]),
                   ]),
                 )));
+  }
+
+  Widget getIsoRow() {
+    return ChangeNotifierProvider<SettingsItem>(
+        create: (context) =>
+        (device.cameraSettings.getItem(SettingsId.ISO)),
+        child: Consumer<SettingsItem>(
+            builder: (context, model, _) => Card(
+              child: Column(children: [
+                ListTile(
+                  title: Text(SettingsId.ISO.name),
+                  subtitle: Text(device.cameraSettings
+                      .getItem(SettingsId.ISO)
+                      .value
+                      ?.name ??
+                      "NotAvailable"),
+                  onTap: () =>
+                      device.api.getIso(update: ForceUpdate.Both),
+                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                          child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: DropdownButton<IsoValue>(
+                                hint: Text("available"),
+                                items: device.cameraSettings
+                                    .getItem(SettingsId.ISO)
+                                    .available
+                                    .map<DropdownMenuItem<IsoValue>>(
+                                        (e) =>
+                                        DropdownMenuItem<IsoValue>(
+                                            child: Text(e.name),
+                                            value: e))
+                                    .toList(),
+                                onChanged: (value) =>
+                                    device.api.setIso(value),
+                              ))),
+                      Expanded(
+                          child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: DropdownButton<IsoValue>(
+                                hint: Text("supported"),
+                                items: device.cameraSettings
+                                    .getItem(SettingsId.ISO)
+                                    .supported
+                                    .map<DropdownMenuItem<IsoValue>>(
+                                        (e) =>
+                                        DropdownMenuItem<IsoValue>(
+                                            child: Text(e.name),
+                                            value: e))
+                                    .toList(),
+                                onChanged: (value) =>
+                                    device.api.setIso(value),
+                              ))),
+                    ]),
+              ]),
+            )));
   }
 
   Widget getImageSizeRow() {
@@ -513,29 +573,7 @@ class TestsPageState extends State<TestsPage> {
     );
   }
 
-  Widget getIsoRow() {
-    return Card(
-      child: IntrinsicHeight(
-          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Expanded(
-          child: ListTile(
-              title: Text(SettingsId.ISO.name),
-              subtitle: Text(
-                  device.cameraSettings.getItem(SettingsId.ISO)?.value?.name ??
-                      "NotAvailable"),
-              onTap: () async => dialog(
-                  device.cameraSettings.getItem(SettingsId.ISO), context)),
-        ),
-        Expanded(
-          child: ListTile(title: Text("Up"), onTap: () => device.api.setIso(1)),
-        ),
-        Expanded(
-          child:
-              ListTile(title: Text("Down"), onTap: () => device.api.setIso(-1)),
-        )
-      ])),
-    );
-  }
+
 
   Widget getFelRow() {
     return Card(

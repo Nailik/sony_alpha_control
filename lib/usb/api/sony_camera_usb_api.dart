@@ -101,7 +101,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
       case SettingsId.WhiteBalanceAB:
         return setWhiteBalanceAb(WhiteBalanceAbIdExtension.getIdFromUsb(value));
       case SettingsId.ISO:
-        return setIso(value);
+        return setIso(IsoValue(value)); //TODO test
       case SettingsId.FocusArea:
         // TODO: Handle this case.
         break;
@@ -449,10 +449,10 @@ class SonyCameraUsbApi extends CameraApiInterface {
           .isValidResponse();
 
   @override
-  Future<bool> setIso(int value) async =>
+  Future<bool> setIso(IsoValue value) async =>
       (await UsbCommands.getCommandSetting(SettingsId.ISO,
                   opCodeId: OpCodeId.MainSetting,
-                  value1: value,
+                  value1: value.usbValue,
                   value1DataSize: 4)
               .send())
           .isValidResponse();

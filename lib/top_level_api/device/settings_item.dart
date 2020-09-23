@@ -49,7 +49,8 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
     if (value != newValue ||
         subValue != newSubValue ||
         available != newAvailable ||
-        supported != newSupported) {//TODO list check all items?
+        supported != newSupported) {
+      //TODO list check all items?
       _value = newValue;
       _subValue = newSubValue;
       _available = new List.unmodifiable(newAvailable);
@@ -73,6 +74,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
   //TODO cont shooting speed and state together in usb, different in wifi
 
   //TODO zusammengefasstes "teilen" auch in usb -> man wählt das eine aus,
+
 //SettingsIdExtension.getSettingsIdWifi(value["type"].toString(
   SettingsValue fromWifi(String wifiValue) {
     switch (settingsId) {
@@ -135,16 +137,17 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.FlashMode:
         return FlashModeValue.fromWifiValue(wifiValue);
       case SettingsId.FNumber:
-        return DoubleValue(double.parse(wifiValue.replaceAll(",","."))); //durch 100
+        return DoubleValue(
+            double.parse(wifiValue.replaceAll(",", "."))); //durch 100
       case SettingsId.FocusMode:
         return FocusModeValue.fromWifiValue(wifiValue);
       case SettingsId.ISO:
-        return IsoValue(
-            double.parse(wifiValue.replaceAll(",","."))); //TODO test noise reduction, auto ...
+        return IsoValue.fromWifiValue(wifiValue); //TODO test noise reduction, auto ...
       case SettingsId.ProgramShift:
       //TODO  return StringValue(wifiValue);
       case SettingsId.ShutterSpeed:
-        return ShutterSpeedValue(double.parse(wifiValue.replaceAll(",",".")), -1);
+        return ShutterSpeedValue(
+            double.parse(wifiValue.replaceAll(",", ".")), -1);
       case SettingsId.WhiteBalance:
       //TODO   return StringValue(wifiValue);
       case SettingsId.FocusAreaSpot: //touchAFPosition
@@ -248,7 +251,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.RecordVideoState:
         return RecordVideoStateValue.fromUSBValue(usbValue);
       case SettingsId.ISO:
-        return IsoValue(usbValue.toDouble());
+        return IsoValue(usbValue);
       case SettingsId.FEL_State:
         return BoolValue(usbValue == 2);
       case SettingsId.LiveViewState:
@@ -333,6 +336,8 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
         return null;
     }
   }
+
+  createListFromWifiJson(List<dynamic> list) => list.map<T>((e) => fromWifi(e)).toList();
 }
 
 class StringValue extends SettingsValue<String> {
@@ -417,8 +422,15 @@ class ShutterSpeedValue extends DoubleValue {
   }
 }
 
-class IsoValue extends DoubleValue {
-  IsoValue(double id) : super(id);
+class IsoValue extends IntValue {
+  IsoValue(int id) : super(id);
+
+  @override
+  factory IsoValue.fromWifiValue(String wifiValue) =>
+      IsoValue(wifiValue == "AUTO" ? 0xFFFFFF : int.parse(wifiValue));
+
+  @override
+  String get wifiValue => id == 0xFFFFFF ? "AUTO" : id.toString();
 
   @override
   String get name {

@@ -42,11 +42,12 @@ class SonyCameraWifiApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
+  /// FNumber
+  ///
   @override
   Future<SettingsItem<DoubleValue>> getFNumber(
           {update = ForceUpdate.IfNull}) async =>
-      await _updateIf<DoubleValue>(
-          update, await super.getFNumber(update: update));
+      await _updateIf<DoubleValue>(update, await super.getFNumber(update: update));
 
   @override
   Future<bool> modifyFNumber(int value) async {
@@ -76,19 +77,50 @@ class SonyCameraWifiApi extends CameraApiInterface {
     });
   }
 
+  /// ISO
+  @override
+  Future<SettingsItem<IsoValue>> getIso({update = ForceUpdate.IfNull}) async =>
+      await _updateIf<IsoValue>(update, await super.getIso(update: update));
+
+  @override
+  Future<bool> setIso(IsoValue value) async {
+    return await WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.ISO,
+        params: [value.wifiValue]).send(device).then((result) {
+      if (result.isValid) {
+        SettingsItem<IsoValue> item =
+            device.cameraSettings.getItem<IsoValue>(SettingsId.ISO);
+        item.updateItem(value, item.subValue, item.available, item.supported);
+      }
+      return result.isValid;
+    });
+  }
+
+  /// Shutter Speed
+  ///
+  @override
+  Future<SettingsItem<IntValue>> getShutterSpeed(
+          {update = ForceUpdate.IfNull}) async =>
+      await _updateIf(update, await super.getShutterSpeed(update: update));
+
+  @override
+  Future<bool> setShutterSpeed(int value) => WifiCommand.createCommand(
+          SonyWebApiMethod.SET, SettingsId.ShutterSpeed, params: [value])
+      .send(device)
+      .then((value) => value.response == "true");
+
   @override
   Future<SettingsItem<BoolValue>> getAel({update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getAel(update: update));
+      await _updateIf(update, await super.getAel(update: update));
 
   @override
   Future<SettingsItem<AspectRatioValue>> getAspectRatio(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getAspectRatio(update: update));
+      await _updateIf(update, await super.getAspectRatio(update: update));
 
   @override
   Future<SettingsItem<AutoFocusStateValue>> getAutoFocusState(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getAutoFocusState(update: update));
+      await _updateIf(update, await super.getAutoFocusState(update: update));
 
   @override
   Future<int> getBatteryPercentage({update = ForceUpdate.IfNull}) {
@@ -98,85 +130,83 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<SettingsItem<DriveModeValue>> getDriveMode(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getDriveMode(update: update));
+      await _updateIf(update, await super.getDriveMode(update: update));
 
   @override
   Future<SettingsItem<DroHdrValue>> getDroHdr(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getDroHdr(update: update));
+      await _updateIf(update, await super.getDroHdr(update: update));
 
   @override
   Future<SettingsItem<DoubleValue>> getEV(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getEV(update: update));
+      await _updateIf(update, await super.getEV(update: update));
 
   @override
   Future<SettingsItem<BoolValue>> getFel({update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getFel(update: update));
+      await _updateIf(update, await super.getFel(update: update));
 
   @override
   Future<SettingsItem<FlashModeValue>> getFlashMode(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getFlashMode(update: update));
+      await _updateIf(update, await super.getFlashMode(update: update));
 
   @override
   Future<SettingsItem<IntValue>> getFlashValue(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getFlashValue(update: update));
+      await _updateIf(update, await super.getFlashValue(update: update));
 
   @override
   Future<SettingsItem<FocusAreaValue>> getFocusArea(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getFocusArea(update: update));
+      await _updateIf(update, await super.getFocusArea(update: update));
 
   @override
   Future<SettingsItem<PointValue>> getFocusAreaSpot(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getFocusAreaSpot(update: update));
+      await _updateIf(update, await super.getFocusAreaSpot(update: update));
 
   @override
   Future<SettingsItem<DoubleValue>> getFocusMagnifier(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getFocusMagnifier(update: update));
+      await _updateIf(update, await super.getFocusMagnifier(update: update));
 
   @override
   Future<SettingsItem<FocusMagnifierDirectionValue>> getFocusMagnifierDirection(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getFocusMagnifierDirection(update: update));
+      await _updateIf(
+          update, await super.getFocusMagnifierDirection(update: update));
 
   @override
   Future<SettingsItem<FocusMagnifierPhaseValue>> getFocusMagnifierPhase(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getFocusMagnifierPhase(update: update));
+      await _updateIf(
+          update, await super.getFocusMagnifierPhase(update: update));
 
   @override
   Future<SettingsItem<FocusModeValue>> getFocusMode(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getFocusMode(update: update));
+      await _updateIf(update, await super.getFocusMode(update: update));
 
   @override
   Future<SettingsItem<FocusModeToggleValue>> getFocusModeToggle(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getFocusModeToggle(update: update));
+      await _updateIf(update, await super.getFocusModeToggle(update: update));
 
   @override
   Future<SettingsItem<ImageFileFormatValue>> getImageFileFormat(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getImageFileFormat(update: update));
+      await _updateIf(update, await super.getImageFileFormat(update: update));
 
   @override
   Future<SettingsItem<ImageSizeValue>> getImageSize(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getImageSize(update: update));
-
-  @override
-  Future<SettingsItem<IntValue>> getIso({update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getIso(update: update));
+      await _updateIf(update, await super.getImageSize(update: update));
 
   @override
   Future<SettingsItem<MeteringModeValue>> getMeteringMode(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getMeteringMode(update: update));
+      await _updateIf(update, await super.getMeteringMode(update: update));
 
   @override
   Future<bool> getPhotoAvailable({update = ForceUpdate.IfNull}) {
@@ -187,37 +217,33 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<SettingsItem<PictureEffectValue>> getPictureEffect(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getPictureEffect(update: update));
+      await _updateIf(update, await super.getPictureEffect(update: update));
 
   @override
   Future<SettingsItem<DriveModeValue>> getShootingMode(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getShootingMode(update: update));
-
-  @override
-  Future<SettingsItem<IntValue>> getShutterSpeed(
-          {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getShutterSpeed(update: update));
+      await _updateIf(update, await super.getShootingMode(update: update));
 
   @override
   Future<SettingsItem<WhiteBalanceValue>> getWhiteBalance(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getWhiteBalance(update: update));
+      await _updateIf(update, await super.getWhiteBalance(update: update));
 
   @override
   Future<SettingsItem<WhiteBalanceAbValue>> getWhiteBalanceAb(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getWhiteBalanceAb(update: update));
+      await _updateIf(update, await super.getWhiteBalanceAb(update: update));
 
   @override
   Future<SettingsItem<IntValue>> getWhiteBalanceColorTemp(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getWhiteBalanceColorTemp(update: update));
+      await _updateIf(
+          update, await super.getWhiteBalanceColorTemp(update: update));
 
   @override
   Future<SettingsItem<WhiteBalanceGmValue>> getWhiteBalanceGm(
           {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getWhiteBalanceGm(update: update));
+      await _updateIf(update, await super.getWhiteBalanceGm(update: update));
 
   @override
   Future<bool> pressShutter(ShutterPressType shutterPressType) {
@@ -347,12 +373,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> setIso(int value) => WifiCommand.createCommand(
-          SonyWebApiMethod.SET, SettingsId.ISO, params: [value])
-      .send(device)
-      .then((value) => value.response == "true");
-
-  @override
   Future<bool> setMeteringMode(MeteringModeId value) =>
       WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.MeteringMode,
               params: [value.wifiValue])
@@ -370,12 +390,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
     // TODO: implement setSettingsRaw
     throw UnimplementedError();
   }
-
-  @override
-  Future<bool> setShutterSpeed(int value) => WifiCommand.createCommand(
-          SonyWebApiMethod.SET, SettingsId.ShutterSpeed, params: [value])
-      .send(device)
-      .then((value) => value.response == "true");
 
   @override
   Future<bool> setWhiteBalance(WhiteBalanceId value) =>

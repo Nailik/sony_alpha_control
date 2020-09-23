@@ -14,10 +14,17 @@ abstract class CameraSettings extends ChangeNotifier {
   //TODO update mit boolean request -> falls immer geupdttet werden soll
   SettingsItem<T> getItem<T extends SettingsValue>(SettingsId settingsId) {
     var item = _settings.firstWhere(
-        (element) => element.settingsId == settingsId,
+        (element) => element?.settingsId == settingsId,
         orElse: () => null);
     if (item == null) {
-      item = SettingsItem<T>(settingsId);
+      switch(settingsId){
+        case SettingsId.FNumber:
+          item = SettingsItem<DoubleValue>(settingsId);
+          break;
+        case SettingsId.ISO:
+          item = SettingsItem<IsoValue>(settingsId);
+          break;
+      }
       _settings.add(item);
     }
     return item;

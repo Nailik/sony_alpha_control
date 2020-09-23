@@ -17,8 +17,7 @@ class CameraWifiSettings extends CameraSettings {
   Future<bool> update() async {
     await getSettings(
         WebApiVersion.V_1_4, true, sonyCameraWifiDevice); //current settings
-    //camera settings?
-    await sonyCameraWifiDevice.api.getFNumber();
+    //TODO camera settings? that are not initialized
   }
 
   Future<String> getSettings(WebApiVersion version, bool longPolling,
@@ -96,39 +95,30 @@ class CameraWifiSettings extends CameraSettings {
     });
   }
 
-  Type typeOf<T>() => T;
-
   updateAvailable(SettingsItem settingsItem, String json) {
-    if (settingsItem.runtimeType == typeOf<SettingsItem<DoubleValue>>()) {
-      var jsonD = jsonDecode(json);
-      var list = jsonD["result"];
-      settingsItem.updateItem(
-          DoubleValue(double.parse(list[0].replaceAll(",", "."))),
-          settingsItem.subValue,
-          (list[1] as List)
-              .map((e) => DoubleValue(double.parse(e.replaceAll(",", "."))))
-              .toList(),
-          settingsItem.supported);
-    }
+    var jsonD = jsonDecode(json);
+    var list = jsonD["result"];
+    settingsItem.updateItem(
+        settingsItem.fromWifi(list[0]),
+        settingsItem.subValue,
+        settingsItem.createListFromWifiJson(list[1] as List),
+        //missing <DoubleValue> in map
+        settingsItem.supported);
   }
 
   updateSupported(SettingsItem settingsItem, String json) {
-    if (settingsItem.runtimeType == typeOf<SettingsItem<DoubleValue>>()) {
-      var jsonD = jsonDecode(json);
-      var list = jsonD["result"];
-      settingsItem.updateItem(
+    var jsonD = jsonDecode(json);
+    var list = jsonD["result"];
+    settingsItem.updateItem(
         settingsItem.value,
         settingsItem.subValue,
         settingsItem.available,
-        (list[0] as List)
-            .map((e) => DoubleValue(double.parse(e.replaceAll(",", "."))))
-            .toList(),
-      );
-    }
+        settingsItem.createListFromWifiJson(list[0] as List));
   }
 
   getDefaultSettings(
       json, SettingsItem setting, String currentName, String availableName) {
+    print("getDefaultSettings json $json availableName $availableName");
     setting.updateItem(
         setting.fromWifi(json[currentName]),
         setting.subValue,
