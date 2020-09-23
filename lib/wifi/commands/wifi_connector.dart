@@ -56,6 +56,7 @@ class WifiConnector {
     //if (socket == null) {
     //when not on camera cannot access?
     try {
+
       if (socket == null) {
         int i = 100;
         while (socket == null) {

@@ -135,16 +135,16 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.FlashMode:
         return FlashModeValue.fromWifiValue(wifiValue);
       case SettingsId.FNumber:
-        return DoubleValue(double.parse(wifiValue)); //durch 100
+        return DoubleValue(double.parse(wifiValue.replaceAll(",","."))); //durch 100
       case SettingsId.FocusMode:
         return FocusModeValue.fromWifiValue(wifiValue);
       case SettingsId.ISO:
         return IsoValue(
-            double.parse(wifiValue)); //TODO test noise reduction, auto ...
+            double.parse(wifiValue.replaceAll(",","."))); //TODO test noise reduction, auto ...
       case SettingsId.ProgramShift:
       //TODO  return StringValue(wifiValue);
       case SettingsId.ShutterSpeed:
-        return ShutterSpeedValue(double.parse(wifiValue), -1);
+        return ShutterSpeedValue(double.parse(wifiValue.replaceAll(",",".")), -1);
       case SettingsId.WhiteBalance:
       //TODO   return StringValue(wifiValue);
       case SettingsId.FocusAreaSpot: //touchAFPosition
@@ -466,6 +466,11 @@ abstract class SettingsValue<T> {
 
   @override
   String toString() => name;
+
+  bool operator ==(o) => o is SettingsValue<T> && id == o.id;
+
+  @override
+  int get hashCode => id.hashCode;
 }
 
 //TODO 0xFFFFFF -> auto iso

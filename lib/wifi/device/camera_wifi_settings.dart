@@ -57,8 +57,9 @@ class CameraWifiSettings extends CameraSettings {
                   setting.value,
                   setting.subValue,
                   element["names"]
-                      .map((element) => setting.fromWifi(element))
-                      .toList<SettingsValue<dynamic>>(),
+                      .map<SettingsValue<dynamic>>(
+                          (element) => setting.fromWifi(element))
+                      .toList(),
                   setting.supported);
             }
             break;
@@ -112,7 +113,18 @@ class CameraWifiSettings extends CameraSettings {
   }
 
   updateSupported(SettingsItem settingsItem, String json) {
-    //TODO
+    if (settingsItem.runtimeType == typeOf<SettingsItem<DoubleValue>>()) {
+      var jsonD = jsonDecode(json);
+      var list = jsonD["result"];
+      settingsItem.updateItem(
+        settingsItem.value,
+        settingsItem.subValue,
+        settingsItem.available,
+        (list[0] as List)
+            .map((e) => DoubleValue(double.parse(e.replaceAll(",", "."))))
+            .toList(),
+      );
+    }
   }
 
   getDefaultSettings(

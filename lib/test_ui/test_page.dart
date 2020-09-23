@@ -133,20 +133,39 @@ class TestsPageState extends State<TestsPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Expanded(
-                            child: DropdownButton<DoubleValue>(
-                              value: device.cameraSettings
-                                  .getItem(SettingsId.FNumber)
-                                  .available[0],
-                              items: device.cameraSettings
-                                  .getItem(SettingsId.FNumber)
-                                  .available
-                                  .map<DropdownMenuItem<DoubleValue>>((e) => DropdownMenuItem<DoubleValue>(
-                                      child: Text(e.name), value: e))
-                                  .toList(),
-                              onChanged: (value) =>
-                                  device.api.setFNumber(value),
-                            ),
-                          ),
+                              child: Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: DropdownButton<DoubleValue>(
+                                    hint: Text("available"),
+                                    items: device.cameraSettings
+                                        .getItem(SettingsId.FNumber)
+                                        .available
+                                        .map<DropdownMenuItem<DoubleValue>>(
+                                            (e) =>
+                                                DropdownMenuItem<DoubleValue>(
+                                                    child: Text(e.name),
+                                                    value: e))
+                                        .toList(),
+                                    onChanged: (value) =>
+                                        device.api.setFNumber(value),
+                                  ))),
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: DropdownButton<DoubleValue>(
+                                    hint: Text("supported"),
+                                    items: device.cameraSettings
+                                        .getItem(SettingsId.FNumber)
+                                        .supported
+                                        .map<DropdownMenuItem<DoubleValue>>(
+                                            (e) =>
+                                                DropdownMenuItem<DoubleValue>(
+                                                    child: Text(e.name),
+                                                    value: e))
+                                        .toList(),
+                                    onChanged: (value) =>
+                                        device.api.setFNumber(value),
+                                  ))),
                         ]),
                   ]),
                 )));
