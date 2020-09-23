@@ -103,4 +103,6 @@ class WifiResponse {
   String response;
 
   WifiResponse(this.request, this.response);
+
+  get isValid => jsonDecode(response)["result"][0] == 0;
 }

@@ -30,23 +30,30 @@ import 'package:sonyalphacontrol/top_level_api/ids/zoom_settings_ids.dart';
 class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
   SettingsId settingsId;
 
-  T value;
-  T subValue;
-  List<T> available = new List.unmodifiable({});
-  List<T> supported = new List.unmodifiable({});
+  T _value;
 
+  get value => _value;
+  T _subValue;
+
+  get subValue => _subValue;
+  List<T> _available = new List.unmodifiable({});
+
+  get available => _available;
+  List<T> _supported = new List.unmodifiable({});
+
+  get supported => _supported;
+
+  //not different setter to not notify layout changes too often when multiple values are updated at the same time one after another
   updateItem(
       T newValue, T newSubValue, List<T> newAvailable, List<T> newSupported) {
-    bool change = value != newValue ||
+    if (value != newValue ||
         subValue != newSubValue ||
         available != newAvailable ||
-        supported != newSupported; //TODO list check all items?
-
-    if (change) {
-      value = newValue;
-      subValue = newSubValue;
-      available = new List.unmodifiable(newAvailable);
-      supported = new List.unmodifiable(newSupported);
+        supported != newSupported) {//TODO list check all items?
+      _value = newValue;
+      _subValue = newSubValue;
+      _available = new List.unmodifiable(newAvailable);
+      _supported = new List.unmodifiable(newSupported);
 
       notifyListeners();
     }
@@ -102,7 +109,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.SteadyMode:
         return OnOffValue(wifiValue);
       case SettingsId.ViewAngle:
-        return IntValue(wifiValue as int);
+        return IntValue(int.parse(wifiValue));
       case SettingsId.FlipSetting:
         return OnOffValue(wifiValue);
       case SettingsId.SceneSelection:
@@ -128,16 +135,16 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.FlashMode:
         return FlashModeValue.fromWifiValue(wifiValue);
       case SettingsId.FNumber:
-        return DoubleValue(wifiValue as double); //durch 100
+        return DoubleValue(double.parse(wifiValue)); //durch 100
       case SettingsId.FocusMode:
         return FocusModeValue.fromWifiValue(wifiValue);
       case SettingsId.ISO:
         return IsoValue(
-            wifiValue as double); //TODO test noise reduction, auto ...
+            double.parse(wifiValue)); //TODO test noise reduction, auto ...
       case SettingsId.ProgramShift:
       //TODO  return StringValue(wifiValue);
       case SettingsId.ShutterSpeed:
-        return ShutterSpeedValue(wifiValue as double, -1);
+        return ShutterSpeedValue(double.parse(wifiValue), -1);
       case SettingsId.WhiteBalance:
       //TODO   return StringValue(wifiValue);
       case SettingsId.FocusAreaSpot: //touchAFPosition
@@ -390,7 +397,7 @@ class DoubleValue extends SettingsValue<double> {
   int get usbValue => id.toInt();
 
   @override
-  String get wifiValue => throw UnimplementedError();
+  String get wifiValue => id.toString();
 }
 
 class ShutterSpeedValue extends DoubleValue {
@@ -456,6 +463,9 @@ abstract class SettingsValue<T> {
   String get wifiValue;
 
   String get name;
+
+  @override
+  String toString() => name;
 }
 
 //TODO 0xFFFFFF -> auto iso

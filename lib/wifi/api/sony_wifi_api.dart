@@ -44,9 +44,9 @@ class SonyWifiApi extends SonyApiInterface {
 
     var functionSettings = SettingsItem<SettingsValue<CameraFunctionId>>(
         SettingsId.CameraFunction);
-    functionSettings.value = available.key;
-    functionSettings.available = available.value;
-    functionSettings.supported = supported;
+
+    functionSettings.updateItem(
+        available.key, functionSettings.subValue, available.value, supported);
 
     //TODO wait until start content transfer / remote shooting is available
 

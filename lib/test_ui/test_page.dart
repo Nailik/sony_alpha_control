@@ -8,6 +8,7 @@ import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/wifi/enums/force_update.dart';
 
 class TestsPage extends StatefulWidget {
   final SonyCameraDevice device;
@@ -41,7 +42,7 @@ class TestsPageState extends State<TestsPage> {
                     children: <Widget>[
                       //states
                       getFNumberRow(),
-                      getStateRow(SettingsId.ShootingMode),
+                      /*  getStateRow(SettingsId.ShootingMode),
                       getStateRow(SettingsId.AutoFocusState),
                       getStateRow(SettingsId.BatteryInfo),
                       getStateRow(SettingsId.LiveViewState),
@@ -72,7 +73,7 @@ class TestsPageState extends State<TestsPage> {
                       getFocusAreaRow(),
                       getFocusModeRow(),
                       getSettingsRow(SettingsId.UnkD2C7),
-                      getSettingsRow(SettingsId.UnkD2C5),
+                      getSettingsRow(SettingsId.UnkD2C5),*/
                     ],
                   ),
                 )),
@@ -98,42 +99,57 @@ class TestsPageState extends State<TestsPage> {
   setFNumber
   */
   Widget getFNumberRow() {
-    return Card(
-      child: Column(children: [
-        Expanded(
-          child: ListTile(
-              title: Text(SettingsId.FNumber.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.FNumber)
-                      ?.value
-                      ?.name ??
-                  "NotAvailable")),
-        ),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          Expanded(
-            child: ListTile(
-                title: Text("Up"), onTap: () => device.api.modifyFNumber(1)),
-          ),
-          Expanded(
-            child: ListTile(
-                title: Text("Down"), onTap: () => device.api.modifyFNumber(-1)),
-          )
-        ]),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          Expanded(
-            child: DropdownButton(
-                value: 0,
-                items: device.cameraSettings
-                    .getItem(SettingsId.FNumber)
-                    .available
-                    .map((e) => DropdownMenuItem(
-                        child: Text(e.name), value: e.wifiValue))
-                    .toList(),
-                onChanged: (value) => device.api.setFNumber(value)),
-          ),
-        ]),
-      ]),
-    );
+    return ChangeNotifierProvider<SettingsItem>(
+        create: (context) =>
+            (device.cameraSettings.getItem(SettingsId.FNumber)),
+        child: Consumer<SettingsItem>(
+            builder: (context, model, _) => Card(
+                  child: Column(children: [
+                    ListTile(
+                      title: Text(SettingsId.FNumber.name),
+                      subtitle: Text(device.cameraSettings
+                              .getItem(SettingsId.FNumber)
+                              .value
+                              ?.name ??
+                          "NotAvailable"),
+                      onTap: () =>
+                          device.api.getFNumber(update: ForceUpdate.Both),
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: ListTile(
+                                title: Text("Up"),
+                                onTap: () => device.api.modifyFNumber(1)),
+                          ),
+                          Expanded(
+                            child: ListTile(
+                                title: Text("Down"),
+                                onTap: () => device.api.modifyFNumber(-1)),
+                          )
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: DropdownButton<DoubleValue>(
+                              value: device.cameraSettings
+                                  .getItem(SettingsId.FNumber)
+                                  .available[0],
+                              items: device.cameraSettings
+                                  .getItem(SettingsId.FNumber)
+                                  .available
+                                  .map<DropdownMenuItem<DoubleValue>>((e) => DropdownMenuItem<DoubleValue>(
+                                      child: Text(e.name), value: e))
+                                  .toList(),
+                              onChanged: (value) =>
+                                  device.api.setFNumber(value),
+                            ),
+                          ),
+                        ]),
+                  ]),
+                )));
   }
 
   Widget getImageSizeRow() {

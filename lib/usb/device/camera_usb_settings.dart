@@ -117,7 +117,10 @@ class CameraUsbSettings extends CameraSettings {
       switch (dataType) {
         case 1:
           offset += 3;
-          setting.value = setting.fromUsb(bytes.getUint8(offset));
+
+          setting.updateItem(setting.fromUsb(bytes.getUint8(offset)),
+              setting.subValue, setting.available, setting.supported);
+
           offset++;
           var subDataType = bytes.getUint8(offset);
           offset++;
@@ -132,7 +135,8 @@ class CameraUsbSettings extends CameraSettings {
           break;
         case 2:
           offset += 3;
-          setting.value = setting.fromUsb(bytes.getUint8(offset));
+          setting.updateItem(setting.fromUsb(bytes.getUint8(offset)),
+              setting.subValue, setting.available, setting.supported);
           offset++;
           var subDataType = bytes.getUint8(offset);
           offset++;
@@ -149,6 +153,7 @@ class CameraUsbSettings extends CameraSettings {
               if (setting.settingsId == SettingsId.WhiteBalanceAB ||
                   setting.settingsId == SettingsId.WhiteBalanceGM) {
                 bool include = false;
+
                 WhiteBalanceAbId.values.forEach((element) {
                   //start
                   if (!include) {
@@ -159,6 +164,9 @@ class CameraUsbSettings extends CameraSettings {
                   //end
                   if (include) {
                     //add
+
+                    //TODO
+                    //setting.updateItem(setting.value, setting.subValue, setting.available, setting.supported);
                     setting.available
                         .insert(0, setting.fromUsb(element.usbValue));
                     if (element.usbValue == max) {
@@ -172,6 +180,8 @@ class CameraUsbSettings extends CameraSettings {
             case 2:
               var num = bytes.getUint16(offset, Endian.little);
               offset += 2;
+              //TODO
+              // setting.updateItem(setting.value, setting.subValue, setting.available, setting.supported);
               setting.available.clear();
               for (int i = 0; i < num; i++) {
                 setting.available.add(setting.fromUsb(bytes.getUint8(offset)));
@@ -186,8 +196,12 @@ class CameraUsbSettings extends CameraSettings {
           break;
         case 3:
           offset += 4;
-          setting.value =
-              setting.fromUsb(bytes.getInt16(offset, Endian.little));
+          setting.updateItem(
+              setting.fromUsb(bytes.getInt16(offset, Endian.little)),
+              setting.subValue,
+              setting.available,
+              setting.supported);
+
           offset += 2;
           var subDataType = bytes.getUint8(offset);
           offset++;
@@ -215,8 +229,12 @@ class CameraUsbSettings extends CameraSettings {
           break;
         case 4: //White blanace color temp
           offset += 4;
-          setting.value =
-              setting.fromUsb(bytes.getUint16(offset, Endian.little));
+          setting.updateItem(
+              setting.fromUsb(bytes.getUint16(offset, Endian.little)),
+              setting.subValue,
+              setting.available,
+              setting.supported);
+
           var nn = bytes.getUint16(offset, Endian.little);
 
           offset += 2;
@@ -233,6 +251,8 @@ class CameraUsbSettings extends CameraSettings {
 
               if (setting.settingsId == SettingsId.WhiteBalanceColorTemp) {
                 //extra
+                //TODO
+                //setting.updateItem(setting.value, setting.subValue, setting.available, setting.supported);
                 for (int i = min; i <= max; i += steps) {
                   setting.available.add(setting.fromUsb(i));
                 }
@@ -241,6 +261,8 @@ class CameraUsbSettings extends CameraSettings {
             case 2:
               var num = bytes.getUint16(offset, Endian.little);
               offset += 2;
+              //TODO
+              //setting.updateItem(setting.value, setting.subValue, setting.available, setting.supported);
               setting.available.clear();
               for (int i = 0; i < num; i++) {
                 setting.available.add(
@@ -261,12 +283,17 @@ class CameraUsbSettings extends CameraSettings {
             offset += 2;
             var subValue = bytes.getUint16(offset, Endian.little);
             offset += 2;
-
-            setting.value = setting.fromUsb(value, subValue: subValue);
-            setting.subValue = setting.fromUsb(subValue);
+            setting.updateItem(
+                setting.fromUsb(value, subValue: subValue),
+                setting.fromUsb(subValue),
+                setting.available,
+                setting.supported);
           } else {
-            setting.value =
-                setting.fromUsb(bytes.getUint32(offset, Endian.little));
+            setting.updateItem(
+                setting.fromUsb(bytes.getUint32(offset, Endian.little)),
+                setting.subValue,
+                setting.available,
+                setting.supported);
             offset += 4;
           }
           var subDataType = bytes.getUint8(offset);

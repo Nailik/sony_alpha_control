@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -41,11 +42,11 @@ class SonyCameraWifiApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
-
   @override
-  Future<SettingsItem<IntValue>> getFNumber(
-      {update = ForceUpdate.IfNull}) async =>
-      _updateIf(update, await super.getFNumber(update: update));
+  Future<SettingsItem<DoubleValue>> getFNumber(
+          {update = ForceUpdate.IfNull}) async =>
+      await _updateIf<DoubleValue>(
+          update, await super.getFNumber(update: update));
 
   @override
   Future<bool> modifyFNumber(int value) async {
@@ -57,20 +58,23 @@ class SonyCameraWifiApi extends CameraApiInterface {
       return false; //would be out of range
     }
     var newIndex = currentIndex + value;
-    return WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.FNumber,
-        params: [fNumber.available[newIndex].wifiValue])
-        .send(device)
-        .then((value) => value.response == "[0]");
+    return setFNumber(fNumber.available[newIndex]);
   }
 
   @override
   Future<bool> setFNumber(DoubleValue value) async {
-    return WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.FNumber,
-        params: [value.wifiValue])
+    return await WifiCommand.createCommand(
+            SonyWebApiMethod.SET, SettingsId.FNumber, params: [value.wifiValue])
         .send(device)
-        .then((value) => value.response == "[0]");
+        .then((result) {
+      if (result.isValid) {
+        SettingsItem<DoubleValue> item =
+            device.cameraSettings.getItem<DoubleValue>(SettingsId.FNumber);
+        item.updateItem(value, item.subValue, item.available, item.supported);
+      }
+      return result.isValid;
+    });
   }
-
 
   @override
   Future<SettingsItem<BoolValue>> getAel({update = ForceUpdate.IfNull}) async =>
@@ -262,7 +266,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
     // TODO: implement setEV
     throw UnimplementedError();
   }
-
 
   @override
   Future<bool> setFel(bool value) {
@@ -527,25 +530,25 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   //update for the getters
-  Future<SettingsItem<dynamic>> _updateIf(
+  Future<SettingsItem<T>> _updateIf<T extends SettingsValue>(
       ForceUpdate update, SettingsItem settingsItem) async {
     switch (update) {
       case ForceUpdate.Available:
-        await _updateAvailable(settingsItem.settingsId);
+        await _updateAvailable(settingsItem);
         break;
       case ForceUpdate.Supported:
-        await _updateSupported(settingsItem.settingsId);
+        await _updateSupported(settingsItem);
         break;
       case ForceUpdate.Both:
-        await _updateAvailable(settingsItem.settingsId);
-        await _updateSupported(settingsItem.settingsId);
+        await _updateAvailable(settingsItem);
+        await _updateSupported(settingsItem);
         break;
       case ForceUpdate.IfNull:
         if (settingsItem.available == null || settingsItem.available.isEmpty) {
-          await _updateAvailable(settingsItem.settingsId);
+          await _updateAvailable(settingsItem);
         }
         if (settingsItem.supported == null || settingsItem.supported.isEmpty) {
-          await _updateSupported(settingsItem.settingsId);
+          await _updateSupported(settingsItem);
         }
         break;
       case ForceUpdate.Off:
@@ -555,17 +558,19 @@ class SonyCameraWifiApi extends CameraApiInterface {
     return device.cameraSettings.getItem(settingsItem.settingsId);
   }
 
-  Future _updateAvailable(SettingsId settingsId) {
-    return WifiCommand.createCommand(SonyWebApiMethod.GET_AVAILABLE, settingsId)
+  Future _updateAvailable(SettingsItem settingsItem) async {
+    return await WifiCommand.createCommand(
+            SonyWebApiMethod.GET_AVAILABLE, settingsItem.settingsId)
         .send(device)
         .then((wifiResponse) => device.cameraSettings
-            .updateAvailable(settingsId, wifiResponse.response));
+            .updateAvailable(settingsItem, wifiResponse.response));
   }
 
-  Future _updateSupported(SettingsId settingsId) {
-    return WifiCommand.createCommand(SonyWebApiMethod.GET_SUPPORTED, settingsId)
+  Future _updateSupported(SettingsItem settingsItem) async {
+    return await WifiCommand.createCommand(
+            SonyWebApiMethod.GET_SUPPORTED, settingsItem.settingsId)
         .send(device)
         .then((wifiResponse) => device.cameraSettings
-            .updateSupported(settingsId, wifiResponse.response));
+            .updateSupported(settingsItem, wifiResponse.response));
   }
 }

@@ -14,10 +14,11 @@ class CameraWifiSettings extends CameraSettings {
   CameraWifiSettings(this.sonyCameraWifiDevice);
 
   @override
-  Future<bool> update() {
-    getSettings(
+  Future<bool> update() async {
+    await getSettings(
         WebApiVersion.V_1_4, true, sonyCameraWifiDevice); //current settings
     //camera settings?
+    await sonyCameraWifiDevice.api.getFNumber();
   }
 
   Future<String> getSettings(WebApiVersion version, bool longPolling,
@@ -29,8 +30,8 @@ class CameraWifiSettings extends CameraSettings {
     var jsonD = jsonDecode(webResponse.response);
 
     (jsonD["result"] as List<dynamic>)?.forEach((element) {
-      if (element != null) {
-        var settingsIdWifiValue = element["type"];
+      if (element != null && !element.isEmpty) {
+        String settingsIdWifiValue = element["type"];
 
         SettingsId settingsIdEnum =
             SettingsIdExtension.getIdFromWifi(settingsIdWifiValue);
@@ -52,10 +53,13 @@ class CameraWifiSettings extends CameraSettings {
           case SettingsId.AvailableApiList:
             var availableList = element["names"];
             if (availableList != null) {
-              setting.available.clear();
-              availableList.forEach((item) {
-                setting.available.add(setting.fromWifi(item));
-              });
+              setting.updateItem(
+                  setting.value,
+                  setting.subValue,
+                  element["names"]
+                      .map((element) => setting.fromWifi(element))
+                      .toList<SettingsValue<dynamic>>(),
+                  setting.supported);
             }
             break;
           case SettingsId.ImageSize:
@@ -64,7 +68,9 @@ class CameraWifiSettings extends CameraSettings {
           case SettingsId.LiveViewState:
           case SettingsId.LiveViewOrientation:
             //there is only a current value
-            setting.value = setting.fromWifi(element[settingsIdWifiValue]);
+            setting.updateItem(setting.fromWifi(element[settingsIdWifiValue]),
+                setting.subValue, setting.available, setting.supported);
+
             break;
           case SettingsId.BeepMode:
           case SettingsId.CameraFunction:
@@ -87,27 +93,34 @@ class CameraWifiSettings extends CameraSettings {
         }
       }
     });
-
   }
 
-  updateAvailable(SettingsId settingsId, String json) {
-    //TODO
+  Type typeOf<T>() => T;
+
+  updateAvailable(SettingsItem settingsItem, String json) {
+    if (settingsItem.runtimeType == typeOf<SettingsItem<DoubleValue>>()) {
+      var jsonD = jsonDecode(json);
+      var list = jsonD["result"];
+      settingsItem.updateItem(
+          DoubleValue(double.parse(list[0].replaceAll(",", "."))),
+          settingsItem.subValue,
+          (list[1] as List)
+              .map((e) => DoubleValue(double.parse(e.replaceAll(",", "."))))
+              .toList(),
+          settingsItem.supported);
+    }
   }
 
-  updateSupported(SettingsId settingsId, String json) {
+  updateSupported(SettingsItem settingsItem, String json) {
     //TODO
   }
 
   getDefaultSettings(
       json, SettingsItem setting, String currentName, String availableName) {
-    setting.value = setting.fromWifi(json[currentName]);
-    var availableList = json[availableName];
-
-    if (availableList != null) {
-      setting.available.clear();
-      availableList.forEach((item) {
-        setting.available.add(setting.fromWifi(item));
-      });
-    }
+    setting.updateItem(
+        setting.fromWifi(json[currentName]),
+        setting.subValue,
+        json[availableName].map((e) => setting.fromWifi(e)).toList(),
+        setting.supported);
   }
 }
