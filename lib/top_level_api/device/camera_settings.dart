@@ -19,6 +19,7 @@ abstract class CameraSettings extends ChangeNotifier {
     if (item == null) {
       switch (settingsId) {
         case SettingsId.FNumber:
+        case SettingsId.EV:
           item = SettingsItem<DoubleValue>(settingsId);
           break;
         case SettingsId.ISO:
@@ -26,6 +27,9 @@ abstract class CameraSettings extends ChangeNotifier {
           break;
         case SettingsId.ShutterSpeed:
           item = SettingsItem<ShutterSpeedValue>(settingsId);
+          break;
+        case SettingsId.AEL_State:
+          item = SettingsItem<BoolValue>(settingsId);
           break;
       }
       _settings.add(item);

@@ -361,7 +361,6 @@ extension SettingsIdExtension on SettingsId {
     switch (this) {
       case SettingsId.CameraStatus:
         return "cameraStatus";
-
       case SettingsId.Versions:
         return "versions";
       case SettingsId.MethodTypes:

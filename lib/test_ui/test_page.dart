@@ -44,6 +44,7 @@ class TestsPageState extends State<TestsPage> {
                       getFNumberRow(),
                       getIsoRow(),
                       getShutterSpeed(),
+                      getEVRow(),
                       /*  getStateRow(SettingsId.ShootingMode),
                       getStateRow(SettingsId.AutoFocusState),
                       getStateRow(SettingsId.BatteryInfo),
@@ -67,7 +68,6 @@ class TestsPageState extends State<TestsPage> {
                       getSettingsRow(SettingsId.DriveMode),
                       getSettingsRow(SettingsId.DroHdr),
                       getSettingsRow(SettingsId.AspectRatio),
-                      getAelRow(),
                       getSettingsRow(SettingsId.PictureEffect),
                       getIsoRow(),
                       getFelRow(),
@@ -236,78 +236,132 @@ class TestsPageState extends State<TestsPage> {
 
   Widget getShutterSpeed() {
     return ChangeNotifierProvider<SettingsItem>(
+      create: (context) =>
+          (device.cameraSettings.getItem(SettingsId.ShutterSpeed)),
+      child: Consumer<SettingsItem>(
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.ShutterSpeed.name),
+              subtitle: Text(device.cameraSettings
+                      .getItem(SettingsId.ShutterSpeed)
+                      .value
+                      ?.name ??
+                  "NotAvailable"),
+              onTap: () => device.api.getShutterSpeed(update: ForceUpdate.Both),
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                child: ListTile(
+                    title: Text("Up"),
+                    onTap: () => device.api.modifyShutterSpeed(1)),
+              ),
+              Expanded(
+                child: ListTile(
+                    title: Text("Down"),
+                    onTap: () => device.api.modifyShutterSpeed(-1)),
+              )
+            ]),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<ShutterSpeedValue>(
+                        hint: Text("available"),
+                        items: device.cameraSettings
+                            .getItem(SettingsId.ShutterSpeed)
+                            .available
+                            .map<DropdownMenuItem<ShutterSpeedValue>>((e) =>
+                                DropdownMenuItem<ShutterSpeedValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) => device.api.setShutterSpeed(value),
+                      ))),
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<ShutterSpeedValue>(
+                        hint: Text("supported"),
+                        items: device.cameraSettings
+                            .getItem(SettingsId.ShutterSpeed)
+                            .supported
+                            .map<DropdownMenuItem<ShutterSpeedValue>>((e) =>
+                                DropdownMenuItem<ShutterSpeedValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) => device.api.setShutterSpeed(value),
+                      ))),
+            ]),
+          ]),
+        ),
+      ),
+    );
+  }
+
+
+
+  Widget getEVRow() {
+    return Card(
+      child: IntrinsicHeight(
+          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Expanded(
+              child: ListTile(
+                  title: Text(SettingsId.EV.name),
+                  subtitle: Text(
+                      device.cameraSettings.getItem(SettingsId.EV)?.value?.name ??
+                          ""),
+                onTap: () => device.api.getEV(update: ForceUpdate.Both),),
+            ),
+            Expanded(
+              child: ListTile(title: Text("Up"), onTap: () => device.api.setEV(1)),
+            ),
+            Expanded(
+              child:
+              ListTile(title: Text("Down"), onTap: () => device.api.setEV(-1)),
+            )
+          ])),
+    );
+  }
+
+
+
+  //done
+
+  Widget getAelRow() {
+    return ChangeNotifierProvider<SettingsItem>(
         create: (context) =>
-            (device.cameraSettings.getItem(SettingsId.ShutterSpeed)),
+            (device.cameraSettings.getItem(SettingsId.AEL_State)),
         child: Consumer<SettingsItem>(
             builder: (context, model, _) => Card(
-                  child: Column(children: [
-                    ListTile(
-                      title: Text(SettingsId.ShutterSpeed.name),
-                      subtitle: Text(device.cameraSettings
-                              .getItem(SettingsId.ShutterSpeed)
-                              .value
-                              ?.name ??
-                          "NotAvailable"),
-                      onTap: () =>
-                          device.api.getShutterSpeed(update: ForceUpdate.Both),
-                    ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                            child: ListTile(
-                                title: Text("Up"),
-                                onTap: () => device.api.modifyShutterSpeed(1)),
-                          ),
-                          Expanded(
-                            child: ListTile(
-                                title: Text("Down"),
-                                onTap: () => device.api.modifyShutterSpeed(-1)),
-                          )
-                        ]),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                              child: Padding(
-                                  padding: EdgeInsets.all(16),
-                                  child: DropdownButton<ShutterSpeedValue>(
-                                    hint: Text("available"),
-                                    items: device.cameraSettings
-                                        .getItem(SettingsId.ShutterSpeed)
-                                        .available
-                                        .map<
-                                            DropdownMenuItem<
-                                                ShutterSpeedValue>>((e) =>
-                                            DropdownMenuItem<ShutterSpeedValue>(
-                                                child: Text(e.name), value: e))
-                                        .toList(),
-                                    onChanged: (value) =>
-                                        device.api.setShutterSpeed(value),
-                                  ))),
-                          Expanded(
-                              child: Padding(
-                                  padding: EdgeInsets.all(16),
-                                  child: DropdownButton<ShutterSpeedValue>(
-                                    hint: Text("supported"),
-                                    items: device.cameraSettings
-                                        .getItem(SettingsId.ShutterSpeed)
-                                        .supported
-                                        .map<
-                                            DropdownMenuItem<
-                                                ShutterSpeedValue>>((e) =>
-                                            DropdownMenuItem<ShutterSpeedValue>(
-                                                child: Text(e.name), value: e))
-                                        .toList(),
-                                    onChanged: (value) =>
-                                        device.api.setShutterSpeed(value),
-                                  ))),
-                        ]),
-                  ]),
+                  child: IntrinsicHeight(
+                      child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                        Expanded(
+                          child: ListTile(
+                              title: Text(SettingsId.AEL_State.name),
+                              subtitle: Text(device.cameraSettings
+                                      .getItem(SettingsId.AEL_State)
+                                      .value
+                                      ?.name ??
+                                  "NotAvailable"),
+                              onTap: () =>
+                                  device.api.getAel(update: ForceUpdate.Both)),
+                        ),
+                        Expanded(
+                          child: SwitchListTile(
+                              title: Text("Switch"),
+                              value: device.cameraSettings
+                                      .getItem(SettingsId.AEL_State)
+                                      ?.value
+                                      ?.id ??
+                                  false,
+                              onChanged: (value) => device.api.setAel(value)),
+                        ),
+                      ])),
                 )));
   }
 
-  //done
 
   Widget getImageSizeRow() {
     return Card(
@@ -513,53 +567,6 @@ class TestsPageState extends State<TestsPage> {
           child: ListTile(
               title: Text("Stop Record"),
               onTap: () => device.api.stopRecordingVideo()),
-        )
-      ])),
-    );
-  }
-
-  Widget getEVRow() {
-    return Card(
-      child: IntrinsicHeight(
-          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Expanded(
-          child: ListTile(
-              title: Text(SettingsId.EV.name),
-              subtitle: Text(
-                  device.cameraSettings.getItem(SettingsId.EV)?.value?.name ??
-                      "")),
-        ),
-        Expanded(
-          child: ListTile(title: Text("Up"), onTap: () => device.api.setEV(1)),
-        ),
-        Expanded(
-          child:
-              ListTile(title: Text("Down"), onTap: () => device.api.setEV(-1)),
-        )
-      ])),
-    );
-  }
-
-  Widget getAelRow() {
-    return Card(
-      child: IntrinsicHeight(
-          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Expanded(
-          child: ListTile(
-              title: Text(SettingsId.AEL_State.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.AEL_State)
-                      ?.value
-                      ?.name ??
-                  "")),
-        ),
-        Expanded(
-          child:
-              ListTile(title: Text("On"), onTap: () => device.api.setAel(true)),
-        ),
-        Expanded(
-          child: ListTile(
-              title: Text("Off"), onTap: () => device.api.setAel(false)),
         )
       ])),
     );

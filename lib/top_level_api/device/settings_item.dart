@@ -103,7 +103,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.CameraFunction:
         return CameraFunctionValue.fromWifiValue(wifiValue);
       case SettingsId.EV: //exposureCompensation
-      //TODO  return IntValue(wifiValue);
+       return DoubleValue(double.parse(wifiValue));
       case SettingsId.MovieQuality:
         return MovieQualityValue.fromWifiValue(wifiValue);
       case SettingsId.CameraFunctionResult:

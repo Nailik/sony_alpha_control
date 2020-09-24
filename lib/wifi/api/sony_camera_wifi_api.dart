@@ -119,8 +119,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> modifyShutterSpeed(int direction) async {
     var shutterSpeed = await getShutterSpeed();
-    var currentIndex = shutterSpeed.available
-        .indexWhere((element) => element.wifiValue == shutterSpeed.value.wifiValue);
+    var currentIndex = shutterSpeed.available.indexWhere(
+        (element) => element.wifiValue == shutterSpeed.value.wifiValue);
     if ((currentIndex == 0 && direction == -1) ||
         (currentIndex == shutterSpeed.available.length - 1 && direction == 1)) {
       return false; //would be out of range
@@ -142,6 +142,50 @@ class SonyCameraWifiApi extends CameraApiInterface {
       return result.isValid;
     });
   }
+
+  ///EV
+
+  @override
+  Future<SettingsItem<DoubleValue>> getEV({update = ForceUpdate.IfNull}) async {
+    SettingsItem<DoubleValue> settingsItem =
+        device.cameraSettings.getItem<DoubleValue>(SettingsId.EV);
+    switch (update) {
+      case ForceUpdate.Available:
+        if (settingsItem.supported == null || settingsItem.supported.isEmpty) {
+          //supported is necessary for available to now the step sizes
+          await _updateSupported(settingsItem);
+        }
+        await _updateAvailable(settingsItem);
+        break;
+      case ForceUpdate.Supported:
+        await _updateSupported(settingsItem);
+        break;
+      case ForceUpdate.Both:
+        await _updateSupported(settingsItem);
+        await _updateAvailable(settingsItem);
+        break;
+      case ForceUpdate.IfNull:
+        if (settingsItem.available == null || settingsItem.available.isEmpty) {
+          await _updateAvailable(settingsItem);
+        }
+        if (settingsItem.supported == null || settingsItem.supported.isEmpty) {
+          await _updateSupported(settingsItem);
+        }
+        break;
+      case ForceUpdate.Off:
+        break;
+    }
+
+    return device.cameraSettings.getItem(settingsItem.settingsId);
+  }
+
+  @override
+  Future<bool> setEV(int value) {
+    // TODO: implement setEV
+    throw UnimplementedError();
+  }
+
+  //TODO
 
   @override
   Future<SettingsItem<BoolValue>> getAel({update = ForceUpdate.IfNull}) async =>
@@ -171,11 +215,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
   Future<SettingsItem<DroHdrValue>> getDroHdr(
           {update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getDroHdr(update: update));
-
-  @override
-  Future<SettingsItem<DoubleValue>> getEV(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getEV(update: update));
 
   @override
   Future<SettingsItem<BoolValue>> getFel({update = ForceUpdate.IfNull}) async =>
@@ -319,12 +358,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> setDroHdr(DroHdrId value) {
     // TODO: implement setDroHdr
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setEV(int value) {
-    // TODO: implement setEV
     throw UnimplementedError();
   }
 
@@ -579,6 +612,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   //update for the getters
+  //TODO update only current?? (if developer only wants to show things without change no need for supported)
   Future<SettingsItem<T>> _updateIf<T extends SettingsValue>(
       ForceUpdate update, SettingsItem settingsItem) async {
     switch (update) {
@@ -589,8 +623,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
         await _updateSupported(settingsItem);
         break;
       case ForceUpdate.Both:
-        await _updateAvailable(settingsItem);
         await _updateSupported(settingsItem);
+        await _updateAvailable(settingsItem);
         break;
       case ForceUpdate.IfNull:
         if (settingsItem.available == null || settingsItem.available.isEmpty) {
@@ -608,18 +642,26 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   Future _updateAvailable(SettingsItem settingsItem) async {
-    return await WifiCommand.createCommand(
-            SonyWebApiMethod.GET_AVAILABLE, settingsItem.settingsId)
-        .send(device)
-        .then((wifiResponse) => device.cameraSettings
-            .updateAvailable(settingsItem, wifiResponse.response));
+    return await _getAvailable(settingsItem).then((response) =>
+        device.cameraSettings.updateAvailable(settingsItem, response));
   }
 
   Future _updateSupported(SettingsItem settingsItem) async {
+    return await _getSupported(settingsItem).then((response) =>
+        device.cameraSettings.updateSupported(settingsItem, response));
+  }
+
+  Future<String> _getSupported(SettingsItem settingsItem) async {
     return await WifiCommand.createCommand(
             SonyWebApiMethod.GET_SUPPORTED, settingsItem.settingsId)
         .send(device)
-        .then((wifiResponse) => device.cameraSettings
-            .updateSupported(settingsItem, wifiResponse.response));
+        .then((wifiResponse) => wifiResponse.response);
+  }
+
+  Future<String> _getAvailable(SettingsItem settingsItem) async {
+    return await WifiCommand.createCommand(
+            SonyWebApiMethod.GET_AVAILABLE, settingsItem.settingsId)
+        .send(device)
+        .then((wifiResponse) => wifiResponse.response);
   }
 }

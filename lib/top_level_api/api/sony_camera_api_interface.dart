@@ -94,6 +94,12 @@ abstract class CameraApiInterface {
   //TODO up/down like f number
   Future<bool> setShutterSpeed(ShutterSpeedValue value);
 
+
+  Future<SettingsItem<DoubleValue>> getEV({ForceUpdate update}) async =>
+      device.cameraSettings.getItem<DoubleValue>(SettingsId.EV);
+
+  Future<bool> setEV(int value);
+
   ///unchecked (wifi) *******************************************
 
   Future<List<CameraImage>> capturePhoto(); //TODO return foto?
@@ -153,10 +159,6 @@ abstract class CameraApiInterface {
           {ForceUpdate update}) async =>
       device.cameraSettings.getItem<AutoFocusStateValue>(SettingsId.AutoFocusState);
 
-  Future<SettingsItem<DoubleValue>> getEV({ForceUpdate update}) async =>
-      device.cameraSettings.getItem<DoubleValue>(SettingsId.EV);
-
-  Future<bool> setEV(int value);
 
   Future<SettingsItem<FlashModeValue>> getFlashMode(
           {ForceUpdate update}) async =>

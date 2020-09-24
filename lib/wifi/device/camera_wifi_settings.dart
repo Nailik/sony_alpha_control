@@ -30,7 +30,8 @@ class CameraWifiSettings extends CameraSettings {
 
     (jsonD["result"] as List<dynamic>)?.forEach((element) {
       if (element != null && !element.isEmpty) {
-        String settingsIdWifiValue = element["type"];
+        String settingsIdWifiValue =
+            element["type"] as String; //as String because it might be an int
 
         SettingsId settingsIdEnum =
             SettingsIdExtension.getIdFromWifi(settingsIdWifiValue);
@@ -98,31 +99,74 @@ class CameraWifiSettings extends CameraSettings {
   updateAvailable(SettingsItem settingsItem, String json) {
     var jsonD = jsonDecode(json);
     var list = jsonD["result"];
-    settingsItem.updateItem(
-        settingsItem.fromWifi(list[0]),
-        settingsItem.subValue,
-        settingsItem.createListFromWifiJson(list[1] as List),
-        //missing <DoubleValue> in map
-        settingsItem.supported);
+
+    switch (settingsItem.settingsId) {
+      case SettingsId.EV:
+        //special case
+        break;
+      default:
+        settingsItem.updateItem(
+            settingsItem.fromWifi(list[0]),
+            settingsItem.subValue,
+            settingsItem.createListFromWifiJson(list[1] as List),
+            //missing <DoubleValue> in map
+            settingsItem.supported);
+        break;
+    }
   }
 
   updateSupported(SettingsItem settingsItem, String json) {
     var jsonD = jsonDecode(json);
     var list = jsonD["result"];
-    settingsItem.updateItem(
-        settingsItem.value,
-        settingsItem.subValue,
-        settingsItem.available,
-        settingsItem.createListFromWifiJson(list[0] as List));
+
+    switch (settingsItem.settingsId) {
+      case SettingsId.EV:
+        //special case
+        //0: int[] upper limit
+        //1: int[] lower limit
+        //2 int[] 1: 1/3 EV  2: 1/2 EV  0: invalid
+        List<DoubleValue> listOfValues = new List();
+
+        //0 -> 0.3 -> 0.7
+        list[2].forEach((index) {
+          //TODO index == 0 -> invalid
+          int x = index-1;
+          double z = x == 0 ? 3 : 2;
+
+          //list for 1/3 ev (x = 0), list for 1/2 ev (x = 1)
+          for (int i = list[1][x]; i <= list[0][x]; i++) {
+            //lower limit to upper limit
+            var num = ((i / z) * 10).toInt();
+            if(num % 10 == 6 ){
+              //ends with a 6 should be a 7
+              num++;
+            }
+            listOfValues.add(DoubleValue(num.toDouble() / 10));
+          }
+        });
+        //createListFromWifiJson(List<dynamic> list) =>
+        //  list.map<T>((e) => fromWifi(e)).toList();
+        break;
+      default:
+        settingsItem.updateItem(
+            settingsItem.value,
+            settingsItem.subValue,
+            settingsItem.available,
+            settingsItem.createListFromWifiJson(list[0] as List));
+        break;
+    }
   }
 
   getDefaultSettings(
       json, SettingsItem setting, String currentName, String availableName) {
     print("getDefaultSettings json $json availableName $availableName");
+    var availableList = json[availableName]
+        ?.map((e) => setting.fromWifi(e))
+        ?.toList(); //maybe there is no candidates/available list (e.g. camera status)
     setting.updateItem(
         setting.fromWifi(json[currentName]),
         setting.subValue,
-        json[availableName].map((e) => setting.fromWifi(e)).toList(),
+        availableList != null ? availableList : setting.available,
         setting.supported);
   }
 }

@@ -21,17 +21,16 @@ setIso
 getShutterSpeed
 setShutterSpeed
 
-
+getEV
+setEV
 
 
 getAel
-setAel
+setAel //TODO wifi not supported?
 
 getFel
-setFel
+setFel //TODO wifi not supported?
 
-getEV
-setEV
 
 getFlashMode
 setFlashMode
