@@ -62,7 +62,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
         // TODO: Handle this case.
         break;
       case SettingsId.EV:
-        return setEV(value);
+        return modifyEV(value);
       case SettingsId.DriveMode:
         return setDriveMode(DriveModeIdExtension.getIdFromUsb(value));
       case SettingsId.FlashValue:
@@ -291,11 +291,14 @@ class SonyCameraUsbApi extends CameraApiInterface {
           .isValidResponse();
 
   @override
-  Future<bool> setEV(int value) async =>
+  Future<bool> modifyEV(int value) async =>
       (await UsbCommands.getCommandSetting(SettingsId.EV,
                   opCodeId: OpCodeId.MainSetting, value1: value)
               .send())
           .isValidResponse();
+
+  @override
+  Future<bool> setEV(DoubleValue value) async => throw UnimplementedError;
 
   @override
   Future<bool> modifyFNumber(int value) async =>

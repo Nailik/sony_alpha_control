@@ -180,9 +180,35 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> setEV(int value) {
-    // TODO: implement setEV
-    throw UnimplementedError();
+  Future<bool> modifyEV(int direction) async {
+    var ev = await getEV();
+    var currentIndex = ev.available
+        .indexWhere((element) => element.wifiValue == ev.value.wifiValue);
+    if ((currentIndex == 0 && direction == -1) ||
+        (currentIndex == ev.available.length - 1 && direction == 1)) {
+      return false; //would be out of range
+    }
+    return _setEVIndex(currentIndex + direction);
+  }
+
+  @override
+  Future<bool> setEV(DoubleValue value) async {
+    var ev = await getEV();
+    return _setEVIndex(ev.available
+        .indexWhere((element) => element.wifiValue == ev.value.wifiValue));
+  }
+
+  Future<bool> _setEVIndex(int index) async {
+    return await WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.EV,
+        params: [index]).send(device).then((result) {
+      if (result.isValid) {
+        SettingsItem<DoubleValue> item =
+            device.cameraSettings.getItem<DoubleValue>(SettingsId.EV);
+        item.updateItem(item.available[index], item.subValue, item.available,
+            item.supported);
+      }
+      return result.isValid;
+    });
   }
 
   //TODO

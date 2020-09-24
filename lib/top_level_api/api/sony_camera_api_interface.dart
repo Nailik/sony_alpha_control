@@ -91,14 +91,16 @@ abstract class CameraApiInterface {
   //value -> up and down (1 or -1)
   Future<bool> modifyShutterSpeed(int direction);
 
-  //TODO up/down like f number
   Future<bool> setShutterSpeed(ShutterSpeedValue value);
 
 
   Future<SettingsItem<DoubleValue>> getEV({ForceUpdate update}) async =>
       device.cameraSettings.getItem<DoubleValue>(SettingsId.EV);
 
-  Future<bool> setEV(int value);
+  //value -> up and down (1 or -1)
+  Future<bool> modifyEV(int direction);
+
+  Future<bool> setEV(DoubleValue value);
 
   ///unchecked (wifi) *******************************************
 
