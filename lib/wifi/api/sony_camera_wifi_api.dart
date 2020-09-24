@@ -51,15 +51,15 @@ class SonyCameraWifiApi extends CameraApiInterface {
           update, await super.getFNumber(update: update));
 
   @override
-  Future<bool> modifyFNumber(int value) async {
+  Future<bool> modifyFNumber(int direction) async {
     var fNumber = await getFNumber();
     var currentIndex = fNumber.available
         .indexWhere((element) => element.wifiValue == fNumber.value.wifiValue);
-    if ((currentIndex == 0 && value == -1) ||
-        (currentIndex == fNumber.available.length - 1 && value == 1)) {
+    if ((currentIndex == 0 && direction == -1) ||
+        (currentIndex == fNumber.available.length - 1 && direction == 1)) {
       return false; //would be out of range
     }
-    var newIndex = currentIndex + value;
+    var newIndex = currentIndex + direction;
     return setFNumber(fNumber.available[newIndex]);
   }
 
@@ -84,6 +84,19 @@ class SonyCameraWifiApi extends CameraApiInterface {
       await _updateIf<IsoValue>(update, await super.getIso(update: update));
 
   @override
+  Future<bool> modifyIso(int direction) async {
+    var iso = await getIso();
+    var currentIndex = iso.available
+        .indexWhere((element) => element.wifiValue == iso.value.wifiValue);
+    if ((currentIndex == 0 && direction == -1) ||
+        (currentIndex == iso.available.length - 1 && direction == 1)) {
+      return false; //would be out of range
+    }
+    var newIndex = currentIndex + direction;
+    return setIso(iso.available[newIndex]);
+  }
+
+  @override
   Future<bool> setIso(IsoValue value) async {
     return await WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.ISO,
         params: [value.wifiValue]).send(device).then((result) {
@@ -102,6 +115,19 @@ class SonyCameraWifiApi extends CameraApiInterface {
   Future<SettingsItem<ShutterSpeedValue>> getShutterSpeed(
           {update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getShutterSpeed(update: update));
+
+  @override
+  Future<bool> modifyShutterSpeed(int direction) async {
+    var shutterSpeed = await getShutterSpeed();
+    var currentIndex = shutterSpeed.available
+        .indexWhere((element) => element.wifiValue == shutterSpeed.value.wifiValue);
+    if ((currentIndex == 0 && direction == -1) ||
+        (currentIndex == shutterSpeed.available.length - 1 && direction == 1)) {
+      return false; //would be out of range
+    }
+    var newIndex = currentIndex + direction;
+    return setShutterSpeed(shutterSpeed.available[newIndex]);
+  }
 
   @override
   Future<bool> setShutterSpeed(ShutterSpeedValue value) async {

@@ -61,24 +61,35 @@ abstract class CameraApiInterface {
   ///usb so far
   Future<bool> setSettingsRaw(SettingsId id, int value);
 
+  ///FNumber
+  ///
   //Wifi checked
   Future<SettingsItem<DoubleValue>> getFNumber({ForceUpdate update}) async =>
       device.cameraSettings.getItem<DoubleValue>(SettingsId.FNumber);
 
   //value -> up and down (1 or -1)
-  Future<bool> modifyFNumber(int value);
+  Future<bool> modifyFNumber(int direction);
 
   //only available on wifi
   Future<bool> setFNumber(DoubleValue value);
 
-  //TODO value or steps?
-  Future<bool> setIso(IsoValue value);
+  ///Iso
 
   Future<SettingsItem<IsoValue>> getIso({ForceUpdate update}) async =>
       device.cameraSettings.getItem<IsoValue>(SettingsId.ISO);
 
+  //TODO value or steps?
+  Future<bool> modifyIso(int direction);
+
+  Future<bool> setIso(IsoValue value);
+
+  ///Shutter
+
   Future<SettingsItem<ShutterSpeedValue>> getShutterSpeed({ForceUpdate update}) async =>
       device.cameraSettings.getItem<ShutterSpeedValue>(SettingsId.ShutterSpeed);
+
+  //value -> up and down (1 or -1)
+  Future<bool> modifyShutterSpeed(int direction);
 
   //TODO up/down like f number
   Future<bool> setShutterSpeed(ShutterSpeedValue value);

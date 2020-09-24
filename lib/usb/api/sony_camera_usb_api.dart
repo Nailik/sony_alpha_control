@@ -449,6 +449,9 @@ class SonyCameraUsbApi extends CameraApiInterface {
           .isValidResponse();
 
   @override
+  Future<bool> modifyIso(int direction) async => throw UnimplementedError();
+
+  @override
   Future<bool> setIso(IsoValue value) async =>
       (await UsbCommands.getCommandSetting(SettingsId.ISO,
                   opCodeId: OpCodeId.MainSetting,
@@ -478,6 +481,15 @@ class SonyCameraUsbApi extends CameraApiInterface {
                   value1: value.usbValue,
                   value1DataSize: 4)
               .send())
+          .isValidResponse();
+
+  @override
+  Future<bool> modifyShutterSpeed(int value) async =>
+      (await UsbCommands.getCommandSetting(SettingsId.ShutterSpeed,
+          opCodeId: OpCodeId.MainSetting,
+          value1: value,
+          value1DataSize: 4)
+          .send())
           .isValidResponse();
 
   @override

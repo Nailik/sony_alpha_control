@@ -31,9 +31,9 @@ class TestsPageState extends State<TestsPage> {
     return MaterialApp(
         home: Scaffold(
             appBar: AppBar(
-          //    leading: CircularProgressIndicator(
-            //      valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
-            ),
+                //    leading: CircularProgressIndicator(
+                //      valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
+                ),
             backgroundColor: Colors.blueGrey,
             body: ChangeNotifierProvider<CameraSettings>(
                 create: (context) => SonyApi.connectedCamera.cameraSettings,
@@ -66,7 +66,6 @@ class TestsPageState extends State<TestsPage> {
                       getEVRow(),
                       getSettingsRow(SettingsId.DriveMode),
                       getSettingsRow(SettingsId.DroHdr),
-                      getShutterSpeedRow(),
                       getSettingsRow(SettingsId.AspectRatio),
                       getAelRow(),
                       getSettingsRow(SettingsId.PictureEffect),
@@ -95,11 +94,6 @@ class TestsPageState extends State<TestsPage> {
             )));
   }
 
-  /*
-  getFNumber
-  modifyFNumber
-  setFNumber
-  */
   Widget getFNumberRow() {
     return ChangeNotifierProvider<SettingsItem>(
         create: (context) =>
@@ -175,121 +169,145 @@ class TestsPageState extends State<TestsPage> {
 
   Widget getIsoRow() {
     return ChangeNotifierProvider<SettingsItem>(
-        create: (context) =>
-        (device.cameraSettings.getItem(SettingsId.ISO)),
+        create: (context) => (device.cameraSettings.getItem(SettingsId.ISO)),
         child: Consumer<SettingsItem>(
             builder: (context, model, _) => Card(
-              child: Column(children: [
-                ListTile(
-                  title: Text(SettingsId.ISO.name),
-                  subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.ISO)
-                      .value
-                      ?.name ??
-                      "NotAvailable"),
-                  onTap: () =>
-                      device.api.getIso(update: ForceUpdate.Both),
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                          child: Padding(
-                              padding: EdgeInsets.all(16),
-                              child: DropdownButton<IsoValue>(
-                                hint: Text("available"),
-                                items: device.cameraSettings
-                                    .getItem(SettingsId.ISO)
-                                    .available
-                                    .map<DropdownMenuItem<IsoValue>>(
-                                        (e) =>
-                                        DropdownMenuItem<IsoValue>(
-                                            child: Text(e.name),
-                                            value: e))
-                                    .toList(),
-                                onChanged: (value) =>
-                                    device.api.setIso(value),
-                              ))),
-                      Expanded(
-                          child: Padding(
-                              padding: EdgeInsets.all(16),
-                              child: DropdownButton<IsoValue>(
-                                hint: Text("supported"),
-                                items: device.cameraSettings
-                                    .getItem(SettingsId.ISO)
-                                    .supported
-                                    .map<DropdownMenuItem<IsoValue>>(
-                                        (e) =>
-                                        DropdownMenuItem<IsoValue>(
-                                            child: Text(e.name),
-                                            value: e))
-                                    .toList(),
-                                onChanged: (value) =>
-                                    device.api.setIso(value),
-                              ))),
-                    ]),
-              ]),
-            )));
+                  child: Column(children: [
+                    ListTile(
+                      title: Text(SettingsId.ISO.name),
+                      subtitle: Text(device.cameraSettings
+                              .getItem(SettingsId.ISO)
+                              .value
+                              ?.name ??
+                          "NotAvailable"),
+                      onTap: () => device.api.getIso(update: ForceUpdate.Both),
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: ListTile(
+                                title: Text("Up"),
+                                onTap: () => device.api.modifyIso(1)),
+                          ),
+                          Expanded(
+                            child: ListTile(
+                                title: Text("Down"),
+                                onTap: () => device.api.modifyIso(-1)),
+                          )
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: DropdownButton<IsoValue>(
+                                    hint: Text("available"),
+                                    items: device.cameraSettings
+                                        .getItem(SettingsId.ISO)
+                                        .available
+                                        .map<DropdownMenuItem<IsoValue>>((e) =>
+                                            DropdownMenuItem<IsoValue>(
+                                                child: Text(e.name), value: e))
+                                        .toList(),
+                                    onChanged: (value) =>
+                                        device.api.setIso(value),
+                                  ))),
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: DropdownButton<IsoValue>(
+                                    hint: Text("supported"),
+                                    items: device.cameraSettings
+                                        .getItem(SettingsId.ISO)
+                                        .supported
+                                        .map<DropdownMenuItem<IsoValue>>((e) =>
+                                            DropdownMenuItem<IsoValue>(
+                                                child: Text(e.name), value: e))
+                                        .toList(),
+                                    onChanged: (value) =>
+                                        device.api.setIso(value),
+                                  ))),
+                        ]),
+                  ]),
+                )));
   }
 
   Widget getShutterSpeed() {
     return ChangeNotifierProvider<SettingsItem>(
         create: (context) =>
-        (device.cameraSettings.getItem(SettingsId.ShutterSpeed)),
+            (device.cameraSettings.getItem(SettingsId.ShutterSpeed)),
         child: Consumer<SettingsItem>(
             builder: (context, model, _) => Card(
-              child: Column(children: [
-                ListTile(
-                  title: Text(SettingsId.ShutterSpeed.name),
-                  subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.ShutterSpeed)
-                      .value
-                      ?.name ??
-                      "NotAvailable"),
-                  onTap: () =>
-                      device.api.getShutterSpeed(update: ForceUpdate.Both),
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                          child: Padding(
-                              padding: EdgeInsets.all(16),
-                              child: DropdownButton<ShutterSpeedValue>(
-                                hint: Text("available"),
-                                items: device.cameraSettings
-                                    .getItem(SettingsId.ShutterSpeed)
-                                    .available
-                                    .map<DropdownMenuItem<ShutterSpeedValue>>(
-                                        (e) =>
-                                        DropdownMenuItem<ShutterSpeedValue>(
-                                            child: Text(e.name),
-                                            value: e))
-                                    .toList(),
-                                onChanged: (value) =>
-                                    device.api.setShutterSpeed(value),
-                              ))),
-                      Expanded(
-                          child: Padding(
-                              padding: EdgeInsets.all(16),
-                              child: DropdownButton<ShutterSpeedValue>(
-                                hint: Text("supported"),
-                                items: device.cameraSettings
-                                    .getItem(SettingsId.ShutterSpeed)
-                                    .supported
-                                    .map<DropdownMenuItem<ShutterSpeedValue>>(
-                                        (e) =>
-                                        DropdownMenuItem<ShutterSpeedValue>(
-                                            child: Text(e.name),
-                                            value: e))
-                                    .toList(),
-                                onChanged: (value) =>
-                                    device.api.setShutterSpeed(value),
-                              ))),
-                    ]),
-              ]),
-            )));
+                  child: Column(children: [
+                    ListTile(
+                      title: Text(SettingsId.ShutterSpeed.name),
+                      subtitle: Text(device.cameraSettings
+                              .getItem(SettingsId.ShutterSpeed)
+                              .value
+                              ?.name ??
+                          "NotAvailable"),
+                      onTap: () =>
+                          device.api.getShutterSpeed(update: ForceUpdate.Both),
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: ListTile(
+                                title: Text("Up"),
+                                onTap: () => device.api.modifyShutterSpeed(1)),
+                          ),
+                          Expanded(
+                            child: ListTile(
+                                title: Text("Down"),
+                                onTap: () => device.api.modifyShutterSpeed(-1)),
+                          )
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: DropdownButton<ShutterSpeedValue>(
+                                    hint: Text("available"),
+                                    items: device.cameraSettings
+                                        .getItem(SettingsId.ShutterSpeed)
+                                        .available
+                                        .map<
+                                            DropdownMenuItem<
+                                                ShutterSpeedValue>>((e) =>
+                                            DropdownMenuItem<ShutterSpeedValue>(
+                                                child: Text(e.name), value: e))
+                                        .toList(),
+                                    onChanged: (value) =>
+                                        device.api.setShutterSpeed(value),
+                                  ))),
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: DropdownButton<ShutterSpeedValue>(
+                                    hint: Text("supported"),
+                                    items: device.cameraSettings
+                                        .getItem(SettingsId.ShutterSpeed)
+                                        .supported
+                                        .map<
+                                            DropdownMenuItem<
+                                                ShutterSpeedValue>>((e) =>
+                                            DropdownMenuItem<ShutterSpeedValue>(
+                                                child: Text(e.name), value: e))
+                                        .toList(),
+                                    onChanged: (value) =>
+                                        device.api.setShutterSpeed(value),
+                                  ))),
+                        ]),
+                  ]),
+                )));
   }
+
+  //done
 
   Widget getImageSizeRow() {
     return Card(
@@ -522,31 +540,6 @@ class TestsPageState extends State<TestsPage> {
     );
   }
 
-  Widget getShutterSpeedRow() {
-    return Card(
-      child: IntrinsicHeight(
-          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Expanded(
-          child: ListTile(
-              title: Text(SettingsId.ShutterSpeed.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.ShutterSpeed)
-                      ?.value
-                      ?.name ??
-                  "")),
-        ),
-     //   Expanded(
-    //      child: ListTile(
-   //           title: Text("Up"), onTap: () => device.api.setShutterSpeed(1)),
-    //    ),
-    //    Expanded(
-    //      child: ListTile(
-    //          title: Text("Down"), onTap: () => device.api.setShutterSpeed(-1)),
-    //    )
-      ])),
-    );
-  }
-
   Widget getAelRow() {
     return Card(
       child: IntrinsicHeight(
@@ -632,8 +625,6 @@ class TestsPageState extends State<TestsPage> {
       ])),
     );
   }
-
-
 
   Widget getFelRow() {
     return Card(
