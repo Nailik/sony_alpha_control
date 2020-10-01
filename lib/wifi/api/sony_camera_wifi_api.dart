@@ -201,8 +201,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
       if (result.isValid) {
         SettingsItem<EvValue> item =
             device.cameraSettings.getItem<EvValue>(SettingsId.EV);
-        item.updateItem(value, item.subValue, item.available,
-            item.supported);
+        item.updateItem(value, item.subValue, item.available, item.supported);
       }
       return result.isValid;
     });
@@ -212,24 +211,41 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<SettingsItem<FlashModeValue>> getFlashMode(
-      {update = ForceUpdate.IfNull}) async =>
+          {update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getFlashMode(update: update));
 
   @override
   Future<bool> setFlashMode(FlashModeValue value) async {
     return await WifiCommand.createCommand(
-        SonyWebApiMethod.SET, SettingsId.FlashMode, params: [value.wifiValue])
-        .send(device)
-        .then((result) {
+        SonyWebApiMethod.SET, SettingsId.FlashMode,
+        params: [value.wifiValue]).send(device).then((result) {
       if (result.isValid) {
         SettingsItem<FlashModeValue> item =
-        device.cameraSettings.getItem<FlashModeValue>(SettingsId.FlashMode);
+            device.cameraSettings.getItem<FlashModeValue>(SettingsId.FlashMode);
         item.updateItem(value, item.subValue, item.available, item.supported);
       }
       return result.isValid;
     });
   }
 
+  ///FocusMode
+
+  @override
+  Future<SettingsItem<FocusModeValue>> getFocusMode(
+          {update = ForceUpdate.IfNull}) async =>
+      await _updateIf(update, await super.getFocusMode(update: update));
+
+  @override
+  Future<bool> setFocusMode(FocusModeValue value) =>
+      WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.FocusMode,
+          params: [value.wifiValue]).send(device).then((result) {
+        if (result.isValid) {
+          SettingsItem<FocusModeValue> item = device.cameraSettings
+              .getItem<FocusModeValue>(SettingsId.FocusMode);
+          item.updateItem(value, item.subValue, item.available, item.supported);
+        }
+        return result.isValid;
+      });
 
   //TODO
 
@@ -297,11 +313,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
           {update = ForceUpdate.IfNull}) async =>
       await _updateIf(
           update, await super.getFocusMagnifierPhase(update: update));
-
-  @override
-  Future<SettingsItem<FocusModeValue>> getFocusMode(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getFocusMode(update: update));
 
   @override
   Future<SettingsItem<FocusModeToggleValue>> getFocusModeToggle(
@@ -450,12 +461,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
     // TODO: implement setFocusMagnifierPhase
     throw UnimplementedError();
   }
-
-  @override
-  Future<bool> setFocusMode(FocusModeId value) =>
-      WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.FocusMode)
-          .send(device)
-          .then((value) => value.response == "true");
 
   @override
   Future<bool> setFocusModeToggle(FocusModeToggleId value) {

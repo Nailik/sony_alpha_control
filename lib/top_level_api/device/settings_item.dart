@@ -129,7 +129,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.PostViewImageSize:
       //TODO  return StringValue(wifiValue);
       case SettingsId.SelfTimer:
-      //TODO  return StringValue(wifiValue);
+        return IntValue(wifiValue);
       case SettingsId.ShootingMode:
       //TODO  return ShootingModeValue.fromWifiValue(wifiValue);
       case SettingsId.MeteringMode: //exposureMode

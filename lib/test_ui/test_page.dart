@@ -7,6 +7,7 @@ import 'package:sonyalphacontrol/top_level_api/device/camera_settings.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/flash_mode_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/wifi/enums/force_update.dart';
@@ -46,8 +47,10 @@ class TestsPageState extends State<TestsPage> {
                       getIsoRow(),
                       getShutterSpeed(),
                       getEVRow(),
-                      getFlashRow()
-                      /*  getStateRow(SettingsId.ShootingMode),
+                      getFlashRow(),
+                      getFocusModeRow()
+                      /*
+                      getSettingsRow(SettingsId.MeteringMode), getStateRow(SettingsId.ShootingMode),
                       getStateRow(SettingsId.AutoFocusState),
                       getStateRow(SettingsId.BatteryInfo),
                       getStateRow(SettingsId.LiveViewState),
@@ -63,15 +66,10 @@ class TestsPageState extends State<TestsPage> {
                       //settings
                       getImageSizeRow(),
                       getWhiteBalanceRow(),
-                      getSettingsRow(SettingsId.FocusMode),
-                      getSettingsRow(SettingsId.MeteringMode),
-                      getFlashRow(),
-                      getEVRow(),
                       getSettingsRow(SettingsId.DriveMode),
                       getSettingsRow(SettingsId.DroHdr),
                       getSettingsRow(SettingsId.AspectRatio),
                       getSettingsRow(SettingsId.PictureEffect),
-                      getIsoRow(),
                       getFelRow(),
                       getFocusAreaRow(),
                       getFocusModeRow(),
@@ -408,6 +406,55 @@ class TestsPageState extends State<TestsPage> {
     );
   }
 
+  Widget getFocusModeRow() {
+    return ChangeNotifierProvider<SettingsItem>(
+      create: (context) => (device.cameraSettings.getItem(SettingsId.FocusMode)),
+      child: Consumer<SettingsItem>(
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.FocusMode.name),
+              subtitle: Text(
+                  device.cameraSettings.getItem(SettingsId.FocusMode).value?.name ??
+                      "NotAvailable"),
+              onTap: () => device.api.getFocusMode(update: ForceUpdate.Both),
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<FocusModeValue>(
+                        hint: Text("available"),
+                        items: device.cameraSettings
+                            .getItem(SettingsId.FocusMode)
+                            .available
+                            .map<DropdownMenuItem<FocusModeValue>>((e) =>
+                            DropdownMenuItem<FocusModeValue>(
+                                child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) => device.api.setFocusMode(value),
+                      ))),
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<FocusModeValue>(
+                        hint: Text("supported"),
+                        items: device.cameraSettings
+                            .getItem(SettingsId.FocusMode)
+                            .supported
+                            .map<DropdownMenuItem<FocusModeValue>>((e) =>
+                            DropdownMenuItem<FocusModeValue>(
+                                child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) => device.api.setFocusMode(value),
+                      ))),
+            ]),
+          ]),
+        ),
+      ),
+    );
+  }
+
   //done
 
   Widget getAelRow() {
@@ -641,38 +688,6 @@ class TestsPageState extends State<TestsPage> {
                   ?.name ??
               "NotAvailable"),
         )),
-      ])),
-    );
-  }
-
-  Widget getFocusModeRow() {
-    return Card(
-      child: IntrinsicHeight(
-          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Expanded(
-          child: ListTile(
-              title: Text(SettingsId.FocusMode.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.FocusMode)
-                      ?.value
-                      ?.name ??
-                  "NotAvailable"),
-              onTap: () => dialog(
-                  device.cameraSettings.getItem(SettingsId.FocusMode),
-                  context)),
-        ),
-        Expanded(
-          child: ListTile(
-              title: Text("AF"),
-              onTap: () =>
-                  device.api.setFocusModeToggle(FocusModeToggleId.Auto)),
-        ),
-        Expanded(
-          child: ListTile(
-              title: Text("MF"),
-              onTap: () =>
-                  device.api.setFocusModeToggle(FocusModeToggleId.Manual)),
-        )
       ])),
     );
   }

@@ -24,6 +24,14 @@ setShutterSpeed
 getEV
 setEV
 
+getFlashMode
+setFlashMode
+
+getFocusMode
+setFocusMode
+
+
+
 
 getAel
 setAel //TODO wifi not supported?
@@ -31,9 +39,6 @@ setAel //TODO wifi not supported?
 getFel
 setFel //TODO wifi not supported?
 
-
-getFlashMode
-setFlashMode
 
 getFlashValue
 setFlashValue
@@ -54,8 +59,6 @@ getImageSize
 setImageSize
 getAspectRatio
 setAspectRatio
-getFocusMode
-setFocusMode
 getFocusModeToggle
 setFocusModeToggle
 setFocusDistance

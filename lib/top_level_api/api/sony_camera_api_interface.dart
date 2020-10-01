@@ -108,6 +108,15 @@ abstract class CameraApiInterface {
 
   Future<bool> setFlashMode(FlashModeValue value);
 
+  ///Focus Mode
+
+  Future<SettingsItem<FocusModeValue>> getFocusMode(
+      {ForceUpdate update}) async =>
+      device.cameraSettings.getItem<FocusModeValue>(SettingsId.FocusMode);
+
+  Future<bool> setFocusMode(FocusModeValue value);
+
+
 
   ///unchecked (wifi) *******************************************
 
@@ -202,12 +211,6 @@ abstract class CameraApiInterface {
       device.cameraSettings.getItem<AspectRatioValue>(SettingsId.AspectRatio);
 
   Future<bool> setAspectRatio(AspectRatioId value);
-
-  Future<SettingsItem<FocusModeValue>> getFocusMode(
-          {ForceUpdate update}) async =>
-      device.cameraSettings.getItem<FocusModeValue>(SettingsId.FocusMode);
-
-  Future<bool> setFocusMode(FocusModeId value);
 
   Future<SettingsItem<FocusModeToggleValue>> getFocusModeToggle(
           {ForceUpdate update}) async =>

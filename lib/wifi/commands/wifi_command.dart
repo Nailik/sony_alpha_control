@@ -104,5 +104,5 @@ class WifiResponse {
 
   WifiResponse(this.request, this.response);
 
-  get isValid => jsonDecode(response)["result"][0] == 0;
+  get isValid => jsonDecode(response)["result"][0] == 0; //TODO what error code? illegal argument/ unsupported etc
 }

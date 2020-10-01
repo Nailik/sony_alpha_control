@@ -53,7 +53,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
       case SettingsId.FNumber:
         return modifyFNumber(value);
       case SettingsId.FocusMode:
-        return setFocusMode(FocusModeIdExtension.getIdFromUsb(value));
+        return setFocusMode(FocusModeValue.fromUSBValue(value));
       case SettingsId.MeteringMode:
         return setMeteringMode(MeteringModeIdExtension.getIdFromUsb(value));
       case SettingsId.FlashMode:
@@ -431,7 +431,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> setFocusMode(FocusModeId value) async =>
+  Future<bool> setFocusMode(FocusModeValue value) async =>
       (await UsbCommands.getCommandSetting(SettingsId.FocusMode,
                   value1: value.usbValue)
               .send())
