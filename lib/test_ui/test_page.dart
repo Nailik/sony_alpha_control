@@ -298,61 +298,55 @@ class TestsPageState extends State<TestsPage> {
     );
   }
 
-
   Widget getEVRow() {
     return ChangeNotifierProvider<SettingsItem>(
-      create: (context) =>
-      (device.cameraSettings.getItem(SettingsId.EV)),
+      create: (context) => (device.cameraSettings.getItem(SettingsId.EV)),
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
               title: Text(SettingsId.EV.name),
-              subtitle: Text(device.cameraSettings
-                  .getItem(SettingsId.EV)
-                  .value
-                  ?.name ??
-                  "NotAvailable"),
+              subtitle: Text(
+                  device.cameraSettings.getItem(SettingsId.EV).value?.name ??
+                      "NotAvailable"),
               onTap: () => device.api.getEV(update: ForceUpdate.Both),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                 child: ListTile(
-                    title: Text("Up"),
-                    onTap: () => device.api.modifyEV(1)),
+                    title: Text("Up"), onTap: () => device.api.modifyEV(1)),
               ),
               Expanded(
                 child: ListTile(
-                    title: Text("Down"),
-                    onTap: () => device.api.modifyEV(-1)),
+                    title: Text("Down"), onTap: () => device.api.modifyEV(-1)),
               )
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
                       padding: EdgeInsets.all(16),
-                      child: DropdownButton<DoubleValue>(
+                      child: DropdownButton<EvValue>(
                         hint: Text("available"),
                         items: device.cameraSettings
                             .getItem(SettingsId.EV)
                             .available
-                            .map<DropdownMenuItem<DoubleValue>>((e) =>
-                            DropdownMenuItem<DoubleValue>(
-                                child: Text(e.name), value: e))
+                            .map<DropdownMenuItem<EvValue>>((e) =>
+                                DropdownMenuItem<EvValue>(
+                                    child: Text(e.name), value: e))
                             .toList(),
                         onChanged: (value) => device.api.setEV(value),
                       ))),
               Expanded(
                   child: Padding(
                       padding: EdgeInsets.all(16),
-                      child: DropdownButton<DoubleValue>(
+                      child: DropdownButton<EvValue>(
                         hint: Text("supported"),
                         items: device.cameraSettings
                             .getItem(SettingsId.EV)
                             .supported
-                            .map<DropdownMenuItem<DoubleValue>>((e) =>
-                            DropdownMenuItem<DoubleValue>(
-                                child: Text(e.name), value: e))
+                            .map<DropdownMenuItem<EvValue>>((e) =>
+                                DropdownMenuItem<EvValue>(
+                                    child: Text(e.name), value: e))
                             .toList(),
                         onChanged: (value) => device.api.setEV(value),
                       ))),
@@ -362,7 +356,6 @@ class TestsPageState extends State<TestsPage> {
       ),
     );
   }
-
 
   //done
 
@@ -400,7 +393,6 @@ class TestsPageState extends State<TestsPage> {
                       ])),
                 )));
   }
-
 
   Widget getImageSizeRow() {
     return Card(

@@ -298,7 +298,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
           .isValidResponse();
 
   @override
-  Future<bool> setEV(DoubleValue value) async => throw UnimplementedError;
+  Future<bool> setEV(EvValue value) async => throw UnimplementedError;
 
   @override
   Future<bool> modifyFNumber(int value) async =>

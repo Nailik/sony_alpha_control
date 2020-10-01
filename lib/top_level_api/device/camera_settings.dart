@@ -19,8 +19,10 @@ abstract class CameraSettings extends ChangeNotifier {
     if (item == null) {
       switch (settingsId) {
         case SettingsId.FNumber:
-        case SettingsId.EV:
           item = SettingsItem<DoubleValue>(settingsId);
+          break;
+        case SettingsId.EV:
+          item = SettingsItem<EvValue>(settingsId);
           break;
         case SettingsId.ISO:
           item = SettingsItem<IsoValue>(settingsId);

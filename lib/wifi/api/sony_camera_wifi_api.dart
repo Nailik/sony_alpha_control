@@ -146,9 +146,9 @@ class SonyCameraWifiApi extends CameraApiInterface {
   ///EV
 
   @override
-  Future<SettingsItem<DoubleValue>> getEV({update = ForceUpdate.IfNull}) async {
-    SettingsItem<DoubleValue> settingsItem =
-        device.cameraSettings.getItem<DoubleValue>(SettingsId.EV);
+  Future<SettingsItem<EvValue>> getEV({update = ForceUpdate.IfNull}) async {
+    SettingsItem<EvValue> settingsItem =
+        device.cameraSettings.getItem<EvValue>(SettingsId.EV);
     switch (update) {
       case ForceUpdate.Available:
         if (settingsItem.supported == null || settingsItem.supported.isEmpty) {
@@ -181,30 +181,25 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> modifyEV(int direction) async {
-    var ev = await getEV();
-    var currentIndex = ev.available
-        .indexWhere((element) => element.wifiValue == ev.value.wifiValue);
-    if ((currentIndex == 0 && direction == -1) ||
-        (currentIndex == ev.available.length - 1 && direction == 1)) {
+    SettingsItem<EvValue> ev = await getEV();
+    var newItem = ev.available
+        .firstWhere((element) => element.index == (ev.value.index + direction));
+    if (newItem == null) {
       return false; //would be out of range
     }
-    return _setEVIndex(currentIndex + direction);
+    return _setEVIndex(newItem);
   }
 
   @override
-  Future<bool> setEV(DoubleValue value) async {
-    var ev = await getEV();
-    return _setEVIndex(ev.available
-        .indexWhere((element) => element.wifiValue == ev.value.wifiValue));
-  }
+  Future<bool> setEV(EvValue value) async => _setEVIndex(value);
 
-  Future<bool> _setEVIndex(int index) async {
+  Future<bool> _setEVIndex(EvValue value) async {
     return await WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.EV,
-        params: [index]).send(device).then((result) {
+        params: [value.index]).send(device).then((result) {
       if (result.isValid) {
-        SettingsItem<DoubleValue> item =
-            device.cameraSettings.getItem<DoubleValue>(SettingsId.EV);
-        item.updateItem(item.available[index], item.subValue, item.available,
+        SettingsItem<EvValue> item =
+            device.cameraSettings.getItem<EvValue>(SettingsId.EV);
+        item.updateItem(value, item.subValue, item.available,
             item.supported);
       }
       return result.isValid;

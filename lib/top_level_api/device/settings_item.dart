@@ -76,7 +76,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
   //TODO zusammengefasstes "teilen" auch in usb -> man wählt das eine aus,
 
 //SettingsIdExtension.getSettingsIdWifi(value["type"].toString(
-  SettingsValue fromWifi(String wifiValue) {
+  SettingsValue fromWifi(dynamic wifiValue) {
     switch (settingsId) {
       case SettingsId.FileFormat: //StillQuality
         return ImageFileFormatValue.fromWifiValue(wifiValue);
@@ -87,7 +87,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.ZoomInformation:
       //TODO return StringValue(wifiValue);
       case SettingsId.LiveViewState:
-        return BoolValue(wifiValue as bool);
+        return BoolValue(wifiValue);
       case SettingsId.LiveViewOrientation:
         return StringValue(wifiValue); //TODO enum 0,90,180,270
       case SettingsId.PostViewUrlSet:
@@ -103,7 +103,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.CameraFunction:
         return CameraFunctionValue.fromWifiValue(wifiValue);
       case SettingsId.EV: //exposureCompensation
-       return DoubleValue(double.parse(wifiValue));
+        return DoubleValue(double.parse(wifiValue));
       case SettingsId.MovieQuality:
         return MovieQualityValue.fromWifiValue(wifiValue);
       case SettingsId.CameraFunctionResult:
@@ -406,6 +406,12 @@ class DoubleValue extends SettingsValue<double> {
   String get wifiValue => id.toString();
 }
 
+class EvValue extends DoubleValue {
+  final int index;
+
+  EvValue(this.index, double id) : super(id);
+}
+
 class ShutterSpeedValue extends DoubleValue {
   var subValue;
   var _name;
@@ -416,14 +422,16 @@ class ShutterSpeedValue extends DoubleValue {
   String get name => _name;
 
   @override
-  String get wifiValue => _name;  //TODO really parse the id value
+  String get wifiValue => _name; //TODO really parse the id value
 
   @override
   factory ShutterSpeedValue.fromWifiValue(String wifiValue) {
     double value = wifiValue.contains("/")
         ? double.parse(wifiValue.split("/")[0]) /
             double.parse(wifiValue.split("/")[1])
-        : wifiValue == "BULB" ? 0xFFFFFF : double.parse(wifiValue.replaceAll("\"", "").replaceAll(",", "."));
+        : wifiValue == "BULB"
+            ? 0xFFFFFF
+            : double.parse(wifiValue.replaceAll("\"", "").replaceAll(",", "."));
     var it = ShutterSpeedValue(value, 0);
     it._name = wifiValue;
     return it;
