@@ -57,7 +57,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
       case SettingsId.MeteringMode:
         return setMeteringMode(MeteringModeIdExtension.getIdFromUsb(value));
       case SettingsId.FlashMode:
-        return setFlashMode(FlashModeIdExtension.getIdFromUsb(value));
+        return setFlashMode(FlashModeValue.fromUSBValue(value));
       case SettingsId.ShootingMode:
         // TODO: Handle this case.
         break;
@@ -324,7 +324,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> setFlashMode(FlashModeId value) async =>
+  Future<bool> setFlashMode(FlashModeValue value) async =>
       (await UsbCommands.getCommandSetting(SettingsId.FlashMode,
                   value1: value.usbValue)
               .send())

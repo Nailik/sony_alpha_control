@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/flash_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 
@@ -32,6 +33,9 @@ abstract class CameraSettings extends ChangeNotifier {
           break;
         case SettingsId.AEL_State:
           item = SettingsItem<BoolValue>(settingsId);
+          break;
+        case SettingsId.FlashMode:
+          item = SettingsItem<FlashModeValue>(settingsId);
           break;
       }
       _settings.add(item);

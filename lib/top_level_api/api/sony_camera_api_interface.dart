@@ -102,6 +102,13 @@ abstract class CameraApiInterface {
 
   Future<bool> setEV(EvValue value);
 
+  Future<SettingsItem<FlashModeValue>> getFlashMode(
+      {ForceUpdate update}) async =>
+      device.cameraSettings.getItem<FlashModeValue>(SettingsId.FlashMode);
+
+  Future<bool> setFlashMode(FlashModeValue value);
+
+
   ///unchecked (wifi) *******************************************
 
   Future<List<CameraImage>> capturePhoto(); //TODO return foto?
@@ -161,12 +168,6 @@ abstract class CameraApiInterface {
           {ForceUpdate update}) async =>
       device.cameraSettings.getItem<AutoFocusStateValue>(SettingsId.AutoFocusState);
 
-
-  Future<SettingsItem<FlashModeValue>> getFlashMode(
-          {ForceUpdate update}) async =>
-      device.cameraSettings.getItem<FlashModeValue>(SettingsId.FlashMode);
-
-  Future<bool> setFlashMode(FlashModeId value);
 
   Future<SettingsItem<IntValue>> getFlashValue({ForceUpdate update}) async =>
       device.cameraSettings.getItem<IntValue>(SettingsId.FlashValue);

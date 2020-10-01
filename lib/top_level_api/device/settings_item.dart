@@ -103,7 +103,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.CameraFunction:
         return CameraFunctionValue.fromWifiValue(wifiValue);
       case SettingsId.EV: //exposureCompensation
-        return DoubleValue(double.parse(wifiValue));
+        throw UnsupportedError; //this should never be called //EvValue(double.parse(wifiValue));
       case SettingsId.MovieQuality:
         return MovieQualityValue.fromWifiValue(wifiValue);
       case SettingsId.CameraFunctionResult:
@@ -408,8 +408,9 @@ class DoubleValue extends SettingsValue<double> {
 
 class EvValue extends DoubleValue {
   final int index;
+  final int step; //0 = problem, 2 = 2/3, 3 = 1/3;
 
-  EvValue(this.index, double id) : super(id);
+  EvValue(this.index, this.step, double id) : super(id);
 }
 
 class ShutterSpeedValue extends DoubleValue {

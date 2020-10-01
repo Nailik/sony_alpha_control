@@ -42,6 +42,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
+  //TODO modify/set ... maybe available and supported is null, eg when camera is in A mode and uses automatic shutter
+
   /// FNumber
   ///
   @override
@@ -206,6 +208,29 @@ class SonyCameraWifiApi extends CameraApiInterface {
     });
   }
 
+  ///FlashMode
+
+  @override
+  Future<SettingsItem<FlashModeValue>> getFlashMode(
+      {update = ForceUpdate.IfNull}) async =>
+      await _updateIf(update, await super.getFlashMode(update: update));
+
+  @override
+  Future<bool> setFlashMode(FlashModeValue value) async {
+    return await WifiCommand.createCommand(
+        SonyWebApiMethod.SET, SettingsId.FlashMode, params: [value.wifiValue])
+        .send(device)
+        .then((result) {
+      if (result.isValid) {
+        SettingsItem<FlashModeValue> item =
+        device.cameraSettings.getItem<FlashModeValue>(SettingsId.FlashMode);
+        item.updateItem(value, item.subValue, item.available, item.supported);
+      }
+      return result.isValid;
+    });
+  }
+
+
   //TODO
 
   @override
@@ -240,11 +265,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<SettingsItem<BoolValue>> getFel({update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getFel(update: update));
-
-  @override
-  Future<SettingsItem<FlashModeValue>> getFlashMode(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getFlashMode(update: update));
 
   @override
   Future<SettingsItem<IntValue>> getFlashValue(
@@ -385,12 +405,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> setFel(bool value) {
     // TODO: implement setFel
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setFlashMode(FlashModeId value) {
-    // TODO: implement setFlashMode
     throw UnimplementedError();
   }
 

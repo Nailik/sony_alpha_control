@@ -6,6 +6,7 @@ import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dar
 import 'package:sonyalphacontrol/top_level_api/device/camera_settings.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/flash_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/wifi/enums/force_update.dart';
@@ -45,6 +46,7 @@ class TestsPageState extends State<TestsPage> {
                       getIsoRow(),
                       getShutterSpeed(),
                       getEVRow(),
+                      getFlashRow()
                       /*  getStateRow(SettingsId.ShootingMode),
                       getStateRow(SettingsId.AutoFocusState),
                       getStateRow(SettingsId.BatteryInfo),
@@ -357,6 +359,55 @@ class TestsPageState extends State<TestsPage> {
     );
   }
 
+  Widget getFlashRow() {
+    return ChangeNotifierProvider<SettingsItem>(
+      create: (context) => (device.cameraSettings.getItem(SettingsId.FlashMode)),
+      child: Consumer<SettingsItem>(
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.FlashMode.name),
+              subtitle: Text(
+                  device.cameraSettings.getItem(SettingsId.FlashMode).value?.name ??
+                      "NotAvailable"),
+              onTap: () => device.api.getFlashMode(update: ForceUpdate.Both),
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<FlashModeValue>(
+                        hint: Text("available"),
+                        items: device.cameraSettings
+                            .getItem(SettingsId.FlashMode)
+                            .available
+                            .map<DropdownMenuItem<FlashModeValue>>((e) =>
+                            DropdownMenuItem<FlashModeValue>(
+                                child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) => device.api.setFlashMode(value),
+                      ))),
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<FlashModeValue>(
+                        hint: Text("supported"),
+                        items: device.cameraSettings
+                            .getItem(SettingsId.FlashMode)
+                            .supported
+                            .map<DropdownMenuItem<FlashModeValue>>((e) =>
+                            DropdownMenuItem<FlashModeValue>(
+                                child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) => device.api.setFlashMode(value),
+                      ))),
+            ]),
+          ]),
+        ),
+      ),
+    );
+  }
+
   //done
 
   Widget getAelRow() {
@@ -536,45 +587,7 @@ class TestsPageState extends State<TestsPage> {
     return list;
   }
 
-  Widget getFlashRow() {
-    return Card(
-      child: IntrinsicHeight(
-          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Expanded(
-          child: ListTile(
-              title: Text(SettingsId.FlashMode.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.FlashMode)
-                      ?.value
-                      ?.name ??
-                  ""),
-              onTap: () => dialog(
-                  device.cameraSettings.getItem(SettingsId.FlashMode),
-                  context)),
-        ),
-        Expanded(
-          child: ListTile(
-              title: Text(SettingsId.FlashValue.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.FlashValue)
-                      ?.value
-                      ?.name ??
-                  ""),
-              onTap: () => dialog(
-                  device.cameraSettings.getItem(SettingsId.FlashValue),
-                  context)),
-        ),
-        Expanded(
-          child: ListTile(
-              title: Text("Up"), onTap: () => device.api.setFlashValue(1)),
-        ),
-        Expanded(
-          child: ListTile(
-              title: Text("Down"), onTap: () => device.api.setFlashValue(-1)),
-        )
-      ])),
-    );
-  }
+
 
   Widget getVideoRow() {
     return Card(
