@@ -6,7 +6,7 @@ enum SettingsId {
   /// <summary>
   /// File format / image quality
   /// </summary>
-  FileFormat,//StillQuality
+  FileFormat, //StillQuality
   WhiteBalance,
   FNumber,
   FocusMode,
@@ -418,9 +418,11 @@ extension SettingsIdExtension on SettingsId {
       case SettingsId.FocusAreaSpot:
         return "touchAFPosition";
       case SettingsId.WhiteBalance:
-      case SettingsId.WhiteBalanceColorTemp:
-      case SettingsId.WhiteBalanceGM:
         return "whiteBalance";
+      case SettingsId.WhiteBalanceColorTemp:
+        return "WhiteBalanceColorTemp";
+      case SettingsId.WhiteBalanceGM:
+        return "";
       case SettingsId.FlashMode:
         return "flashMode";
       case SettingsId.FocusMode:

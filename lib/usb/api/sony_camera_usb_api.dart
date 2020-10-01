@@ -43,19 +43,23 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   SonyCameraUsbApi(SonyCameraDevice device) : super(device);
 
-  Future<bool> setSettings( //TODO instead of int some SettingsValue<dynamic>
-      SettingsId settingsId, int value, SonyCameraUsbDevice device) async {
+  Future<bool> setSettings(
+      //TODO instead of int some SettingsValue<dynamic>
+      SettingsId settingsId,
+      int value,
+      SonyCameraUsbDevice device) async {
     switch (settingsId) {
       case SettingsId.FileFormat:
-        return setImageFileFormat(ImageFileFormatIdExtension.getIdFromUsb(value));
+        return setImageFileFormat(
+            ImageFileFormatIdExtension.getIdFromUsb(value));
       case SettingsId.WhiteBalance:
-        return setWhiteBalance(WhiteBalanceIdExtension.getIdFromUsb(value));
+        return setWhiteBalanceMode(WhiteBalanceModeValue.fromUSBValue(value));
       case SettingsId.FNumber:
         return modifyFNumber(value);
       case SettingsId.FocusMode:
         return setFocusMode(FocusModeValue.fromUSBValue(value));
       case SettingsId.MeteringMode:
-        return setMeteringMode(MeteringModeIdExtension.getIdFromUsb(value));
+        return setMeteringMode(MeteringModeValue.fromUSBValue(value));
       case SettingsId.FlashMode:
         return setFlashMode(FlashModeValue.fromUSBValue(value));
       case SettingsId.ShootingMode:
@@ -72,9 +76,10 @@ class SonyCameraUsbApi extends CameraApiInterface {
       case SettingsId.ImageSize:
         return setImageSize(ImageSizeIdExtension.getIdFromUsb(value));
       case SettingsId.ShutterSpeed:
-        return setShutterSpeed(ShutterSpeedValue.fromUsbValue(value as double, 0));
+        return setShutterSpeed(
+            ShutterSpeedValue.fromUsbValue(value as double, 0));
       case SettingsId.WhiteBalanceColorTemp:
-        return setWhiteBalanceColorTemp(value);
+        return setWhiteBalanceColorTemp(WhiteBalanceColorTempValue.fromUSBValue(value));
       case SettingsId.WhiteBalanceGM:
         return setWhiteBalanceGm(WhiteBalanceGmIdExtension.getIdFromUsb(value));
       case SettingsId.AspectRatio:
@@ -249,9 +254,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   @override
   Future<int> getBatteryPercentage({update = ForceUpdate.Off}) async {
-    return device.cameraSettings.getItem(SettingsId.BatteryInfo)
-        .value
-        .usbValue;
+    return device.cameraSettings.getItem(SettingsId.BatteryInfo).value.usbValue;
   }
 
   @override
@@ -464,7 +467,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
           .isValidResponse();
 
   @override
-  Future<bool> setMeteringMode(MeteringModeId value) async =>
+  Future<bool> setMeteringMode(MeteringModeValue value) async =>
       (await UsbCommands.getCommandSetting(SettingsId.MeteringMode,
                   value1: value.usbValue)
               .send())
@@ -489,14 +492,14 @@ class SonyCameraUsbApi extends CameraApiInterface {
   @override
   Future<bool> modifyShutterSpeed(int value) async =>
       (await UsbCommands.getCommandSetting(SettingsId.ShutterSpeed,
-          opCodeId: OpCodeId.MainSetting,
-          value1: value,
-          value1DataSize: 4)
-          .send())
+                  opCodeId: OpCodeId.MainSetting,
+                  value1: value,
+                  value1DataSize: 4)
+              .send())
           .isValidResponse();
 
   @override
-  Future<bool> setWhiteBalance(WhiteBalanceId value) async =>
+  Future<bool> setWhiteBalanceMode(WhiteBalanceModeValue value) async =>
       (await UsbCommands.getCommandSetting(SettingsId.WhiteBalance,
                   value1: value.usbValue)
               .send())
@@ -510,11 +513,13 @@ class SonyCameraUsbApi extends CameraApiInterface {
           .isValidResponse();
 
   @override
-  Future<bool> setWhiteBalanceColorTemp(int value) async =>
+  Future<bool> setWhiteBalanceColorTemp(WhiteBalanceColorTempValue value) async =>
       (await UsbCommands.getCommandSetting(SettingsId.WhiteBalanceColorTemp,
-                  value1: value)
+                  value1: value.usbValue)
               .send())
           .isValidResponse();
+
+
 
   @override
   Future<bool> setWhiteBalanceGm(WhiteBalanceGmId value) async =>
@@ -540,8 +545,8 @@ class SonyCameraUsbApi extends CameraApiInterface {
   @override
   Future<RecordVideoStateValue> getRecordingVideoState(
           {update = ForceUpdate.Off}) async =>
-      device.cameraSettings.getItem(SettingsId.RecordVideoState)
-          .value as RecordVideoStateValue;
+      device.cameraSettings.getItem(SettingsId.RecordVideoState).value
+          as RecordVideoStateValue;
 
   @override
   Future<SettingsItem<ImageSizeValue>> getImageSize(
@@ -633,5 +638,11 @@ class SonyCameraUsbApi extends CameraApiInterface {
         yield img;
       }
     }
+  }
+
+  @override
+  Future<bool> modifyWhiteBalanceColorTemp(int direction) {
+    // TODO: implement modifyWhiteBalanceColorTemp
+    throw UnimplementedError();
   }
 }

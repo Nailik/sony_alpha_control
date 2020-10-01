@@ -9,7 +9,9 @@ import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/flash_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 import 'package:sonyalphacontrol/wifi/enums/force_update.dart';
 
 class TestsPage extends StatefulWidget {
@@ -37,7 +39,7 @@ class TestsPageState extends State<TestsPage> {
                 //      valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
                 ),
             backgroundColor: Colors.blueGrey,
-            body: ChangeNotifierProvider<CameraSettings>(
+            body: ListenableProvider<CameraSettings>(
                 create: (context) => SonyApi.connectedCamera.cameraSettings,
                 child: Consumer<CameraSettings>(
                   builder: (context, model, _) => ListView(
@@ -48,7 +50,9 @@ class TestsPageState extends State<TestsPage> {
                       getShutterSpeed(),
                       getEVRow(),
                       getFlashRow(),
-                      getFocusModeRow()
+                      getFocusModeRow(),
+                      getWhiteBalanceModeRow(),
+                      getWhiteBalanceColorTempRow()
                       /*
                       getSettingsRow(SettingsId.MeteringMode), getStateRow(SettingsId.ShootingMode),
                       getStateRow(SettingsId.AutoFocusState),
@@ -64,8 +68,7 @@ class TestsPageState extends State<TestsPage> {
                       getImageRow(),
                       getLiveViewRow(),
                       //settings
-                      getImageSizeRow(),
-                      getWhiteBalanceRow(),
+                      getImageSizeRow(),,
                       getSettingsRow(SettingsId.DriveMode),
                       getSettingsRow(SettingsId.DroHdr),
                       getSettingsRow(SettingsId.AspectRatio),
@@ -95,7 +98,7 @@ class TestsPageState extends State<TestsPage> {
   }
 
   Widget getFNumberRow() {
-    return ChangeNotifierProvider<SettingsItem>(
+    return ListenableProvider<SettingsItem>(
         create: (context) =>
             (device.cameraSettings.getItem(SettingsId.FNumber)),
         child: Consumer<SettingsItem>(
@@ -168,7 +171,7 @@ class TestsPageState extends State<TestsPage> {
   }
 
   Widget getIsoRow() {
-    return ChangeNotifierProvider<SettingsItem>(
+    return ListenableProvider<SettingsItem>(
         create: (context) => (device.cameraSettings.getItem(SettingsId.ISO)),
         child: Consumer<SettingsItem>(
             builder: (context, model, _) => Card(
@@ -235,7 +238,7 @@ class TestsPageState extends State<TestsPage> {
   }
 
   Widget getShutterSpeed() {
-    return ChangeNotifierProvider<SettingsItem>(
+    return ListenableProvider<SettingsItem>(
       create: (context) =>
           (device.cameraSettings.getItem(SettingsId.ShutterSpeed)),
       child: Consumer<SettingsItem>(
@@ -299,7 +302,7 @@ class TestsPageState extends State<TestsPage> {
   }
 
   Widget getEVRow() {
-    return ChangeNotifierProvider<SettingsItem>(
+    return ListenableProvider<SettingsItem>(
       create: (context) => (device.cameraSettings.getItem(SettingsId.EV)),
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
@@ -358,16 +361,19 @@ class TestsPageState extends State<TestsPage> {
   }
 
   Widget getFlashRow() {
-    return ChangeNotifierProvider<SettingsItem>(
-      create: (context) => (device.cameraSettings.getItem(SettingsId.FlashMode)),
+    return ListenableProvider<SettingsItem>(
+      create: (context) =>
+          (device.cameraSettings.getItem(SettingsId.FlashMode)),
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
               title: Text(SettingsId.FlashMode.name),
-              subtitle: Text(
-                  device.cameraSettings.getItem(SettingsId.FlashMode).value?.name ??
-                      "NotAvailable"),
+              subtitle: Text(device.cameraSettings
+                      .getItem(SettingsId.FlashMode)
+                      .value
+                      ?.name ??
+                  "NotAvailable"),
               onTap: () => device.api.getFlashMode(update: ForceUpdate.Both),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -380,8 +386,8 @@ class TestsPageState extends State<TestsPage> {
                             .getItem(SettingsId.FlashMode)
                             .available
                             .map<DropdownMenuItem<FlashModeValue>>((e) =>
-                            DropdownMenuItem<FlashModeValue>(
-                                child: Text(e.name), value: e))
+                                DropdownMenuItem<FlashModeValue>(
+                                    child: Text(e.name), value: e))
                             .toList(),
                         onChanged: (value) => device.api.setFlashMode(value),
                       ))),
@@ -394,8 +400,8 @@ class TestsPageState extends State<TestsPage> {
                             .getItem(SettingsId.FlashMode)
                             .supported
                             .map<DropdownMenuItem<FlashModeValue>>((e) =>
-                            DropdownMenuItem<FlashModeValue>(
-                                child: Text(e.name), value: e))
+                                DropdownMenuItem<FlashModeValue>(
+                                    child: Text(e.name), value: e))
                             .toList(),
                         onChanged: (value) => device.api.setFlashMode(value),
                       ))),
@@ -407,16 +413,19 @@ class TestsPageState extends State<TestsPage> {
   }
 
   Widget getFocusModeRow() {
-    return ChangeNotifierProvider<SettingsItem>(
-      create: (context) => (device.cameraSettings.getItem(SettingsId.FocusMode)),
+    return ListenableProvider<SettingsItem>(
+      create: (context) =>
+          (device.cameraSettings.getItem(SettingsId.FocusMode)),
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
               title: Text(SettingsId.FocusMode.name),
-              subtitle: Text(
-                  device.cameraSettings.getItem(SettingsId.FocusMode).value?.name ??
-                      "NotAvailable"),
+              subtitle: Text(device.cameraSettings
+                      .getItem(SettingsId.FocusMode)
+                      .value
+                      ?.name ??
+                  "NotAvailable"),
               onTap: () => device.api.getFocusMode(update: ForceUpdate.Both),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -429,8 +438,8 @@ class TestsPageState extends State<TestsPage> {
                             .getItem(SettingsId.FocusMode)
                             .available
                             .map<DropdownMenuItem<FocusModeValue>>((e) =>
-                            DropdownMenuItem<FocusModeValue>(
-                                child: Text(e.name), value: e))
+                                DropdownMenuItem<FocusModeValue>(
+                                    child: Text(e.name), value: e))
                             .toList(),
                         onChanged: (value) => device.api.setFocusMode(value),
                       ))),
@@ -443,8 +452,8 @@ class TestsPageState extends State<TestsPage> {
                             .getItem(SettingsId.FocusMode)
                             .supported
                             .map<DropdownMenuItem<FocusModeValue>>((e) =>
-                            DropdownMenuItem<FocusModeValue>(
-                                child: Text(e.name), value: e))
+                                DropdownMenuItem<FocusModeValue>(
+                                    child: Text(e.name), value: e))
                             .toList(),
                         onChanged: (value) => device.api.setFocusMode(value),
                       ))),
@@ -455,10 +464,186 @@ class TestsPageState extends State<TestsPage> {
     );
   }
 
+  Widget getWhiteBalanceModeRow() {
+    return ListenableProvider<SettingsItem>(
+      create: (context) =>
+          (device.cameraSettings.getItem(SettingsId.WhiteBalance)),
+      child: Consumer<SettingsItem>(
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.WhiteBalance.name),
+              subtitle: Text(device.cameraSettings
+                      .getItem(SettingsId.WhiteBalance)
+                      .value
+                      ?.name ??
+                  "NotAvailable"),
+              onTap: () =>
+                  device.api.getWhiteBalanceMode(update: ForceUpdate.Both),
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<WhiteBalanceModeValue>(
+                        hint: Text("available"),
+                        items: device.cameraSettings
+                            .getItem(SettingsId.WhiteBalance)
+                            .available
+                            .map<DropdownMenuItem<WhiteBalanceModeValue>>((e) =>
+                                DropdownMenuItem<WhiteBalanceModeValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) =>
+                            device.api.setWhiteBalanceMode(value),
+                      ))),
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<WhiteBalanceModeValue>(
+                        hint: Text("supported"),
+                        items: device.cameraSettings
+                            .getItem(SettingsId.WhiteBalance)
+                            .supported
+                            .map<DropdownMenuItem<WhiteBalanceModeValue>>((e) =>
+                                DropdownMenuItem<WhiteBalanceModeValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) =>
+                            device.api.setWhiteBalanceMode(value),
+                      ))),
+            ]),
+          ]),
+        ),
+      ),
+    );
+  }
+
+  Widget getWhiteBalanceColorTempRow() {
+    return ListenableProvider<SettingsItem>(
+      create: (context) =>
+          (device.cameraSettings.getItem(SettingsId.WhiteBalanceColorTemp)),
+      child: Consumer<SettingsItem>(
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.WhiteBalanceColorTemp.name),
+              subtitle: Text(device.cameraSettings
+                      .getItem(SettingsId.WhiteBalanceColorTemp)
+                      .value
+                      ?.name ??
+                  "NotAvailable"),
+              onTap: () =>
+                  device.api.getWhiteBalanceColorTemp(update: ForceUpdate.Both),
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                child: ListTile(
+                    title: Text("Up"),
+                    onTap: () => device.api.modifyWhiteBalanceColorTemp(1)),
+              ),
+              Expanded(
+                child: ListTile(
+                    title: Text("Down"),
+                    onTap: () => device.api.modifyWhiteBalanceColorTemp(-1)),
+              )
+            ]),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<WhiteBalanceColorTempValue>(
+                        hint: Text("available"),
+                        items: device.cameraSettings
+                            .getItem(SettingsId.WhiteBalanceColorTemp)
+                            .available
+                            .map<DropdownMenuItem<WhiteBalanceColorTempValue>>(
+                                (e) => DropdownMenuItem<
+                                        WhiteBalanceColorTempValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) =>
+                            device.api.setWhiteBalanceColorTemp(value),
+                      ))),
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<WhiteBalanceColorTempValue>(
+                        hint: Text("supported"),
+                        items: device.cameraSettings
+                            .getItem(SettingsId.WhiteBalanceColorTemp)
+                            .supported
+                            .map<DropdownMenuItem<WhiteBalanceColorTempValue>>(
+                                (e) => DropdownMenuItem<
+                                        WhiteBalanceColorTempValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) =>
+                            device.api.setWhiteBalanceColorTemp(value),
+                      ))),
+            ]),
+          ]),
+        ),
+      ),
+    );
+  }
+
   //done
 
+  Widget getMeteringModeRow() {
+    return ListenableProvider<SettingsItem>(
+      create: (context) =>
+          (device.cameraSettings.getItem(SettingsId.MeteringMode)),
+      child: Consumer<SettingsItem>(
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.MeteringMode.name),
+              subtitle: Text(device.cameraSettings
+                      .getItem(SettingsId.MeteringMode)
+                      .value
+                      ?.name ??
+                  "NotAvailable"),
+              onTap: () => device.api.getMeteringMode(update: ForceUpdate.Both),
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<MeteringModeValue>(
+                        hint: Text("available"),
+                        items: device.cameraSettings
+                            .getItem(SettingsId.MeteringMode)
+                            .available
+                            .map<DropdownMenuItem<MeteringModeValue>>((e) =>
+                                DropdownMenuItem<MeteringModeValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) => device.api.setMeteringMode(value),
+                      ))),
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<MeteringModeValue>(
+                        hint: Text("supported"),
+                        items: device.cameraSettings
+                            .getItem(SettingsId.MeteringMode)
+                            .supported
+                            .map<DropdownMenuItem<MeteringModeValue>>((e) =>
+                                DropdownMenuItem<MeteringModeValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) => device.api.setMeteringMode(value),
+                      ))),
+            ]),
+          ]),
+        ),
+      ),
+    );
+  }
+
   Widget getAelRow() {
-    return ChangeNotifierProvider<SettingsItem>(
+    return ListenableProvider<SettingsItem>(
         create: (context) =>
             (device.cameraSettings.getItem(SettingsId.AEL_State)),
         child: Consumer<SettingsItem>(
@@ -523,62 +708,6 @@ class TestsPageState extends State<TestsPage> {
     );
   }
 
-  Widget getWhiteBalanceRow() {
-    return Card(
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-        Expanded(
-          child: ListTile(
-              title: Text(SettingsId.WhiteBalance.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.WhiteBalance)
-                      ?.value
-                      ?.name ??
-                  ""),
-              onTap: () => dialog(
-                  device.cameraSettings.getItem(SettingsId.WhiteBalance),
-                  context)),
-        ),
-        Expanded(
-          child: ListTile(
-              title: Text(SettingsId.WhiteBalanceColorTemp.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.WhiteBalanceColorTemp)
-                      ?.value
-                      ?.name ??
-                  ""),
-              onTap: () => dialog(
-                  device.cameraSettings
-                      .getItem(SettingsId.WhiteBalanceColorTemp),
-                  context)),
-        ),
-        Expanded(
-          child: ListTile(
-              title: Text(SettingsId.WhiteBalanceAB.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.WhiteBalanceAB)
-                      ?.value
-                      ?.name ??
-                  ""),
-              onTap: () => dialog(
-                  device.cameraSettings.getItem(SettingsId.WhiteBalanceAB),
-                  context)),
-        ),
-        Expanded(
-          child: ListTile(
-              title: Text(SettingsId.WhiteBalanceGM.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.WhiteBalanceGM)
-                      ?.value
-                      ?.name ??
-                  ""),
-              onTap: () => dialog(
-                  device.cameraSettings.getItem(SettingsId.WhiteBalanceGM),
-                  context)),
-        )
-      ]),
-    );
-  }
-
   Widget getStateRow(SettingsId settingsId) {
     var name = settingsId.name;
     var value = device.cameraSettings.getItem(settingsId)?.value?.name ?? "";
@@ -633,8 +762,6 @@ class TestsPageState extends State<TestsPage> {
     }
     return list;
   }
-
-
 
   Widget getVideoRow() {
     return Card(
@@ -775,7 +902,7 @@ class TestsPageState extends State<TestsPage> {
               child: ListTile(
                   title: Text("select folder"),
                   subtitle: ValueListenableBuilder(
-                      //ChangeNotifierProvider.value is not working
+                      //ListenableProvider.value is not working
                       valueListenable: path,
                       builder: (_, __, ___) => Text(path.value.toString())),
                   onTap: () =>

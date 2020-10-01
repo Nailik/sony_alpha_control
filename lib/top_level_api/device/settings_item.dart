@@ -32,13 +32,13 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
 
   T _value;
 
-  get value => _value;
+  T get value => _value;
   T _subValue;
 
-  get subValue => _subValue;
+  T get subValue => _subValue;
   List<T> _available = new List.unmodifiable({});
 
-  get available => _available;
+  List<T> get available => _available;
   List<T> _supported = new List.unmodifiable({});
 
   get supported => _supported;
@@ -149,7 +149,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.ShutterSpeed:
         return ShutterSpeedValue.fromWifiValue(wifiValue);
       case SettingsId.WhiteBalance:
-      //TODO   return StringValue(wifiValue);
+        throw UnsupportedError; //should never be called return WhiteBalanceModeValue.fromWifiValue(wifiValue);
       case SettingsId.FocusAreaSpot: //touchAFPosition
       //TODO  return IntValue(wifiValue);
       case SettingsId.AutoFocusState:
@@ -197,7 +197,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.FileFormat:
         return ImageFileFormatValue.fromUSBValue(usbValue);
       case SettingsId.WhiteBalance:
-        return WhiteBalanceValue.fromUSBValue(usbValue);
+        return WhiteBalanceModeValue.fromUSBValue(usbValue);
       case SettingsId.FNumber:
         return DoubleValue(usbValue as double); //TODO test
       case SettingsId.FocusMode:
@@ -490,6 +490,14 @@ class IntValue extends SettingsValue<int> {
 
   @override
   String get wifiValue => id.toString();
+}
+
+class WhiteBalanceColorTempValue extends IntValue {
+  final WhiteBalanceModeId whiteBalanceModeId;
+
+  WhiteBalanceColorTempValue(int id, this.whiteBalanceModeId) : super(id);
+
+  static WhiteBalanceColorTempValue fromUSBValue(int value) {}
 }
 
 abstract class SettingsValue<T> {

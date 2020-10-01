@@ -1,7 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
-enum WhiteBalanceId {
+enum WhiteBalanceModeId {
   Auto,
   Daylight,
   Incandescent,
@@ -20,69 +22,115 @@ enum WhiteBalanceId {
   Unknown
 }
 
-extension WhiteBalanceIdExtension on WhiteBalanceId {
+extension WhiteBalanceIdExtension on WhiteBalanceModeId {
   String get name => toString().split('.')[1];
 
   int get usbValue {
     switch (this) {
-      case WhiteBalanceId.Auto:
+      case WhiteBalanceModeId.Auto:
         return 0x0002;
-      case WhiteBalanceId.Daylight:
+      case WhiteBalanceModeId.Daylight:
         return 0x0004;
-      case WhiteBalanceId.Incandescent:
+      case WhiteBalanceModeId.Incandescent:
         return 0x0006;
-      case WhiteBalanceId.Flash:
+      case WhiteBalanceModeId.Flash:
         return 0x0007;
-      case WhiteBalanceId.Fluor_WarmWhite:
+      case WhiteBalanceModeId.Fluor_WarmWhite:
         return 0x8001;
-      case WhiteBalanceId.Fluor_CoolWhite:
+      case WhiteBalanceModeId.Fluor_CoolWhite:
         return 0x8002;
-      case WhiteBalanceId.Fluor_DayWhite:
+      case WhiteBalanceModeId.Fluor_DayWhite:
         return 0x8003;
-      case WhiteBalanceId.Fluor_Daylight:
+      case WhiteBalanceModeId.Fluor_Daylight:
         return 0x8004;
-      case WhiteBalanceId.Cloudy:
+      case WhiteBalanceModeId.Cloudy:
         return 0x8010;
-      case WhiteBalanceId.Shade:
+      case WhiteBalanceModeId.Shade:
         return 0x8011;
-      case WhiteBalanceId.CTempFilter:
+      case WhiteBalanceModeId.CTempFilter:
         return 0x8012;
-      case WhiteBalanceId.Custom1:
+      case WhiteBalanceModeId.Custom1:
         return 0x8020;
-      case WhiteBalanceId.Custom2:
+      case WhiteBalanceModeId.Custom2:
         return 0x8021;
-      case WhiteBalanceId.Custom3:
+      case WhiteBalanceModeId.Custom3:
         return 0x8022;
-      case WhiteBalanceId.UnderwaterAuto:
+      case WhiteBalanceModeId.UnderwaterAuto:
         return 0x8030;
-      case WhiteBalanceId.Unknown:
+      case WhiteBalanceModeId.Unknown:
         return -1;
       default:
         return -2;
     }
   }
 
-  String get wifiValue => throw UnimplementedError;
+  String get wifiValue {
+    switch (this) {
+      case WhiteBalanceModeId.Auto:
+        return "Auto WB";
+      case WhiteBalanceModeId.Daylight:
+        return "Daylight";
+      case WhiteBalanceModeId.Incandescent:
+        return "Incandescent";
+      case WhiteBalanceModeId.Flash:
+        return "Flash";
+      case WhiteBalanceModeId.Fluor_WarmWhite:
+        return "Fluorescent: Warm White (-1)";
+      case WhiteBalanceModeId.Fluor_CoolWhite:
+        return "Fluorescent: Cool White (0)";
+      case WhiteBalanceModeId.Fluor_DayWhite:
+        return "Fluorescent: Day White (+1)";
+      case WhiteBalanceModeId.Fluor_Daylight:
+        return "Fluorescent: Daylight (+2)";
+      case WhiteBalanceModeId.Cloudy:
+        return "Cloudy";
+      case WhiteBalanceModeId.Shade:
+        return "Shade";
+      case WhiteBalanceModeId.CTempFilter:
+        return "Color Temperature";
+      case WhiteBalanceModeId.Custom1:
+        return "Custom";
+      case WhiteBalanceModeId.Custom2:
+        return "Custom 1";
+      case WhiteBalanceModeId.Custom3:
+        return "Custom 2";
+      case WhiteBalanceModeId.UnderwaterAuto:
+        return "Custom 3";
+      case WhiteBalanceModeId.Unknown:
+        return "Unknown";
+      default:
+        return "Unsupported";
+    }
+  }
 
-  static WhiteBalanceId getIdFromUsb(int usbValue) => WhiteBalanceId.values
-      .firstWhere((element) => element.usbValue == usbValue,
-          orElse: () => WhiteBalanceId.Unknown);
+  static WhiteBalanceModeId getIdFromUsb(int usbValue) =>
+      WhiteBalanceModeId.values.firstWhere(
+          (element) => element.usbValue == usbValue,
+          orElse: () => WhiteBalanceModeId.Unknown);
 
-  static WhiteBalanceId getIdFromWifi(String wifiValue) => WhiteBalanceId.values
-      .firstWhere((element) => element.wifiValue == wifiValue,
-          orElse: () => WhiteBalanceId.Unknown);
+  static WhiteBalanceModeId getIdFromWifi(String wifiValue) =>
+      WhiteBalanceModeId.values.firstWhere(
+          (element) => element.wifiValue == wifiValue,
+          orElse: () => WhiteBalanceModeId.Unknown);
 }
 
-class WhiteBalanceValue extends SettingsValue<WhiteBalanceId> {
-  WhiteBalanceValue(WhiteBalanceId id) : super(id);
+class WhiteBalanceModeValue extends SettingsValue<WhiteBalanceModeId> {
+  final bool hasColorTemps;
+
+  WhiteBalanceModeValue(WhiteBalanceModeId id, {this.hasColorTemps = false})
+      : super(id);
 
   @override
-  factory WhiteBalanceValue.fromUSBValue(int usbValue) =>
-      WhiteBalanceValue(WhiteBalanceIdExtension.getIdFromUsb(usbValue));
+  factory WhiteBalanceModeValue.fromUSBValue(int usbValue) =>
+      WhiteBalanceModeValue(WhiteBalanceIdExtension.getIdFromUsb(usbValue));
 
   @override
-  factory WhiteBalanceValue.fromWifiValue(String wifiValue) =>
-      WhiteBalanceValue(WhiteBalanceIdExtension.getIdFromWifi(wifiValue));
+  factory WhiteBalanceModeValue.fromWifiValue(
+      String wifiValue, bool hasColorTemps) {
+    return WhiteBalanceModeValue(
+        WhiteBalanceIdExtension.getIdFromWifi(wifiValue),
+        hasColorTemps: hasColorTemps);
+  }
 
   @override
   int get usbValue => id.usbValue;

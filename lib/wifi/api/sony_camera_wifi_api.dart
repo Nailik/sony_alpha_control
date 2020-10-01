@@ -247,6 +247,135 @@ class SonyCameraWifiApi extends CameraApiInterface {
         return result.isValid;
       });
 
+  ///White Balance Mode
+
+  @override
+  Future<SettingsItem<WhiteBalanceModeValue>> getWhiteBalanceMode(
+          {update = ForceUpdate.IfNull}) async =>
+      await _updateIf(update, await super.getWhiteBalanceMode(update: update));
+
+  @override
+  Future<bool> setWhiteBalanceMode(WhiteBalanceModeValue value) async =>
+      WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.WhiteBalance,
+              params: [value.wifiValue, false, 0])
+          .send(device)
+          .then((result) async {
+        if (result.isValid) {
+          SettingsItem<WhiteBalanceModeValue> item = device.cameraSettings
+              .getItem<WhiteBalanceModeValue>(SettingsId.WhiteBalance);
+          item.updateItem(value, item.subValue, item.available, item.supported);
+        }
+
+        await getWhiteBalanceColorTemp(update: ForceUpdate.Available);
+        return result.isValid;
+      });
+
+  /// WhiteBalance Color Temp
+
+  @override
+  Future<SettingsItem<WhiteBalanceColorTempValue>> getWhiteBalanceColorTemp(
+      {update = ForceUpdate.IfNull}) async {
+    SettingsItem<WhiteBalanceColorTempValue> settingsItemWhiteColorTemp =
+        await super.getWhiteBalanceColorTemp(update: update);
+
+    SettingsItem<WhiteBalanceModeValue> settingsItemWhiteBalanceMode =
+        await super.getWhiteBalanceMode(update: update);
+
+    switch (update) {
+      case ForceUpdate.Available:
+        await _getAvailable(SettingsId.WhiteBalance).then((response) => device
+            .cameraSettings
+            .updateAvailable(settingsItemWhiteBalanceMode, response));
+        break;
+      case ForceUpdate.Supported:
+        await _getSupported(SettingsId.WhiteBalance).then((response) => device
+            .cameraSettings
+            .updateSupported(settingsItemWhiteBalanceMode, response));
+        break;
+      case ForceUpdate.Both:
+        await _getSupported(SettingsId.WhiteBalance).then((response) => device
+            .cameraSettings
+            .updateSupported(settingsItemWhiteBalanceMode, response));
+        await _getAvailable(SettingsId.WhiteBalance).then((response) => device
+            .cameraSettings
+            .updateAvailable(settingsItemWhiteBalanceMode, response));
+        break;
+      case ForceUpdate.IfNull:
+        if (settingsItemWhiteColorTemp.available == null ||
+            settingsItemWhiteColorTemp.available.isEmpty) {
+          await _getAvailable(SettingsId.WhiteBalance).then((response) => device
+              .cameraSettings
+              .updateAvailable(settingsItemWhiteBalanceMode, response));
+        }
+        if (settingsItemWhiteColorTemp.supported == null ||
+            settingsItemWhiteColorTemp.supported.isEmpty) {
+          await _getSupported(SettingsId.WhiteBalance).then((response) => device
+              .cameraSettings
+              .updateSupported(settingsItemWhiteBalanceMode, response));
+        }
+        break;
+      case ForceUpdate.Off:
+        break;
+    }
+
+    return settingsItemWhiteColorTemp;
+  }
+
+  @override
+  Future<bool> modifyWhiteBalanceColorTemp(int direction) async {
+    SettingsItem<WhiteBalanceColorTempValue> temp =
+        await getWhiteBalanceColorTemp();
+    var newIndex = temp.available.indexWhere((element) =>
+            element.id == temp.value.id &&
+            element.whiteBalanceModeId == temp.value.whiteBalanceModeId) +
+        direction;
+    if (newIndex == temp.available.length || newIndex < 0) {
+      return false;
+    }
+    return setWhiteBalanceColorTemp(temp.available[newIndex]);
+  }
+
+  @override
+  Future<bool> setWhiteBalanceColorTemp(
+      WhiteBalanceColorTempValue value) async {
+    SettingsItem<WhiteBalanceModeValue> settingsItemWhiteBalanceMode =
+        await super.getWhiteBalanceMode(update: ForceUpdate.Off);
+
+    return WifiCommand.createCommand(
+        SonyWebApiMethod.SET, SettingsId.WhiteBalance, params: [
+      settingsItemWhiteBalanceMode.value.wifiValue,
+      true,
+      value.id
+    ]).send(device).then((result) {
+      if (result.isValid) { //TODO valid result but not actually working maybe?? (white balance not color temp but setting a color temp returns valid result)
+        SettingsItem<WhiteBalanceColorTempValue> item = device.cameraSettings
+            .getItem<WhiteBalanceColorTempValue>(
+                SettingsId.WhiteBalanceColorTemp);
+        item.updateItem(value, item.subValue, item.available, item.supported);
+      }
+      return result.isValid;
+    });
+  }
+
+  ///MeteringMode TODO unsupported?
+
+  @override
+  Future<SettingsItem<MeteringModeValue>> getMeteringMode(
+          {update = ForceUpdate.IfNull}) async =>
+      await _updateIf(update, await super.getMeteringMode(update: update));
+
+  @override
+  Future<bool> setMeteringMode(MeteringModeValue value) =>
+      WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.MeteringMode,
+          params: [value.wifiValue]).send(device).then((result) {
+        if (result.isValid) {
+          SettingsItem<MeteringModeValue> item = device.cameraSettings
+              .getItem<MeteringModeValue>(SettingsId.MeteringMode);
+          item.updateItem(value, item.subValue, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
   //TODO
 
   @override
@@ -330,11 +459,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
       await _updateIf(update, await super.getImageSize(update: update));
 
   @override
-  Future<SettingsItem<MeteringModeValue>> getMeteringMode(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getMeteringMode(update: update));
-
-  @override
   Future<bool> getPhotoAvailable({update = ForceUpdate.IfNull}) {
     // TODO: implement getPhotoAvailable
     throw UnimplementedError();
@@ -351,20 +475,9 @@ class SonyCameraWifiApi extends CameraApiInterface {
       await _updateIf(update, await super.getShootingMode(update: update));
 
   @override
-  Future<SettingsItem<WhiteBalanceValue>> getWhiteBalance(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getWhiteBalance(update: update));
-
-  @override
   Future<SettingsItem<WhiteBalanceAbValue>> getWhiteBalanceAb(
           {update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getWhiteBalanceAb(update: update));
-
-  @override
-  Future<SettingsItem<IntValue>> getWhiteBalanceColorTemp(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(
-          update, await super.getWhiteBalanceColorTemp(update: update));
 
   @override
   Future<SettingsItem<WhiteBalanceGmValue>> getWhiteBalanceGm(
@@ -481,13 +594,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> setMeteringMode(MeteringModeId value) =>
-      WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.MeteringMode,
-              params: [value.wifiValue])
-          .send(device)
-          .then((value) => value.response == "true");
-
-  @override
   Future<bool> setPictureEffect(PictureEffectId value) {
     // TODO: implement setPictureEffect
     throw UnimplementedError();
@@ -500,21 +606,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> setWhiteBalance(WhiteBalanceId value) =>
-      WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.WhiteBalance,
-              params: [value.wifiValue])
-          .send(device)
-          .then((value) => value.response == "true");
-
-  @override
   Future<bool> setWhiteBalanceAb(WhiteBalanceAbId value) {
     // TODO: implement setWhiteBalanceAb
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setWhiteBalanceColorTemp(int value) {
-    // TODO: implement setWhiteBalanceColorTemp
     throw UnimplementedError();
   }
 
@@ -682,25 +775,25 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   Future _updateAvailable(SettingsItem settingsItem) async {
-    return await _getAvailable(settingsItem).then((response) =>
+    return await _getAvailable(settingsItem.settingsId).then((response) =>
         device.cameraSettings.updateAvailable(settingsItem, response));
   }
 
   Future _updateSupported(SettingsItem settingsItem) async {
-    return await _getSupported(settingsItem).then((response) =>
+    return await _getSupported(settingsItem.settingsId).then((response) =>
         device.cameraSettings.updateSupported(settingsItem, response));
   }
 
-  Future<String> _getSupported(SettingsItem settingsItem) async {
+  Future<String> _getSupported(SettingsId settingsId) async {
     return await WifiCommand.createCommand(
-            SonyWebApiMethod.GET_SUPPORTED, settingsItem.settingsId)
+            SonyWebApiMethod.GET_SUPPORTED, settingsId)
         .send(device)
         .then((wifiResponse) => wifiResponse.response);
   }
 
-  Future<String> _getAvailable(SettingsItem settingsItem) async {
+  Future<String> _getAvailable(SettingsId settingsId) async {
     return await WifiCommand.createCommand(
-            SonyWebApiMethod.GET_AVAILABLE, settingsItem.settingsId)
+            SonyWebApiMethod.GET_AVAILABLE, settingsId)
         .send(device)
         .then((wifiResponse) => wifiResponse.response);
   }

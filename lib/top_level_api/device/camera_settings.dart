@@ -7,6 +7,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 
 abstract class CameraSettings extends ChangeNotifier {
   List<SettingsItem> _settings = new List();
@@ -44,6 +45,12 @@ abstract class CameraSettings extends ChangeNotifier {
           break;
         case SettingsId.MeteringMode:
           item = SettingsItem<MeteringModeValue>(settingsId);
+          break;
+        case SettingsId.WhiteBalance:
+          item = SettingsItem<WhiteBalanceModeValue>(settingsId);
+          break;
+        case SettingsId.WhiteBalanceColorTemp:
+          item = SettingsItem<WhiteBalanceColorTempValue>(settingsId);
           break;
       }
       _settings.add(item);
