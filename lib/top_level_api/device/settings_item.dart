@@ -80,7 +80,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
     switch (settingsId) {
       case SettingsId.ImageFileFormat: //StillQuality
         return ImageFileFormatValue.fromWifiValue(wifiValue);
-      case SettingsId.AvailableApiList:
+      case SettingsId.ApiList:
         return StringValue(wifiValue);
       case SettingsId.CameraStatus:
         return CameraStatusValue.fromWifiValue(wifiValue);

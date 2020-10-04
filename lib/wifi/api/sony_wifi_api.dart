@@ -91,7 +91,7 @@ class SonyWifiApi extends SonyApiInterface {
       SonyCameraWifiDevice device) async {
     var list = Map<SettingsId, List<SonyWebApiMethod>>();
     await WifiCommand.createCommand(
-            SonyWebApiMethod.GET, SettingsId.AvailableApiList)
+            SonyWebApiMethod.GET_AVAILABLE, SettingsId.ApiList)
         .send(device)
         .then((value) => (jsonDecode(value.response)["result"][0] as List)
                 ?.forEach((element) {

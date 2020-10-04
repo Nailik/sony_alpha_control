@@ -169,7 +169,6 @@ enum SettingsId {
   StorageInformation,
   Versions,
   MethodTypes,
-  AvailableApiList,
   ApiList,
   ApplicationInfo,
   BeepMode,
@@ -369,8 +368,6 @@ extension SettingsIdExtension on SettingsId {
         return "methodTypes";
       case SettingsId.ApplicationInfo:
         return "applicationInfo";
-      case SettingsId.AvailableApiList:
-        return "availableApiList";
       case SettingsId.ApiList: //TODO supported api list?
         return "apiList";
       case SettingsId.AvailableSettings:

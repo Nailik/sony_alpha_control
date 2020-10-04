@@ -59,7 +59,7 @@ class CameraWifiSettings extends CameraSettings {
             getDefaultSettings(
                 element, setting, settingsIdWifiValue, "candidate");
             break;
-          case SettingsId.AvailableApiList:
+          case SettingsId.ApiList:
             var availableList = element["names"];
             if (availableList != null) {
               setting.updateItem(
