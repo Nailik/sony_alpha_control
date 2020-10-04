@@ -97,7 +97,7 @@ class SonyWifiApi extends SonyApiInterface {
                 ?.forEach((element) {
               MapEntry<SettingsId, SonyWebApiMethod> entry =
                   const SettingsIdConverter().fromJson(element);
-
+              //TODO WhiteBalance means there is also WhiteBalanceColorTemp
               if (list.containsKey(entry.key)) {
                 var item = list.entries
                     .firstWhere((element) => element.key == entry.key);

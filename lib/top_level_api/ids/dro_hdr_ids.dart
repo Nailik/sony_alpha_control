@@ -1,3 +1,4 @@
+import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 /// <summary>
@@ -63,13 +64,17 @@ extension DroHdrIdExtension on DroHdrId {
 
   String get wifiValue => throw UnimplementedError;
 
-  static DroHdrId getIdFromUsb(int usbValue) =>
-      DroHdrId.values.firstWhere((element) => element.usbValue == usbValue,
-          orElse: () => DroHdrId.Unknown);
+  static DroHdrId getIdFromUsb(int usbValue) => DroHdrId.values
+          .firstWhere((element) => element.usbValue == usbValue, orElse: () {
+        Logger.n(DroHdrId, usbValue);
+        return DroHdrId.Unknown;
+      });
 
-  static DroHdrId getIdFromWifi(String wifiValue) =>
-      DroHdrId.values.firstWhere((element) => element.wifiValue == wifiValue,
-          orElse: () => DroHdrId.Unknown);
+  static DroHdrId getIdFromWifi(String wifiValue) => DroHdrId.values
+          .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+        Logger.n(DroHdrId, wifiValue);
+        return DroHdrId.Unknown;
+      });
 }
 
 class DroHdrValue extends SettingsValue<DroHdrId> {

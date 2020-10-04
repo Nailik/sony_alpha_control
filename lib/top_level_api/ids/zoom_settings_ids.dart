@@ -1,3 +1,4 @@
+import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum ZoomSettingId {
@@ -32,8 +33,10 @@ extension ZoomSettingIdExtension on ZoomSettingId {
   }
 
   static ZoomSettingId getIdFromWifi(String wifiValue) => ZoomSettingId.values
-      .firstWhere((element) => element.wifiValue == wifiValue,
-          orElse: () => ZoomSettingId.Unknown);
+          .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+        Logger.n(ZoomSettingId, wifiValue);
+        return ZoomSettingId.Unknown;
+      });
 }
 
 class ZoomSettingValue extends SettingsValue<ZoomSettingId> {

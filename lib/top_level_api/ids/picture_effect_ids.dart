@@ -1,3 +1,4 @@
+import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum PictureEffectId {
@@ -121,13 +122,17 @@ extension PictureEffectIdExtension on PictureEffectId {
   String get wifiValue => throw UnimplementedError;
 
   static PictureEffectId getIdFromUsb(int usbValue) => PictureEffectId.values
-      .firstWhere((element) => element.usbValue == usbValue,
-          orElse: () => PictureEffectId.Unknown);
+          .firstWhere((element) => element.usbValue == usbValue, orElse: () {
+        Logger.n(PictureEffectId, usbValue);
+        return PictureEffectId.Unknown;
+      });
 
   static PictureEffectId getIdFromWifi(String wifiValue) =>
-      PictureEffectId.values.firstWhere(
-          (element) => element.wifiValue == wifiValue,
-          orElse: () => PictureEffectId.Unknown);
+      PictureEffectId.values
+          .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+        Logger.n(PictureEffectId, wifiValue);
+        return PictureEffectId.Unknown;
+      });
 }
 
 class PictureEffectValue extends SettingsValue<PictureEffectId> {

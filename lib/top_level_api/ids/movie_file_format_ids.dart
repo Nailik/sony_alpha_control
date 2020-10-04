@@ -1,14 +1,9 @@
+import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
-enum MovieFileFormatId {
-  MP4,
-  XAVC_S,
-  XAVC_S_4K,
-  Unknown
-}
+enum MovieFileFormatId { MP4, XAVC_S, XAVC_S_4K, Unknown }
 
 extension MovieFileFormatIdExtension on MovieFileFormatId {
-
   String get name => toString().split('.')[1];
 
   String get wifiValue {
@@ -29,9 +24,11 @@ extension MovieFileFormatIdExtension on MovieFileFormatId {
   static MovieFileFormatId getIdFromUsb(int usbValue) => throw UnsupportedError;
 
   static MovieFileFormatId getIdFromWifi(String wifiValue) {
-    return MovieFileFormatId.values.firstWhere(
-            (element) => element.wifiValue == wifiValue,
-        orElse: () => MovieFileFormatId.Unknown);
+    return MovieFileFormatId.values
+        .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+      Logger.n(MovieFileFormatId, wifiValue);
+      return MovieFileFormatId.Unknown;
+    });
   }
 }
 

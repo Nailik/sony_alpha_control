@@ -1,3 +1,4 @@
+import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 /// <summary>
@@ -25,13 +26,17 @@ extension FocusModeToggleIdExtension on FocusModeToggleId {
 
   static FocusModeToggleId getIdFromUsb(int usbValue) =>
       FocusModeToggleId.values
-          .firstWhere((element) => element.usbValue == usbValue,
-          orElse: () => FocusModeToggleId.Unknown);
+          .firstWhere((element) => element.usbValue == usbValue, orElse: () {
+        Logger.n(FocusModeToggleId, usbValue);
+        return FocusModeToggleId.Unknown;
+      });
 
   static FocusModeToggleId getIdFromWifi(String wifiValue) =>
-      FocusModeToggleId.values.firstWhere(
-              (element) => element.wifiValue == wifiValue,
-          orElse: () => FocusModeToggleId.Unknown);
+      FocusModeToggleId.values
+          .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+        Logger.n(FocusModeToggleId, wifiValue);
+        return FocusModeToggleId.Unknown;
+      });
 }
 
 class FocusModeToggleValue extends SettingsValue<FocusModeToggleId> {

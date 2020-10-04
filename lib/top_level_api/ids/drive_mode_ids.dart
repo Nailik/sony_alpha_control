@@ -1,3 +1,4 @@
+import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum DriveModeId {
@@ -202,13 +203,17 @@ extension DriveModeIdExtension on DriveModeId {
 
   String get wifiValue => throw UnimplementedError; //TODO
 
-  static DriveModeId getIdFromUsb(int usbValue) =>
-      DriveModeId.values.firstWhere((element) => element.usbValue == usbValue,
-          orElse: () => DriveModeId.Unknown);
+  static DriveModeId getIdFromUsb(int usbValue) => DriveModeId.values
+          .firstWhere((element) => element.usbValue == usbValue, orElse: () {
+        Logger.n(DriveModeId, usbValue);
+        return DriveModeId.Unknown;
+      });
 
-  static DriveModeId getIdFromWifi(String wifiValue) =>
-      DriveModeId.values.firstWhere((element) => element.wifiValue == wifiValue,
-          orElse: () => DriveModeId.Unknown);
+  static DriveModeId getIdFromWifi(String wifiValue) => DriveModeId.values
+          .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+        Logger.n(DriveModeId, wifiValue);
+        return DriveModeId.Unknown;
+      });
 }
 
 class DriveModeValue extends SettingsValue<DriveModeId> {

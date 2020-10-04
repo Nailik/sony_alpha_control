@@ -1,3 +1,4 @@
+import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum ImageFileFormatId {
@@ -51,14 +52,18 @@ extension ImageFileFormatIdExtension on ImageFileFormatId {
   }
 
   static ImageFileFormatId getIdFromUsb(int usbValue) =>
-      ImageFileFormatId.values.firstWhere(
-          (element) => element.usbValue == usbValue,
-          orElse: () => ImageFileFormatId.Unknown);
+      ImageFileFormatId.values
+          .firstWhere((element) => element.usbValue == usbValue, orElse: () {
+        Logger.n(ImageFileFormatId, usbValue);
+        return ImageFileFormatId.Unknown;
+      });
 
   static ImageFileFormatId getIdFromWifi(String wifiValue) =>
-      ImageFileFormatId.values.firstWhere(
-          (element) => element.wifiValue == wifiValue,
-          orElse: () => ImageFileFormatId.Unknown);
+      ImageFileFormatId.values
+          .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+        Logger.n(ImageFileFormatId, wifiValue);
+        return ImageFileFormatId.Unknown;
+      });
 }
 
 class ImageFileFormatValue extends SettingsValue<ImageFileFormatId> {

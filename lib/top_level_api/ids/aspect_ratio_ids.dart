@@ -1,3 +1,4 @@
+import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum AspectRatioId { Ar3_2, Ar16_9, Ar4_3, Ar1_1, Unknown }
@@ -35,13 +36,17 @@ extension AspectRatioIdExtension on AspectRatioId {
     }
   }
 
-  static AspectRatioId getIdFromUsb(int usbValue) =>
-      AspectRatioId.values.firstWhere((element) => element.usbValue == usbValue,
-          orElse: () => AspectRatioId.Unknown);
+  static AspectRatioId getIdFromUsb(int usbValue) => AspectRatioId.values
+          .firstWhere((element) => element.usbValue == usbValue, orElse: () {
+        Logger.n(AspectRatioId, usbValue);
+        return AspectRatioId.Unknown;
+      });
 
   static AspectRatioId getIdFromWifi(String wifiValue) => AspectRatioId.values
-      .firstWhere((element) => element.wifiValue == wifiValue,
-          orElse: () => AspectRatioId.Unknown);
+          .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+        Logger.n(AspectRatioId, wifiValue);
+        return AspectRatioId.Unknown;
+      });
 }
 
 class AspectRatioValue extends SettingsValue<AspectRatioId> {

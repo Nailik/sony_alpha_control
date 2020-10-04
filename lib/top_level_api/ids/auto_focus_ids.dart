@@ -1,4 +1,7 @@
+import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
+
+import 'aspect_ratio_ids.dart';
 
 enum AutoFocusStateId {
   /// <summary>
@@ -70,13 +73,17 @@ extension AutoFocusStateIdExtension on AutoFocusStateId {
   }
 
   static AutoFocusStateId getIdFromUsb(int usbValue) => AutoFocusStateId.values
-      .firstWhere((element) => element.usbValue == usbValue,
-          orElse: () => AutoFocusStateId.Unknown);
+          .firstWhere((element) => element.usbValue == usbValue, orElse: () {
+        Logger.n(AspectRatioId, usbValue);
+        return AutoFocusStateId.Unknown;
+      });
 
   static AutoFocusStateId getIdFromWifi(String wifiValue) =>
-      AutoFocusStateId.values.firstWhere(
-          (element) => element.wifiValue == wifiValue,
-          orElse: () => AutoFocusStateId.Unknown);
+      AutoFocusStateId.values
+          .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+        Logger.n(AspectRatioId, wifiValue);
+        return AutoFocusStateId.Unknown;
+      });
 }
 
 class AutoFocusStateValue extends SettingsValue<AutoFocusStateId> {

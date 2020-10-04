@@ -45,41 +45,79 @@ class TestsPageState extends State<TestsPage> {
                 child: Consumer<CameraSettings>(
                   builder: (context, model, _) => ListView(
                     children: <Widget>[
-                      //states
-                      getFNumberRow(),
-                      getIsoRow(),
-                      getShutterSpeed(),
+                      ///Versions (get)
+
+                      ///MethodTypes (get)
+
+                      ///ApplicationInfo (get)
+
+                      ///ApiList (getAvailable)
+
+                      ///AvailableSettings (get)
+
+                      ///CameraFunction (set, get, getSupported, getAvailable)
+
+                      ///CapturePhoto (act)
+                      //getCapturePhotoRow(),
+                      ///CameraSetup (stop)
+
+                      ///LiveView (start, stop)
+
+                      ///LiveViewWithSize (start)
+
+                      ///Zoom (act)
+
+                      ///HalfPressShutter (act, cancel)
+
+                      ///SelfTimer (set, get, getSupported, getAvailable)
+
+                      ///ContShootingMode (set, get, getSupported, getAvailable)
+
+                      ///ContShootingSpeed (set, get, getSupported, getAvailable)
+
+                      ///MeteringMode (get, getSupported)
+
+                      ///Ev (set, get, getSupported, getAvailable)
                       getEVRow(),
-                      getFlashRow(),
-                      getFocusModeRow(),
+
+                      ///FNumber (set, get, getSupported, getAvailable)
+                      getFNumberRow(),
+
+                      ///Iso (set, get, getSupported, getAvailable)
+                      getIsoRow(),
+
+                      ///LiveViewSize (set, get, getSupported, getAvailable)
+
+                      ///PostViewImageSize (set, get, getSupported, getAvailable)
+
+                      ///ProgramShift (set, get, getSupported, getAvailable)
+
+                      ///ShootingMode (set, get, getSupported, getAvailable)
+
+                      ///ShutterSpeed (set, get, getSupported, getAvailable)
+                      getShutterSpeed(),
+
+                      ///FocusAreaSpot (set, get)
+
+                      ///WhiteBalance (set, get, getSupported, getAvailable)
                       getWhiteBalanceModeRow(),
                       getWhiteBalanceColorTempRow(),
-                      getImageFormatRow()
-                      /*
-                      getSettingsRow(SettingsId.MeteringMode), getStateRow(SettingsId.ShootingMode),
-                      getStateRow(SettingsId.AutoFocusState),
-                      getStateRow(SettingsId.BatteryInfo),
-                      getStateRow(SettingsId.LiveViewState),
-                      getStateRow(SettingsId.SensorCrop),
-                      getStateRow(SettingsId.FocusMagnifierState),
-                      getStateRow(SettingsId.UseLiveViewDisplayEffect),
-                      getStateRow(SettingsId.PhotoTransferQueue),
-                      getStateRow(SettingsId.Zoom),
-                      //functions
-                      getVideoRow(),
-                      getImageRow(),
-                      getLiveViewRow(),
-                      //settings
-                      getImageSizeRow(),,
-                      getSettingsRow(SettingsId.DriveMode),
-                      getSettingsRow(SettingsId.DroHdr),
-                      getSettingsRow(SettingsId.AspectRatio),
-                      getSettingsRow(SettingsId.PictureEffect),
-                      getFelRow(),
-                      getFocusAreaRow(),
+
+                      ///FlashMode (set, get, getSupported, getAvailable)
+                      getFlashRow(),
+
+                      ///FocusMode (set, get, getSupported, getAvailable)
                       getFocusModeRow(),
-                      getSettingsRow(SettingsId.UnkD2C7),
-                      getSettingsRow(SettingsId.UnkD2C5),*/
+
+                      ///ZoomSetting (set, get, getSupported, getAvailable)
+
+                      ///StorageInformation (get)
+
+                      ///LiveViewInfo (set, get)
+
+                      ///SilentShootingSettings (set, get, getSupported, getAvailable)
+
+                      getImageFormatRow()
                     ],
                   ),
                 )),
@@ -593,396 +631,54 @@ class TestsPageState extends State<TestsPage> {
   Widget getImageFormatRow() {
     return ListenableProvider<SettingsItem>(
       create: (context) =>
-      (device.cameraSettings.getItem(SettingsId.ImageFileFormat)),
+          (device.cameraSettings.getItem(SettingsId.ImageFileFormat)),
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.ImageFileFormat.name),
-              subtitle: Text(device.cameraSettings
-                  .getItem(SettingsId.ImageFileFormat)
-                  .value
-                  ?.name ??
-                  "NotAvailable"),
-              onTap: () => device.api.getImageFileFormat(update: ForceUpdate.Both),
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.all(16),
-                      child: DropdownButton<ImageFileFormatValue>(
-                        hint: Text("available"),
-                        items: device.cameraSettings
-                            .getItem(SettingsId.ImageFileFormat)
-                            .available
-                            .map<DropdownMenuItem<ImageFileFormatValue>>((e) =>
-                            DropdownMenuItem<ImageFileFormatValue>(
-                                child: Text(e.name), value: e))
-                            .toList(),
-                        onChanged: (value) => device.api.setImageFileFormat(value),
-                      ))),
-              Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.all(16),
-                      child: DropdownButton<ImageFileFormatValue>(
-                        hint: Text("supported"),
-                        items: device.cameraSettings
-                            .getItem(SettingsId.ImageFileFormat)
-                            .supported
-                            .map<DropdownMenuItem<ImageFileFormatValue>>((e) =>
-                            DropdownMenuItem<ImageFileFormatValue>(
-                                child: Text(e.name), value: e))
-                            .toList(),
-                        onChanged: (value) => device.api.setImageFileFormat(value),
-                      ))),
-            ]),
-          ]),
-        ),
-      ),
-    );
-  }
-
-  //done
-
-  Widget getMeteringModeRow() {
-    return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.MeteringMode)),
-      child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(
-          child: Column(children: [
-            ListTile(
-              title: Text(SettingsId.MeteringMode.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.MeteringMode)
-                      .value
-                      ?.name ??
-                  "NotAvailable"),
-              onTap: () => device.api.getMeteringMode(update: ForceUpdate.Both),
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.all(16),
-                      child: DropdownButton<MeteringModeValue>(
-                        hint: Text("available"),
-                        items: device.cameraSettings
-                            .getItem(SettingsId.MeteringMode)
-                            .available
-                            .map<DropdownMenuItem<MeteringModeValue>>((e) =>
-                                DropdownMenuItem<MeteringModeValue>(
-                                    child: Text(e.name), value: e))
-                            .toList(),
-                        onChanged: (value) => device.api.setMeteringMode(value),
-                      ))),
-              Expanded(
-                  child: Padding(
-                      padding: EdgeInsets.all(16),
-                      child: DropdownButton<MeteringModeValue>(
-                        hint: Text("supported"),
-                        items: device.cameraSettings
-                            .getItem(SettingsId.MeteringMode)
-                            .supported
-                            .map<DropdownMenuItem<MeteringModeValue>>((e) =>
-                                DropdownMenuItem<MeteringModeValue>(
-                                    child: Text(e.name), value: e))
-                            .toList(),
-                        onChanged: (value) => device.api.setMeteringMode(value),
-                      ))),
-            ]),
-          ]),
-        ),
-      ),
-    );
-  }
-
-  Widget getAelRow() {
-    return ListenableProvider<SettingsItem>(
-        create: (context) =>
-            (device.cameraSettings.getItem(SettingsId.AEL_State)),
-        child: Consumer<SettingsItem>(
-            builder: (context, model, _) => Card(
-                  child: IntrinsicHeight(
-                      child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                        Expanded(
-                          child: ListTile(
-                              title: Text(SettingsId.AEL_State.name),
-                              subtitle: Text(device.cameraSettings
-                                      .getItem(SettingsId.AEL_State)
-                                      .value
-                                      ?.name ??
-                                  "NotAvailable"),
-                              onTap: () =>
-                                  device.api.getAel(update: ForceUpdate.Both)),
-                        ),
-                        Expanded(
-                          child: SwitchListTile(
-                              title: Text("Switch"),
-                              value: device.cameraSettings
-                                      .getItem(SettingsId.AEL_State)
-                                      ?.value
-                                      ?.id ??
-                                  false,
-                              onChanged: (value) => device.api.setAel(value)),
-                        ),
-                      ])),
-                )));
-  }
-
-  Widget getImageSizeRow() {
-    return Card(
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-        Expanded(
-          child: ListTile(
               title: Text(SettingsId.ImageFileFormat.name),
               subtitle: Text(device.cameraSettings
                       .getItem(SettingsId.ImageFileFormat)
-                      ?.value
-                      ?.name ??
-                  ""),
-              onTap: () => dialog(
-                  device.cameraSettings.getItem(SettingsId.ImageFileFormat),
-                  context)),
-        ),
-        Expanded(
-          child: ListTile(
-              title: Text(SettingsId.ImageSize.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.ImageSize)
-                      ?.value
-                      ?.name ??
-                  ""),
-              onTap: () => dialog(
-                  device.cameraSettings.getItem(SettingsId.ImageSize),
-                  context)),
-        )
-      ]),
-    );
-  }
-
-  Widget getStateRow(SettingsId settingsId) {
-    var name = settingsId.name;
-    var value = device.cameraSettings.getItem(settingsId)?.value?.name ?? "";
-    return Card(
-      child: ListTile(title: Text(name), subtitle: Text(value.toString())),
-    );
-  }
-
-  Widget getSettingsRow(SettingsId settingsId) {
-    var name = settingsId.name;
-    var settingsItem = device.cameraSettings.getItem(settingsId);
-    return Card(
-      child: ListTile(
-          title: Text(name),
-          subtitle: Text(settingsItem?.value?.name ?? ""),
-          onTap: () async => dialog(settingsItem, context)),
-    );
-  }
-
-  Widget getFunctionsRow(SettingsId settingsId) {
-    var name = settingsId.name;
-    var settingsItem = device.cameraSettings.getItem(settingsId);
-    return Card(
-      child: ListTile(
-          title: Text(name),
-          subtitle: Text(settingsItem?.value?.name ?? ""),
-          onTap: () async => dialog(settingsItem, context)),
-    );
-  }
-
-  dialog(SettingsItem settingsItem, BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return new SimpleDialog(
-              title: Text('Select ${settingsItem.value} mode'),
-              children: getOptions(settingsItem));
-        });
-  }
-
-  List<Widget> getOptions(SettingsItem data) {
-    List<Widget> list = new List();
-    for (var value in data.available) {
-      list.add(
-        new SimpleDialogOption(
-          onPressed: () {
-            device.api.setSettingsRaw(data.settingsId, value.usbValue);
-          },
-          child: Text(value?.name ?? "t"),
-        ),
-      );
-    }
-    return list;
-  }
-
-  Widget getVideoRow() {
-    return Card(
-      child: IntrinsicHeight(
-          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Expanded(
-          child: ListTile(
-              title: Text(SettingsId.RecordVideoState.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.RecordVideoState)
-                      ?.value
-                      ?.name ??
-                  "")),
-        ),
-        Expanded(
-          child: ListTile(
-              title: Text("Start Record"),
-              onTap: () => device.api.startRecordingVideo()),
-        ),
-        Expanded(
-          child: ListTile(
-              title: Text("Stop Record"),
-              onTap: () => device.api.stopRecordingVideo()),
-        )
-      ])),
-    );
-  }
-
-  Widget getFocusAreaRow() {
-    return Card(
-      child: IntrinsicHeight(
-          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Expanded(
-          child: ListTile(
-              title: Text(SettingsId.FocusArea.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.FocusArea)
-                      ?.value
+                      .value
                       ?.name ??
                   "NotAvailable"),
-              onTap: () => dialog(
-                  device.cameraSettings.getItem(SettingsId.FocusArea),
-                  context)),
+              onTap: () =>
+                  device.api.getImageFileFormat(update: ForceUpdate.Both),
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<ImageFileFormatValue>(
+                        hint: Text("available"),
+                        items: device.cameraSettings
+                            .getItem(SettingsId.ImageFileFormat)
+                            .available
+                            .map<DropdownMenuItem<ImageFileFormatValue>>((e) =>
+                                DropdownMenuItem<ImageFileFormatValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) =>
+                            device.api.setImageFileFormat(value),
+                      ))),
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<ImageFileFormatValue>(
+                        hint: Text("supported"),
+                        items: device.cameraSettings
+                            .getItem(SettingsId.ImageFileFormat)
+                            .supported
+                            .map<DropdownMenuItem<ImageFileFormatValue>>((e) =>
+                                DropdownMenuItem<ImageFileFormatValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) =>
+                            device.api.setImageFileFormat(value),
+                      ))),
+            ]),
+          ]),
         ),
-        Expanded(
-            child: ListTile(
-          title: Text(SettingsId.FocusAreaSpot.name),
-          subtitle: Text(device.cameraSettings
-                  .getItem(SettingsId.FocusAreaSpot)
-                  ?.value
-                  ?.name ??
-              "NotAvailable"),
-        )),
-      ])),
-    );
-  }
-
-  Widget getFelRow() {
-    return Card(
-      child: IntrinsicHeight(
-          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Expanded(
-          child: ListTile(
-              title: Text(SettingsId.FEL_State.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.FEL_State)
-                      ?.value
-                      ?.name ??
-                  "NotAvailable")),
-        ),
-        Expanded(
-          child:
-              ListTile(title: Text("On"), onTap: () => device.api.setFel(true)),
-        ),
-        Expanded(
-          child: ListTile(
-              title: Text("Off"), onTap: () => device.api.setFel(false)),
-        )
-      ])),
-    );
-  }
-
-  Widget getImageRow() {
-    return Card(
-        child: Column(
-      children: [
-        IntrinsicHeight(
-            child:
-                Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Expanded(
-            child: ListTile(
-                title: Text("HalfPressShutter"),
-                onTap: () => device.api.pressShutter(ShutterPressType.Half)),
-          ),
-          Expanded(
-            child: ListTile(
-                title: Text("release HalfPressShutter"),
-                onTap: () => device.api.releaseShutter(ShutterPressType.Half)),
-          )
-        ])),
-        IntrinsicHeight(
-            child:
-                Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Expanded(
-            child: ListTile(
-                title: Text("FullPressShutter"),
-                onTap: () => device.api.pressShutter(ShutterPressType.Full)),
-          ),
-          Expanded(
-            child: ListTile(
-                title: Text("release FullPressShutter"),
-                onTap: () => device.api.releaseShutter(ShutterPressType.Full)),
-          )
-        ])),
-        IntrinsicHeight(
-            child:
-                Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Expanded(
-            child: ListTile(
-                title: Text("BothPressShutter"),
-                onTap: () => device.api.pressShutter(ShutterPressType.Both)),
-          ),
-          Expanded(
-            child: ListTile(
-                title: Text("release BothPressShutter"),
-                onTap: () => device.api.releaseShutter(ShutterPressType.Both)),
-          )
-        ])),
-        IntrinsicHeight(
-            child:
-                Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Expanded(
-            child: ListTile(
-                title: Text("capture photo"),
-                onTap: () => device.api.capturePhoto()),
-          ),
-          Expanded(
-              child: ListTile(
-                  title: Text("select folder"),
-                  subtitle: ValueListenableBuilder(
-                      //ListenableProvider.value is not working
-                      valueListenable: path,
-                      builder: (_, __, ___) => Text(path.value.toString())),
-                  onTap: () =>
-                      showOpenPanel(canSelectDirectories: true).then((value) {
-                        path.value = value.paths[0].toString();
-                      })))
-        ])),
-      ],
-    ));
-  }
-
-  Widget getLiveViewRow() {
-    return Card(
-      child: ListTile(
-        title: Text(SettingsId.LiveView.name),
-        subtitle: Text(device.cameraSettings
-                .getItem(SettingsId.LiveViewState)
-                ?.value
-                ?.name ??
-            "NotAvailable"),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => LiveViewPage(device)),
-          );
-        },
       ),
     );
   }

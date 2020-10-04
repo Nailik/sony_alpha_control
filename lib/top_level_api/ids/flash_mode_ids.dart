@@ -1,3 +1,4 @@
+import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum FlashModeId {
@@ -75,13 +76,17 @@ extension FlashModeIdExtension on FlashModeId {
     }
   }
 
-  static FlashModeId getIdFromUsb(int usbValue) =>
-      FlashModeId.values.firstWhere((element) => element.usbValue == usbValue,
-          orElse: () => FlashModeId.Unknown);
+  static FlashModeId getIdFromUsb(int usbValue) => FlashModeId.values
+          .firstWhere((element) => element.usbValue == usbValue, orElse: () {
+        Logger.n(FlashModeId, usbValue);
+        return FlashModeId.Unknown;
+      });
 
-  static FlashModeId getIdFromWifi(String wifiValue) =>
-      FlashModeId.values.firstWhere((element) => element.wifiValue == wifiValue,
-          orElse: () => FlashModeId.Unknown);
+  static FlashModeId getIdFromWifi(String wifiValue) => FlashModeId.values
+          .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+        Logger.n(FlashModeId, wifiValue);
+        return FlashModeId.Unknown;
+      });
 }
 
 class FlashModeValue extends SettingsValue<FlashModeId> {

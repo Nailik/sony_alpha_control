@@ -1,3 +1,4 @@
+import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum FocusModeId {
@@ -48,13 +49,17 @@ extension FocusModeIdExtension on FocusModeId {
     }
   }
 
-  static FocusModeId getIdFromUsb(int usbValue) =>
-      FocusModeId.values.firstWhere((element) => element.usbValue == usbValue,
-          orElse: () => FocusModeId.Unknown);
+  static FocusModeId getIdFromUsb(int usbValue) => FocusModeId.values
+          .firstWhere((element) => element.usbValue == usbValue, orElse: () {
+        Logger.n(FocusModeId, usbValue);
+        return FocusModeId.Unknown;
+      });
 
-  static FocusModeId getIdFromWifi(String wifiValue) =>
-      FocusModeId.values.firstWhere((element) => element.wifiValue == wifiValue,
-          orElse: () => FocusModeId.Unknown);
+  static FocusModeId getIdFromWifi(String wifiValue) => FocusModeId.values
+          .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+        Logger.n(FocusModeId, wifiValue);
+        return FocusModeId.Unknown;
+      });
 }
 
 class FocusModeValue extends SettingsValue<FocusModeId> {

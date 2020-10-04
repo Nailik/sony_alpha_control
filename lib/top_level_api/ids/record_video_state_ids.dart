@@ -1,3 +1,4 @@
+import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum RecordVideoStateId { Stopped, Recording, UnableToRecord, Unknown }
@@ -23,14 +24,18 @@ extension RecordVideoStateIdExtension on RecordVideoStateId {
   String get wifiValue => throw UnimplementedError;
 
   static RecordVideoStateId getIdFromUsb(int usbValue) =>
-      RecordVideoStateId.values.firstWhere(
-          (element) => element.usbValue == usbValue,
-          orElse: () => RecordVideoStateId.Unknown);
+      RecordVideoStateId.values
+          .firstWhere((element) => element.usbValue == usbValue, orElse: () {
+        Logger.n(RecordVideoStateId, usbValue);
+        return RecordVideoStateId.Unknown;
+      });
 
   static RecordVideoStateId getIdFromWifi(String wifiValue) =>
-      RecordVideoStateId.values.firstWhere(
-          (element) => element.wifiValue == wifiValue,
-          orElse: () => RecordVideoStateId.Unknown);
+      RecordVideoStateId.values
+          .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+        Logger.n(RecordVideoStateId, wifiValue);
+        return RecordVideoStateId.Unknown;
+      });
 }
 
 class RecordVideoStateValue extends SettingsValue<RecordVideoStateId> {

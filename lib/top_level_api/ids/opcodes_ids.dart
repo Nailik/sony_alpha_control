@@ -1,4 +1,6 @@
+import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/movie_quality_ids.dart';
 
 enum OpCodeId {
   Connect,
@@ -63,13 +65,17 @@ extension OpCodesExtension on OpCodeId {
 
   String get wifiValue => throw UnimplementedError;
 
-  static OpCodeId getIdFromUsb(int usbValue) =>
-      OpCodeId.values.firstWhere((element) => element.usbValue == usbValue,
-          orElse: () => OpCodeId.Unknown);
+  static OpCodeId getIdFromUsb(int usbValue) => OpCodeId.values
+          .firstWhere((element) => element.usbValue == usbValue, orElse: () {
+        Logger.n(OpCodeId, usbValue);
+        return OpCodeId.Unknown;
+      });
 
-  static OpCodeId getIdFromWifi(String wifiValue) =>
-      OpCodeId.values.firstWhere((element) => element.wifiValue == wifiValue,
-          orElse: () => OpCodeId.Unknown);
+  static OpCodeId getIdFromWifi(String wifiValue) => OpCodeId.values
+          .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+        Logger.n(OpCodeId, wifiValue);
+        return OpCodeId.Unknown;
+      });
 }
 
 class OpCodeValue extends SettingsValue<OpCodeId> {

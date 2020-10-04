@@ -1,3 +1,4 @@
+import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum FocusMagnifierPhaseId {
@@ -39,14 +40,18 @@ extension FocusMagnifierPhaseIdExtension on FocusMagnifierPhaseId {
   String get wifiValue => throw UnimplementedError;
 
   static FocusMagnifierPhaseId getIdFromUsb(int usbValue) =>
-      FocusMagnifierPhaseId.values.firstWhere(
-          (element) => element.usbValue == usbValue,
-          orElse: () => FocusMagnifierPhaseId.Unknown);
+      FocusMagnifierPhaseId.values
+          .firstWhere((element) => element.usbValue == usbValue, orElse: () {
+        Logger.n(FocusMagnifierPhaseId, usbValue);
+        return FocusMagnifierPhaseId.Unknown;
+      });
 
   static FocusMagnifierPhaseId getIdFromWifi(String wifiValue) =>
-      FocusMagnifierPhaseId.values.firstWhere(
-          (element) => element.wifiValue == wifiValue,
-          orElse: () => FocusMagnifierPhaseId.Unknown);
+      FocusMagnifierPhaseId.values
+          .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+        Logger.n(FocusMagnifierPhaseId, wifiValue);
+        return FocusMagnifierPhaseId.Unknown;
+      });
 }
 
 class FocusMagnifierPhaseValue extends SettingsValue<FocusMagnifierPhaseId> {

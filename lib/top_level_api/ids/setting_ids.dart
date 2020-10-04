@@ -1,3 +1,4 @@
+import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_method.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -402,8 +403,6 @@ extension SettingsIdExtension on SettingsId {
         return "contShootingMode";
       case SettingsId.ContShootingSpeed:
         return "contShootingSpeed";
-      case SettingsId.MeteringMode:
-        return "exposureMode";
       case SettingsId.EV:
         return "exposureCompensation";
       case SettingsId.FNumber:
@@ -414,6 +413,8 @@ extension SettingsIdExtension on SettingsId {
         return "postviewImageSize";
       case SettingsId.ProgramShift:
         return "programShift";
+      case SettingsId.MeteringMode:
+        return "exposureMode"; //TODO exposure mode somehow together with shootmode
       case SettingsId.ShootingMode:
         return "shootMode";
       case SettingsId.ShutterSpeed:
@@ -581,13 +582,17 @@ extension SettingsIdExtension on SettingsId {
     }
   }
 
-  static SettingsId getIdFromUsb(int usbValue) =>
-      SettingsId.values.firstWhere((element) => element.usbValue == usbValue,
-          orElse: () {print("couldn't find SettingsId for usb $usbValue"); return SettingsId.Unknown;});
+  static SettingsId getIdFromUsb(int usbValue) => SettingsId.values
+          .firstWhere((element) => element.usbValue == usbValue, orElse: () {
+        Logger.n(SettingsId, usbValue);
+        return SettingsId.Unknown;
+      });
 
-  static SettingsId getIdFromWifi(String wifiValue) =>
-      SettingsId.values.firstWhere((element) => element.wifiValue == wifiValue,
-          orElse: () {print("couldn't find SettingsId for wifi $wifiValue"); return SettingsId.Unknown;});
+  static SettingsId getIdFromWifi(String wifiValue) => SettingsId.values
+          .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+        Logger.n(SettingsId, wifiValue);
+        return SettingsId.Unknown;
+      });
 }
 
 class SettingsIdValue extends SettingsValue<SettingsId> {

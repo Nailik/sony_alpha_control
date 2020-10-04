@@ -1,3 +1,4 @@
+import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 ///
@@ -109,13 +110,17 @@ extension WhiteBalanceAbIdExtension on WhiteBalanceAbId {
   String get wifiValue => throw UnimplementedError;
 
   static WhiteBalanceAbId getIdFromUsb(int usbValue) => WhiteBalanceAbId.values
-      .firstWhere((element) => element.usbValue == usbValue,
-      orElse: () => WhiteBalanceAbId.Unknown);
+          .firstWhere((element) => element.usbValue == usbValue, orElse: () {
+        Logger.n(WhiteBalanceAbId, usbValue);
+        return WhiteBalanceAbId.Unknown;
+      });
 
   static WhiteBalanceAbId getIdFromWifi(String wifiValue) =>
-      WhiteBalanceAbId.values.firstWhere(
-              (element) => element.wifiValue == wifiValue,
-          orElse: () => WhiteBalanceAbId.Unknown);
+      WhiteBalanceAbId.values
+          .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+        Logger.n(WhiteBalanceAbId, wifiValue);
+        return WhiteBalanceAbId.Unknown;
+      });
 }
 
 class WhiteBalanceAbValue extends SettingsValue<WhiteBalanceAbId> {

@@ -1,3 +1,4 @@
+import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum MovieQualityId {
@@ -106,9 +107,11 @@ extension MovieFileFormatIdExtension on MovieQualityId {
   static MovieQualityId getIdFromUsb(int usbValue) => throw UnsupportedError;
 
   static MovieQualityId getIdFromWifi(String wifiValue) {
-    return MovieQualityId.values.firstWhere(
-        (element) => element.wifiValue == wifiValue,
-        orElse: () => MovieQualityId.Unknown);
+    return MovieQualityId.values
+        .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+      Logger.n(MovieQualityId, wifiValue);
+      return MovieQualityId.Unknown;
+    });
   }
 }
 

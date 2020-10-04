@@ -1,3 +1,4 @@
+import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum CameraFunctionId {
@@ -8,7 +9,6 @@ enum CameraFunctionId {
 }
 
 extension CameraFunctionIdExtension on CameraFunctionId {
-
   String get name => toString().split('.')[1];
 
   String get wifiValue {
@@ -29,9 +29,11 @@ extension CameraFunctionIdExtension on CameraFunctionId {
   static CameraFunctionId getIdFromUsb(int usbValue) => throw UnsupportedError;
 
   static CameraFunctionId getIdFromWifi(String wifiValue) {
-    return CameraFunctionId.values.firstWhere(
-        (element) => element.wifiValue == wifiValue,
-        orElse: () => CameraFunctionId.Unknown);
+    return CameraFunctionId.values
+        .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+      Logger.n(CameraFunctionId, wifiValue);
+      return CameraFunctionId.Unknown;
+    });
   }
 }
 
