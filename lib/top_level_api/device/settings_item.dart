@@ -78,7 +78,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
 //SettingsIdExtension.getSettingsIdWifi(value["type"].toString(
   SettingsValue fromWifi(dynamic wifiValue) {
     switch (settingsId) {
-      case SettingsId.FileFormat: //StillQuality
+      case SettingsId.ImageFileFormat: //StillQuality
         return ImageFileFormatValue.fromWifiValue(wifiValue);
       case SettingsId.AvailableApiList:
         return StringValue(wifiValue);
@@ -127,7 +127,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.TvColorSystem:
       //TODO
       case SettingsId.PostViewImageSize:
-      //TODO  return StringValue(wifiValue);
+         return StringValue(wifiValue);
       case SettingsId.SelfTimer:
         return IntValue(wifiValue);
       case SettingsId.ShootingMode:
@@ -194,7 +194,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
 
   SettingsValue fromUsb(int usbValue, {int subValue = 1}) {
     switch (settingsId) {
-      case SettingsId.FileFormat:
+      case SettingsId.ImageFileFormat:
         return ImageFileFormatValue.fromUSBValue(usbValue);
       case SettingsId.WhiteBalance:
         return WhiteBalanceModeValue.fromUSBValue(usbValue);

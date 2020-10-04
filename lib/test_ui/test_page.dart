@@ -9,6 +9,7 @@ import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/flash_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
@@ -52,7 +53,8 @@ class TestsPageState extends State<TestsPage> {
                       getFlashRow(),
                       getFocusModeRow(),
                       getWhiteBalanceModeRow(),
-                      getWhiteBalanceColorTempRow()
+                      getWhiteBalanceColorTempRow(),
+                      getImageFormatRow()
                       /*
                       getSettingsRow(SettingsId.MeteringMode), getStateRow(SettingsId.ShootingMode),
                       getStateRow(SettingsId.AutoFocusState),
@@ -588,6 +590,58 @@ class TestsPageState extends State<TestsPage> {
     );
   }
 
+  Widget getImageFormatRow() {
+    return ListenableProvider<SettingsItem>(
+      create: (context) =>
+      (device.cameraSettings.getItem(SettingsId.ImageFileFormat)),
+      child: Consumer<SettingsItem>(
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.ImageFileFormat.name),
+              subtitle: Text(device.cameraSettings
+                  .getItem(SettingsId.ImageFileFormat)
+                  .value
+                  ?.name ??
+                  "NotAvailable"),
+              onTap: () => device.api.getImageFileFormat(update: ForceUpdate.Both),
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<ImageFileFormatValue>(
+                        hint: Text("available"),
+                        items: device.cameraSettings
+                            .getItem(SettingsId.ImageFileFormat)
+                            .available
+                            .map<DropdownMenuItem<ImageFileFormatValue>>((e) =>
+                            DropdownMenuItem<ImageFileFormatValue>(
+                                child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) => device.api.setImageFileFormat(value),
+                      ))),
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<ImageFileFormatValue>(
+                        hint: Text("supported"),
+                        items: device.cameraSettings
+                            .getItem(SettingsId.ImageFileFormat)
+                            .supported
+                            .map<DropdownMenuItem<ImageFileFormatValue>>((e) =>
+                            DropdownMenuItem<ImageFileFormatValue>(
+                                child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) => device.api.setImageFileFormat(value),
+                      ))),
+            ]),
+          ]),
+        ),
+      ),
+    );
+  }
+
   //done
 
   Widget getMeteringModeRow() {
@@ -682,14 +736,14 @@ class TestsPageState extends State<TestsPage> {
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         Expanded(
           child: ListTile(
-              title: Text(SettingsId.FileFormat.name),
+              title: Text(SettingsId.ImageFileFormat.name),
               subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.FileFormat)
+                      .getItem(SettingsId.ImageFileFormat)
                       ?.value
                       ?.name ??
                   ""),
               onTap: () => dialog(
-                  device.cameraSettings.getItem(SettingsId.FileFormat),
+                  device.cameraSettings.getItem(SettingsId.ImageFileFormat),
                   context)),
         ),
         Expanded(

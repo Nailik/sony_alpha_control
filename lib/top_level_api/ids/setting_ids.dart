@@ -6,7 +6,7 @@ enum SettingsId {
   /// <summary>
   /// File format / image quality
   /// </summary>
-  FileFormat, //StillQuality
+  ImageFileFormat, //StillQuality
   WhiteBalance,
   FNumber,
   FocusMode,
@@ -224,7 +224,7 @@ extension SettingsIdExtension on SettingsId {
 
   int get usbValue {
     switch (this) {
-      case SettingsId.FileFormat:
+      case SettingsId.ImageFileFormat:
         return 0x5004;
       case SettingsId.WhiteBalance:
         return 0x5005;
@@ -481,7 +481,7 @@ extension SettingsIdExtension on SettingsId {
         return "loopRecording";
       case SettingsId.RemotePlayback:
         return "remotePlayback";
-      case SettingsId.FileFormat:
+      case SettingsId.ImageFileFormat:
         return "stillQuality";
       case SettingsId.RecordVideo:
         return "movieRecording";

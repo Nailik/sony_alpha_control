@@ -49,9 +49,9 @@ class SonyCameraUsbApi extends CameraApiInterface {
       int value,
       SonyCameraUsbDevice device) async {
     switch (settingsId) {
-      case SettingsId.FileFormat:
+      case SettingsId.ImageFileFormat:
         return setImageFileFormat(
-            ImageFileFormatIdExtension.getIdFromUsb(value));
+            ImageFileFormatValue.fromUSBValue(value));
       case SettingsId.WhiteBalance:
         return setWhiteBalanceMode(WhiteBalanceModeValue.fromUSBValue(value));
       case SettingsId.FNumber:
@@ -448,8 +448,8 @@ class SonyCameraUsbApi extends CameraApiInterface {
           .isValidResponse();
 
   @override
-  Future<bool> setImageFileFormat(ImageFileFormatId value) async =>
-      (await UsbCommands.getCommandSetting(SettingsId.FileFormat,
+  Future<bool> setImageFileFormat(ImageFileFormatValue value) async =>
+      (await UsbCommands.getCommandSetting(SettingsId.ImageFileFormat,
                   value1: value.usbValue)
               .send())
           .isValidResponse();

@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:sonyalphacontrol/top_level_api/device/camera_settings.dart';
@@ -32,6 +33,12 @@ class CameraWifiSettings extends CameraSettings {
 
     (jsonD["result"] as List<dynamic>)?.forEach((element) {
       if (element != null && !element.isEmpty) {
+
+        if(element is LinkedHashMap){
+          //probably storage information
+          return;
+        }
+
         String settingsIdWifiValue =
             element["type"] as String; //as String because it might be an int
 
@@ -45,7 +52,7 @@ class CameraWifiSettings extends CameraSettings {
         }
 
         switch (setting.settingsId) {
-          case SettingsId.FileFormat:
+          case SettingsId.ImageFileFormat:
           case SettingsId.CameraStatus:
             //current is only named like the setting, eg: "fileFormat"
             //available list is named candidate

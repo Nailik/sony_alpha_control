@@ -44,7 +44,7 @@ extension ImageFileFormatIdExtension on ImageFileFormatId {
       case ImageFileFormatId.Raw_JPEG:
         return "RAW+JPEG";
       case ImageFileFormatId.Unknown:
-        return "Unkown";
+        return "Unknown";
       default:
         return "Unsupported";
     }

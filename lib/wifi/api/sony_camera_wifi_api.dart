@@ -347,7 +347,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
       true,
       value.id
     ]).send(device).then((result) {
-      if (result.isValid) { //TODO valid result but not actually working maybe?? (white balance not color temp but setting a color temp returns valid result)
+      if (result.isValid) {
+        //TODO valid result but not actually working maybe?? (white balance not color temp but setting a color temp returns valid result)
         SettingsItem<WhiteBalanceColorTempValue> item = device.cameraSettings
             .getItem<WhiteBalanceColorTempValue>(
                 SettingsId.WhiteBalanceColorTemp);
@@ -357,7 +358,28 @@ class SonyCameraWifiApi extends CameraApiInterface {
     });
   }
 
-  ///MeteringMode TODO unsupported?
+  ///Image File Format
+
+  @override
+  Future<SettingsItem<ImageFileFormatValue>> getImageFileFormat(
+          {update = ForceUpdate.IfNull}) async =>
+      await _updateIf(update, await super.getImageFileFormat(update: update));
+
+  @override
+  Future<bool> setImageFileFormat(ImageFileFormatValue value) async {
+    return await WifiCommand.createCommand(
+        SonyWebApiMethod.SET, SettingsId.ImageFileFormat,
+        params: [value.wifiValue]).send(device).then((result) {
+      if (result.isValid) {
+        SettingsItem<ImageFileFormatValue> item = device.cameraSettings
+            .getItem<ImageFileFormatValue>(SettingsId.ImageFileFormat);
+        item.updateItem(value, item.subValue, item.available, item.supported);
+      }
+      return result.isValid;
+    });
+  }
+
+  ///Metering Mode TODO unsupported?
 
   @override
   Future<SettingsItem<MeteringModeValue>> getMeteringMode(
@@ -447,11 +469,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
   Future<SettingsItem<FocusModeToggleValue>> getFocusModeToggle(
           {update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getFocusModeToggle(update: update));
-
-  @override
-  Future<SettingsItem<ImageFileFormatValue>> getImageFileFormat(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getImageFileFormat(update: update));
 
   @override
   Future<SettingsItem<ImageSizeValue>> getImageSize(
@@ -578,12 +595,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> setFocusModeToggle(FocusModeToggleId value) {
     // TODO: implement setFocusModeToggle
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setImageFileFormat(ImageFileFormatId value) {
-    // TODO: implement setImageFileFormat
     throw UnimplementedError();
   }
 

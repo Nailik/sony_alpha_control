@@ -4,6 +4,7 @@ import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/flash_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
@@ -51,6 +52,9 @@ abstract class CameraSettings extends ChangeNotifier {
           break;
         case SettingsId.WhiteBalanceColorTemp:
           item = SettingsItem<WhiteBalanceColorTempValue>(settingsId);
+          break;
+        case SettingsId.ImageFileFormat:
+          item = SettingsItem<ImageFileFormatValue>(settingsId);
           break;
       }
       _settings.add(item);

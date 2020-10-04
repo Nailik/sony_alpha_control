@@ -209,9 +209,9 @@ abstract class CameraApiInterface {
   Future<SettingsItem<ImageFileFormatValue>> getImageFileFormat(
           {ForceUpdate update}) async =>
       device.cameraSettings
-          .getItem<ImageFileFormatValue>(SettingsId.FileFormat);
+          .getItem<ImageFileFormatValue>(SettingsId.ImageFileFormat);
 
-  Future<bool> setImageFileFormat(ImageFileFormatId value);
+  Future<bool> setImageFileFormat(ImageFileFormatValue value);
 
   Future<SettingsItem<PictureEffectValue>> getPictureEffect(
           {ForceUpdate update}) async =>
