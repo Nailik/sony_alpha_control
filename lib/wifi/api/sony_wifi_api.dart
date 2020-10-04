@@ -52,8 +52,7 @@ class SonyWifiApi extends SonyApiInterface {
 
     startConnection(device);
 
-    var apiList = await getAvailableApiList(
-        device); //available api (all methods of this camera in current Function)
+    var apiList = await getAvailableApiList( device); //available api (all methods of this camera in current Function)
     await device.updateSettings();
 
     WifiCameraFunctionality(versions, methods, apiList,

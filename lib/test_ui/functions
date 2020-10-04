@@ -1,92 +1,65 @@
+a6300 wifi
 
-getFNumber
-modifyFNumber
-setFNumber
+Versions (get)
 
-getIso
-setIso
+MethodTypes (get)
 
-getShutterSpeed
-setShutterSpeed
+ApplicationInfo (get)
 
-getEV
-setEV
+ApiList (getAvailable)
 
-getFlashMode
-setFlashMode
+AvailableSettings (get)
 
-getFocusMode
-setFocusMode
+CameraFunction (set, get, getSupported, getAvailable)
 
-getWhiteBalance
-setWhiteBalance
+CapturePhoto (act)
 
-getWhiteBalanceColorTemp
-setWhiteBalanceColorTemp
+CameraSetup (stop)
 
-getImageFileFormat //TODO test not supported on a6300?
-setImageFileFormat
+LiveView (start, stop)
 
+LiveViewWithSize (start)
 
+Zoom (act)
 
+HalfPressShutter (act, cancel)
 
+SelfTimer (set, get, getSupported, getAvailable)
 
-getImageSize //TODO test not supported on a6300?
-setImageSize
+ContShootingMode (set, get, getSupported, getAvailable)
 
+ContShootingSpeed (set, get, getSupported, getAvailable)
 
+MeteringMode (get, getSupported)
 
-capturePhoto
-getPhotoAvailable
-requestPhotoAvailable
-pressShutter
-releaseShutter
-startRecordingVideo
-stopRecordingVideo
-getRecordingVideoState
-startRecordingAudio
-stopRecordingAudio
-setRecordingAudio
-getRecordingAudio
-getFocusModeToggle
-setFocusModeToggle
+Ev (set, get, getSupported, getAvailable)
 
+FNumber (set, get, getSupported, getAvailable)
 
-getAel
-setAel //TODO wifi not supported?
+Iso (set, get, getSupported, getAvailable)
 
-getFel
-setFel //TODO wifi not supported?
+LiveViewSize (set, get, getSupported, getAvailable)
 
+PostViewImageSize (set, get, getSupported, getAvailable)
 
-getFlashValue
-setFlashValue
+ProgramShift (set, get, getSupported, getAvailable)
 
-getBatteryPercentage
-getFocusArea
-setFocusArea
-getFocusAreaSpot
-setFocusAreaSpot
-getAutoFocusState
-getPictureEffect
-setPictureEffect
-getDroHdr
-setDroHdr
-getAspectRatio
-setAspectRatio
-setFocusDistance
-getShootingMode
-getWhiteBalanceAb
-setWhiteBalanceAb
-getWhiteBalanceGm
-setWhiteBalanceGm
-getDriveMode
-setDriveMode
-getMeteringMode
-setMeteringMode
-getFocusMagnifierDirection
-setFocusMagnifierDirection
-getFocusMagnifierPhase
-setFocusMagnifierPhase
-getFocusMagnifier
-setFocusMagnifier
+ShootingMode (set, get, getSupported, getAvailable)
+
+ShutterSpeed (set, get, getSupported, getAvailable)
+
+FocusAreaSpot (set, get)
+
+WhiteBalance (set, get, getSupported, getAvailable)
+
+FlashMode (set, get, getSupported, getAvailable)
+
+FocusMode (set, get, getSupported, getAvailable)
+
+ZoomSetting (set, get, getSupported, getAvailable)
+
+StorageInformation (get)
+
+LiveViewInfo (set, get)
+
+SilentShootingSettings (set, get, getSupported, getAvailable)

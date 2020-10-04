@@ -169,6 +169,7 @@ enum SettingsId {
   Versions,
   MethodTypes,
   AvailableApiList,
+  ApiList,
   ApplicationInfo,
   BeepMode,
   CameraFunction,
@@ -369,6 +370,8 @@ extension SettingsIdExtension on SettingsId {
         return "applicationInfo";
       case SettingsId.AvailableApiList:
         return "availableApiList";
+      case SettingsId.ApiList: //TODO supported api list?
+        return "apiList";
       case SettingsId.AvailableSettings:
         return "event";
       case SettingsId.CapturePhoto:
@@ -380,7 +383,7 @@ extension SettingsIdExtension on SettingsId {
       case SettingsId.LiveViewOrientation:
         return "liveviewOrientation";
       case SettingsId.LiveView:
-        return "liveView";
+        return "liveview";
       case SettingsId.LiveViewWithSize:
         return "liveviewWithSize";
       case SettingsId.LiveViewSize:
@@ -432,7 +435,7 @@ extension SettingsIdExtension on SettingsId {
       case SettingsId.StorageInformation:
         return "storageInformation";
       case SettingsId.LiveViewInfo:
-        return "liveviewFrame";
+        return "liveviewFrameInfo";
       case SettingsId.SilentShootingSettings:
         return "silentShootingSetting";
       case SettingsId.SilentShooting:
@@ -580,11 +583,11 @@ extension SettingsIdExtension on SettingsId {
 
   static SettingsId getIdFromUsb(int usbValue) =>
       SettingsId.values.firstWhere((element) => element.usbValue == usbValue,
-          orElse: () => SettingsId.Unknown);
+          orElse: () {print("couldn't find SettingsId for usb $usbValue"); return SettingsId.Unknown;});
 
   static SettingsId getIdFromWifi(String wifiValue) =>
       SettingsId.values.firstWhere((element) => element.wifiValue == wifiValue,
-          orElse: () => SettingsId.Unknown);
+          orElse: () {print("couldn't find SettingsId for wifi $wifiValue"); return SettingsId.Unknown;});
 }
 
 class SettingsIdValue extends SettingsValue<SettingsId> {
