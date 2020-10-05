@@ -19,12 +19,12 @@ import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 import 'package:sonyalphacontrol/wifi/enums/force_update.dart';
-
-import '../ids/setting_ids.dart';
 
 abstract class CameraApiInterface {
   SonyCameraDevice cameraDevice;
@@ -39,6 +39,9 @@ abstract class CameraApiInterface {
     //TODO on usb running within update loop?
     //how to send changes?
   }
+
+  Future<SettingsItem<WebApiVersionValue>> getWebApiVersions({ForceUpdate update}) async =>
+      device.cameraSettings.versions;
 
   ///usb so far
   Future<bool> setSettingsRaw(SettingsId id, int value);

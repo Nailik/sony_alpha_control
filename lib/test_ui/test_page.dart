@@ -171,7 +171,20 @@ class TestsPageState extends State<TestsPage> {
               title: Text(SettingsId.Versions.name),
               subtitle: Text(
                   device.cameraSettings.versions.value?.name ?? "NotAvailable"),
+              onTap: () => device.api.getWebApiVersions()
             ),
+            Expanded(
+                child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: DropdownButton<EvValue>(
+                      hint: Text("available"),
+                      items: device.cameraSettings.versions.available
+                          .map<DropdownMenuItem<EvValue>>((e) =>
+                          DropdownMenuItem<EvValue>(
+                              child: Text(e.name), value: e))
+                          .toList(),
+                      onChanged: (value) => device.api.setEV(value),
+                    ))),
           ]),
         ),
       ),

@@ -1,10 +1,10 @@
-import 'package:sonyalphacontrol/wifi/enums/web_api_version.dart';
+import 'file:///C:/Users/kilia/CloudStation/Dokumente/Projects/sony_alpha_control/lib/top_level_api/ids/web_api_version.dart';
 
 class CameraWebApiService {
   String type;
   String url;
   String accessType;
-  List<WebApiVersion> supportedVersions;
+  List<WebApiVersionId> supportedVersions;
 
   get maxVersion =>
       supportedVersions.reduce((x, y) => x.index > y.index ? x : y);

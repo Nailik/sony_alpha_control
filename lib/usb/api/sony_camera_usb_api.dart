@@ -9,7 +9,6 @@ import 'package:sonyalphacontrol/top_level_api/device/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/dro_hdr_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/flash_mode_ids.dart';
@@ -25,7 +24,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
@@ -50,8 +49,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
       SonyCameraUsbDevice device) async {
     switch (settingsId) {
       case SettingsId.ImageFileFormat:
-        return setImageFileFormat(
-            ImageFileFormatValue.fromUSBValue(value));
+        return setImageFileFormat(ImageFileFormatValue.fromUSBValue(value));
       case SettingsId.WhiteBalanceMode:
         return setWhiteBalanceMode(WhiteBalanceModeValue.fromUSBValue(value));
       case SettingsId.FNumber:
@@ -79,7 +77,8 @@ class SonyCameraUsbApi extends CameraApiInterface {
         return setShutterSpeed(
             ShutterSpeedValue.fromUsbValue(value as double, 0));
       case SettingsId.WhiteBalanceColorTemp:
-        return setWhiteBalanceColorTemp(WhiteBalanceColorTempValue.fromUSBValue(value));
+        return setWhiteBalanceColorTemp(
+            WhiteBalanceColorTempValue.fromUSBValue(value));
       case SettingsId.WhiteBalanceGM:
         return setWhiteBalanceGm(WhiteBalanceGmIdExtension.getIdFromUsb(value));
       case SettingsId.AspectRatio:
@@ -513,13 +512,12 @@ class SonyCameraUsbApi extends CameraApiInterface {
           .isValidResponse();
 
   @override
-  Future<bool> setWhiteBalanceColorTemp(WhiteBalanceColorTempValue value) async =>
+  Future<bool> setWhiteBalanceColorTemp(
+          WhiteBalanceColorTempValue value) async =>
       (await UsbCommands.getCommandSetting(SettingsId.WhiteBalanceColorTemp,
                   value1: value.usbValue)
               .send())
           .isValidResponse();
-
-
 
   @override
   Future<bool> setWhiteBalanceGm(WhiteBalanceGmId value) async =>
@@ -643,6 +641,13 @@ class SonyCameraUsbApi extends CameraApiInterface {
   @override
   Future<bool> modifyWhiteBalanceColorTemp(int direction) {
     // TODO: implement modifyWhiteBalanceColorTemp
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<SettingsItem<WebApiVersionValue>> getWebApiVersions(
+      {ForceUpdate update}) {
+    // TODO: implement getWebApiVersions
     throw UnimplementedError();
   }
 }

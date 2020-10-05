@@ -22,6 +22,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
@@ -42,6 +43,31 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   //TODO modify/set ... maybe available and supported is null, eg when camera is in A mode and uses automatic shutter
+
+  Future<SettingsItem<WebApiVersionValue>> getWebApiVersions(
+      {update = ForceUpdate.IfNull}) async {
+    var settingsItem = await super.getWebApiVersions();
+
+    switch (update) {
+      case ForceUpdate.Available:
+      case ForceUpdate.Supported:
+      case ForceUpdate.Current:
+      case ForceUpdate.On:
+        await _updateCurrent(settingsItem);
+        break;
+      case ForceUpdate.IfNull:
+        if (settingsItem.available == null || settingsItem.available.isEmpty) {
+          await _updateAvailable(settingsItem);
+        }
+        if (settingsItem.supported == null || settingsItem.supported.isEmpty) {
+          await _updateSupported(settingsItem);
+        }
+        break;
+      case ForceUpdate.Off:
+        break;
+    }
+    return await super.getWebApiVersions();
+  }
 
   /// FNumber
   ///
@@ -161,6 +187,13 @@ class SonyCameraWifiApi extends CameraApiInterface {
       case ForceUpdate.Supported:
         await _updateSupported(settingsItem);
         break;
+      case ForceUpdate.Current:
+        if (settingsItem.supported == null || settingsItem.supported.isEmpty) {
+          //supported is necessary for available to now the step sizes
+          await _updateSupported(settingsItem);
+        }
+        await _updateCurrent(settingsItem);
+        break;
       case ForceUpdate.On:
         await _updateSupported(settingsItem);
         await _updateAvailable(settingsItem);
@@ -255,7 +288,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setWhiteBalanceMode(WhiteBalanceModeValue value) async =>
-      WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.WhiteBalanceMode,
+      WifiCommand.createCommand(
+              SonyWebApiMethod.SET, SettingsId.WhiteBalanceMode,
               params: [value.wifiValue, false, 0])
           .send(device)
           .then((result) async {
@@ -282,35 +316,36 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
     switch (update) {
       case ForceUpdate.Available:
-        await _getAvailable(SettingsId.WhiteBalanceMode).then((response) => device
-            .cameraSettings
-            .updateAvailable(settingsItemWhiteBalanceMode, response));
+        await _getAvailable(SettingsId.WhiteBalanceMode).then((response) =>
+            device.cameraSettings
+                .updateAvailable(settingsItemWhiteBalanceMode, response));
         break;
       case ForceUpdate.Supported:
-        await _getSupported(SettingsId.WhiteBalanceMode).then((response) => device
-            .cameraSettings
-            .updateSupported(settingsItemWhiteBalanceMode, response));
+        await _getSupported(SettingsId.WhiteBalanceMode).then((response) =>
+            device.cameraSettings
+                .updateSupported(settingsItemWhiteBalanceMode, response));
         break;
       case ForceUpdate.On:
-        await _getSupported(SettingsId.WhiteBalanceMode).then((response) => device
-            .cameraSettings
-            .updateSupported(settingsItemWhiteBalanceMode, response));
-        await _getAvailable(SettingsId.WhiteBalanceMode).then((response) => device
-            .cameraSettings
-            .updateAvailable(settingsItemWhiteBalanceMode, response));
+        await _getSupported(SettingsId.WhiteBalanceMode).then((response) =>
+            device.cameraSettings
+                .updateSupported(settingsItemWhiteBalanceMode, response));
+        await _getAvailable(SettingsId.WhiteBalanceMode).then((response) =>
+            device.cameraSettings
+                .updateAvailable(settingsItemWhiteBalanceMode, response));
         break;
+      //TODO ForceUpdate.Current
       case ForceUpdate.IfNull:
         if (settingsItemWhiteColorTemp.available == null ||
             settingsItemWhiteColorTemp.available.isEmpty) {
-          await _getAvailable(SettingsId.WhiteBalanceMode).then((response) => device
-              .cameraSettings
-              .updateAvailable(settingsItemWhiteBalanceMode, response));
+          await _getAvailable(SettingsId.WhiteBalanceMode).then((response) =>
+              device.cameraSettings
+                  .updateAvailable(settingsItemWhiteBalanceMode, response));
         }
         if (settingsItemWhiteColorTemp.supported == null ||
             settingsItemWhiteColorTemp.supported.isEmpty) {
-          await _getSupported(SettingsId.WhiteBalanceMode).then((response) => device
-              .cameraSettings
-              .updateSupported(settingsItemWhiteBalanceMode, response));
+          await _getSupported(SettingsId.WhiteBalanceMode).then((response) =>
+              device.cameraSettings
+                  .updateSupported(settingsItemWhiteBalanceMode, response));
         }
         break;
       case ForceUpdate.Off:
@@ -415,7 +450,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<int> getBatteryPercentage({update = ForceUpdate.IfNull}) {
-    //TODO
+    //TODO only get
   }
 
   @override
@@ -765,6 +800,9 @@ class SonyCameraWifiApi extends CameraApiInterface {
       case ForceUpdate.Supported:
         await _updateSupported(settingsItem);
         break;
+      case ForceUpdate.Current:
+        await _updateCurrent(settingsItem);
+        break;
       case ForceUpdate.On:
         await _updateSupported(settingsItem);
         await _updateAvailable(settingsItem);
@@ -782,6 +820,11 @@ class SonyCameraWifiApi extends CameraApiInterface {
     }
 
     return device.cameraSettings.getItem(settingsItem.settingsId);
+  }
+
+  Future _updateCurrent(SettingsItem settingsItem) async {
+    return await _getCurrent(settingsItem.settingsId).then((response) =>
+        device.cameraSettings.updateCurrent(settingsItem, response));
   }
 
   Future _updateAvailable(SettingsItem settingsItem) async {
@@ -804,6 +847,12 @@ class SonyCameraWifiApi extends CameraApiInterface {
   Future<String> _getAvailable(SettingsId settingsId) async {
     return await WifiCommand.createCommand(
             SonyWebApiMethod.GET_AVAILABLE, settingsId)
+        .send(device)
+        .then((wifiResponse) => wifiResponse.response);
+  }
+
+  Future<String> _getCurrent(SettingsId settingsId) async {
+    return await WifiCommand.createCommand(SonyWebApiMethod.GET, settingsId)
         .send(device)
         .then((wifiResponse) => wifiResponse.response);
   }

@@ -10,7 +10,7 @@ import 'package:sonyalphacontrol/wifi/commands/wifi_connector.dart';
 import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_method.dart';
-import 'package:sonyalphacontrol/wifi/enums/web_api_version.dart';
+import 'file:///C:/Users/kilia/CloudStation/Dokumente/Projects/sony_alpha_control/lib/top_level_api/ids/web_api_version.dart';
 
 class SonyWifiApi extends SonyApiInterface {
   var _initialized = false;
@@ -36,11 +36,11 @@ class SonyWifiApi extends SonyApiInterface {
 
   @override
   Future<bool> connectCamera(SonyCameraDevice device) async {
-    var versions = await getWebApiVersions(device);
-    var methods = await getMethodTypes(WebApiVersion.V_1_4, device);
+    var versions = await device.api.getWebApiVersions();
+    var methods = await getMethodTypes(WebApiVersionId.V_1_4, device);
 
-    var supported = await getSupportedFunctions(WebApiVersion.V_1_4, device);
-    var available = await getAvailableFunctions(WebApiVersion.V_1_4, device);
+    var supported = await getSupportedFunctions(WebApiVersionId.V_1_4, device);
+    var available = await getAvailableFunctions(WebApiVersionId.V_1_4, device);
 
     var functionSettings = SettingsItem<SettingsValue<CameraFunctionId>>(
         SettingsId.CameraFunction);
@@ -52,28 +52,17 @@ class SonyWifiApi extends SonyApiInterface {
 
     startConnection(device);
 
-    var apiList = await getAvailableApiList( device); //available api (all methods of this camera in current Function)
+    var apiList = await getAvailableApiList(
+        device); //available api (all methods of this camera in current Function)
     await device.updateSettings();
 
-    WifiCameraFunctionality(versions, methods, apiList,
+    WifiCameraFunctionality(versions.supported, methods, apiList,
         functionSettings); //TODO save in device and maybe update
     return true;
   }
 
-  Future<List<WebApiVersion>> getWebApiVersions(
-      SonyCameraWifiDevice device) async {
-    var list = List<WebApiVersion>();
-    await WifiCommand.createCommand(SonyWebApiMethod.GET, SettingsId.Versions)
-        .send(device)
-        .then((value) => (jsonDecode(value.response)["result"][0] as List)
-                ?.forEach((element) {
-              list.add(WebApiVersionExtension.fromWifiValue(element));
-            }));
-    return list;
-  }
-
   Future<List<WebApiMethod>> getMethodTypes(
-      WebApiVersion webApiVersion, SonyCameraWifiDevice device) async {
+      WebApiVersionId webApiVersion, SonyCameraWifiDevice device) async {
     var list = List<WebApiMethod>();
     await WifiCommand.createCommand(
             SonyWebApiMethod.GET, SettingsId.MethodTypes,
@@ -111,7 +100,7 @@ class SonyWifiApi extends SonyApiInterface {
   }
 
   Future<List<CameraFunctionValue>> getSupportedFunctions(
-      WebApiVersion version, SonyCameraWifiDevice device) async {
+      WebApiVersionId version, SonyCameraWifiDevice device) async {
     var webResponse = await WifiCommand.createCommand(
             SonyWebApiMethod.GET_SUPPORTED, SettingsId.CameraFunction)
         .send(device);
@@ -127,7 +116,7 @@ class SonyWifiApi extends SonyApiInterface {
 
   Future<MapEntry<CameraFunctionValue, List<CameraFunctionValue>>>
       getAvailableFunctions(
-          WebApiVersion version, SonyCameraWifiDevice device) async {
+          WebApiVersionId version, SonyCameraWifiDevice device) async {
     var webResponse = await WifiCommand.createCommand(
             SonyWebApiMethod.GET_AVAILABLE, SettingsId.CameraFunction)
         .send(device);

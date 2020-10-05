@@ -9,7 +9,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_method.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_service_type.dart';
-import 'package:sonyalphacontrol/wifi/enums/web_api_version.dart';
+import 'file:///C:/Users/kilia/CloudStation/Dokumente/Projects/sony_alpha_control/lib/top_level_api/ids/web_api_version.dart';
 
 class WifiCommands {
   //TOdo in json
@@ -26,14 +26,14 @@ class WifiCommand {
 
   int id = 0;
   String method;
-  WebApiVersion version;
+  WebApiVersionId version;
   List<dynamic> params;
 
   WifiCommand(this.id, this.method, this.version, this.params, {this.service});
 
   static WifiCommand createCommand(SonyWebApiMethod method, SettingsId apiGroup,
       {SonyWebApiServiceType service = SonyWebApiServiceType.CAMERA,
-        WebApiVersion version = WebApiVersion.V_1_0, //TOp supported version?
+        WebApiVersionId version = WebApiVersionId.V_1_0, //TOp supported version?
         List<dynamic> params = const []}) =>
       WifiCommand(
           0, method.wifiValue + apiGroup.wifiValue.startCap, version, params,
@@ -85,7 +85,7 @@ class WifiCommand {
       WifiCommand(
         json['id'] as int,
         json['method'] as String,
-        WebApiVersionExtension.fromWifiValue(json['version'] as String),
+        WebApiVersionIdExtension.fromWifiValue(json['version'] as String),
         json['params'] as List,
       );
 

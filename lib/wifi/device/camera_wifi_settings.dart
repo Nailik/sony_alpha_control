@@ -8,7 +8,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 import 'package:sonyalphacontrol/wifi/commands/wifi_command.dart';
 import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
 import 'package:sonyalphacontrol/wifi/enums/sony_web_api_method.dart';
-import 'package:sonyalphacontrol/wifi/enums/web_api_version.dart';
+import 'file:///C:/Users/kilia/CloudStation/Dokumente/Projects/sony_alpha_control/lib/top_level_api/ids/web_api_version.dart';
 
 class CameraWifiSettings extends CameraSettings {
   final SonyCameraWifiDevice sonyCameraWifiDevice;
@@ -18,12 +18,12 @@ class CameraWifiSettings extends CameraSettings {
   @override
   Future<bool> update() async {
     await getSettings(
-        WebApiVersion.V_1_4, true, sonyCameraWifiDevice); //current settings
+        WebApiVersionId.V_1_4, true, sonyCameraWifiDevice); //current settings
     //TODO camera settings? that are not initialized
   }
 
   //TODO machen
-  Future<String> getSettings(WebApiVersion version, bool longPolling,
+  Future<String> getSettings(WebApiVersionId version, bool longPolling,
       SonyCameraWifiDevice device) async {
     var webResponse = await WifiCommand.createCommand(
         SonyWebApiMethod.GET, SettingsId.AvailableSettings,
@@ -244,6 +244,31 @@ class CameraWifiSettings extends CameraSettings {
         break;
     }
   }
+
+  updateCurrent(SettingsItem settingsItem, String json) async {
+    var jsonD = jsonDecode(json);
+    var list = jsonD["result"];
+    switch (settingsItem.settingsId) {
+      case SettingsId.Versions:
+        var itemsList = settingsItem.createListFromWifiJson(list[0] as List);
+        settingsItem.updateItem(
+            settingsItem.value,
+            settingsItem.subValue,
+            itemsList,
+            itemsList);
+        break;
+      default:
+      //TODO
+        settingsItem.updateItem(
+            settingsItem.value,
+            settingsItem.subValue,
+            settingsItem.available,
+            settingsItem.supported);
+        break;
+    }
+  }
+
+
 
   getDefaultSettings(json, SettingsItem settingsItem, String currentName,
       String availableName) {
