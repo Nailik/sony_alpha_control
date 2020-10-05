@@ -68,6 +68,8 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
         settingsId == SettingsId.ShutterSpeed);
   }
 
+  //TODO speichern welche methoden möglich sind für dieses "settingsid" item
+
   //TODO stillsize(usb) - size and aspect ratio (wifi)
   //TODO drivemode cont and timer (usb) - single on wifi (different methods) TODO test
   //TODO cont shooting on wifi - on off via "start cont shooting" (bracket not wupporte?)
@@ -148,7 +150,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       //TODO  return StringValue(wifiValue);
       case SettingsId.ShutterSpeed:
         return ShutterSpeedValue.fromWifiValue(wifiValue);
-      case SettingsId.WhiteBalance:
+      case SettingsId.WhiteBalanceMode:
         throw UnsupportedError; //should never be called return WhiteBalanceModeValue.fromWifiValue(wifiValue);
       case SettingsId.FocusAreaSpot: //touchAFPosition
       //TODO  return IntValue(wifiValue);
@@ -196,7 +198,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
     switch (settingsId) {
       case SettingsId.ImageFileFormat:
         return ImageFileFormatValue.fromUSBValue(usbValue);
-      case SettingsId.WhiteBalance:
+      case SettingsId.WhiteBalanceMode:
         return WhiteBalanceModeValue.fromUSBValue(usbValue);
       case SettingsId.FNumber:
         return DoubleValue(usbValue as double); //TODO test

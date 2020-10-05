@@ -255,13 +255,13 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setWhiteBalanceMode(WhiteBalanceModeValue value) async =>
-      WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.WhiteBalance,
+      WifiCommand.createCommand(SonyWebApiMethod.SET, SettingsId.WhiteBalanceMode,
               params: [value.wifiValue, false, 0])
           .send(device)
           .then((result) async {
         if (result.isValid) {
           SettingsItem<WhiteBalanceModeValue> item = device.cameraSettings
-              .getItem<WhiteBalanceModeValue>(SettingsId.WhiteBalance);
+              .getItem<WhiteBalanceModeValue>(SettingsId.WhiteBalanceMode);
           item.updateItem(value, item.subValue, item.available, item.supported);
         }
 
@@ -282,33 +282,33 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
     switch (update) {
       case ForceUpdate.Available:
-        await _getAvailable(SettingsId.WhiteBalance).then((response) => device
+        await _getAvailable(SettingsId.WhiteBalanceMode).then((response) => device
             .cameraSettings
             .updateAvailable(settingsItemWhiteBalanceMode, response));
         break;
       case ForceUpdate.Supported:
-        await _getSupported(SettingsId.WhiteBalance).then((response) => device
+        await _getSupported(SettingsId.WhiteBalanceMode).then((response) => device
             .cameraSettings
             .updateSupported(settingsItemWhiteBalanceMode, response));
         break;
       case ForceUpdate.Both:
-        await _getSupported(SettingsId.WhiteBalance).then((response) => device
+        await _getSupported(SettingsId.WhiteBalanceMode).then((response) => device
             .cameraSettings
             .updateSupported(settingsItemWhiteBalanceMode, response));
-        await _getAvailable(SettingsId.WhiteBalance).then((response) => device
+        await _getAvailable(SettingsId.WhiteBalanceMode).then((response) => device
             .cameraSettings
             .updateAvailable(settingsItemWhiteBalanceMode, response));
         break;
       case ForceUpdate.IfNull:
         if (settingsItemWhiteColorTemp.available == null ||
             settingsItemWhiteColorTemp.available.isEmpty) {
-          await _getAvailable(SettingsId.WhiteBalance).then((response) => device
+          await _getAvailable(SettingsId.WhiteBalanceMode).then((response) => device
               .cameraSettings
               .updateAvailable(settingsItemWhiteBalanceMode, response));
         }
         if (settingsItemWhiteColorTemp.supported == null ||
             settingsItemWhiteColorTemp.supported.isEmpty) {
-          await _getSupported(SettingsId.WhiteBalance).then((response) => device
+          await _getSupported(SettingsId.WhiteBalanceMode).then((response) => device
               .cameraSettings
               .updateSupported(settingsItemWhiteBalanceMode, response));
         }
@@ -341,7 +341,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
         await super.getWhiteBalanceMode(update: ForceUpdate.Off);
 
     return WifiCommand.createCommand(
-        SonyWebApiMethod.SET, SettingsId.WhiteBalance, params: [
+        SonyWebApiMethod.SET, SettingsId.WhiteBalanceMode, params: [
       settingsItemWhiteBalanceMode.value.wifiValue,
       true,
       value.id

@@ -33,8 +33,7 @@ class CameraWifiSettings extends CameraSettings {
 
     (jsonD["result"] as List<dynamic>)?.forEach((element) {
       if (element != null && !element.isEmpty) {
-
-        if(element is LinkedHashMap){
+        if (element is LinkedHashMap) {
           //probably storage information
           return;
         }
@@ -47,8 +46,7 @@ class CameraWifiSettings extends CameraSettings {
 
         SettingsItem setting = getItem(settingsIdEnum);
         if (setting == null) {
-          setting = new SettingsItem(settingsIdEnum);
-          addItem(setting);
+          print("ERROR ******");
         }
 
         switch (setting.settingsId) {
@@ -81,7 +79,7 @@ class CameraWifiSettings extends CameraSettings {
             setting.updateItem(setting.fromWifi(element[settingsIdWifiValue]),
                 setting.subValue, setting.available, setting.supported);
             break;
-          case SettingsId.WhiteBalance:
+          case SettingsId.WhiteBalanceMode:
             //   setting.updateItem(setting.fromWifi(element[settingsIdWifiValue]),
             //   setting.subValue, setting.available, setting.supported); //TODO
             break;
@@ -123,14 +121,13 @@ class CameraWifiSettings extends CameraSettings {
             listOfValues,
             settingsItem.supported);
         break;
-      case SettingsId.WhiteBalance:
+      case SettingsId.WhiteBalanceMode:
         List<WhiteBalanceColorTempValue> supportedColorTempList =
             List<WhiteBalanceColorTempValue>();
         List<WhiteBalanceColorTempValue> availableColorTempList =
             List<WhiteBalanceColorTempValue>();
         SettingsValue currentWhiteBalance = WhiteBalanceModeValue.fromWifiValue(
-            list[0]["whiteBalanceMode"],
-            list[0]["colorTemperature"] != -1);
+            list[0]["whiteBalanceMode"], list[0]["colorTemperature"] != -1);
 
         //colorTemperature
         SettingsItem<WhiteBalanceColorTempValue> settingsItemColorTemp =
@@ -197,7 +194,7 @@ class CameraWifiSettings extends CameraSettings {
         settingsItem.updateItem(settingsItem.value, settingsItem.subValue,
             settingsItem.available, listOfValues);
         break;
-      case SettingsId.WhiteBalance:
+      case SettingsId.WhiteBalanceMode:
         List<WhiteBalanceColorTempValue> supportedColorTempList =
             List<WhiteBalanceColorTempValue>();
         List<WhiteBalanceColorTempValue> availableColorTempList =

@@ -8,7 +8,7 @@ enum SettingsId {
   /// File format / image quality
   /// </summary>
   ImageFileFormat, //StillQuality
-  WhiteBalance,
+  WhiteBalanceMode,
   FNumber,
   FocusMode,
   MeteringMode,
@@ -78,6 +78,7 @@ enum SettingsId {
   /// </summary>
   UnkD22E,
   FocusMagnifier,
+  FocusMagnifierDirection,
   FocusMagnifierPosition,
   UseLiveViewDisplayEffect,
   FocusAreaSpot,
@@ -227,7 +228,7 @@ extension SettingsIdExtension on SettingsId {
     switch (this) {
       case SettingsId.ImageFileFormat:
         return 0x5004;
-      case SettingsId.WhiteBalance:
+      case SettingsId.WhiteBalanceMode:
         return 0x5005;
       case SettingsId.FNumber:
         return 0x5007;
@@ -418,7 +419,7 @@ extension SettingsIdExtension on SettingsId {
         return "shutterSpeed";
       case SettingsId.FocusAreaSpot:
         return "touchAFPosition";
-      case SettingsId.WhiteBalance:
+      case SettingsId.WhiteBalanceMode:
         return "whiteBalance";
       case SettingsId.WhiteBalanceColorTemp:
         return "WhiteBalanceColorTemp";

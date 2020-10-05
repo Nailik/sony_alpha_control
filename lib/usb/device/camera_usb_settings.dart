@@ -106,8 +106,7 @@ class CameraUsbSettings extends CameraSettings {
 
       SettingsItem setting = getItem(settingsIdEnum);
       if (setting == null) {
-        setting = new SettingsItem(settingsIdEnum);
-        addItem(setting);
+        print("ERROR ******");
       }
 
       //TODO check if i know this settings id

@@ -163,9 +163,17 @@ class TestsPageState extends State<TestsPage> {
   ///Versions (get)
   Widget getVersionsRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => (device.cameraSettings.getItem(SettingsId.Versions)),
+      create: (context) => device.cameraSettings.versions,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.Versions.name),
+              subtitle: Text(
+                  device.cameraSettings.versions.value?.name ?? "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -173,10 +181,17 @@ class TestsPageState extends State<TestsPage> {
   ///MethodTypes (get)
   Widget getMethodTypesRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.MethodTypes)),
+      create: (context) => device.cameraSettings.methodTypes,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.MethodTypes.name),
+              subtitle: Text(device.cameraSettings.methodTypes.value?.name ??
+                  "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -184,10 +199,18 @@ class TestsPageState extends State<TestsPage> {
   ///ApplicationInfo (get)
   Widget getApplicationInfoRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.ApplicationInfo)),
+      create: (context) => device.cameraSettings.applicationInfo,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.ApplicationInfo.name),
+              subtitle: Text(
+                  device.cameraSettings.applicationInfo.value?.name ??
+                      "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -195,9 +218,17 @@ class TestsPageState extends State<TestsPage> {
   ///ApiList (getAvailable)
   Widget getApiListRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => (device.cameraSettings.getItem(SettingsId.ApiList)),
+      create: (context) => device.cameraSettings.apiList,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.ApiList.name),
+              subtitle: Text(
+                  device.cameraSettings.apiList.value?.name ?? "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -205,10 +236,18 @@ class TestsPageState extends State<TestsPage> {
   ///AvailableSettings (get)
   Widget getAvailableSettingsRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.AvailableSettings)),
+      create: (context) => device.cameraSettings.availableSettings,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.AvailableSettings.name),
+              subtitle: Text(
+                  device.cameraSettings.availableSettings.value?.name ??
+                      "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -216,10 +255,17 @@ class TestsPageState extends State<TestsPage> {
   ///CameraFunction (set, get, getSupported, getAvailable)
   Widget getCameraFunctionsRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.CameraFunction)),
+      create: (context) => device.cameraSettings.cameraFunction,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.CameraFunction.name),
+              subtitle: Text(device.cameraSettings.cameraFunction.value?.name ??
+                  "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -227,10 +273,17 @@ class TestsPageState extends State<TestsPage> {
   ///CapturePhoto (act)
   Widget getCapturePhotoRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.CapturePhoto)),
+      create: (context) => device.cameraSettings.capturePhoto,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.CapturePhoto.name),
+              subtitle: Text(device.cameraSettings.capturePhoto.value?.name ??
+                  "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -238,10 +291,17 @@ class TestsPageState extends State<TestsPage> {
   ///CameraSetup (stop)
   Widget getCameraSetupRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.CameraSetup)),
+      create: (context) => device.cameraSettings.cameraSetup,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.CameraSetup.name),
+              subtitle: Text(device.cameraSettings.cameraSetup.value?.name ??
+                  "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -249,9 +309,18 @@ class TestsPageState extends State<TestsPage> {
   ///LiveView (start, stop)
   Widget getLiveViewRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => (device.cameraSettings.getItem(SettingsId.LiveView)),
+      create: (context) => device.cameraSettings.liveView,
+      //TODO availabilty of functions?
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.LiveView.name),
+              subtitle: Text(
+                  device.cameraSettings.liveView.value?.name ?? "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -259,10 +328,18 @@ class TestsPageState extends State<TestsPage> {
   ///LiveViewWithSize (start)
   Widget getLiveViewWithSizeRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.LiveViewWithSize)),
+      create: (context) => device.cameraSettings.liveViewWithSize,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.LiveViewWithSize.name),
+              subtitle: Text(
+                  device.cameraSettings.liveViewWithSize.value?.name ??
+                      "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -270,9 +347,17 @@ class TestsPageState extends State<TestsPage> {
   ///Zoom (act)
   Widget getZoomRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => (device.cameraSettings.getItem(SettingsId.Zoom)),
+      create: (context) => device.cameraSettings.zoom,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.Zoom.name),
+              subtitle: Text(
+                  device.cameraSettings.zoom.value?.name ?? "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -280,10 +365,18 @@ class TestsPageState extends State<TestsPage> {
   ///HalfPressShutter (act, cancel)
   Widget getHalfPressShutterRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.HalfPressShutter)),
+      create: (context) => device.cameraSettings.halfPressShutter,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.HalfPressShutter.name),
+              subtitle: Text(
+                  device.cameraSettings.halfPressShutter.value?.name ??
+                      "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -291,10 +384,17 @@ class TestsPageState extends State<TestsPage> {
   ///SelfTimer (set, get, getSupported, getAvailable)
   Widget getSelfTimerRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.SelfTimer)),
+      create: (context) => device.cameraSettings.selfTimer,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.SelfTimer.name),
+              subtitle: Text(device.cameraSettings.selfTimer.value?.name ??
+                  "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -302,10 +402,18 @@ class TestsPageState extends State<TestsPage> {
   ///ContShootingMode (set, get, getSupported, getAvailable)
   Widget getContShootingModeRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.ContShootingMode)),
+      create: (context) => device.cameraSettings.contShootingMode,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.ContShootingMode.name),
+              subtitle: Text(
+                  device.cameraSettings.contShootingMode.value?.name ??
+                      "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -313,10 +421,18 @@ class TestsPageState extends State<TestsPage> {
   ///ContShootingSpeed (set, get, getSupported, getAvailable)
   Widget getContShootingSpeedRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.ContShootingSpeed)),
+      create: (context) => device.cameraSettings.contShootingSpeed,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.ContShootingSpeed.name),
+              subtitle: Text(
+                  device.cameraSettings.contShootingSpeed.value?.name ??
+                      "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -324,10 +440,17 @@ class TestsPageState extends State<TestsPage> {
   ///MeteringMode (get, getSupported)
   Widget getMeteringModeRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.MeteringMode)),
+      create: (context) => device.cameraSettings.meteringMode,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.MeteringMode.name),
+              subtitle: Text(device.cameraSettings.meteringMode.value?.name ??
+                  "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -335,15 +458,14 @@ class TestsPageState extends State<TestsPage> {
   ///Ev (set, get, getSupported, getAvailable)
   Widget getEVRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => (device.cameraSettings.getItem(SettingsId.EV)),
+      create: (context) => device.cameraSettings.ev,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
               title: Text(SettingsId.EV.name),
-              subtitle: Text(
-                  device.cameraSettings.getItem(SettingsId.EV).value?.name ??
-                      "NotAvailable"),
+              subtitle:
+                  Text(device.cameraSettings.ev.value?.name ?? "NotAvailable"),
               onTap: () => device.api.getEV(update: ForceUpdate.Both),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -362,9 +484,7 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<EvValue>(
                         hint: Text("available"),
-                        items: device.cameraSettings
-                            .getItem(SettingsId.EV)
-                            .available
+                        items: device.cameraSettings.ev.available
                             .map<DropdownMenuItem<EvValue>>((e) =>
                                 DropdownMenuItem<EvValue>(
                                     child: Text(e.name), value: e))
@@ -376,9 +496,7 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<EvValue>(
                         hint: Text("supported"),
-                        items: device.cameraSettings
-                            .getItem(SettingsId.EV)
-                            .supported
+                        items: device.cameraSettings.ev.supported
                             .map<DropdownMenuItem<EvValue>>((e) =>
                                 DropdownMenuItem<EvValue>(
                                     child: Text(e.name), value: e))
@@ -395,18 +513,15 @@ class TestsPageState extends State<TestsPage> {
   ///FNumber (set, get, getSupported, getAvailable)
   Widget getFNumberRow() {
     return ListenableProvider<SettingsItem>(
-        create: (context) =>
-            (device.cameraSettings.getItem(SettingsId.FNumber)),
+        create: (context) => device.cameraSettings.fNumber,
         child: Consumer<SettingsItem>(
             builder: (context, model, _) => Card(
                   child: Column(children: [
                     ListTile(
                       title: Text(SettingsId.FNumber.name),
-                      subtitle: Text(device.cameraSettings
-                              .getItem(SettingsId.FNumber)
-                              .value
-                              ?.name ??
-                          "NotAvailable"),
+                      subtitle: Text(
+                          device.cameraSettings.fNumber.value?.name ??
+                              "NotAvailable"),
                       onTap: () =>
                           device.api.getFNumber(update: ForceUpdate.Both),
                     ),
@@ -432,9 +547,8 @@ class TestsPageState extends State<TestsPage> {
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<DoubleValue>(
                                     hint: Text("available"),
-                                    items: device.cameraSettings
-                                        .getItem(SettingsId.FNumber)
-                                        .available
+                                    items: device
+                                        .cameraSettings.fNumber.available
                                         .map<DropdownMenuItem<DoubleValue>>(
                                             (e) =>
                                                 DropdownMenuItem<DoubleValue>(
@@ -449,9 +563,8 @@ class TestsPageState extends State<TestsPage> {
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<DoubleValue>(
                                     hint: Text("supported"),
-                                    items: device.cameraSettings
-                                        .getItem(SettingsId.FNumber)
-                                        .supported
+                                    items: device
+                                        .cameraSettings.fNumber.supported
                                         .map<DropdownMenuItem<DoubleValue>>(
                                             (e) =>
                                                 DropdownMenuItem<DoubleValue>(
@@ -469,16 +582,13 @@ class TestsPageState extends State<TestsPage> {
   ///Iso (set, get, getSupported, getAvailable)
   Widget getIsoRow() {
     return ListenableProvider<SettingsItem>(
-        create: (context) => (device.cameraSettings.getItem(SettingsId.ISO)),
+        create: (context) => device.cameraSettings.iso,
         child: Consumer<SettingsItem>(
             builder: (context, model, _) => Card(
                   child: Column(children: [
                     ListTile(
                       title: Text(SettingsId.ISO.name),
-                      subtitle: Text(device.cameraSettings
-                              .getItem(SettingsId.ISO)
-                              .value
-                              ?.name ??
+                      subtitle: Text(device.cameraSettings.iso.value?.name ??
                           "NotAvailable"),
                       onTap: () => device.api.getIso(update: ForceUpdate.Both),
                     ),
@@ -504,9 +614,7 @@ class TestsPageState extends State<TestsPage> {
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<IsoValue>(
                                     hint: Text("available"),
-                                    items: device.cameraSettings
-                                        .getItem(SettingsId.ISO)
-                                        .available
+                                    items: device.cameraSettings.iso.available
                                         .map<DropdownMenuItem<IsoValue>>((e) =>
                                             DropdownMenuItem<IsoValue>(
                                                 child: Text(e.name), value: e))
@@ -519,9 +627,7 @@ class TestsPageState extends State<TestsPage> {
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<IsoValue>(
                                     hint: Text("supported"),
-                                    items: device.cameraSettings
-                                        .getItem(SettingsId.ISO)
-                                        .supported
+                                    items: device.cameraSettings.iso.supported
                                         .map<DropdownMenuItem<IsoValue>>((e) =>
                                             DropdownMenuItem<IsoValue>(
                                                 child: Text(e.name), value: e))
@@ -537,10 +643,17 @@ class TestsPageState extends State<TestsPage> {
   ///LiveViewSize (set, get, getSupported, getAvailable)
   Widget getLiveViewSizeRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.LiveViewSize)),
+      create: (context) => device.cameraSettings.liveViewSize,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.LiveViewSize.name),
+              subtitle: Text(device.cameraSettings.liveViewSize.value?.name ??
+                  "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -548,10 +661,18 @@ class TestsPageState extends State<TestsPage> {
   ///PostViewImageSize (set, get, getSupported, getAvailable)
   Widget getPostViewImageSizeRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.PostViewImageSize)),
+      create: (context) => device.cameraSettings.postViewImageSize,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.PostViewImageSize.name),
+              subtitle: Text(
+                  device.cameraSettings.postViewImageSize.value?.name ??
+                      "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -559,10 +680,17 @@ class TestsPageState extends State<TestsPage> {
   ///ProgramShift (set, get, getSupported, getAvailable)
   Widget getProgramShiftRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.ProgramShift)),
+      create: (context) => device.cameraSettings.programShift,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.ProgramShift.name),
+              subtitle: Text(device.cameraSettings.programShift.value?.name ??
+                  "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -570,10 +698,17 @@ class TestsPageState extends State<TestsPage> {
   ///ShootingMode (set, get, getSupported, getAvailable)
   Widget getShootingModeRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.ShootingMode)),
+      create: (context) => device.cameraSettings.shootingMode,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.ShootingMode.name),
+              subtitle: Text(device.cameraSettings.shootingMode.value?.name ??
+                  "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -581,17 +716,13 @@ class TestsPageState extends State<TestsPage> {
   ///ShutterSpeed (set, get, getSupported, getAvailable)
   Widget getShutterSpeedRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.ShutterSpeed)),
+      create: (context) => device.cameraSettings.shutterSpeed,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
               title: Text(SettingsId.ShutterSpeed.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.ShutterSpeed)
-                      .value
-                      ?.name ??
+              subtitle: Text(device.cameraSettings.shutterSpeed.value?.name ??
                   "NotAvailable"),
               onTap: () => device.api.getShutterSpeed(update: ForceUpdate.Both),
             ),
@@ -613,9 +744,7 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<ShutterSpeedValue>(
                         hint: Text("available"),
-                        items: device.cameraSettings
-                            .getItem(SettingsId.ShutterSpeed)
-                            .available
+                        items: device.cameraSettings.shutterSpeed.available
                             .map<DropdownMenuItem<ShutterSpeedValue>>((e) =>
                                 DropdownMenuItem<ShutterSpeedValue>(
                                     child: Text(e.name), value: e))
@@ -627,9 +756,7 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<ShutterSpeedValue>(
                         hint: Text("supported"),
-                        items: device.cameraSettings
-                            .getItem(SettingsId.ShutterSpeed)
-                            .supported
+                        items: device.cameraSettings.shutterSpeed.supported
                             .map<DropdownMenuItem<ShutterSpeedValue>>((e) =>
                                 DropdownMenuItem<ShutterSpeedValue>(
                                     child: Text(e.name), value: e))
@@ -646,10 +773,17 @@ class TestsPageState extends State<TestsPage> {
   ///FocusAreaSpot (set, get, getSupported, getAvailable)
   Widget getFocusAreaSpotRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.FocusAreaSpot)),
+      create: (context) => (device.cameraSettings.focusAreaSpot),
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.FocusAreaSpot.name),
+              subtitle: Text(device.cameraSettings.focusAreaSpot.value?.name ??
+                  "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -657,18 +791,15 @@ class TestsPageState extends State<TestsPage> {
   ///WhiteBalance (set, get, getSupported, getAvailable)
   Widget getWhiteBalanceModeRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.WhiteBalance)),
+      create: (context) => device.cameraSettings.whiteBalanceMode,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.WhiteBalance.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.WhiteBalance)
-                      .value
-                      ?.name ??
-                  "NotAvailable"),
+              title: Text(SettingsId.WhiteBalanceMode.name),
+              subtitle: Text(
+                  device.cameraSettings.whiteBalanceMode.value?.name ??
+                      "NotAvailable"),
               onTap: () =>
                   device.api.getWhiteBalanceMode(update: ForceUpdate.Both),
             ),
@@ -678,9 +809,7 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<WhiteBalanceModeValue>(
                         hint: Text("available"),
-                        items: device.cameraSettings
-                            .getItem(SettingsId.WhiteBalance)
-                            .available
+                        items: device.cameraSettings.whiteBalanceMode.available
                             .map<DropdownMenuItem<WhiteBalanceModeValue>>((e) =>
                                 DropdownMenuItem<WhiteBalanceModeValue>(
                                     child: Text(e.name), value: e))
@@ -693,9 +822,7 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<WhiteBalanceModeValue>(
                         hint: Text("supported"),
-                        items: device.cameraSettings
-                            .getItem(SettingsId.WhiteBalance)
-                            .supported
+                        items: device.cameraSettings.whiteBalanceMode.supported
                             .map<DropdownMenuItem<WhiteBalanceModeValue>>((e) =>
                                 DropdownMenuItem<WhiteBalanceModeValue>(
                                     child: Text(e.name), value: e))
@@ -712,18 +839,15 @@ class TestsPageState extends State<TestsPage> {
 
   Widget getWhiteBalanceColorTempRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.WhiteBalanceColorTemp)),
+      create: (context) => device.cameraSettings.whiteBalanceColorTemp,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
               title: Text(SettingsId.WhiteBalanceColorTemp.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.WhiteBalanceColorTemp)
-                      .value
-                      ?.name ??
-                  "NotAvailable"),
+              subtitle: Text(
+                  device.cameraSettings.whiteBalanceColorTemp.value?.name ??
+                      "NotAvailable"),
               onTap: () =>
                   device.api.getWhiteBalanceColorTemp(update: ForceUpdate.Both),
             ),
@@ -745,9 +869,8 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<WhiteBalanceColorTempValue>(
                         hint: Text("available"),
-                        items: device.cameraSettings
-                            .getItem(SettingsId.WhiteBalanceColorTemp)
-                            .available
+                        items: device
+                            .cameraSettings.whiteBalanceColorTemp.available
                             .map<DropdownMenuItem<WhiteBalanceColorTempValue>>(
                                 (e) => DropdownMenuItem<
                                         WhiteBalanceColorTempValue>(
@@ -761,9 +884,8 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<WhiteBalanceColorTempValue>(
                         hint: Text("supported"),
-                        items: device.cameraSettings
-                            .getItem(SettingsId.WhiteBalanceColorTemp)
-                            .supported
+                        items: device
+                            .cameraSettings.whiteBalanceColorTemp.supported
                             .map<DropdownMenuItem<WhiteBalanceColorTempValue>>(
                                 (e) => DropdownMenuItem<
                                         WhiteBalanceColorTempValue>(
@@ -782,17 +904,13 @@ class TestsPageState extends State<TestsPage> {
   ///FlashMode (set, get, getSupported, getAvailable)
   Widget getFlashRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.FlashMode)),
+      create: (context) => device.cameraSettings.flashMode,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
               title: Text(SettingsId.FlashMode.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.FlashMode)
-                      .value
-                      ?.name ??
+              subtitle: Text(device.cameraSettings.flashMode.value?.name ??
                   "NotAvailable"),
               onTap: () => device.api.getFlashMode(update: ForceUpdate.Both),
             ),
@@ -802,9 +920,7 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<FlashModeValue>(
                         hint: Text("available"),
-                        items: device.cameraSettings
-                            .getItem(SettingsId.FlashMode)
-                            .available
+                        items: device.cameraSettings.flashMode.available
                             .map<DropdownMenuItem<FlashModeValue>>((e) =>
                                 DropdownMenuItem<FlashModeValue>(
                                     child: Text(e.name), value: e))
@@ -816,9 +932,7 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<FlashModeValue>(
                         hint: Text("supported"),
-                        items: device.cameraSettings
-                            .getItem(SettingsId.FlashMode)
-                            .supported
+                        items: device.cameraSettings.flashMode.supported
                             .map<DropdownMenuItem<FlashModeValue>>((e) =>
                                 DropdownMenuItem<FlashModeValue>(
                                     child: Text(e.name), value: e))
@@ -835,17 +949,13 @@ class TestsPageState extends State<TestsPage> {
   ///FocusMode (set, get, getSupported, getAvailable)
   Widget getFocusModeRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.FocusMode)),
+      create: (context) => device.cameraSettings.focusMode,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
               title: Text(SettingsId.FocusMode.name),
-              subtitle: Text(device.cameraSettings
-                      .getItem(SettingsId.FocusMode)
-                      .value
-                      ?.name ??
+              subtitle: Text(device.cameraSettings.focusMode.value?.name ??
                   "NotAvailable"),
               onTap: () => device.api.getFocusMode(update: ForceUpdate.Both),
             ),
@@ -855,9 +965,7 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<FocusModeValue>(
                         hint: Text("available"),
-                        items: device.cameraSettings
-                            .getItem(SettingsId.FocusMode)
-                            .available
+                        items: device.cameraSettings.focusMode.available
                             .map<DropdownMenuItem<FocusModeValue>>((e) =>
                                 DropdownMenuItem<FocusModeValue>(
                                     child: Text(e.name), value: e))
@@ -869,9 +977,7 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<FocusModeValue>(
                         hint: Text("supported"),
-                        items: device.cameraSettings
-                            .getItem(SettingsId.FocusMode)
-                            .supported
+                        items: device.cameraSettings.focusMode.supported
                             .map<DropdownMenuItem<FocusModeValue>>((e) =>
                                 DropdownMenuItem<FocusModeValue>(
                                     child: Text(e.name), value: e))
@@ -888,10 +994,17 @@ class TestsPageState extends State<TestsPage> {
   ///ZoomSetting (set, get, getSupported, getAvailable)
   Widget getZoomSettingRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.ZoomSetting)),
+      create: (context) => device.cameraSettings.zoomSetting,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.ZoomSetting.name),
+              subtitle: Text(device.cameraSettings.zoomSetting.value?.name ??
+                  "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -899,10 +1012,18 @@ class TestsPageState extends State<TestsPage> {
   ///StorageInformation (get)
   Widget getStorageInformationRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.StorageInformation)),
+      create: (context) => device.cameraSettings.storageInformation,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.StorageInformation.name),
+              subtitle: Text(
+                  device.cameraSettings.storageInformation.value?.name ??
+                      "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -910,10 +1031,17 @@ class TestsPageState extends State<TestsPage> {
   ///LiveViewInfo (set, get)
   Widget getLiveViewInfoRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.LiveViewInfo)),
+      create: (context) => device.cameraSettings.liveViewInfo,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.LiveViewInfo.name),
+              subtitle: Text(device.cameraSettings.liveViewInfo.value?.name ??
+                  "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -921,10 +1049,18 @@ class TestsPageState extends State<TestsPage> {
   ///SilentShootingSettings (set, get, getSupported, getAvailable)
   Widget getSilentShootingSettings() {
     return ListenableProvider<SettingsItem>(
-      create: (context) =>
-          (device.cameraSettings.getItem(SettingsId.SilentShootingSettings)),
+      create: (context) => device.cameraSettings.silentShootingSettings,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(),
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(SettingsId.SilentShootingSettings.name),
+              subtitle: Text(
+                  device.cameraSettings.silentShootingSettings.value?.name ??
+                      "NotAvailable"),
+            ),
+          ]),
+        ),
       ),
     );
   }

@@ -33,24 +33,6 @@ abstract class CameraApiInterface {
 
   CameraApiInterface(this.cameraDevice);
 
-  //camera has status items we can read
-  final List<CameraStatusItemType> _availableStatusItems =
-      new List(); //TODO different for cameras?!
-
-  List<CameraStatusItemType> get availableStatusItems => _availableStatusItems;
-
-  //camera has settings items we can change
-  final List<CameraSettingsItemType> _availableSettingsItems = new List();
-
-  List<CameraSettingsItemType> get availableSettingsItems =>
-      _availableSettingsItems;
-
-  //camera has functions we can trigger
-  final List<CameraFunctionItemType> _availableFunctionItems = new List();
-
-  List<CameraFunctionItemType> get availableFunctionItems =>
-      _availableFunctionItems;
-
   Stream<Image> streamLiveView(); //steps?
 
   startLiveView() {
@@ -65,7 +47,7 @@ abstract class CameraApiInterface {
   ///
   //Wifi checked
   Future<SettingsItem<DoubleValue>> getFNumber({ForceUpdate update}) async =>
-      device.cameraSettings.getItem<DoubleValue>(SettingsId.FNumber);
+      device.cameraSettings.fNumber;
 
   //value -> up and down (1 or -1)
   Future<bool> modifyFNumber(int direction);
@@ -76,7 +58,7 @@ abstract class CameraApiInterface {
   ///Iso
 
   Future<SettingsItem<IsoValue>> getIso({ForceUpdate update}) async =>
-      device.cameraSettings.getItem<IsoValue>(SettingsId.ISO);
+      device.cameraSettings.iso;
 
   //TODO value or steps?
   Future<bool> modifyIso(int direction);
@@ -87,7 +69,7 @@ abstract class CameraApiInterface {
 
   Future<SettingsItem<ShutterSpeedValue>> getShutterSpeed(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem<ShutterSpeedValue>(SettingsId.ShutterSpeed);
+      device.cameraSettings.shutterSpeed;
 
   //value -> up and down (1 or -1)
   Future<bool> modifyShutterSpeed(int direction);
@@ -95,16 +77,20 @@ abstract class CameraApiInterface {
   Future<bool> setShutterSpeed(ShutterSpeedValue value);
 
   Future<SettingsItem<EvValue>> getEV({ForceUpdate update}) async =>
-      device.cameraSettings.getItem<EvValue>(SettingsId.EV);
+      device.cameraSettings.ev;
+
+  ///EV
 
   //value -> up and down (1 or -1)
   Future<bool> modifyEV(int direction);
 
   Future<bool> setEV(EvValue value);
 
+  ///Flash Mode
+
   Future<SettingsItem<FlashModeValue>> getFlashMode(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem<FlashModeValue>(SettingsId.FlashMode);
+      device.cameraSettings.flashMode;
 
   Future<bool> setFlashMode(FlashModeValue value);
 
@@ -112,7 +98,7 @@ abstract class CameraApiInterface {
 
   Future<SettingsItem<FocusModeValue>> getFocusMode(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem<FocusModeValue>(SettingsId.FocusMode);
+      device.cameraSettings.focusMode;
 
   Future<bool> setFocusMode(FocusModeValue value);
 
@@ -120,8 +106,7 @@ abstract class CameraApiInterface {
 
   Future<SettingsItem<WhiteBalanceModeValue>> getWhiteBalanceMode(
           {ForceUpdate update}) async =>
-      device.cameraSettings
-          .getItem<WhiteBalanceModeValue>(SettingsId.WhiteBalance);
+      device.cameraSettings.whiteBalanceMode;
 
   Future<bool> setWhiteBalanceMode(WhiteBalanceModeValue value);
 
@@ -129,8 +114,7 @@ abstract class CameraApiInterface {
 
   Future<SettingsItem<WhiteBalanceColorTempValue>> getWhiteBalanceColorTemp(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem<WhiteBalanceColorTempValue>(
-          SettingsId.WhiteBalanceColorTemp);
+      device.cameraSettings.whiteBalanceColorTemp;
 
   //value -> up and down (1 or -1)
   Future<bool> modifyWhiteBalanceColorTemp(int direction);
@@ -164,7 +148,7 @@ abstract class CameraApiInterface {
 
   Future<SettingsItem<MeteringModeValue>> getMeteringMode(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem<MeteringModeValue>(SettingsId.MeteringMode);
+      device.cameraSettings.meteringMode;
 
   Future<bool> setMeteringMode(MeteringModeValue value);
 
@@ -173,74 +157,69 @@ abstract class CameraApiInterface {
 
   //Auto Exposure Level (lock/unlock)
   Future<SettingsItem<BoolValue>> getAel({update = ForceUpdate.IfNull}) async =>
-      device.cameraSettings.getItem<BoolValue>(
-          SettingsId.AEL_State); //TODO differenc ael and ael state?
+      device.cameraSettings.aelState; //TODO differenc ael and ael state?
 
   Future<bool> setAel(bool value);
 
   //Flash Exposure Level (lock/unlock)
   Future<SettingsItem<BoolValue>> getFel({ForceUpdate update}) async =>
-      device.cameraSettings.getItem<BoolValue>(SettingsId.FEL);
+      device.cameraSettings.fel;
 
   Future<bool> setFel(bool value);
 
   Future<SettingsItem<FocusAreaValue>> getFocusArea(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem<FocusAreaValue>(SettingsId.FocusArea);
+      device.cameraSettings.focusArea;
 
   Future<bool> setFocusArea(FocusAreaId value);
 
   Future<SettingsItem<PointValue>> getFocusAreaSpot(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem<PointValue>(SettingsId.FocusAreaSpot);
+      device.cameraSettings.focusAreaSpot;
 
   Future<bool> setFocusAreaSpot(Point value);
 
   Future<SettingsItem<AutoFocusStateValue>> getAutoFocusState(
           {ForceUpdate update}) async =>
-      device.cameraSettings
-          .getItem<AutoFocusStateValue>(SettingsId.AutoFocusState);
+      device.cameraSettings.autoFocusState;
 
   Future<SettingsItem<IntValue>> getFlashValue({ForceUpdate update}) async =>
-      device.cameraSettings.getItem<IntValue>(SettingsId.FlashValue);
+      device.cameraSettings.flashValue;
 
   Future<bool> setFlashValue(int value);
 
   Future<SettingsItem<ImageFileFormatValue>> getImageFileFormat(
           {ForceUpdate update}) async =>
-      device.cameraSettings
-          .getItem<ImageFileFormatValue>(SettingsId.ImageFileFormat);
+      device.cameraSettings.imageFileFormat;
 
   Future<bool> setImageFileFormat(ImageFileFormatValue value);
 
   Future<SettingsItem<PictureEffectValue>> getPictureEffect(
           {ForceUpdate update}) async =>
-      device.cameraSettings
-          .getItem<PictureEffectValue>(SettingsId.PictureEffect);
+      device.cameraSettings.pictureEffect;
 
   Future<bool> setPictureEffect(PictureEffectId value);
 
   Future<SettingsItem<DroHdrValue>> getDroHdr({ForceUpdate update}) async =>
-      device.cameraSettings.getItem<DroHdrValue>(SettingsId.DroHdr);
+      device.cameraSettings.droHdr;
 
   Future<bool> setDroHdr(DroHdrId value);
 
   Future<SettingsItem<ImageSizeValue>> getImageSize(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem<ImageSizeValue>(SettingsId.ImageSize);
+      device.cameraSettings.imageSize;
 
   Future<bool> setImageSize(ImageSizeId value);
 
   Future<SettingsItem<AspectRatioValue>> getAspectRatio(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem<AspectRatioValue>(SettingsId.AspectRatio);
+      device.cameraSettings.aspectRatio;
 
   Future<bool> setAspectRatio(AspectRatioId value);
 
   Future<SettingsItem<FocusModeToggleValue>> getFocusModeToggle(
           {ForceUpdate update}) async =>
-      device.cameraSettings
-          .getItem<FocusModeToggleValue>(SettingsId.FocusModeToggleResponse);
+      device.cameraSettings.focusModeToggleResponse;
 
   Future<bool> setFocusModeToggle(FocusModeToggleId value);
 
@@ -249,19 +228,17 @@ abstract class CameraApiInterface {
 
   Future<SettingsItem<DriveModeValue>> getShootingMode(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem<DriveModeValue>(SettingsId.ShootingMode);
+      device.cameraSettings.shootingMode;
 
   Future<SettingsItem<WhiteBalanceAbValue>> getWhiteBalanceAb(
           {ForceUpdate update}) async =>
-      device.cameraSettings
-          .getItem<WhiteBalanceAbValue>(SettingsId.WhiteBalanceAB);
+      device.cameraSettings.whiteBalanceAB;
 
   Future<bool> setWhiteBalanceAb(WhiteBalanceAbId value);
 
   Future<SettingsItem<WhiteBalanceGmValue>> getWhiteBalanceGm(
           {ForceUpdate update}) async =>
-      device.cameraSettings
-          .getItem<WhiteBalanceGmValue>(SettingsId.WhiteBalanceGM);
+      device.cameraSettings.whiteBalanceGM;
 
   Future<bool> setWhiteBalanceGm(WhiteBalanceGmId value);
 
@@ -273,8 +250,8 @@ abstract class CameraApiInterface {
 
   Future<SettingsItem<FocusMagnifierDirectionValue>> getFocusMagnifierDirection(
           {ForceUpdate update}) async =>
-      device.cameraSettings
-          .getItem<FocusMagnifierDirectionValue>(SettingsId.FocusMagnifier);
+      device.cameraSettings.getItem<FocusMagnifierDirectionValue>(
+          SettingsId.FocusMagnifierDirection);
 
   Future<bool> setFocusMagnifierDirection(
       FocusMagnifierDirectionId value, int steps); //move with steps?
@@ -294,13 +271,5 @@ abstract class CameraApiInterface {
 }
 
 enum InterfaceType { Wifi_Interface, USB_Interface }
-
-enum CameraStatusItemType {
-  Battery_Status,
-}
-
-enum CameraSettingsItemType { FNumber_Settings }
-
-enum CameraFunctionItemType { Capture_Function }
 
 enum ShutterPressType { Half, Full, Both } //Any means both
