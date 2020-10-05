@@ -466,7 +466,7 @@ class TestsPageState extends State<TestsPage> {
               title: Text(SettingsId.EV.name),
               subtitle:
                   Text(device.cameraSettings.ev.value?.name ?? "NotAvailable"),
-              onTap: () => device.api.getEV(update: ForceUpdate.Both),
+              onTap: () => device.api.getEV(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -523,7 +523,7 @@ class TestsPageState extends State<TestsPage> {
                           device.cameraSettings.fNumber.value?.name ??
                               "NotAvailable"),
                       onTap: () =>
-                          device.api.getFNumber(update: ForceUpdate.Both),
+                          device.api.getFNumber(update: ForceUpdate.On),
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -590,7 +590,7 @@ class TestsPageState extends State<TestsPage> {
                       title: Text(SettingsId.ISO.name),
                       subtitle: Text(device.cameraSettings.iso.value?.name ??
                           "NotAvailable"),
-                      onTap: () => device.api.getIso(update: ForceUpdate.Both),
+                      onTap: () => device.api.getIso(update: ForceUpdate.On),
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -724,7 +724,7 @@ class TestsPageState extends State<TestsPage> {
               title: Text(SettingsId.ShutterSpeed.name),
               subtitle: Text(device.cameraSettings.shutterSpeed.value?.name ??
                   "NotAvailable"),
-              onTap: () => device.api.getShutterSpeed(update: ForceUpdate.Both),
+              onTap: () => device.api.getShutterSpeed(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -801,7 +801,7 @@ class TestsPageState extends State<TestsPage> {
                   device.cameraSettings.whiteBalanceMode.value?.name ??
                       "NotAvailable"),
               onTap: () =>
-                  device.api.getWhiteBalanceMode(update: ForceUpdate.Both),
+                  device.api.getWhiteBalanceMode(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -849,7 +849,7 @@ class TestsPageState extends State<TestsPage> {
                   device.cameraSettings.whiteBalanceColorTemp.value?.name ??
                       "NotAvailable"),
               onTap: () =>
-                  device.api.getWhiteBalanceColorTemp(update: ForceUpdate.Both),
+                  device.api.getWhiteBalanceColorTemp(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -912,7 +912,7 @@ class TestsPageState extends State<TestsPage> {
               title: Text(SettingsId.FlashMode.name),
               subtitle: Text(device.cameraSettings.flashMode.value?.name ??
                   "NotAvailable"),
-              onTap: () => device.api.getFlashMode(update: ForceUpdate.Both),
+              onTap: () => device.api.getFlashMode(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -957,7 +957,7 @@ class TestsPageState extends State<TestsPage> {
               title: Text(SettingsId.FocusMode.name),
               subtitle: Text(device.cameraSettings.focusMode.value?.name ??
                   "NotAvailable"),
-              onTap: () => device.api.getFocusMode(update: ForceUpdate.Both),
+              onTap: () => device.api.getFocusMode(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(

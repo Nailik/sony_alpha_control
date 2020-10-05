@@ -69,6 +69,9 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
   }
 
   //TODO speichern welche methoden möglich sind für dieses "settingsid" item
+  //TODO für wifi available apilist nutzen, für usb nur ob diese funktion implementiert ist
+  //TODO methoden beim erstellen hinzufügen?
+
 
   //TODO stillsize(usb) - size and aspect ratio (wifi)
   //TODO drivemode cont and timer (usb) - single on wifi (different methods) TODO test
@@ -525,5 +528,3 @@ abstract class SettingsValue<T> {
   @override
   int get hashCode => id.hashCode;
 }
-
-//TODO 0xFFFFFF -> auto iso

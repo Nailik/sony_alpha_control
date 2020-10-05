@@ -161,7 +161,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
       case ForceUpdate.Supported:
         await _updateSupported(settingsItem);
         break;
-      case ForceUpdate.Both:
+      case ForceUpdate.On:
         await _updateSupported(settingsItem);
         await _updateAvailable(settingsItem);
         break;
@@ -291,7 +291,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
             .cameraSettings
             .updateSupported(settingsItemWhiteBalanceMode, response));
         break;
-      case ForceUpdate.Both:
+      case ForceUpdate.On:
         await _getSupported(SettingsId.WhiteBalanceMode).then((response) => device
             .cameraSettings
             .updateSupported(settingsItemWhiteBalanceMode, response));
@@ -765,7 +765,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
       case ForceUpdate.Supported:
         await _updateSupported(settingsItem);
         break;
-      case ForceUpdate.Both:
+      case ForceUpdate.On:
         await _updateSupported(settingsItem);
         await _updateAvailable(settingsItem);
         break;

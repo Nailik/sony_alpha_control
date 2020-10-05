@@ -4,9 +4,11 @@ enum ForceUpdate {
   Available,
   //force loads Supported
   Supported,
+  //force loads Current
+  Current,
   //force loads available, supported, current
-  Both,
-  //force loads the one that is null
+  On,
+  //force loads all that are null (available, supported, current)
   IfNull,
   //do not load
   Off
