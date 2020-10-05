@@ -17,6 +17,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/live_view_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
@@ -67,7 +68,7 @@ abstract class CameraSettings extends ChangeNotifier {
       SettingsItem<FocusMagnifierPhaseValue>(SettingsId.FocusMagnifierPhase);
   SettingsItem focusMagnifier =
       SettingsItem<DoubleValue>(SettingsId.FocusMagnifier);
-  SettingsItem versions = SettingsItem<StringValue>(SettingsId.Versions);
+  SettingsItem versions = SettingsItem<WebApiVersionValue>(SettingsId.Versions);
   SettingsItem methodTypes = SettingsItem<StringValue>(SettingsId.MethodTypes);
   SettingsItem applicationInfo =
       SettingsItem<StringValue>(SettingsId.ApplicationInfo);

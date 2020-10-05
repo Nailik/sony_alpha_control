@@ -12,6 +12,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 import 'package:sonyalphacontrol/wifi/enums/force_update.dart';
 
@@ -166,26 +167,31 @@ class TestsPageState extends State<TestsPage> {
       create: (context) => device.cameraSettings.versions,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
-          child: Column(children: [
-            ListTile(
-              title: Text(SettingsId.Versions.name),
-              subtitle: Text(
-                  device.cameraSettings.versions.value?.name ?? "NotAvailable"),
-              onTap: () => device.api.getWebApiVersions()
-            ),
-            Expanded(
-                child: Padding(
-                    padding: EdgeInsets.all(16),
-                    child: DropdownButton<EvValue>(
-                      hint: Text("available"),
-                      items: device.cameraSettings.versions.available
-                          .map<DropdownMenuItem<EvValue>>((e) =>
-                          DropdownMenuItem<EvValue>(
-                              child: Text(e.name), value: e))
-                          .toList(),
-                      onChanged: (value) => device.api.setEV(value),
-                    ))),
-          ]),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                    title: Text(SettingsId.Versions.name),
+                    onTap: () => device.api.getWebApiVersions()),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                          child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: DropdownButton<WebApiVersionValue>(
+                                hint: Text("available"),
+                                items: device.cameraSettings.versions.available
+                                    .map<DropdownMenuItem<WebApiVersionValue>>(
+                                        (e) => DropdownMenuItem<
+                                                WebApiVersionValue>(
+                                            child: Text(e.name), value: e))
+                                    .toList(),
+                                onChanged: (value) {},
+                              )))
+                    ]),
+              ]),
         ),
       ),
     );

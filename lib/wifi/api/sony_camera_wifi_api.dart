@@ -51,17 +51,15 @@ class SonyCameraWifiApi extends CameraApiInterface {
     switch (update) {
       case ForceUpdate.Available:
       case ForceUpdate.Supported:
+      if (settingsItem.supported == null || settingsItem.supported.isEmpty || settingsItem.available == null || settingsItem.available.isEmpty) {
+        //supported is necessary for available to now the step sizes
+        await _updateCurrent(settingsItem);
+      }
+      break;
       case ForceUpdate.Current:
+      case ForceUpdate.IfNull:
       case ForceUpdate.On:
         await _updateCurrent(settingsItem);
-        break;
-      case ForceUpdate.IfNull:
-        if (settingsItem.available == null || settingsItem.available.isEmpty) {
-          await _updateAvailable(settingsItem);
-        }
-        if (settingsItem.supported == null || settingsItem.supported.isEmpty) {
-          await _updateSupported(settingsItem);
-        }
         break;
       case ForceUpdate.Off:
         break;
