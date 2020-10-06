@@ -341,6 +341,7 @@ class TestsPageState extends State<TestsPage> {
                   child: Padding(
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<WebApiMethodValue>(
+                        isExpanded: true,
                         hint: Text("available"),
                         items: device.cameraSettings.methodTypesCamera.available
                             .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
@@ -372,6 +373,7 @@ class TestsPageState extends State<TestsPage> {
                   child: Padding(
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<WebApiMethodValue>(
+                        isExpanded: true,
                         hint: Text("available"),
                         items: device
                             .cameraSettings.methodTypesAvContent.available
@@ -404,6 +406,7 @@ class TestsPageState extends State<TestsPage> {
                   child: Padding(
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<WebApiMethodValue>(
+                        isExpanded: true,
                         hint: Text("available"),
                         items: device.cameraSettings.methodTypesSystem.available
                             .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
@@ -435,6 +438,7 @@ class TestsPageState extends State<TestsPage> {
                   child: Padding(
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<WebApiMethodValue>(
+                        isExpanded: true,
                         hint: Text("available"),
                         items: device.cameraSettings.methodTypesGuide.available
                             .map<DropdownMenuItem<WebApiMethodValue>>((e) =>

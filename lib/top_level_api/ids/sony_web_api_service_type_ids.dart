@@ -3,6 +3,7 @@ enum SonyWebApiServiceTypeId {
   AV_CONTENT,
   SYSTEM,
   GUIDE,
+  ACCESS_CONTROL,
   Unknown }
 
 extension SonyWebApiServiceTypeIdExtension on SonyWebApiServiceTypeId {
@@ -16,6 +17,8 @@ extension SonyWebApiServiceTypeIdExtension on SonyWebApiServiceTypeId {
         return "system";
       case SonyWebApiServiceTypeId.GUIDE:
         return "guide";
+      case SonyWebApiServiceTypeId.ACCESS_CONTROL:
+        return "accessControl";
       case SonyWebApiServiceTypeId.Unknown:
         return "Unknown";
       default:

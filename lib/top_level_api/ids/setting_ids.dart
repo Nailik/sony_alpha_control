@@ -220,6 +220,10 @@ enum SettingsId {
   NumberOfShots,
   SilentShootingSetting,
   BulbCapturingTime,
+  Content,
+  RequestTo,
+  ServiceProtocols,
+  ApiInfo,
   Unknown,
 }
 
@@ -505,6 +509,14 @@ extension SettingsIdExtension on SettingsId {
         return "movieRecording";
       case SettingsId.CameraInfo:
         return "serverInformation";
+      case SettingsId.Content:
+        return "content";
+      case SettingsId.RequestTo:
+        return "requestTo";
+      case SettingsId.ServiceProtocols:
+        return "serviceProtocols";
+      case SettingsId.ApiInfo:
+        return "apiInfo";
       case SettingsId.DriveMode:
         return "";
       case SettingsId.FlashValue:

@@ -260,18 +260,11 @@ class CameraWifiSettings extends CameraSettings {
       case SettingsId.MethodTypes:
         list = jsonD["results"];
         var itemsList = settingsItem.createListFromWifiJson(list as List);
-        List<WebApiMethodValue> newList = new List<WebApiMethodValue>.from(settingsItem.available);
+        List<WebApiMethodValue> newList =
+            new List<WebApiMethodValue>.from(settingsItem.available);
 
         itemsList.forEach((element) {
-          var item =
-              newList.firstWhere((item) => item == element, orElse: () => null);
-          if (item != null) {
-            (element as WebApiMethodValue).id.versions.forEach((vers) {
-              if (!(item).id.versions.contains(vers)) {
-                (item).id.versions.add(vers);
-              }
-            });
-          } else {
+          if (!settingsItem.available.contains(element)) {
             newList.add(element);
           }
         });

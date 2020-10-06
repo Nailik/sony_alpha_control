@@ -10,11 +10,11 @@ class WebApiMethod {
   final SettingsId settingsId;
   final List<String> parameterTypes;
   final List<String> responseTypes;
-  final List<WebApiVersionId>
-      versions; //all the versions that are available for this method
+  final WebApiVersionId
+      version; //all the versions that are available for this method
 
   WebApiMethod(this.apiName, this.settingsId, this.parameterTypes,
-      this.responseTypes, this.versions);
+      this.responseTypes, this.version);
 
   @override
   bool operator ==(o) =>
@@ -22,12 +22,13 @@ class WebApiMethod {
       settingsId == o.settingsId &&
       apiName == o.apiName &&
       const ListEquality().equals(parameterTypes, o.parameterTypes) &&
-      const ListEquality().equals(responseTypes, o.responseTypes);
+      const ListEquality().equals(responseTypes, o.responseTypes) &&
+      version == o.version;
 
   // \n parameterTypes: \n $parameterTypes \n responseTypes: \n $responseTypes";
   @override
   String toString() =>
-      "apiName: $apiName settingsId: $settingsId version: $versions";
+      "apiName: $apiName settingsId: $settingsId version: $version";
 
   @override
   // TODO: implement hashCode
@@ -52,7 +53,7 @@ class WebApiMethodValue extends SettingsValue<WebApiMethod> {
                 .startLow),
         (wifiValue[1] as List)?.map((e) => e as String)?.toList(),
         (wifiValue[2] as List)?.map((e) => e as String)?.toList(),
-        new List.from([WebApiVersionIdExtension.fromWifiValue(wifiValue[3])])));
+        WebApiVersionIdExtension.fromWifiValue(wifiValue[3])));
   }
 
   @override

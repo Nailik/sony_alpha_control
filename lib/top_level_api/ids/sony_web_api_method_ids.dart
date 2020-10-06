@@ -1,3 +1,5 @@
+import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
+
 enum SonyWebApiMethodId {
   //important that the longer get is before "get" for some other logic
   GET_AVAILABLE,
@@ -11,9 +13,9 @@ enum SonyWebApiMethodId {
   CANCEL,
   PAUSE,
   SEEK,
-  REQUEST_TO_NOTIFY_STREAMING_STATUS,
-  DELETE_CONTENT,
-  UNKNOWN
+  NOTIFY_STREAMING_STATUS,
+  DELETE,
+  Unknown
 }
 
 extension SonyWebApiMethodExtension on SonyWebApiMethodId {
@@ -41,42 +43,19 @@ extension SonyWebApiMethodExtension on SonyWebApiMethodId {
         return "pause";
       case SonyWebApiMethodId.SEEK:
         return "seek";
-      case SonyWebApiMethodId.REQUEST_TO_NOTIFY_STREAMING_STATUS:
-        return "requestToNotifyStreamingStatus";
-      case SonyWebApiMethodId.DELETE_CONTENT:
-        return "deleteContent";
-      case SonyWebApiMethodId.UNKNOWN:
+      case SonyWebApiMethodId.NOTIFY_STREAMING_STATUS:
+        return "notifyStreamingStatus";
+      case SonyWebApiMethodId.DELETE:
+        return "delete";
+      case SonyWebApiMethodId.Unknown:
       default:
         return "";
     }
   }
 
-  static SonyWebApiMethodId fromWifiValue(String value) {
-    switch (value) {
-      case "get":
-        return SonyWebApiMethodId.GET;
-      case "set":
-        return SonyWebApiMethodId.SET;
-      case "act":
-        return SonyWebApiMethodId.ACT;
-      case "await":
-        return SonyWebApiMethodId.AWAIT;
-      case "start":
-        return SonyWebApiMethodId.START;
-      case "stop":
-        return SonyWebApiMethodId.STOP;
-      case "cancel":
-        return SonyWebApiMethodId.CANCEL;
-      case "pause":
-        return SonyWebApiMethodId.PAUSE;
-      case "seek":
-        return SonyWebApiMethodId.SEEK;
-      case "requestToNotifyStreamingStatus":
-        return SonyWebApiMethodId.REQUEST_TO_NOTIFY_STREAMING_STATUS;
-      case "deleteContent":
-        return SonyWebApiMethodId.DELETE_CONTENT;
-      default:
-        return SonyWebApiMethodId.UNKNOWN;
-    }
-  }
+  static SonyWebApiMethodId getIdFromWifi(String wifiValue) => SonyWebApiMethodId.values
+      .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+    Logger.n(SonyWebApiMethodId, wifiValue);
+    return SonyWebApiMethodId.Unknown;
+  });
 }

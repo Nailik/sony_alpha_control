@@ -74,8 +74,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   Future _getWebApiVersions(
       SettingsItem settingsItem, SonyWebApiServiceTypeId serviceTypeId) async {
     return await WifiCommand.createCommand(
-            SonyWebApiMethodId.GET, SettingsId.Versions,
-            service: serviceTypeId)
+            SonyWebApiMethodId.GET, SettingsId.Versions, service: serviceTypeId)
         .send(device)
         .then((wifiResponse) => wifiResponse.response)
         .then((response) =>
@@ -96,28 +95,14 @@ class SonyCameraWifiApi extends CameraApiInterface {
       case ForceUpdate.IfNull:
         if (webApiVersion != null) {
           //check if there is no function for this version (this version probably hasn't been loaded)
-          if (settingsItem.supported.any((element) =>
-                      element.id.versions.contains(webApiVersion)) ==
-                  false ||
-              settingsItem.available.any((element) =>
-                      element.id.versions.contains(webApiVersion)) ==
-                  false) {
-            await _getMethodTypes(settingsItem, serviceTypeId, webApiVersion);
-          }
+          await _getMethodTypes(settingsItem, serviceTypeId, webApiVersion);
         } else {
           await getWebApiVersions(serviceTypeId, update: ForceUpdate.IfNull)
               .then((value) => value.available.forEach((version) async {
                     //check if there is no function for this version (this version probably hasn't been loaded)
-                    if (settingsItem.supported.any((element) =>
-                                element.id.versions.contains(version.id)) ==
-                            false ||
-                        settingsItem.available.any((element) =>
-                                element.id.versions.contains(version.id)) ==
-                            false) {
-                      //update for all versions
-                      await _getMethodTypes(
-                          settingsItem, serviceTypeId, version.id);
-                    }
+                    //update for all versions
+                    await _getMethodTypes(
+                        settingsItem, serviceTypeId, version.id);
                   }));
         }
         break;
@@ -147,7 +132,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
       WebApiVersionId webApiVersion) async {
     return await WifiCommand.createCommand(
             SonyWebApiMethodId.GET, SettingsId.MethodTypes,
-            params: [webApiVersion.wifiValue])
+            params: [webApiVersion.wifiValue], service: serviceTypeId)
         .send(device)
         .then((wifiResponse) => wifiResponse.response)
         .then((response) => device.cameraSettings.updateCurrent(
