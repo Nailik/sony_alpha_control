@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:sonyalphacontrol/top_level_api/device/camera_settings.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
@@ -246,7 +247,8 @@ class CameraWifiSettings extends CameraSettings {
     }
   }
 
-  updateCurrent(SettingsItem settingsItem, String json, {SonyWebApiServiceTypeId webApiServiceTypeId}) async {
+  updateCurrent(SettingsItem settingsItem, String json,
+      {WebApiVersionId webApiVersion}) async {
     var jsonD = jsonDecode(json);
     var list = jsonD["result"];
     switch (settingsItem.settingsId) {
@@ -258,8 +260,24 @@ class CameraWifiSettings extends CameraSettings {
       case SettingsId.MethodTypes:
         list = jsonD["results"];
         var itemsList = settingsItem.createListFromWifiJson(list as List);
+        List<WebApiMethodValue> newList = new List<WebApiMethodValue>.from(settingsItem.available);
+
+        itemsList.forEach((element) {
+          var item =
+              newList.firstWhere((item) => item == element, orElse: () => null);
+          if (item != null) {
+            (element as WebApiMethodValue).id.versions.forEach((vers) {
+              if (!(item).id.versions.contains(vers)) {
+                (item).id.versions.add(vers);
+              }
+            });
+          } else {
+            newList.add(element);
+          }
+        });
+
         settingsItem.updateItem(
-            settingsItem.value, settingsItem.subValue, itemsList, itemsList);
+            settingsItem.value, settingsItem.subValue, newList, newList);
         break;
       default:
         //TODO

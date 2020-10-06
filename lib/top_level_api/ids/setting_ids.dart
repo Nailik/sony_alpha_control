@@ -175,6 +175,7 @@ enum SettingsId {
   BeepMode,
   CameraFunction,
   MovieQuality,
+  MovieRec,
   SteadyMode,
   ViewAngle,
   PostViewImageSize,
@@ -182,6 +183,7 @@ enum SettingsId {
   SilentShootingSettings,
   SilentShooting,
   ProgramShift,
+  ContShooting,
   ContShootingMode,
   ContShootingSpeed,
   FlipSetting,
@@ -397,6 +399,8 @@ extension SettingsIdExtension on SettingsId {
         return "halfPressShutter";
       case SettingsId.SelfTimer:
         return "selfTimer";
+      case SettingsId.ContShooting:
+        return "contShooting";
       case SettingsId.ContShootingMode:
         return "contShootingMode";
       case SettingsId.ContShootingSpeed:
@@ -445,6 +449,8 @@ extension SettingsIdExtension on SettingsId {
         return "beepMode";
       case SettingsId.MovieQuality:
         return "movieQuality";
+      case SettingsId.MovieRec:
+        return "movieRec";
       case SettingsId.ViewAngle:
         return "viewAngle";
       case SettingsId.FlipSetting:

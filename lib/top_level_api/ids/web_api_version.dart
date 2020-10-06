@@ -85,8 +85,8 @@ class WebApiVersionsValue extends SettingsValue<WebApiVersionId> {
       throw UnsupportedError;
 
   @override
-  factory WebApiVersionsValue.fromWifiValue(dynamic wifiValue) =>
-      WebApiVersionsValue(WebApiVersionIdExtension.getIdFromWifi(wifiValue[1]));
+  factory WebApiVersionsValue.fromWifiValue(String wifiValue) =>
+      WebApiVersionsValue(WebApiVersionIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => throw UnsupportedError;

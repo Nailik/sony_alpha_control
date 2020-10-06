@@ -1,24 +1,37 @@
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
+import 'package:collection/collection.dart';
 
 class WebApiMethod {
-  SonyWebApiServiceTypeId serviceTypeId;
-  SonyWebApiMethodId apiName;
+  final SonyWebApiMethodId apiName;
 
-  SettingsId settingsId;
-  List<String> parameterTypes;
-  List<String> responseTypes;
-  WebApiVersionId version;
+  final SettingsId settingsId;
+  final List<String> parameterTypes;
+  final List<String> responseTypes;
+  final List<WebApiVersionId>
+      versions; //all the versions that are available for this method
 
   WebApiMethod(this.apiName, this.settingsId, this.parameterTypes,
-      this.responseTypes, this.version);
+      this.responseTypes, this.versions);
 
   @override
+  bool operator ==(o) =>
+      o is WebApiMethod &&
+      settingsId == o.settingsId &&
+      apiName == o.apiName &&
+      const ListEquality().equals(parameterTypes, o.parameterTypes) &&
+      const ListEquality().equals(responseTypes, o.responseTypes);
+
+  // \n parameterTypes: \n $parameterTypes \n responseTypes: \n $responseTypes";
+  @override
   String toString() =>
-      "apiName: $apiName settingsId: $settingsId version: $version \n parameterTypes: \n $parameterTypes \n responseTypes: \n $responseTypes";
+      "apiName: $apiName settingsId: $settingsId version: $versions";
+
+  @override
+  // TODO: implement hashCode
+  int get hashCode => super.hashCode;
 }
 
 class WebApiMethodValue extends SettingsValue<WebApiMethod> {
@@ -39,7 +52,7 @@ class WebApiMethodValue extends SettingsValue<WebApiMethod> {
                 .startLow),
         (wifiValue[1] as List)?.map((e) => e as String)?.toList(),
         (wifiValue[2] as List)?.map((e) => e as String)?.toList(),
-        WebApiVersionIdExtension.fromWifiValue(wifiValue[3])));
+        new List.from([WebApiVersionIdExtension.fromWifiValue(wifiValue[3])])));
   }
 
   @override

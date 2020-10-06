@@ -77,7 +77,10 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem<WebApiVersionsValue> versionsGuide = SettingsItem<WebApiVersionsValue>(SettingsId.Versions);
 
   //TODO method types for all different SonyWebApiServiceTypeIds with versions?
-  SettingsItem methodTypes = SettingsItem<WebApiMethodValue>(SettingsId.MethodTypes);
+  SettingsItem methodTypesCamera = SettingsItem<WebApiMethodValue>(SettingsId.MethodTypes);
+  SettingsItem methodTypesAvContent = SettingsItem<WebApiMethodValue>(SettingsId.MethodTypes);
+  SettingsItem methodTypesSystem = SettingsItem<WebApiMethodValue>(SettingsId.MethodTypes);
+  SettingsItem methodTypesGuide = SettingsItem<WebApiMethodValue>(SettingsId.MethodTypes);
 
 
   SettingsItem applicationInfo =
@@ -183,7 +186,7 @@ abstract class CameraSettings extends ChangeNotifier {
       case SettingsId.Versions:
         throw UnsupportedError;
       case SettingsId.MethodTypes:
-        return methodTypes;
+        throw UnsupportedError;
       case SettingsId.ApplicationInfo:
         return applicationInfo;
       case SettingsId.ApiList:

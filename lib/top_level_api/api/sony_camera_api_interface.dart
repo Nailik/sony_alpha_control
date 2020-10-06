@@ -47,10 +47,9 @@ abstract class CameraApiInterface {
 
   ///This method checks teh available versions for the web api
   ///serviceTypeId means for which service
-  ///forceupdate
+  ///ForceUpdate
   ///   IfNull/Available/Supported -> if a field is null it will be read from camera
   ///   Current/On -> will load even if field is set
-  ///   Off -> will only give back
   Future<SettingsItem<WebApiVersionsValue>> getWebApiVersions(
       SonyWebApiServiceTypeId serviceTypeId,
       {ForceUpdate update}) async {
@@ -69,15 +68,29 @@ abstract class CameraApiInterface {
     }
   }
 
-  //TODO web api version id unkown sollte bei sowas einen fehler werfen
-
-  //eine speziell web api version ...nur letzte -> selbst machen
-  //alle (wenn null)
+  ///This method checks the available methods for the web api
+  ///serviceTypeId means for which service
+  ///ForceUpdate
+  ///   IfNull/Available/Supported -> if a field is null it will be read from camera
+  ///   Current/On -> will load even if field is set
   Future<SettingsItem<WebApiMethodValue>> getMethodTypes(
-          {SonyWebApiServiceTypeId serviceTypeId,
-          WebApiVersionId webApiVersion,
-          ForceUpdate update}) async =>
-      device.cameraSettings.methodTypes;
+      SonyWebApiServiceTypeId serviceTypeId,
+      {WebApiVersionId webApiVersion,
+      ForceUpdate update}) async {
+    switch (serviceTypeId) {
+      case SonyWebApiServiceTypeId.CAMERA:
+        return device.cameraSettings.methodTypesCamera;
+      case SonyWebApiServiceTypeId.AV_CONTENT:
+        return device.cameraSettings.methodTypesAvContent;
+      case SonyWebApiServiceTypeId.SYSTEM:
+        return device.cameraSettings.methodTypesSystem;
+      case SonyWebApiServiceTypeId.GUIDE:
+        return device.cameraSettings.methodTypesGuide;
+      case SonyWebApiServiceTypeId.Unknown:
+      default:
+        throw UnsupportedError;
+    }
+  }
 
   /*
   Future<Map<SettingsId, List<SonyWebApiMethod>>> getAvailableApiList(

@@ -23,6 +23,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
@@ -43,11 +44,13 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
   List<T> get available => _available;
   List<T> _supported = new List.unmodifiable({});
 
-  get supported => _supported;
+  List<T> get supported => _supported;
+
+  List<SonyWebApiMethodId> get supportedMethods => new List.unmodifiable({});//TODO setup this
 
   //not different setter to not notify layout changes too often when multiple values are updated at the same time one after another
-  updateItem(
-      T newValue, T newSubValue, List<T> newAvailable, List<T> newSupported) {
+  updateItem(T newValue, T newSubValue, List<T> newAvailable,
+      List<T> newSupported) {
     if (value != newValue ||
         subValue != newSubValue ||
         available != newAvailable ||
@@ -138,7 +141,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.TvColorSystem:
       //TODO
       case SettingsId.PostViewImageSize:
-         return StringValue(wifiValue);
+        return StringValue(wifiValue);
       case SettingsId.SelfTimer:
         return IntValue(wifiValue);
       case SettingsId.ShootingMode:
@@ -344,9 +347,9 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
       case SettingsId.Connect:
         return IntValue(usbValue);
       case SettingsId.Versions:
-        return throw UnsupportedError;
+        throw UnsupportedError;
       default:
-        return throw UnsupportedError;
+        throw UnsupportedError;
     }
   }
 
@@ -442,10 +445,10 @@ class ShutterSpeedValue extends DoubleValue {
   factory ShutterSpeedValue.fromWifiValue(String wifiValue) {
     double value = wifiValue.contains("/")
         ? double.parse(wifiValue.split("/")[0]) /
-            double.parse(wifiValue.split("/")[1])
+        double.parse(wifiValue.split("/")[1])
         : wifiValue == "BULB"
-            ? 0xFFFFFF
-            : double.parse(wifiValue.replaceAll("\"", "").replaceAll(",", "."));
+        ? 0xFFFFFF
+        : double.parse(wifiValue.replaceAll("\"", "").replaceAll(",", "."));
     var it = ShutterSpeedValue(value, 0);
     it._name = wifiValue;
     return it;
@@ -481,12 +484,12 @@ class IsoValue extends IntValue {
     var multiFrame = id > (2 * 0xFFFFFF)
         ? "MultiFrame RM High"
         : id > 0xFFFFFF
-            ? "MultiFrame RM Standard"
-            : "";
+        ? "MultiFrame RM Standard"
+        : "";
     var auto =
-        id == 0xFFFFFF || id == (2 * 0xFFFFFF) + 1 || id == (3 * 0xFFFFFF) + 2
-            ? "Auto"
-            : "";
+    id == 0xFFFFFF || id == (2 * 0xFFFFFF) + 1 || id == (3 * 0xFFFFFF) + 2
+        ? "Auto"
+        : "";
     var value = id % 0xFFFFFF - id ~/ 0xFFFFFF;
     return "${auto.isEmpty ? value : auto} $multiFrame"; //TODO enums for text?
   }
@@ -531,6 +534,7 @@ abstract class SettingsValue<T> {
   @override
   String toString() => name;
 
+  @override
   bool operator ==(o) => o is SettingsValue<T> && id == o.id;
 
   @override

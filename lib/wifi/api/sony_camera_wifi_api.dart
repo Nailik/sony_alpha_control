@@ -52,8 +52,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
     var settingsItem = await super.getWebApiVersions(serviceTypeId);
 
     switch (update) {
-      case ForceUpdate.Available:
-      case ForceUpdate.Supported:
       case ForceUpdate.IfNull:
         if (settingsItem.supported == null ||
             settingsItem.supported.isEmpty ||
@@ -63,6 +61,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
           await _getWebApiVersions(settingsItem, serviceTypeId);
         }
         break;
+      case ForceUpdate.Available:
+      case ForceUpdate.Supported:
       case ForceUpdate.Current:
       case ForceUpdate.On:
         await _getWebApiVersions(settingsItem, serviceTypeId);
@@ -74,7 +74,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   Future _getWebApiVersions(
       SettingsItem settingsItem, SonyWebApiServiceTypeId serviceTypeId) async {
     return await WifiCommand.createCommand(
-            SonyWebApiMethodId.GET, SettingsId.MethodTypes,
+            SonyWebApiMethodId.GET, SettingsId.Versions,
             service: serviceTypeId)
         .send(device)
         .then((wifiResponse) => wifiResponse.response)
@@ -86,43 +86,73 @@ class SonyCameraWifiApi extends CameraApiInterface {
   //WebApiVersionId webApiVersion,
   //wip
   Future<SettingsItem<WebApiMethodValue>> getMethodTypes(
-      {SonyWebApiServiceTypeId serviceTypeId,
-      WebApiVersionId webApiVersion,
+      SonyWebApiServiceTypeId serviceTypeId,
+      {WebApiVersionId webApiVersion,
       update = ForceUpdate.IfNull}) async {
-    var settingsItem = await super.getMethodTypes();
+    SettingsItem<WebApiMethodValue> settingsItem =
+        await super.getMethodTypes(serviceTypeId);
 
     switch (update) {
-      case ForceUpdate.Available:
-      case ForceUpdate.Supported:
-        if (settingsItem.supported == null ||
-            settingsItem.supported.isEmpty ||
-            settingsItem.available == null ||
-            settingsItem.available.isEmpty) {
-          if (webApiVersion != null) {
-            //supported is necessary for available to now the step sizes
-            await _getMethodTypes(settingsItem, webApiVersion);
-          } else {}
+      case ForceUpdate.IfNull:
+        if (webApiVersion != null) {
+          //check if there is no function for this version (this version probably hasn't been loaded)
+          if (settingsItem.supported.any((element) =>
+                      element.id.versions.contains(webApiVersion)) ==
+                  false ||
+              settingsItem.available.any((element) =>
+                      element.id.versions.contains(webApiVersion)) ==
+                  false) {
+            await _getMethodTypes(settingsItem, serviceTypeId, webApiVersion);
+          }
+        } else {
+          await getWebApiVersions(serviceTypeId, update: ForceUpdate.IfNull)
+              .then((value) => value.available.forEach((version) async {
+                    //check if there is no function for this version (this version probably hasn't been loaded)
+                    if (settingsItem.supported.any((element) =>
+                                element.id.versions.contains(version.id)) ==
+                            false ||
+                        settingsItem.available.any((element) =>
+                                element.id.versions.contains(version.id)) ==
+                            false) {
+                      //update for all versions
+                      await _getMethodTypes(
+                          settingsItem, serviceTypeId, version.id);
+                    }
+                  }));
         }
         break;
+      case ForceUpdate.Available:
+      case ForceUpdate.Supported:
       case ForceUpdate.Current:
-      case ForceUpdate.IfNull:
-      //TODO null für eine unterstützte web api version, oder für diese unterstützte web api version?
       case ForceUpdate.On:
-        await _getMethodTypes(settingsItem, webApiVersion);
+        if (webApiVersion != null) {
+          //supported is necessary for available to now the step sizes
+          await _getMethodTypes(settingsItem, serviceTypeId, webApiVersion);
+        } else {
+          await getWebApiVersions(serviceTypeId, update: ForceUpdate.IfNull)
+              .then((value) => value.available.forEach((version) async {
+                    //update for all versions
+                    await _getMethodTypes(
+                        settingsItem, serviceTypeId, version.id);
+                  }));
+        }
         break;
     }
-    return await super.getMethodTypes();
+    return await super.getMethodTypes(serviceTypeId);
   }
 
   Future _getMethodTypes(
-      SettingsItem settingsItem, WebApiVersionId webApiVersion) async {
+      SettingsItem settingsItem,
+      SonyWebApiServiceTypeId serviceTypeId,
+      WebApiVersionId webApiVersion) async {
     return await WifiCommand.createCommand(
             SonyWebApiMethodId.GET, SettingsId.MethodTypes,
             params: [webApiVersion.wifiValue])
         .send(device)
         .then((wifiResponse) => wifiResponse.response)
-        .then((response) =>
-            device.cameraSettings.updateCurrent(settingsItem, response));
+        .then((response) => device.cameraSettings.updateCurrent(
+            settingsItem, response,
+            webApiVersion: webApiVersion));
   }
 
   /// FNumber

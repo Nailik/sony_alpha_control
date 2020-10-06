@@ -52,8 +52,17 @@ class TestsPageState extends State<TestsPage> {
                       ///Versions (get) guide
                       getVersionsRowGuide(),
 
-                      ///MethodTypes (get)
-                      getMethodTypesRow(),
+                      ///MethodTypes (get) camera
+                      getMethodTypesRowCamera(),
+
+                      ///MethodTypes (get) avContent
+                      getMethodTypesRowAvContent(),
+
+                      ///MethodTypes (get) system
+                      getMethodTypesRowSystem(),
+
+                      ///MethodTypes (get) guide
+                      getMethodTypesRowGuide(),
 
                       ///ApplicationInfo (get)
                       getApplicationInfoRow(),
@@ -164,7 +173,7 @@ class TestsPageState extends State<TestsPage> {
             )));
   }
 
-  ///Versions (get) camera
+  ///Versions (get) Camera
   Widget getVersionsRowCamera() {
     return ListenableProvider<SettingsItem>(
       create: (context) => device.cameraSettings.versionsCamera,
@@ -175,7 +184,7 @@ class TestsPageState extends State<TestsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
-                    title: Text(SettingsId.Versions.name),
+                    title: Text(SettingsId.Versions.name + " Camera"),
                     onTap: () => device.api
                         .getWebApiVersions(SonyWebApiServiceTypeId.CAMERA)),
                 Row(
@@ -213,7 +222,7 @@ class TestsPageState extends State<TestsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
-                    title: Text(SettingsId.Versions.name),
+                    title: Text(SettingsId.Versions.name + " AvContent"),
                     onTap: () => device.api
                         .getWebApiVersions(SonyWebApiServiceTypeId.AV_CONTENT)),
                 Row(
@@ -251,7 +260,7 @@ class TestsPageState extends State<TestsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
-                    title: Text(SettingsId.Versions.name),
+                    title: Text(SettingsId.Versions.name + " System"),
                     onTap: () => device.api
                         .getWebApiVersions(SonyWebApiServiceTypeId.SYSTEM)),
                 Row(
@@ -289,7 +298,7 @@ class TestsPageState extends State<TestsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
-                    title: Text(SettingsId.Versions.name),
+                    title: Text(SettingsId.Versions.name + " Guide"),
                     onTap: () => device.api
                         .getWebApiVersions(SonyWebApiServiceTypeId.GUIDE)),
                 Row(
@@ -316,23 +325,118 @@ class TestsPageState extends State<TestsPage> {
     );
   }
 
-  ///MethodTypes (get)
-  Widget getMethodTypesRow() {
+  ///MethodTypes (get) camera
+  Widget getMethodTypesRowCamera() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.methodTypes,
+      create: (context) => device.cameraSettings.methodTypesCamera,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-                title: Text(SettingsId.MethodTypes.name),
-                onTap: () => device.api.getMethodTypes()),
+                title: Text(SettingsId.MethodTypes.name + " Camera"),
+                onTap: () =>
+                    device.api.getMethodTypes(SonyWebApiServiceTypeId.CAMERA)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<WebApiMethodValue>(
                         hint: Text("available"),
-                        items: device.cameraSettings.methodTypes.available
+                        items: device.cameraSettings.methodTypesCamera.available
+                            .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
+                                DropdownMenuItem<WebApiMethodValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) {},
+                      )))
+            ]),
+          ]),
+        ),
+      ),
+    );
+  }
+
+  ///MethodTypes (get) avContent
+  Widget getMethodTypesRowAvContent() {
+    return ListenableProvider<SettingsItem>(
+      create: (context) => device.cameraSettings.methodTypesAvContent,
+      child: Consumer<SettingsItem>(
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+                title: Text(SettingsId.MethodTypes.name + " AvContent"),
+                onTap: () => device.api
+                    .getMethodTypes(SonyWebApiServiceTypeId.AV_CONTENT)),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<WebApiMethodValue>(
+                        hint: Text("available"),
+                        items: device
+                            .cameraSettings.methodTypesAvContent.available
+                            .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
+                                DropdownMenuItem<WebApiMethodValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) {},
+                      )))
+            ]),
+          ]),
+        ),
+      ),
+    );
+  }
+
+  ///MethodTypes (get) system
+  Widget getMethodTypesRowSystem() {
+    return ListenableProvider<SettingsItem>(
+      create: (context) => device.cameraSettings.methodTypesSystem,
+      child: Consumer<SettingsItem>(
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+                title: Text(SettingsId.MethodTypes.name + " System"),
+                onTap: () =>
+                    device.api.getMethodTypes(SonyWebApiServiceTypeId.SYSTEM)),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<WebApiMethodValue>(
+                        hint: Text("available"),
+                        items: device.cameraSettings.methodTypesSystem.available
+                            .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
+                                DropdownMenuItem<WebApiMethodValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) {},
+                      )))
+            ]),
+          ]),
+        ),
+      ),
+    );
+  }
+
+  ///MethodTypes (get) guide
+  Widget getMethodTypesRowGuide() {
+    return ListenableProvider<SettingsItem>(
+      create: (context) => device.cameraSettings.methodTypesGuide,
+      child: Consumer<SettingsItem>(
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+                title: Text(SettingsId.MethodTypes.name + " Guide"),
+                onTap: () =>
+                    device.api.getMethodTypes(SonyWebApiServiceTypeId.GUIDE)),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<WebApiMethodValue>(
+                        hint: Text("available"),
+                        items: device.cameraSettings.methodTypesGuide.available
                             .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
                                 DropdownMenuItem<WebApiMethodValue>(
                                     child: Text(e.name), value: e))
