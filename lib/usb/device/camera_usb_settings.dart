@@ -18,7 +18,7 @@ class CameraUsbSettings extends CameraSettings {
   @override
   Future<bool> update() async {
     var response = await UsbCommands.getCommandSetting(
-            SettingsId.AvailableSettings,
+            ItemId.AvailableSettings,
             opCodeId: OpCodeId.SettingsList,
             value1: 0,
             value2: 0,
@@ -33,7 +33,7 @@ class CameraUsbSettings extends CameraSettings {
     //299...
     analyzeSettingsAvailable(response);
 
-    response = await UsbCommands.getCommandSetting(SettingsId.CameraInfo,
+    response = await UsbCommands.getCommandSetting(ItemId.CameraInfo,
             opCodeId: OpCodeId.Settings,
             value1: 0,
             value2: 0,
@@ -102,7 +102,7 @@ class CameraUsbSettings extends CameraSettings {
       var settingsId = bytes.getUint16(offset, Endian.little);
       offset += 2;
 
-      SettingsId settingsIdEnum = SettingsIdExtension.getIdFromUsb(settingsId);
+      ItemId settingsIdEnum = SettingsIdExtension.getIdFromUsb(settingsId);
 
       SettingsItem setting = getItem(settingsIdEnum);
       if (setting == null) {
@@ -149,8 +149,8 @@ class CameraUsbSettings extends CameraSettings {
               var steps = bytes.getUint8(offset); //??
               offset += 1;
 
-              if (setting.settingsId == SettingsId.WhiteBalanceAB ||
-                  setting.settingsId == SettingsId.WhiteBalanceGM) {
+              if (setting.itemId == ItemId.WhiteBalanceAB ||
+                  setting.itemId == ItemId.WhiteBalanceGM) {
                 bool include = false;
 
                 WhiteBalanceAbId.values.forEach((element) {
@@ -246,7 +246,7 @@ class CameraUsbSettings extends CameraSettings {
               var steps = bytes.getUint16(offset, Endian.little);
               offset += 2;
 
-              if (setting.settingsId == SettingsId.WhiteBalanceColorTemp) {
+              if (setting.itemId == ItemId.WhiteBalanceColorTemp) {
                 //extra
                 //TODO
                 //setting.updateItem(setting.value, setting.subValue, setting.available, setting.supported);

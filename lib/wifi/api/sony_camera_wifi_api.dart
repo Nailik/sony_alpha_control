@@ -66,7 +66,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   Future _getWebApiVersions(
       SettingsItem settingsItem, SonyWebApiServiceTypeId serviceTypeId) async {
     return await WifiCommand.createCommand(
-            SonyWebApiMethodId.GET, SettingsId.Versions, service: serviceTypeId)
+            SonyWebApiMethodId.GET, ItemId.Versions, service: serviceTypeId)
         .send(device)
         .then((wifiResponse) => wifiResponse.response)
         .then((response) =>
@@ -123,7 +123,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
       SonyWebApiServiceTypeId serviceTypeId,
       WebApiVersionId webApiVersion) async {
     return await WifiCommand.createCommand(
-            SonyWebApiMethodId.GET, SettingsId.MethodTypes,
+            SonyWebApiMethodId.GET, ItemId.MethodTypes,
             params: [webApiVersion.wifiValue], service: serviceTypeId)
         .send(device)
         .then((wifiResponse) => wifiResponse.response)
@@ -156,11 +156,11 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> setFNumber(DoubleValue value) async {
     return await WifiCommand.createCommand(
-        SonyWebApiMethodId.SET, SettingsId.FNumber,
+        SonyWebApiMethodId.SET, ItemId.FNumber,
         params: [value.wifiValue]).send(device).then((result) {
       if (result.isValid) {
         SettingsItem<DoubleValue> item =
-            device.cameraSettings.getItem<DoubleValue>(SettingsId.FNumber);
+            device.cameraSettings.getItem<DoubleValue>(ItemId.FNumber);
         item.updateItem(value, item.available, item.supported);
       }
       return result.isValid;
@@ -188,12 +188,12 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> setIso(IsoValue value) async {
     return await WifiCommand.createCommand(
-            SonyWebApiMethodId.SET, SettingsId.ISO, params: [value.wifiValue])
+            SonyWebApiMethodId.SET, ItemId.ISO, params: [value.wifiValue])
         .send(device)
         .then((result) {
       if (result.isValid) {
         SettingsItem<IsoValue> item =
-            device.cameraSettings.getItem<IsoValue>(SettingsId.ISO);
+            device.cameraSettings.getItem<IsoValue>(ItemId.ISO);
         item.updateItem(value, item.available, item.supported);
       }
       return result.isValid;
@@ -223,11 +223,11 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> setShutterSpeed(ShutterSpeedValue value) async {
     return await WifiCommand.createCommand(
-        SonyWebApiMethodId.SET, SettingsId.ShutterSpeed,
+        SonyWebApiMethodId.SET, ItemId.ShutterSpeed,
         params: [value.wifiValue]).send(device).then((result) {
       if (result.isValid) {
         SettingsItem<ShutterSpeedValue> item = device.cameraSettings
-            .getItem<ShutterSpeedValue>(SettingsId.ShutterSpeed);
+            .getItem<ShutterSpeedValue>(ItemId.ShutterSpeed);
         item.updateItem(value, item.available, item.supported);
       }
       return result.isValid;
@@ -239,7 +239,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<SettingsItem<EvValue>> getEV({update = ForceUpdate.IfNull}) async {
     SettingsItem<EvValue> settingsItem =
-        device.cameraSettings.getItem<EvValue>(SettingsId.EV);
+        device.cameraSettings.getItem<EvValue>(ItemId.EV);
     switch (update) {
       case ForceUpdate.Available:
         if (settingsItem.supported == null || settingsItem.supported.isEmpty) {
@@ -272,7 +272,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
         break;
     }
 
-    return device.cameraSettings.getItem(settingsItem.settingsId);
+    return device.cameraSettings.getItem(settingsItem.itemId);
   }
 
   @override
@@ -291,12 +291,12 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   Future<bool> _setEVIndex(EvValue value) async {
     return await WifiCommand.createCommand(
-            SonyWebApiMethodId.SET, SettingsId.EV, params: [value.index])
+            SonyWebApiMethodId.SET, ItemId.EV, params: [value.index])
         .send(device)
         .then((result) {
       if (result.isValid) {
         SettingsItem<EvValue> item =
-            device.cameraSettings.getItem<EvValue>(SettingsId.EV);
+            device.cameraSettings.getItem<EvValue>(ItemId.EV);
         item.updateItem(value, item.available, item.supported);
       }
       return result.isValid;
@@ -313,11 +313,11 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> setFlashMode(FlashModeValue value) async {
     return await WifiCommand.createCommand(
-        SonyWebApiMethodId.SET, SettingsId.FlashMode,
+        SonyWebApiMethodId.SET, ItemId.FlashMode,
         params: [value.wifiValue]).send(device).then((result) {
       if (result.isValid) {
         SettingsItem<FlashModeValue> item =
-            device.cameraSettings.getItem<FlashModeValue>(SettingsId.FlashMode);
+            device.cameraSettings.getItem<FlashModeValue>(ItemId.FlashMode);
         item.updateItem(value, item.available, item.supported);
       }
       return result.isValid;
@@ -333,11 +333,11 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setFocusMode(FocusModeValue value) =>
-      WifiCommand.createCommand(SonyWebApiMethodId.SET, SettingsId.FocusMode,
+      WifiCommand.createCommand(SonyWebApiMethodId.SET, ItemId.FocusMode,
           params: [value.wifiValue]).send(device).then((result) {
         if (result.isValid) {
           SettingsItem<FocusModeValue> item = device.cameraSettings
-              .getItem<FocusModeValue>(SettingsId.FocusMode);
+              .getItem<FocusModeValue>(ItemId.FocusMode);
           item.updateItem(value, item.available, item.supported);
         }
         return result.isValid;
@@ -353,13 +353,13 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> setWhiteBalanceMode(WhiteBalanceModeValue value) async =>
       WifiCommand.createCommand(
-              SonyWebApiMethodId.SET, SettingsId.WhiteBalanceMode,
+              SonyWebApiMethodId.SET, ItemId.WhiteBalanceMode,
               params: [value.wifiValue, false, 0])
           .send(device)
           .then((result) async {
         if (result.isValid) {
           SettingsItem<WhiteBalanceModeValue> item = device.cameraSettings
-              .getItem<WhiteBalanceModeValue>(SettingsId.WhiteBalanceMode);
+              .getItem<WhiteBalanceModeValue>(ItemId.WhiteBalanceMode);
           item.updateItem(value, item.available, item.supported);
         }
 
@@ -380,20 +380,20 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
     switch (update) {
       case ForceUpdate.Available:
-        await _getAvailable(SettingsId.WhiteBalanceMode).then((response) =>
+        await _getAvailable(ItemId.WhiteBalanceMode).then((response) =>
             device.cameraSettings
                 .updateAvailable(settingsItemWhiteBalanceMode, response));
         break;
       case ForceUpdate.Supported:
-        await _getSupported(SettingsId.WhiteBalanceMode).then((response) =>
+        await _getSupported(ItemId.WhiteBalanceMode).then((response) =>
             device.cameraSettings
                 .updateSupported(settingsItemWhiteBalanceMode, response));
         break;
       case ForceUpdate.On:
-        await _getSupported(SettingsId.WhiteBalanceMode).then((response) =>
+        await _getSupported(ItemId.WhiteBalanceMode).then((response) =>
             device.cameraSettings
                 .updateSupported(settingsItemWhiteBalanceMode, response));
-        await _getAvailable(SettingsId.WhiteBalanceMode).then((response) =>
+        await _getAvailable(ItemId.WhiteBalanceMode).then((response) =>
             device.cameraSettings
                 .updateAvailable(settingsItemWhiteBalanceMode, response));
         break;
@@ -401,13 +401,13 @@ class SonyCameraWifiApi extends CameraApiInterface {
       case ForceUpdate.IfNull:
         if (settingsItemWhiteColorTemp.available == null ||
             settingsItemWhiteColorTemp.available.isEmpty) {
-          await _getAvailable(SettingsId.WhiteBalanceMode).then((response) =>
+          await _getAvailable(ItemId.WhiteBalanceMode).then((response) =>
               device.cameraSettings
                   .updateAvailable(settingsItemWhiteBalanceMode, response));
         }
         if (settingsItemWhiteColorTemp.supported == null ||
             settingsItemWhiteColorTemp.supported.isEmpty) {
-          await _getSupported(SettingsId.WhiteBalanceMode).then((response) =>
+          await _getSupported(ItemId.WhiteBalanceMode).then((response) =>
               device.cameraSettings
                   .updateSupported(settingsItemWhiteBalanceMode, response));
         }
@@ -438,7 +438,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
         await super.getWhiteBalanceMode();
 
     return WifiCommand.createCommand(
-        SonyWebApiMethodId.SET, SettingsId.WhiteBalanceMode, params: [
+        SonyWebApiMethodId.SET, ItemId.WhiteBalanceMode, params: [
       settingsItemWhiteBalanceMode.value.wifiValue,
       true,
       value.id
@@ -447,7 +447,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
         //TODO valid result but not actually working maybe?? (white balance not color temp but setting a color temp returns valid result)
         SettingsItem<WhiteBalanceColorTempValue> item = device.cameraSettings
             .getItem<WhiteBalanceColorTempValue>(
-                SettingsId.WhiteBalanceColorTemp);
+                ItemId.WhiteBalanceColorTemp);
         item.updateItem(value, item.available, item.supported);
       }
       return result.isValid;
@@ -464,11 +464,11 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> setImageFileFormat(ImageFileFormatValue value) async {
     return await WifiCommand.createCommand(
-        SonyWebApiMethodId.SET, SettingsId.ImageFileFormat,
+        SonyWebApiMethodId.SET, ItemId.ImageFileFormat,
         params: [value.wifiValue]).send(device).then((result) {
       if (result.isValid) {
         SettingsItem<ImageFileFormatValue> item = device.cameraSettings
-            .getItem<ImageFileFormatValue>(SettingsId.ImageFileFormat);
+            .getItem<ImageFileFormatValue>(ItemId.ImageFileFormat);
         item.updateItem(value, item.available, item.supported);
       }
       return result.isValid;
@@ -484,11 +484,11 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setMeteringMode(MeteringModeValue value) =>
-      WifiCommand.createCommand(SonyWebApiMethodId.SET, SettingsId.MeteringMode,
+      WifiCommand.createCommand(SonyWebApiMethodId.SET, ItemId.MeteringMode,
           params: [value.wifiValue]).send(device).then((result) {
         if (result.isValid) {
           SettingsItem<MeteringModeValue> item = device.cameraSettings
-              .getItem<MeteringModeValue>(SettingsId.MeteringMode);
+              .getItem<MeteringModeValue>(ItemId.MeteringMode);
           item.updateItem(value, item.available, item.supported);
         }
         return result.isValid;
@@ -707,7 +707,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> setSettingsRaw(SettingsId id, int value) {
+  Future<bool> setSettingsRaw(ItemId id, int value) {
     // TODO: implement setSettingsRaw
     throw UnimplementedError();
   }
@@ -726,13 +726,13 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> startRecordingVideo() => WifiCommand.createCommand(
-          SonyWebApiMethodId.START, SettingsId.RecordVideo)
+          SonyWebApiMethodId.START, ItemId.RecordVideo)
       .send(device)
       .then((value) => value.response == "true");
 
   @override
   Future<bool> stopRecordingVideo() =>
-      WifiCommand.createCommand(SonyWebApiMethodId.STOP, SettingsId.RecordVideo)
+      WifiCommand.createCommand(SonyWebApiMethodId.STOP, ItemId.RecordVideo)
           .send(device)
           .then((value) => value.response == "true");
 
@@ -791,7 +791,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   /// @return see [ApiCallSet]
   @override
   Future<bool> startRecordingAudio() => WifiCommand.createCommand(
-          SonyWebApiMethodId.START, SettingsId.AudioRecording)
+          SonyWebApiMethodId.START, ItemId.AudioRecording)
       .send(device)
       .then((value) => value.response == "true");
 
@@ -808,7 +808,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   /// @return see [ApiCallSet]
   @override
   Future<bool> stopRecordingAudio() => WifiCommand.createCommand(
-          SonyWebApiMethodId.STOP, SettingsId.AudioRecording)
+          SonyWebApiMethodId.STOP, ItemId.AudioRecording)
       .send(device)
       .then((value) => value.response == "true");
 
@@ -827,7 +827,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> setRecordingAudio(String audioRecordingSetting) =>
       WifiCommand.createCommand(
-              SonyWebApiMethodId.SET, SettingsId.AudioRecording,
+              SonyWebApiMethodId.SET, ItemId.AudioRecording,
               params: [audioRecordingSetting])
           .send(device)
           .then((value) => value.response == "true");
@@ -879,39 +879,39 @@ class SonyCameraWifiApi extends CameraApiInterface {
         break;
     }
 
-    return device.cameraSettings.getItem(settingsItem.settingsId);
+    return device.cameraSettings.getItem(settingsItem.itemId);
   }
 
   Future _updateCurrent(SettingsItem settingsItem) async {
-    return await _getCurrent(settingsItem.settingsId).then((response) =>
+    return await _getCurrent(settingsItem.itemId).then((response) =>
         device.cameraSettings.updateCurrent(settingsItem, response));
   }
 
   Future _updateAvailable(SettingsItem settingsItem) async {
-    return await _getAvailable(settingsItem.settingsId).then((response) =>
+    return await _getAvailable(settingsItem.itemId).then((response) =>
         device.cameraSettings.updateAvailable(settingsItem, response));
   }
 
   Future _updateSupported(SettingsItem settingsItem) async {
-    return await _getSupported(settingsItem.settingsId).then((response) =>
+    return await _getSupported(settingsItem.itemId).then((response) =>
         device.cameraSettings.updateSupported(settingsItem, response));
   }
 
-  Future<String> _getSupported(SettingsId settingsId) async {
+  Future<String> _getSupported(ItemId settingsId) async {
     return await WifiCommand.createCommand(
             SonyWebApiMethodId.GET_SUPPORTED, settingsId)
         .send(device)
         .then((wifiResponse) => wifiResponse.response);
   }
 
-  Future<String> _getAvailable(SettingsId settingsId) async {
+  Future<String> _getAvailable(ItemId settingsId) async {
     return await WifiCommand.createCommand(
             SonyWebApiMethodId.GET_AVAILABLE, settingsId)
         .send(device)
         .then((wifiResponse) => wifiResponse.response);
   }
 
-  Future<String> _getCurrent(SettingsId settingsId) async {
+  Future<String> _getCurrent(ItemId settingsId) async {
     return await WifiCommand.createCommand(SonyWebApiMethodId.GET, settingsId)
         .send(device)
         .then((wifiResponse) => wifiResponse.response);

@@ -6,7 +6,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/web_api_version_ids.dart';
 class WebApiMethod {
   final SonyWebApiMethodId apiName;
 
-  final SettingsId settingsId;
+  final ItemId settingsId;
   final List<String> parameterTypes;
   final List<String> responseTypes;
   final WebApiVersionId

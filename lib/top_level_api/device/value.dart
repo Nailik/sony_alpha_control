@@ -711,8 +711,8 @@ class PictureEffectValue extends Value<PictureEffectId> {
   String get name => id.name;
 }
 
-class SettingsIdValue extends Value<SettingsId> {
-  SettingsIdValue(SettingsId id) : super(id);
+class SettingsIdValue extends Value<ItemId> {
+  SettingsIdValue(ItemId id) : super(id);
 
   @override
   factory SettingsIdValue.fromUSBValue(int usbValue) =>

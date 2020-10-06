@@ -26,7 +26,7 @@ class CameraWifiSettings extends CameraSettings {
   Future<String> getSettings(WebApiVersionId version, bool longPolling,
       SonyCameraWifiDevice device) async {
     var webResponse = await WifiCommand.createCommand(
-        SonyWebApiMethodId.GET, SettingsId.AvailableSettings,
+        SonyWebApiMethodId.GET, ItemId.AvailableSettings,
         params: [longPolling]).send(device, timeout: 80000);
     //a list
     var jsonD = jsonDecode(webResponse.response);
@@ -41,7 +41,7 @@ class CameraWifiSettings extends CameraSettings {
         String settingsIdWifiValue =
             element["type"] as String; //as String because it might be an int
 
-        SettingsId settingsIdEnum =
+        ItemId settingsIdEnum =
             SettingsIdExtension.getIdFromWifi(settingsIdWifiValue);
 
         SettingsItem setting = getItem(settingsIdEnum);
@@ -49,15 +49,15 @@ class CameraWifiSettings extends CameraSettings {
           print("ERROR ******");
         }
 
-        switch (setting.settingsId) {
-          case SettingsId.ImageFileFormat:
-          case SettingsId.CameraStatus:
+        switch (setting.itemId) {
+          case ItemId.ImageFileFormat:
+          case ItemId.CameraStatus:
             //current is only named like the setting, eg: "fileFormat"
             //available list is named candidate
             getDefaultSettings(
                 element, setting, settingsIdWifiValue, "candidate");
             break;
-          case SettingsId.ApiList:
+          case ItemId.ApiList:
             var availableList = element["names"];
             if (availableList != null) {
               setting.updateItem(
@@ -69,28 +69,28 @@ class CameraWifiSettings extends CameraSettings {
                   setting.supported);
             }
             break;
-          case SettingsId.ImageSize:
-          case SettingsId.AspectRatio:
+          case ItemId.ImageSize:
+          case ItemId.AspectRatio:
             break;
-          case SettingsId.LiveViewState:
-          case SettingsId.LiveViewOrientation:
+          case ItemId.LiveViewState:
+          case ItemId.LiveViewOrientation:
             //there is only a current value
             setting.updateItem(setting.fromWifi(element[settingsIdWifiValue]),
                 setting.available, setting.supported);
             break;
-          case SettingsId.WhiteBalanceMode:
+          case ItemId.WhiteBalanceMode:
             //   setting.updateItem(setting.fromWifi(element[settingsIdWifiValue]),
             //   setting.subValue, setting.available, setting.supported); //TODO
             break;
-          case SettingsId.BeepMode:
-          case SettingsId.CameraFunction:
-          case SettingsId.MovieQuality:
-          case SettingsId.MovieFileFormat:
-          case SettingsId.FlashMode:
-          case SettingsId.FocusMode:
-          case SettingsId.FNumber:
-          case SettingsId.ShutterSpeed:
-          case SettingsId.ISO:
+          case ItemId.BeepMode:
+          case ItemId.CameraFunction:
+          case ItemId.MovieQuality:
+          case ItemId.MovieFileFormat:
+          case ItemId.FlashMode:
+          case ItemId.FocusMode:
+          case ItemId.FNumber:
+          case ItemId.ShutterSpeed:
+          case ItemId.ISO:
           default:
             //current is only named like the current setting, eg: "currentFNumber"
             //available list is named candidates like fNumberCandidates
@@ -110,8 +110,8 @@ class CameraWifiSettings extends CameraSettings {
     var jsonD = jsonDecode(json);
     var list = jsonD["result"];
 
-    switch (settingsItem.settingsId) {
-      case SettingsId.EV:
+    switch (settingsItem.itemId) {
+      case ItemId.EV:
         //special case
         List<EvValue> listOfValues = getEvList(list[2], list[1], list[3]);
         settingsItem.updateItem(
@@ -119,7 +119,7 @@ class CameraWifiSettings extends CameraSettings {
             listOfValues,
             settingsItem.supported);
         break;
-      case SettingsId.WhiteBalanceMode:
+      case ItemId.WhiteBalanceMode:
         List<WhiteBalanceColorTempValue> supportedColorTempList =
             List<WhiteBalanceColorTempValue>();
         List<WhiteBalanceColorTempValue> availableColorTempList =
@@ -131,7 +131,7 @@ class CameraWifiSettings extends CameraSettings {
         SettingsItem<WhiteBalanceColorTempValue> settingsItemColorTemp =
             sonyCameraWifiDevice.cameraSettings
                 .getItem<WhiteBalanceColorTempValue>(
-                    SettingsId.WhiteBalanceColorTemp);
+                    ItemId.WhiteBalanceColorTemp);
 
         settingsItem.updateItem(
             currentWhiteBalance,
@@ -174,8 +174,8 @@ class CameraWifiSettings extends CameraSettings {
     var jsonD = jsonDecode(json);
     var list = jsonD["result"];
 
-    switch (settingsItem.settingsId) {
-      case SettingsId.EV:
+    switch (settingsItem.itemId) {
+      case ItemId.EV:
         //special case
         //0: int[] upper limit
         //1: int[] lower limit
@@ -189,7 +189,7 @@ class CameraWifiSettings extends CameraSettings {
         settingsItem.updateItem(
             settingsItem.value, settingsItem.available, listOfValues);
         break;
-      case SettingsId.WhiteBalanceMode:
+      case ItemId.WhiteBalanceMode:
         List<WhiteBalanceColorTempValue> supportedColorTempList =
             List<WhiteBalanceColorTempValue>();
         List<WhiteBalanceColorTempValue> availableColorTempList =
@@ -199,7 +199,7 @@ class CameraWifiSettings extends CameraSettings {
         SettingsItem<WhiteBalanceColorTempValue> settingsItemColorTemp =
             sonyCameraWifiDevice.cameraSettings
                 .getItem<WhiteBalanceColorTempValue>(
-                    SettingsId.WhiteBalanceColorTemp);
+                    ItemId.WhiteBalanceColorTemp);
 
         settingsItem.updateItem(
             settingsItem.value,
@@ -237,12 +237,12 @@ class CameraWifiSettings extends CameraSettings {
       {WebApiVersionId webApiVersion}) async {
     var jsonD = jsonDecode(json);
     var list = jsonD["result"];
-    switch (settingsItem.settingsId) {
-      case SettingsId.Versions:
+    switch (settingsItem.itemId) {
+      case ItemId.Versions:
         var itemsList = settingsItem.createListFromWifiJson(list[0] as List);
         settingsItem.updateItem(settingsItem.value, itemsList, itemsList);
         break;
-      case SettingsId.MethodTypes:
+      case ItemId.MethodTypes:
         list = jsonD["results"];
         var itemsList = settingsItem.createListFromWifiJson(list as List);
         List<WebApiMethodValue> newList =
@@ -271,8 +271,8 @@ class CameraWifiSettings extends CameraSettings {
     List<Value> availableList;
     Value current;
 
-    switch (settingsItem.settingsId) {
-      case SettingsId.EV:
+    switch (settingsItem.itemId) {
+      case ItemId.EV:
         availableList = getEvList(
             json["minExposureCompensation"],
             json["maxExposureCompensation"],

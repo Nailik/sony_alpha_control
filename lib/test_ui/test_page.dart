@@ -180,7 +180,7 @@ class TestsPageState extends State<TestsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
-                    title: Text(SettingsId.Versions.name + " Camera"),
+                    title: Text(ItemId.Versions.name + " Camera"),
                     onTap: () => device.api
                         .getWebApiVersions(SonyWebApiServiceTypeId.CAMERA)),
                 Row(
@@ -218,7 +218,7 @@ class TestsPageState extends State<TestsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
-                    title: Text(SettingsId.Versions.name + " AvContent"),
+                    title: Text(ItemId.Versions.name + " AvContent"),
                     onTap: () => device.api
                         .getWebApiVersions(SonyWebApiServiceTypeId.AV_CONTENT)),
                 Row(
@@ -256,7 +256,7 @@ class TestsPageState extends State<TestsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
-                    title: Text(SettingsId.Versions.name + " System"),
+                    title: Text(ItemId.Versions.name + " System"),
                     onTap: () => device.api
                         .getWebApiVersions(SonyWebApiServiceTypeId.SYSTEM)),
                 Row(
@@ -294,7 +294,7 @@ class TestsPageState extends State<TestsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
-                    title: Text(SettingsId.Versions.name + " Guide"),
+                    title: Text(ItemId.Versions.name + " Guide"),
                     onTap: () => device.api
                         .getWebApiVersions(SonyWebApiServiceTypeId.GUIDE)),
                 Row(
@@ -329,7 +329,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-                title: Text(SettingsId.MethodTypes.name + " Camera"),
+                title: Text(ItemId.MethodTypes.name + " Camera"),
                 onTap: () =>
                     device.api.getMethodTypes(SonyWebApiServiceTypeId.CAMERA)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -361,7 +361,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-                title: Text(SettingsId.MethodTypes.name + " AvContent"),
+                title: Text(ItemId.MethodTypes.name + " AvContent"),
                 onTap: () => device.api
                     .getMethodTypes(SonyWebApiServiceTypeId.AV_CONTENT)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -394,7 +394,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-                title: Text(SettingsId.MethodTypes.name + " System"),
+                title: Text(ItemId.MethodTypes.name + " System"),
                 onTap: () =>
                     device.api.getMethodTypes(SonyWebApiServiceTypeId.SYSTEM)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -426,7 +426,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-                title: Text(SettingsId.MethodTypes.name + " Guide"),
+                title: Text(ItemId.MethodTypes.name + " Guide"),
                 onTap: () =>
                     device.api.getMethodTypes(SonyWebApiServiceTypeId.GUIDE)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -458,7 +458,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.ApplicationInfo.name),
+              title: Text(ItemId.ApplicationInfo.name),
               subtitle: Text(
                   device.cameraSettings.applicationInfo.value?.name ??
                       "NotAvailable"),
@@ -477,7 +477,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.ApiList.name),
+              title: Text(ItemId.ApiList.name),
               subtitle: Text(
                   device.cameraSettings.apiList.value?.name ?? "NotAvailable"),
             ),
@@ -495,7 +495,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.AvailableSettings.name),
+              title: Text(ItemId.AvailableSettings.name),
               subtitle: Text(
                   device.cameraSettings.availableSettings.value?.name ??
                       "NotAvailable"),
@@ -514,7 +514,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.CameraFunction.name),
+              title: Text(ItemId.CameraFunction.name),
               subtitle: Text(device.cameraSettings.cameraFunction.value?.name ??
                   "NotAvailable"),
             ),
@@ -532,7 +532,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.CapturePhoto.name),
+              title: Text(ItemId.CapturePhoto.name),
               subtitle: Text(device.cameraSettings.capturePhoto.value?.name ??
                   "NotAvailable"),
             ),
@@ -550,7 +550,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.CameraSetup.name),
+              title: Text(ItemId.CameraSetup.name),
               subtitle: Text(device.cameraSettings.cameraSetup.value?.name ??
                   "NotAvailable"),
             ),
@@ -569,7 +569,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.LiveView.name),
+              title: Text(ItemId.LiveView.name),
               subtitle: Text(
                   device.cameraSettings.liveView.value?.name ?? "NotAvailable"),
             ),
@@ -587,7 +587,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.LiveViewWithSize.name),
+              title: Text(ItemId.LiveViewWithSize.name),
               subtitle: Text(
                   device.cameraSettings.liveViewWithSize.value?.name ??
                       "NotAvailable"),
@@ -606,7 +606,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.Zoom.name),
+              title: Text(ItemId.Zoom.name),
               subtitle: Text(
                   device.cameraSettings.zoom.value?.name ?? "NotAvailable"),
             ),
@@ -624,7 +624,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.HalfPressShutter.name),
+              title: Text(ItemId.HalfPressShutter.name),
               subtitle: Text(
                   device.cameraSettings.halfPressShutter.value?.name ??
                       "NotAvailable"),
@@ -643,7 +643,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.SelfTimer.name),
+              title: Text(ItemId.SelfTimer.name),
               subtitle: Text(device.cameraSettings.selfTimer.value?.name ??
                   "NotAvailable"),
             ),
@@ -661,7 +661,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.ContShootingMode.name),
+              title: Text(ItemId.ContShootingMode.name),
               subtitle: Text(
                   device.cameraSettings.contShootingMode.value?.name ??
                       "NotAvailable"),
@@ -680,7 +680,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.ContShootingSpeed.name),
+              title: Text(ItemId.ContShootingSpeed.name),
               subtitle: Text(
                   device.cameraSettings.contShootingSpeed.value?.name ??
                       "NotAvailable"),
@@ -699,7 +699,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.MeteringMode.name),
+              title: Text(ItemId.MeteringMode.name),
               subtitle: Text(device.cameraSettings.meteringMode.value?.name ??
                   "NotAvailable"),
             ),
@@ -717,7 +717,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.EV.name),
+              title: Text(ItemId.EV.name),
               subtitle:
                   Text(device.cameraSettings.ev.value?.name ?? "NotAvailable"),
               onTap: () => device.api.getEV(update: ForceUpdate.On),
@@ -772,7 +772,7 @@ class TestsPageState extends State<TestsPage> {
             builder: (context, model, _) => Card(
                   child: Column(children: [
                     ListTile(
-                      title: Text(SettingsId.FNumber.name),
+                      title: Text(ItemId.FNumber.name),
                       subtitle: Text(
                           device.cameraSettings.fNumber.value?.name ??
                               "NotAvailable"),
@@ -841,7 +841,7 @@ class TestsPageState extends State<TestsPage> {
             builder: (context, model, _) => Card(
                   child: Column(children: [
                     ListTile(
-                      title: Text(SettingsId.ISO.name),
+                      title: Text(ItemId.ISO.name),
                       subtitle: Text(device.cameraSettings.iso.value?.name ??
                           "NotAvailable"),
                       onTap: () => device.api.getIso(update: ForceUpdate.On),
@@ -902,7 +902,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.LiveViewSize.name),
+              title: Text(ItemId.LiveViewSize.name),
               subtitle: Text(device.cameraSettings.liveViewSize.value?.name ??
                   "NotAvailable"),
             ),
@@ -920,7 +920,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.PostViewImageSize.name),
+              title: Text(ItemId.PostViewImageSize.name),
               subtitle: Text(
                   device.cameraSettings.postViewImageSize.value?.name ??
                       "NotAvailable"),
@@ -939,7 +939,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.ProgramShift.name),
+              title: Text(ItemId.ProgramShift.name),
               subtitle: Text(device.cameraSettings.programShift.value?.name ??
                   "NotAvailable"),
             ),
@@ -957,7 +957,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.ShootingMode.name),
+              title: Text(ItemId.ShootingMode.name),
               subtitle: Text(device.cameraSettings.shootingMode.value?.name ??
                   "NotAvailable"),
             ),
@@ -975,7 +975,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.ShutterSpeed.name),
+              title: Text(ItemId.ShutterSpeed.name),
               subtitle: Text(device.cameraSettings.shutterSpeed.value?.name ??
                   "NotAvailable"),
               onTap: () => device.api.getShutterSpeed(update: ForceUpdate.On),
@@ -1032,7 +1032,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.FocusAreaSpot.name),
+              title: Text(ItemId.FocusAreaSpot.name),
               subtitle: Text(device.cameraSettings.focusAreaSpot.value?.name ??
                   "NotAvailable"),
             ),
@@ -1050,7 +1050,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.WhiteBalanceMode.name),
+              title: Text(ItemId.WhiteBalanceMode.name),
               subtitle: Text(
                   device.cameraSettings.whiteBalanceMode.value?.name ??
                       "NotAvailable"),
@@ -1098,7 +1098,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.WhiteBalanceColorTemp.name),
+              title: Text(ItemId.WhiteBalanceColorTemp.name),
               subtitle: Text(
                   device.cameraSettings.whiteBalanceColorTemp.value?.name ??
                       "NotAvailable"),
@@ -1163,7 +1163,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.FlashMode.name),
+              title: Text(ItemId.FlashMode.name),
               subtitle: Text(device.cameraSettings.flashMode.value?.name ??
                   "NotAvailable"),
               onTap: () => device.api.getFlashMode(update: ForceUpdate.On),
@@ -1208,7 +1208,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.FocusMode.name),
+              title: Text(ItemId.FocusMode.name),
               subtitle: Text(device.cameraSettings.focusMode.value?.name ??
                   "NotAvailable"),
               onTap: () => device.api.getFocusMode(update: ForceUpdate.On),
@@ -1253,7 +1253,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.ZoomSetting.name),
+              title: Text(ItemId.ZoomSetting.name),
               subtitle: Text(device.cameraSettings.zoomSetting.value?.name ??
                   "NotAvailable"),
             ),
@@ -1271,7 +1271,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.StorageInformation.name),
+              title: Text(ItemId.StorageInformation.name),
               subtitle: Text(
                   device.cameraSettings.storageInformation.value?.name ??
                       "NotAvailable"),
@@ -1290,7 +1290,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.LiveViewInfo.name),
+              title: Text(ItemId.LiveViewInfo.name),
               subtitle: Text(device.cameraSettings.liveViewInfo.value?.name ??
                   "NotAvailable"),
             ),
@@ -1308,7 +1308,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.SilentShootingSettings.name),
+              title: Text(ItemId.SilentShootingSettings.name),
               subtitle: Text(
                   device.cameraSettings.silentShootingSettings.value?.name ??
                       "NotAvailable"),

@@ -33,7 +33,7 @@ class WifiCommand {
   WifiCommand(this.id, this.method, this.version, this.params, {this.service});
 
   static WifiCommand createCommand(
-          SonyWebApiMethodId method, SettingsId apiGroup,
+          SonyWebApiMethodId method, ItemId apiGroup,
           {SonyWebApiServiceTypeId service = SonyWebApiServiceTypeId.CAMERA,
           WebApiVersionId version =
               WebApiVersionId.V_1_0, //TOp supported version?

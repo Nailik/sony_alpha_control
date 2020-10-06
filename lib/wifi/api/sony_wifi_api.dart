@@ -136,7 +136,7 @@ class SonyWifiApi extends SonyApiInterface {
 
   Future<bool> startConnection(SonyCameraWifiDevice device) async {
     var webResponse = await WifiCommand.createCommand(
-            SonyWebApiMethodId.START, SettingsId.CameraSetup)
+            SonyWebApiMethodId.START, ItemId.CameraSetup)
         .send(device);
     //[0] if success
     return jsonDecode(webResponse.response)["0"] == 0;

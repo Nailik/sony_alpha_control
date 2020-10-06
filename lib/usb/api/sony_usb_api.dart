@@ -66,7 +66,7 @@ class SonyUsbApi extends SonyApiInterface {
       print("return true android connection no idea what result is correct");
       return true;
     } else if (Platform.isWindows) {
-      return (await UsbCommands.getCommandSetting(SettingsId.Connect,
+      return (await UsbCommands.getCommandSetting(ItemId.Connect,
                   opCodeId: OpCodeId.Connect,
                   value1: 3,
                   value2: 0,

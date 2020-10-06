@@ -1,6 +1,6 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 
-enum SettingsId {
+enum ItemId {
   /// <summary>
   /// File format / image quality
   /// </summary>
@@ -224,138 +224,138 @@ enum SettingsId {
   Unknown,
 }
 
-extension SettingsIdExtension on SettingsId {
+extension SettingsIdExtension on ItemId {
   String get name => toString().split('.')[1];
 
   int get usbValue {
     switch (this) {
-      case SettingsId.ImageFileFormat:
+      case ItemId.ImageFileFormat:
         return 0x5004;
-      case SettingsId.WhiteBalanceMode:
+      case ItemId.WhiteBalanceMode:
         return 0x5005;
-      case SettingsId.FNumber:
+      case ItemId.FNumber:
         return 0x5007;
-      case SettingsId.FocusMode:
+      case ItemId.FocusMode:
         return 0x500A;
-      case SettingsId.MeteringMode:
+      case ItemId.MeteringMode:
         return 0x500B;
-      case SettingsId.FlashMode:
+      case ItemId.FlashMode:
         return 0x500C;
-      case SettingsId.ShootingMode:
+      case ItemId.ShootingMode:
         return 0x500E;
-      case SettingsId.EV:
+      case ItemId.EV:
         return 0x5010;
-      case SettingsId.DriveMode:
+      case ItemId.DriveMode:
         return 0x5013;
-      case SettingsId.FlashValue:
+      case ItemId.FlashValue:
         return 0xD200;
-      case SettingsId.DroHdr:
+      case ItemId.DroHdr:
         return 0xD201;
-      case SettingsId.ImageSize:
+      case ItemId.ImageSize:
         return 0xD203;
-      case SettingsId.ShutterSpeed:
+      case ItemId.ShutterSpeed:
         return 0xD20D;
-      case SettingsId.UnkD20E:
+      case ItemId.UnkD20E:
         return 0xD20E;
-      case SettingsId.WhiteBalanceColorTemp:
+      case ItemId.WhiteBalanceColorTemp:
         return 0xD20F;
-      case SettingsId.WhiteBalanceGM:
+      case ItemId.WhiteBalanceGM:
         return 0xD210;
-      case SettingsId.AspectRatio:
+      case ItemId.AspectRatio:
         return 0xD211;
-      case SettingsId.UnkD212:
+      case ItemId.UnkD212:
         return 0xD212;
-      case SettingsId.AutoFocusState:
+      case ItemId.AutoFocusState:
         return 0xD213;
-      case SettingsId.Zoom:
+      case ItemId.Zoom:
         return 0xD214;
-      case SettingsId.PhotoTransferQueue:
+      case ItemId.PhotoTransferQueue:
         return 0xD215;
-      case SettingsId.AEL_State:
+      case ItemId.AEL_State:
         return 0xD217;
-      case SettingsId.BatteryInfo:
+      case ItemId.BatteryInfo:
         return 0xD218;
-      case SettingsId.SensorCrop:
+      case ItemId.SensorCrop:
         return 0xD219;
-      case SettingsId.PictureEffect:
+      case ItemId.PictureEffect:
         return 0xD21B;
-      case SettingsId.WhiteBalanceAB:
+      case ItemId.WhiteBalanceAB:
         return 0xD21C;
-      case SettingsId.RecordVideoState:
+      case ItemId.RecordVideoState:
         return 0xD21D;
-      case SettingsId.ISO:
+      case ItemId.ISO:
         return 0xD21E;
-      case SettingsId.FEL_State:
+      case ItemId.FEL_State:
         return 0xD21F;
-      case SettingsId.LiveViewState:
+      case ItemId.LiveViewState:
         return 0xD221;
-      case SettingsId.UnkD222:
+      case ItemId.UnkD222:
         return 0xD222;
-      case SettingsId.FocusArea:
+      case ItemId.FocusArea:
         return 0xD22C;
-      case SettingsId.FocusMagnifierPhase:
+      case ItemId.FocusMagnifierPhase:
         return 0xD22D;
-      case SettingsId.UnkD22E:
+      case ItemId.UnkD22E:
         return 0xD22E;
-      case SettingsId.FocusMagnifier:
+      case ItemId.FocusMagnifier:
         return 0xD22F;
-      case SettingsId.FocusMagnifierPosition:
+      case ItemId.FocusMagnifierPosition:
         return 0xD230;
-      case SettingsId.UseLiveViewDisplayEffect:
+      case ItemId.UseLiveViewDisplayEffect:
         return 0xD231;
-      case SettingsId.FocusAreaSpot:
+      case ItemId.FocusAreaSpot:
         return 0xD232;
-      case SettingsId.FocusMagnifierState:
+      case ItemId.FocusMagnifierState:
         return 0x5005;
-      case SettingsId.FocusModeToggleResponse:
+      case ItemId.FocusModeToggleResponse:
         return 0xD235;
-      case SettingsId.UnkD236:
+      case ItemId.UnkD236:
         return 0xD236;
-      case SettingsId.HalfPressShutter:
+      case ItemId.HalfPressShutter:
         return 0xD2C1;
-      case SettingsId.CapturePhoto:
+      case ItemId.CapturePhoto:
         return 0xD2C2;
-      case SettingsId.AEL:
+      case ItemId.AEL:
         return 0xD2C3;
-      case SettingsId.UnkD2C5:
+      case ItemId.UnkD2C5:
         return 0xD2C5;
-      case SettingsId.UnkD2C7:
+      case ItemId.UnkD2C7:
         return 0xD2C7;
-      case SettingsId.RecordVideo:
+      case ItemId.RecordVideo:
         return 0xD2C8;
-      case SettingsId.FEL:
+      case ItemId.FEL:
         return 0xD2C9;
-      case SettingsId.FocusMagnifierRequest:
+      case ItemId.FocusMagnifierRequest:
         return 0xD2CB;
-      case SettingsId.FocusMagnifierResetRequest:
+      case ItemId.FocusMagnifierResetRequest:
         return 0xD2CC;
-      case SettingsId.FocusMagnifierMoveUpRequest:
+      case ItemId.FocusMagnifierMoveUpRequest:
         return 0xD2CD;
-      case SettingsId.FocusMagnifierMoveDownRequest:
+      case ItemId.FocusMagnifierMoveDownRequest:
         return 0xD2CE;
-      case SettingsId.FocusMagnifierMoveLeftRequest:
+      case ItemId.FocusMagnifierMoveLeftRequest:
         return 0xD2CF;
-      case SettingsId.FocusMagnifierMoveRightRequest:
+      case ItemId.FocusMagnifierMoveRightRequest:
         return 0xD2D0;
-      case SettingsId.FocusDistance:
+      case ItemId.FocusDistance:
         return 0xD2D1;
-      case SettingsId.FocusModeToggleRequest:
+      case ItemId.FocusModeToggleRequest:
         return 0xD2D2;
-      case SettingsId.UnkD2D3:
+      case ItemId.UnkD2D3:
         return 0xD2D3; //manual focus?
-      case SettingsId.UnkD2D4:
+      case ItemId.UnkD2D4:
         return 0xD2D4; //??
-      case SettingsId.LiveViewInfo:
+      case ItemId.LiveViewInfo:
         return 0xC002;
-      case SettingsId.PhotoInfo: //0c00
+      case ItemId.PhotoInfo: //0c00
         return 0xC001;
-      case SettingsId.AvailableSettings:
+      case ItemId.AvailableSettings:
         return 0x00C8;
-      case SettingsId.CameraInfo:
+      case ItemId.CameraInfo:
         return 0x00;
-      case SettingsId.Connect:
+      case ItemId.Connect:
         return 0x01;
-      case SettingsId.Unknown:
+      case ItemId.Unknown:
         return -1;
       default:
         return -2;
@@ -364,246 +364,246 @@ extension SettingsIdExtension on SettingsId {
 
   String get wifiValue {
     switch (this) {
-      case SettingsId.CameraStatus:
+      case ItemId.CameraStatus:
         return "cameraStatus";
-      case SettingsId.Versions:
+      case ItemId.Versions:
         return "versions";
-      case SettingsId.MethodTypes:
+      case ItemId.MethodTypes:
         return "methodTypes";
-      case SettingsId.ApplicationInfo:
+      case ItemId.ApplicationInfo:
         return "applicationInfo";
-      case SettingsId.ApiList: //TODO supported api list?
+      case ItemId.ApiList: //TODO supported api list?
         return "apiList";
-      case SettingsId.AvailableSettings:
+      case ItemId.AvailableSettings:
         return "event";
-      case SettingsId.CapturePhoto:
+      case ItemId.CapturePhoto:
         return "takePicture";
-      case SettingsId.CameraSetup:
+      case ItemId.CameraSetup:
         return "recMode";
-      case SettingsId.LiveViewState:
+      case ItemId.LiveViewState:
         return "liveviewStatus";
-      case SettingsId.LiveViewOrientation:
+      case ItemId.LiveViewOrientation:
         return "liveviewOrientation";
-      case SettingsId.LiveView:
+      case ItemId.LiveView:
         return "liveview";
-      case SettingsId.LiveViewWithSize:
+      case ItemId.LiveViewWithSize:
         return "liveviewWithSize";
-      case SettingsId.LiveViewSize:
+      case ItemId.LiveViewSize:
         return "liveviewSize";
-      case SettingsId.CameraFunction:
+      case ItemId.CameraFunction:
         return "cameraFunction";
-      case SettingsId.Zoom:
+      case ItemId.Zoom:
         return "zoom";
-      case SettingsId.ZoomInformation:
+      case ItemId.ZoomInformation:
         return "zoomInformation";
-      case SettingsId.HalfPressShutter:
+      case ItemId.HalfPressShutter:
         return "halfPressShutter";
-      case SettingsId.SelfTimer:
+      case ItemId.SelfTimer:
         return "selfTimer";
-      case SettingsId.ContShooting:
+      case ItemId.ContShooting:
         return "contShooting";
-      case SettingsId.ContShootingMode:
+      case ItemId.ContShootingMode:
         return "contShootingMode";
-      case SettingsId.ContShootingSpeed:
+      case ItemId.ContShootingSpeed:
         return "contShootingSpeed";
-      case SettingsId.EV:
+      case ItemId.EV:
         return "exposureCompensation";
-      case SettingsId.FNumber:
+      case ItemId.FNumber:
         return "fNumber";
-      case SettingsId.ISO:
+      case ItemId.ISO:
         return "isoSpeedRate";
-      case SettingsId.PostViewImageSize:
+      case ItemId.PostViewImageSize:
         return "postviewImageSize";
-      case SettingsId.ProgramShift:
+      case ItemId.ProgramShift:
         return "programShift";
-      case SettingsId.MeteringMode:
+      case ItemId.MeteringMode:
         return "exposureMode"; //TODO exposure mode somehow together with shootmode
-      case SettingsId.ShootingMode:
+      case ItemId.ShootingMode:
         return "shootMode";
-      case SettingsId.ShutterSpeed:
+      case ItemId.ShutterSpeed:
         return "shutterSpeed";
-      case SettingsId.FocusAreaSpot:
+      case ItemId.FocusAreaSpot:
         return "touchAFPosition";
-      case SettingsId.WhiteBalanceMode:
+      case ItemId.WhiteBalanceMode:
         return "whiteBalance";
-      case SettingsId.WhiteBalanceColorTemp:
+      case ItemId.WhiteBalanceColorTemp:
         return "WhiteBalanceColorTemp";
-      case SettingsId.WhiteBalanceGM:
+      case ItemId.WhiteBalanceGM:
         return "";
-      case SettingsId.FlashMode:
+      case ItemId.FlashMode:
         return "flashMode";
-      case SettingsId.FocusMode:
+      case ItemId.FocusMode:
         return "focusMode";
-      case SettingsId.ZoomSetting:
+      case ItemId.ZoomSetting:
         return "zoomSetting";
-      case SettingsId.StorageInformation:
+      case ItemId.StorageInformation:
         return "storageInformation";
-      case SettingsId.LiveViewInfo:
+      case ItemId.LiveViewInfo:
         return "liveviewFrameInfo";
-      case SettingsId.SilentShootingSettings:
+      case ItemId.SilentShootingSettings:
         return "silentShootingSetting";
-      case SettingsId.SilentShooting:
+      case ItemId.SilentShooting:
         return "silentShooting";
-      case SettingsId.SteadyMode:
+      case ItemId.SteadyMode:
         return "steadyMode";
-      case SettingsId.BeepMode:
+      case ItemId.BeepMode:
         return "beepMode";
-      case SettingsId.MovieQuality:
+      case ItemId.MovieQuality:
         return "movieQuality";
-      case SettingsId.MovieRec:
+      case ItemId.MovieRec:
         return "movieRec";
-      case SettingsId.ViewAngle:
+      case ItemId.ViewAngle:
         return "viewAngle";
-      case SettingsId.FlipSetting:
+      case ItemId.FlipSetting:
         return "flipSetting";
-      case SettingsId.IntervalTime:
+      case ItemId.IntervalTime:
         return "intervalTime";
-      case SettingsId.ColorSetting:
+      case ItemId.ColorSetting:
         return "colorSetting";
-      case SettingsId.MovieFileFormat:
+      case ItemId.MovieFileFormat:
         return "movieFileFormat";
-      case SettingsId.InfraredRemoteControl:
+      case ItemId.InfraredRemoteControl:
         return "infraredRemoteControl";
-      case SettingsId.TvColorSystem:
+      case ItemId.TvColorSystem:
         return "tvColorSystem";
-      case SettingsId.TrackingFocus:
+      case ItemId.TrackingFocus:
         return "trackingFocus";
-      case SettingsId.AutoPowerOff:
+      case ItemId.AutoPowerOff:
         return "autoPowerOff";
-      case SettingsId.LoopRecordingTime:
+      case ItemId.LoopRecordingTime:
         return "loopRecTime";
-      case SettingsId.AudioRecording:
+      case ItemId.AudioRecording:
         return "audioRecording";
-      case SettingsId.WindNoiseReduction:
+      case ItemId.WindNoiseReduction:
         return "windNoiseReduction";
-      case SettingsId.BulbShooting:
+      case ItemId.BulbShooting:
         return "bulbShooting";
-      case SettingsId.AudioRecordingSetting:
+      case ItemId.AudioRecordingSetting:
         return "audioRecordingSetting";
-      case SettingsId.DateTimeSetting:
+      case ItemId.DateTimeSetting:
         return "dateTimeSetting";
-      case SettingsId.DeleteContents:
+      case ItemId.DeleteContents:
         return "deleteContent";
-      case SettingsId.IntervalStillRecording:
+      case ItemId.IntervalStillRecording:
         return "intervalStillRecording";
-      case SettingsId.LoopRecording:
+      case ItemId.LoopRecording:
         return "loopRecording";
-      case SettingsId.RemotePlayback:
+      case ItemId.RemotePlayback:
         return "remotePlayback";
-      case SettingsId.ImageFileFormat:
+      case ItemId.ImageFileFormat:
         return "stillQuality";
-      case SettingsId.RecordVideo:
+      case ItemId.RecordVideo:
         return "movieRecording";
-      case SettingsId.ImageSize:
+      case ItemId.ImageSize:
         return "stillSize";
-      case SettingsId.PhotoTransferQueue:
+      case ItemId.PhotoTransferQueue:
         return "transferringImages";
-      case SettingsId.PictureEffect:
+      case ItemId.PictureEffect:
         return "sceneSelection";
-      case SettingsId.BatteryInfo:
+      case ItemId.BatteryInfo:
         return "batteryInfo";
-      case SettingsId.RecordVideoState:
+      case ItemId.RecordVideoState:
         return "movieRecording";
-      case SettingsId.CameraInfo:
+      case ItemId.CameraInfo:
         return "serverInformation";
-      case SettingsId.Content:
+      case ItemId.Content:
         return "content";
-      case SettingsId.RequestTo:
+      case ItemId.RequestTo:
         return "requestTo";
-      case SettingsId.ServiceProtocols:
+      case ItemId.ServiceProtocols:
         return "serviceProtocols";
-      case SettingsId.ApiInfo:
+      case ItemId.ApiInfo:
         return "apiInfo";
-      case SettingsId.DriveMode:
+      case ItemId.DriveMode:
         return "";
-      case SettingsId.FlashValue:
+      case ItemId.FlashValue:
         return "";
-      case SettingsId.DroHdr:
+      case ItemId.DroHdr:
         return "";
-      case SettingsId.UnkD20E:
+      case ItemId.UnkD20E:
         return "";
-      case SettingsId.AspectRatio:
+      case ItemId.AspectRatio:
         return "";
-      case SettingsId.UnkD212:
+      case ItemId.UnkD212:
         return "";
-      case SettingsId.AutoFocusState:
+      case ItemId.AutoFocusState:
         return "focusStatus";
-      case SettingsId.AEL_State:
+      case ItemId.AEL_State:
         return "";
-      case SettingsId.SensorCrop:
+      case ItemId.SensorCrop:
         return "";
-      case SettingsId.WhiteBalanceAB:
+      case ItemId.WhiteBalanceAB:
         return "";
-      case SettingsId.FEL_State:
+      case ItemId.FEL_State:
         return "";
-      case SettingsId.UnkD222:
+      case ItemId.UnkD222:
         return "";
-      case SettingsId.FocusArea:
+      case ItemId.FocusArea:
         return "";
-      case SettingsId.FocusMagnifierPhase:
+      case ItemId.FocusMagnifierPhase:
         return "";
-      case SettingsId.UnkD22E:
+      case ItemId.UnkD22E:
         return "";
-      case SettingsId.FocusMagnifier:
+      case ItemId.FocusMagnifier:
         return "";
-      case SettingsId.FocusMagnifierPosition:
+      case ItemId.FocusMagnifierPosition:
         return "";
-      case SettingsId.UseLiveViewDisplayEffect:
+      case ItemId.UseLiveViewDisplayEffect:
         return "";
-      case SettingsId.FocusMagnifierState:
+      case ItemId.FocusMagnifierState:
         return "";
-      case SettingsId.FocusModeToggleResponse:
+      case ItemId.FocusModeToggleResponse:
         return "";
-      case SettingsId.UnkD236:
+      case ItemId.UnkD236:
         return "";
-      case SettingsId.AEL:
+      case ItemId.AEL:
         return "";
-      case SettingsId.UnkD2C5:
+      case ItemId.UnkD2C5:
         return "";
-      case SettingsId.UnkD2C7:
+      case ItemId.UnkD2C7:
         return "";
-      case SettingsId.FEL:
+      case ItemId.FEL:
         return "";
-      case SettingsId.FocusMagnifierRequest:
+      case ItemId.FocusMagnifierRequest:
         return "";
-      case SettingsId.FocusMagnifierResetRequest:
+      case ItemId.FocusMagnifierResetRequest:
         return "";
-      case SettingsId.FocusMagnifierMoveUpRequest:
+      case ItemId.FocusMagnifierMoveUpRequest:
         return "";
-      case SettingsId.FocusMagnifierMoveDownRequest:
+      case ItemId.FocusMagnifierMoveDownRequest:
         return "";
-      case SettingsId.FocusMagnifierMoveLeftRequest:
+      case ItemId.FocusMagnifierMoveLeftRequest:
         return "";
-      case SettingsId.FocusMagnifierMoveRightRequest:
+      case ItemId.FocusMagnifierMoveRightRequest:
         return "";
-      case SettingsId.FocusDistance:
+      case ItemId.FocusDistance:
         return "";
-      case SettingsId.FocusModeToggleRequest:
+      case ItemId.FocusModeToggleRequest:
         return "";
-      case SettingsId.UnkD2D3:
+      case ItemId.UnkD2D3:
         return "";
-      case SettingsId.UnkD2D4:
+      case ItemId.UnkD2D4:
         return "";
-      case SettingsId.PhotoInfo:
+      case ItemId.PhotoInfo:
         return "";
-      case SettingsId.Connect:
+      case ItemId.Connect:
         return "";
-      case SettingsId.Unknown:
+      case ItemId.Unknown:
         return "";
       default:
         return "";
     }
   }
 
-  static SettingsId getIdFromUsb(int usbValue) => SettingsId.values
+  static ItemId getIdFromUsb(int usbValue) => ItemId.values
           .firstWhere((element) => element.usbValue == usbValue, orElse: () {
-        Logger.n(SettingsId, usbValue);
-        return SettingsId.Unknown;
+        Logger.n(ItemId, usbValue);
+        return ItemId.Unknown;
       });
 
-  static SettingsId getIdFromWifi(String wifiValue) => SettingsId.values
+  static ItemId getIdFromWifi(String wifiValue) => ItemId.values
           .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
-        Logger.n(SettingsId, wifiValue);
-        return SettingsId.Unknown;
+        Logger.n(ItemId, wifiValue);
+        return ItemId.Unknown;
       });
 }

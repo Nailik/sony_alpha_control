@@ -95,7 +95,7 @@ abstract class CameraApiInterface {
 */
 
   ///usb so far
-  Future<bool> setSettingsRaw(SettingsId id, int value);
+  Future<bool> setSettingsRaw(ItemId id, int value);
 
   ///FNumber
   ///
@@ -298,14 +298,14 @@ abstract class CameraApiInterface {
 
   Future<SettingsItem<DriveModeValue>> getDriveMode(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem<DriveModeValue>(SettingsId.DriveMode);
+      device.cameraSettings.getItem<DriveModeValue>(ItemId.DriveMode);
 
   Future<bool> setDriveMode(DriveModeId value);
 
   Future<SettingsItem<FocusMagnifierDirectionValue>> getFocusMagnifierDirection(
           {ForceUpdate update}) async =>
       device.cameraSettings.getItem<FocusMagnifierDirectionValue>(
-          SettingsId.FocusMagnifierDirection);
+          ItemId.FocusMagnifierDirection);
 
   Future<bool> setFocusMagnifierDirection(
       FocusMagnifierDirectionId value, int steps); //move with steps?
@@ -313,13 +313,13 @@ abstract class CameraApiInterface {
   Future<SettingsItem<FocusMagnifierPhaseValue>> getFocusMagnifierPhase(
           {ForceUpdate update}) async =>
       device.cameraSettings
-          .getItem<FocusMagnifierPhaseValue>(SettingsId.FocusMagnifierPhase);
+          .getItem<FocusMagnifierPhaseValue>(ItemId.FocusMagnifierPhase);
 
   Future<bool> setFocusMagnifierPhase(FocusMagnifierPhaseId value);
 
   Future<SettingsItem<DoubleValue>> getFocusMagnifier(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem<DoubleValue>(SettingsId.FocusMagnifier);
+      device.cameraSettings.getItem<DoubleValue>(ItemId.FocusMagnifier);
 
   Future<bool> setFocusMagnifier(double value);
 }

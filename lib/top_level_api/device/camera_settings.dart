@@ -7,215 +7,215 @@ import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 abstract class CameraSettings extends ChangeNotifier {
   Future<bool> update();
 
-  SettingsItem fNumber = SettingsItem<DoubleValue>(SettingsId.FNumber);
-  SettingsItem iso = SettingsItem<IsoValue>(SettingsId.ISO);
+  SettingsItem fNumber = SettingsItem<DoubleValue>(ItemId.FNumber);
+  SettingsItem iso = SettingsItem<IsoValue>(ItemId.ISO);
   SettingsItem shutterSpeed =
-      SettingsItem<ShutterSpeedValue>(SettingsId.ShutterSpeed);
-  SettingsItem ev = SettingsItem<EvValue>(SettingsId.EV);
-  SettingsItem flashMode = SettingsItem<FlashModeValue>(SettingsId.FlashMode);
-  SettingsItem focusMode = SettingsItem<FocusModeValue>(SettingsId.FocusMode);
+      SettingsItem<ShutterSpeedValue>(ItemId.ShutterSpeed);
+  SettingsItem ev = SettingsItem<EvValue>(ItemId.EV);
+  SettingsItem flashMode = SettingsItem<FlashModeValue>(ItemId.FlashMode);
+  SettingsItem focusMode = SettingsItem<FocusModeValue>(ItemId.FocusMode);
   SettingsItem whiteBalanceMode =
-      SettingsItem<WhiteBalanceModeValue>(SettingsId.WhiteBalanceMode);
+      SettingsItem<WhiteBalanceModeValue>(ItemId.WhiteBalanceMode);
   SettingsItem whiteBalanceColorTemp = SettingsItem<WhiteBalanceColorTempValue>(
-      SettingsId.WhiteBalanceColorTemp);
-  SettingsItem aelState = SettingsItem<BoolValue>(SettingsId.AEL_State);
-  SettingsItem fel = SettingsItem<BoolValue>(SettingsId.FEL);
-  SettingsItem focusArea = SettingsItem<FocusAreaValue>(SettingsId.FocusArea);
+      ItemId.WhiteBalanceColorTemp);
+  SettingsItem aelState = SettingsItem<BoolValue>(ItemId.AEL_State);
+  SettingsItem fel = SettingsItem<BoolValue>(ItemId.FEL);
+  SettingsItem focusArea = SettingsItem<FocusAreaValue>(ItemId.FocusArea);
   SettingsItem focusAreaSpot =
-      SettingsItem<PointValue>(SettingsId.FocusAreaSpot);
+      SettingsItem<PointValue>(ItemId.FocusAreaSpot);
   SettingsItem autoFocusState =
-      SettingsItem<AutoFocusStateValue>(SettingsId.AutoFocusState);
-  SettingsItem flashValue = SettingsItem<IntValue>(SettingsId.FlashValue);
+      SettingsItem<AutoFocusStateValue>(ItemId.AutoFocusState);
+  SettingsItem flashValue = SettingsItem<IntValue>(ItemId.FlashValue);
   SettingsItem imageFileFormat =
-      SettingsItem<ImageFileFormatValue>(SettingsId.ImageFileFormat);
+      SettingsItem<ImageFileFormatValue>(ItemId.ImageFileFormat);
   SettingsItem pictureEffect =
-      SettingsItem<PictureEffectValue>(SettingsId.PictureEffect);
-  SettingsItem droHdr = SettingsItem<DroHdrValue>(SettingsId.DroHdr);
-  SettingsItem imageSize = SettingsItem<ImageSizeValue>(SettingsId.ImageSize);
+      SettingsItem<PictureEffectValue>(ItemId.PictureEffect);
+  SettingsItem droHdr = SettingsItem<DroHdrValue>(ItemId.DroHdr);
+  SettingsItem imageSize = SettingsItem<ImageSizeValue>(ItemId.ImageSize);
   SettingsItem aspectRatio =
-      SettingsItem<AspectRatioValue>(SettingsId.AspectRatio);
+      SettingsItem<AspectRatioValue>(ItemId.AspectRatio);
   SettingsItem focusModeToggleResponse =
-      SettingsItem<FocusModeToggleValue>(SettingsId.FocusModeToggleResponse);
+      SettingsItem<FocusModeToggleValue>(ItemId.FocusModeToggleResponse);
   SettingsItem shootingMode =
-      SettingsItem<DriveModeValue>(SettingsId.ShootingMode);
+      SettingsItem<DriveModeValue>(ItemId.ShootingMode);
   SettingsItem whiteBalanceAB =
-      SettingsItem<WhiteBalanceAbValue>(SettingsId.WhiteBalanceAB);
+      SettingsItem<WhiteBalanceAbValue>(ItemId.WhiteBalanceAB);
   SettingsItem whiteBalanceGM =
-      SettingsItem<WhiteBalanceGmValue>(SettingsId.WhiteBalanceGM);
-  SettingsItem driveMode = SettingsItem<DriveModeValue>(SettingsId.DriveMode);
+      SettingsItem<WhiteBalanceGmValue>(ItemId.WhiteBalanceGM);
+  SettingsItem driveMode = SettingsItem<DriveModeValue>(ItemId.DriveMode);
   SettingsItem focusMagnifierDirection =
       SettingsItem<FocusMagnifierDirectionValue>(
-          SettingsId.FocusMagnifierDirection);
+          ItemId.FocusMagnifierDirection);
   SettingsItem focusMagnifierPhase =
-      SettingsItem<FocusMagnifierPhaseValue>(SettingsId.FocusMagnifierPhase);
+      SettingsItem<FocusMagnifierPhaseValue>(ItemId.FocusMagnifierPhase);
   SettingsItem focusMagnifier =
-      SettingsItem<DoubleValue>(SettingsId.FocusMagnifier);
+      SettingsItem<DoubleValue>(ItemId.FocusMagnifier);
 
   //versions for all the different SonyWebApiServiceTypeIds
   SettingsItem<WebApiVersionsValue> versionsCamera =
-      SettingsItem<WebApiVersionsValue>(SettingsId.Versions);
+      SettingsItem<WebApiVersionsValue>(ItemId.Versions);
   SettingsItem<WebApiVersionsValue> versionsAvContent =
-      SettingsItem<WebApiVersionsValue>(SettingsId.Versions);
+      SettingsItem<WebApiVersionsValue>(ItemId.Versions);
   SettingsItem<WebApiVersionsValue> versionsSystem =
-      SettingsItem<WebApiVersionsValue>(SettingsId.Versions);
+      SettingsItem<WebApiVersionsValue>(ItemId.Versions);
   SettingsItem<WebApiVersionsValue> versionsGuide =
-      SettingsItem<WebApiVersionsValue>(SettingsId.Versions);
+      SettingsItem<WebApiVersionsValue>(ItemId.Versions);
 
   //TODO method types for all different SonyWebApiServiceTypeIds with versions?
   SettingsItem methodTypesCamera =
-      SettingsItem<WebApiMethodValue>(SettingsId.MethodTypes);
+      SettingsItem<WebApiMethodValue>(ItemId.MethodTypes);
   SettingsItem methodTypesAvContent =
-      SettingsItem<WebApiMethodValue>(SettingsId.MethodTypes);
+      SettingsItem<WebApiMethodValue>(ItemId.MethodTypes);
   SettingsItem methodTypesSystem =
-      SettingsItem<WebApiMethodValue>(SettingsId.MethodTypes);
+      SettingsItem<WebApiMethodValue>(ItemId.MethodTypes);
   SettingsItem methodTypesGuide =
-      SettingsItem<WebApiMethodValue>(SettingsId.MethodTypes);
+      SettingsItem<WebApiMethodValue>(ItemId.MethodTypes);
 
   SettingsItem applicationInfo =
-      SettingsItem<StringValue>(SettingsId.ApplicationInfo);
-  SettingsItem apiList = SettingsItem<StringValue>(SettingsId.ApiList);
+      SettingsItem<StringValue>(ItemId.ApplicationInfo);
+  SettingsItem apiList = SettingsItem<StringValue>(ItemId.ApiList);
   SettingsItem availableSettings =
-      SettingsItem<StringValue>(SettingsId.AvailableSettings);
+      SettingsItem<StringValue>(ItemId.AvailableSettings);
   SettingsItem cameraFunction =
-      SettingsItem<StringValue>(SettingsId.CameraFunction);
+      SettingsItem<StringValue>(ItemId.CameraFunction);
   SettingsItem capturePhoto =
-      SettingsItem<StringValue>(SettingsId.CapturePhoto);
-  SettingsItem cameraSetup = SettingsItem<StringValue>(SettingsId.CameraSetup);
-  SettingsItem liveView = SettingsItem<StringValue>(SettingsId.LiveView);
+      SettingsItem<StringValue>(ItemId.CapturePhoto);
+  SettingsItem cameraSetup = SettingsItem<StringValue>(ItemId.CameraSetup);
+  SettingsItem liveView = SettingsItem<StringValue>(ItemId.LiveView);
   SettingsItem liveViewWithSize =
-      SettingsItem<StringValue>(SettingsId.LiveViewWithSize);
-  SettingsItem zoom = SettingsItem<StringValue>(SettingsId.Zoom);
+      SettingsItem<StringValue>(ItemId.LiveViewWithSize);
+  SettingsItem zoom = SettingsItem<StringValue>(ItemId.Zoom);
   SettingsItem halfPressShutter =
-      SettingsItem<StringValue>(SettingsId.HalfPressShutter);
-  SettingsItem selfTimer = SettingsItem<StringValue>(SettingsId.SelfTimer);
+      SettingsItem<StringValue>(ItemId.HalfPressShutter);
+  SettingsItem selfTimer = SettingsItem<StringValue>(ItemId.SelfTimer);
   SettingsItem contShootingMode =
-      SettingsItem<StringValue>(SettingsId.ContShootingMode);
+      SettingsItem<StringValue>(ItemId.ContShootingMode);
   SettingsItem contShootingSpeed =
-      SettingsItem<StringValue>(SettingsId.ContShootingSpeed);
+      SettingsItem<StringValue>(ItemId.ContShootingSpeed);
   SettingsItem meteringMode =
-      SettingsItem<MeteringModeValue>(SettingsId.MeteringMode);
+      SettingsItem<MeteringModeValue>(ItemId.MeteringMode);
   SettingsItem liveViewSize =
-      SettingsItem<LiveViewSizeValue>(SettingsId.LiveViewSize);
+      SettingsItem<LiveViewSizeValue>(ItemId.LiveViewSize);
   SettingsItem postViewImageSize =
-      SettingsItem<StringValue>(SettingsId.PostViewImageSize);
+      SettingsItem<StringValue>(ItemId.PostViewImageSize);
   SettingsItem programShift =
-      SettingsItem<StringValue>(SettingsId.ProgramShift);
-  SettingsItem zoomSetting = SettingsItem<StringValue>(SettingsId.ZoomSetting);
+      SettingsItem<StringValue>(ItemId.ProgramShift);
+  SettingsItem zoomSetting = SettingsItem<StringValue>(ItemId.ZoomSetting);
   SettingsItem storageInformation =
-      SettingsItem<StringValue>(SettingsId.StorageInformation);
+      SettingsItem<StringValue>(ItemId.StorageInformation);
   SettingsItem liveViewInfo =
-      SettingsItem<StringValue>(SettingsId.LiveViewInfo);
+      SettingsItem<StringValue>(ItemId.LiveViewInfo);
   SettingsItem silentShootingSettings =
-      SettingsItem<StringValue>(SettingsId.SilentShootingSettings);
+      SettingsItem<StringValue>(ItemId.SilentShootingSettings);
 
   //TODO getter future, da wenn current value "leer" evtl nochmal requesten? (vtl einstellbar falls nie ?)
   //TODO update mit boolean request -> falls immer geupdttet werden soll
   //TODO remove this method
-  SettingsItem<T> getItem<T extends Value>(SettingsId settingsId) {
+  SettingsItem<T> getItem<T extends Value>(ItemId settingsId) {
     switch (settingsId) {
-      case SettingsId.FNumber:
+      case ItemId.FNumber:
         return fNumber;
-      case SettingsId.EV:
+      case ItemId.EV:
         return ev;
-      case SettingsId.ISO:
+      case ItemId.ISO:
         return iso;
-      case SettingsId.ShutterSpeed:
+      case ItemId.ShutterSpeed:
         return shutterSpeed;
-      case SettingsId.AEL_State:
+      case ItemId.AEL_State:
         return aelState;
-      case SettingsId.FEL:
+      case ItemId.FEL:
         return fel;
-      case SettingsId.FlashMode:
+      case ItemId.FlashMode:
         return flashMode;
-      case SettingsId.FocusMode:
+      case ItemId.FocusMode:
         return focusMode;
-      case SettingsId.MeteringMode:
+      case ItemId.MeteringMode:
         return meteringMode;
-      case SettingsId.WhiteBalanceMode:
+      case ItemId.WhiteBalanceMode:
         return whiteBalanceMode;
-      case SettingsId.WhiteBalanceColorTemp:
+      case ItemId.WhiteBalanceColorTemp:
         return whiteBalanceColorTemp;
-      case SettingsId.FocusArea:
+      case ItemId.FocusArea:
         return focusArea;
-      case SettingsId.FocusAreaSpot:
+      case ItemId.FocusAreaSpot:
         return focusAreaSpot;
-      case SettingsId.AutoFocusState:
+      case ItemId.AutoFocusState:
         return autoFocusState;
-      case SettingsId.ImageFileFormat:
+      case ItemId.ImageFileFormat:
         return autoFocusState;
-      case SettingsId.FlashValue:
+      case ItemId.FlashValue:
         return flashValue;
-      case SettingsId.ImageFileFormat:
+      case ItemId.ImageFileFormat:
         return imageFileFormat;
-      case SettingsId.PictureEffect:
+      case ItemId.PictureEffect:
         return pictureEffect;
-      case SettingsId.DroHdr:
+      case ItemId.DroHdr:
         return droHdr;
-      case SettingsId.ImageSize:
+      case ItemId.ImageSize:
         return imageSize;
-      case SettingsId.AspectRatio:
+      case ItemId.AspectRatio:
         return aspectRatio;
-      case SettingsId.FocusModeToggleResponse:
+      case ItemId.FocusModeToggleResponse:
         return focusModeToggleResponse;
-      case SettingsId.ShootingMode:
+      case ItemId.ShootingMode:
         return shootingMode;
-      case SettingsId.WhiteBalanceAB:
+      case ItemId.WhiteBalanceAB:
         return whiteBalanceAB;
-      case SettingsId.WhiteBalanceGM:
+      case ItemId.WhiteBalanceGM:
         return whiteBalanceGM;
-      case SettingsId.DriveMode:
+      case ItemId.DriveMode:
         return driveMode;
-      case SettingsId.FocusMagnifierDirection:
+      case ItemId.FocusMagnifierDirection:
         return focusMagnifierDirection;
-      case SettingsId.FocusMagnifierPhase:
+      case ItemId.FocusMagnifierPhase:
         return focusMagnifierPhase;
-      case SettingsId.FocusMagnifier:
+      case ItemId.FocusMagnifier:
         return focusMagnifier;
-      case SettingsId.Versions:
+      case ItemId.Versions:
         throw UnsupportedError;
-      case SettingsId.MethodTypes:
+      case ItemId.MethodTypes:
         throw UnsupportedError;
-      case SettingsId.ApplicationInfo:
+      case ItemId.ApplicationInfo:
         return applicationInfo;
-      case SettingsId.ApiList:
+      case ItemId.ApiList:
         return apiList;
-      case SettingsId.AvailableSettings:
+      case ItemId.AvailableSettings:
         return availableSettings;
-      case SettingsId.CameraFunction:
+      case ItemId.CameraFunction:
         return cameraFunction;
-      case SettingsId.CameraSetup:
+      case ItemId.CameraSetup:
         return cameraSetup;
-      case SettingsId.LiveView:
+      case ItemId.LiveView:
         return liveView;
-      case SettingsId.LiveViewWithSize:
+      case ItemId.LiveViewWithSize:
         return liveViewWithSize;
-      case SettingsId.Zoom:
+      case ItemId.Zoom:
         return zoom;
-      case SettingsId.HalfPressShutter:
+      case ItemId.HalfPressShutter:
         return halfPressShutter;
-      case SettingsId.SelfTimer:
+      case ItemId.SelfTimer:
         return selfTimer;
-      case SettingsId.ContShootingMode:
+      case ItemId.ContShootingMode:
         return contShootingMode;
-      case SettingsId.ContShootingSpeed:
+      case ItemId.ContShootingSpeed:
         return contShootingSpeed;
-      case SettingsId.MeteringMode:
+      case ItemId.MeteringMode:
         return meteringMode;
-      case SettingsId.LiveViewSize:
+      case ItemId.LiveViewSize:
         return liveViewSize;
-      case SettingsId.PostViewImageSize:
+      case ItemId.PostViewImageSize:
         return postViewImageSize;
-      case SettingsId.ProgramShift:
+      case ItemId.ProgramShift:
         return programShift;
-      case SettingsId.ZoomSetting:
+      case ItemId.ZoomSetting:
         return zoomSetting;
-      case SettingsId.StorageInformation:
+      case ItemId.StorageInformation:
         return storageInformation;
-      case SettingsId.ProgramShift:
+      case ItemId.ProgramShift:
         return programShift;
-      case SettingsId.LiveViewInfo:
+      case ItemId.LiveViewInfo:
         return liveViewInfo;
-      case SettingsId.SilentShootingSettings:
+      case ItemId.SilentShootingSettings:
         return silentShootingSettings;
       default:
         return null;

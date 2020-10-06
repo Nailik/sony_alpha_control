@@ -11,7 +11,7 @@ class UsbCommands {
   static var index = 1;
 
 //omost often used values as default
-  static SonyUsbCommand getCommandSetting(SettingsId settingsId,
+  static SonyUsbCommand getCommandSetting(ItemId settingsId,
       {OpCodeId opCodeId = OpCodeId.SubSetting,
       int value1 = 0,
       int value2 = 0,
@@ -24,7 +24,7 @@ class UsbCommands {
       if (value2DataSize != 0) {
         length += 2;
       }
-      if (opCodeId == OpCodeId.Connect && settingsId == SettingsId.Connect) {
+      if (opCodeId == OpCodeId.Connect && settingsId == ItemId.Connect) {
         length = 38;
       }
 
@@ -34,15 +34,15 @@ class UsbCommands {
       list.goTo(10);
       list.writeUInt16(settingsId.usbValue);
       list.goTo(30);
-      if (settingsId == SettingsId.Connect) {
+      if (settingsId == ItemId.Connect) {
         list.writeUInt8(3);
       } else {
         list.writeUInt8(1);
       }
       list.goTo(34);
-      if (settingsId == SettingsId.AvailableSettings ||
-          settingsId == SettingsId.CameraInfo ||
-          settingsId == SettingsId.Connect) {
+      if (settingsId == ItemId.AvailableSettings ||
+          settingsId == ItemId.CameraInfo ||
+          settingsId == ItemId.Connect) {
         list.writeUInt8(3);
       } else {
         list.writeUInt8(4);
@@ -158,8 +158,8 @@ class UsbCommands {
     //TODO if not 1024
     OpCodeId opcode =
         info ? OpCodeId.GetImageInfo : OpCodeId.GetImageData; //0x1008
-    SettingsId settingsId =
-        liveView ? SettingsId.LiveViewInfo : SettingsId.PhotoInfo; //0xC002
+    ItemId settingsId =
+        liveView ? ItemId.LiveViewInfo : ItemId.PhotoInfo; //0xC002
 
     Uint8List list;
     if (Platform.isWindows) {
