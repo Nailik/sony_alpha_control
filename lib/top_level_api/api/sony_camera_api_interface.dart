@@ -28,7 +28,6 @@ import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 
 import 'force_update.dart';
 
-
 abstract class CameraApiInterface {
   SonyCameraDevice cameraDevice;
 
@@ -50,8 +49,9 @@ abstract class CameraApiInterface {
       device.cameraSettings.versions;
 
   Future<SettingsItem<WebApiMethodValue>> getMethodTypes(
+          WebApiVersionId webApiVersion,
           {ForceUpdate update}) async =>
-      device.cameraSettings.versions;
+      device.cameraSettings.methodTypes;
 
   /*
   Future<Map<SettingsId, List<SonyWebApiMethod>>> getAvailableApiList(

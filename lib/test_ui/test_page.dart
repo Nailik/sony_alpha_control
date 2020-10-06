@@ -8,6 +8,7 @@ import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/flash_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 
@@ -197,10 +198,22 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(SettingsId.MethodTypes.name),
-              subtitle: Text(device.cameraSettings.methodTypes.value?.name ??
-                  "NotAvailable"),
-            ),
+                title: Text(SettingsId.MethodTypes.name),
+                onTap: () => device.api.getMethodTypes(WebApiVersionId.V_1_3)),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<WebApiMethodValue>(
+                        hint: Text("available"),
+                        items: device.cameraSettings.methodTypes.available
+                            .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
+                                DropdownMenuItem<WebApiMethodValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) {},
+                      )))
+            ]),
           ]),
         ),
       ),

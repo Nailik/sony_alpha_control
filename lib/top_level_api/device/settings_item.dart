@@ -22,6 +22,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
@@ -86,6 +87,8 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
     switch (settingsId) {
       case SettingsId.Versions:
         return WebApiVersionValue.fromWifiValue(wifiValue);
+      case SettingsId.MethodTypes:
+        return WebApiMethodValue.fromWifiValue(wifiValue);
       case SettingsId.ImageFileFormat: //StillQuality
         return ImageFileFormatValue.fromWifiValue(wifiValue);
       case SettingsId.ApiList:

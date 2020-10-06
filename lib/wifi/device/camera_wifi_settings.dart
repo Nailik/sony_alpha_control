@@ -254,6 +254,12 @@ class CameraWifiSettings extends CameraSettings {
         settingsItem.updateItem(
             settingsItem.value, settingsItem.subValue, itemsList, itemsList);
         break;
+      case SettingsId.MethodTypes:
+        list = jsonD["results"];
+        var itemsList = settingsItem.createListFromWifiJson(list as List);
+        settingsItem.updateItem(
+            settingsItem.value, settingsItem.subValue, itemsList, itemsList);
+        break;
       default:
         //TODO
         settingsItem.updateItem(settingsItem.value, settingsItem.subValue,

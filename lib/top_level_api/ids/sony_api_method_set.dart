@@ -1,21 +1,23 @@
 import 'dart:convert';
 
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
 
 class WebApiMethod {
   SonyWebApiMethodId apiName;
+  SettingsId settingsId;
   List<String> parameterTypes;
   List<String> responseTypes;
   WebApiVersionId version;
 
-  WebApiMethod(
-      this.apiName, this.parameterTypes, this.responseTypes, this.version);
+  WebApiMethod(this.apiName, this.settingsId, this.parameterTypes,
+      this.responseTypes, this.version);
 
   @override
   String toString() =>
-      "apiName: $apiName version: $version \n parameterTypes: \n $parameterTypes \n responseTypes: \n $responseTypes";
+      "apiName: $apiName settingsId: $settingsId version: $version \n parameterTypes: \n $parameterTypes \n responseTypes: \n $responseTypes";
 }
 
 class WebApiMethodValue extends SettingsValue<WebApiMethod> {
@@ -26,14 +28,17 @@ class WebApiMethodValue extends SettingsValue<WebApiMethod> {
       throw UnsupportedError;
 
   @override
-  factory WebApiMethodValue.fromWifiValue(String wifiValue) {
-    var jsonD = jsonDecode(wifiValue);
+  factory WebApiMethodValue.fromWifiValue(dynamic wifiValue) {
+    var methodId = SonyWebApiMethodId.values
+        .firstWhere((element) => wifiValue[0].startsWith(element.wifiValue));
     return WebApiMethodValue(WebApiMethod(
-        SonyWebApiMethodId.values
-            .firstWhere((element) => jsonD[0].startsWith(element.wifiValue)),
-        (jsonD[1] as List)?.map((e) => e as String)?.toList(),
-        (jsonD[2] as List)?.map((e) => e as String)?.toList(),
-        WebApiVersionIdExtension.fromWifiValue(jsonD[3])));
+        methodId,
+        SettingsIdExtension.getIdFromWifi(
+            (wifiValue[0].replaceFirst(methodId.wifiValue, "") as String)
+                .startLow),
+        (wifiValue[1] as List)?.map((e) => e as String)?.toList(),
+        (wifiValue[2] as List)?.map((e) => e as String)?.toList(),
+        WebApiVersionIdExtension.fromWifiValue(wifiValue[3])));
   }
 
   @override
