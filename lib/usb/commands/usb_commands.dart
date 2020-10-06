@@ -5,7 +5,7 @@ import 'package:flutter_usb/Command.dart';
 import 'package:flutter_usb/Response.dart';
 import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 
 class UsbCommands {
   static var index = 1;

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/device/value.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 
 abstract class CameraSettings extends ChangeNotifier {
   Future<bool> update();

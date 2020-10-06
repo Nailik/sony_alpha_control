@@ -5,7 +5,7 @@ import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/api/sony_api.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 import 'package:sonyalphacontrol/usb/commands/response_validation.dart';
 import 'package:sonyalphacontrol/usb/commands/usb_commands.dart';
 import 'package:sonyalphacontrol/usb/device/sony_camera_usb_device.dart';
