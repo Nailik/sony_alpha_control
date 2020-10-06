@@ -1,20 +1,15 @@
-import 'package:file_chooser/file_chooser.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sonyalphacontrol/top_level_api/api/force_update.dart';
 import 'package:sonyalphacontrol/top_level_api/api/sony_api.dart';
-import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/device/camera_settings.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/flash_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
-import 'package:sonyalphacontrol/wifi/enums/force_update.dart';
 
 class TestsPage extends StatefulWidget {
   final SonyCameraDevice device;
@@ -36,10 +31,7 @@ class TestsPageState extends State<TestsPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-            appBar: AppBar(
-                //    leading: CircularProgressIndicator(
-                //      valueColor: AlwaysStoppedAnimation<Color>(Colors.white)),
-                ),
+            appBar: AppBar(),
             backgroundColor: Colors.blueGrey,
             body: ListenableProvider<CameraSettings>(
                 create: (context) => SonyApi.connectedCamera.cameraSettings,

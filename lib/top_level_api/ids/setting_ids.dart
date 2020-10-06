@@ -1,6 +1,6 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
-import 'package:sonyalphacontrol/wifi/enums/sony_web_api_method.dart';
+import 'file:///C:/Users/kilia/CloudStation/Dokumente/Projects/sony_alpha_control/lib/top_level_api/ids/sony_web_api_method_ids.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 enum SettingsId {
@@ -612,24 +612,6 @@ class SettingsIdValue extends SettingsValue<SettingsId> {
 
   @override
   String get name => id.name;
-}
-
-class SettingsIdConverter
-    implements JsonConverter<MapEntry<SettingsId, SonyWebApiMethod>, String> {
-  const SettingsIdConverter();
-
-  @override
-  MapEntry<SettingsId, SonyWebApiMethod> fromJson(String json) {
-    SonyWebApiMethod method = SonyWebApiMethod.values
-        .firstWhere((element) => json.startsWith(element.wifiValue));
-    SettingsId settingsId = SettingsIdExtension.getIdFromWifi(
-        json.replaceFirst(method.wifiValue, "").startLow);
-    return MapEntry(settingsId, method);
-  }
-
-  @override
-  String toJson(MapEntry<SettingsId, SonyWebApiMethod> method) =>
-      "${method.value.wifiValue.startCap}${method.key.wifiValue}";
 }
 
 extension StringExtension on String {

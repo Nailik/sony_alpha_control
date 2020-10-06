@@ -20,11 +20,14 @@ import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
-import 'package:sonyalphacontrol/wifi/enums/force_update.dart';
+
+import 'force_update.dart';
+
 
 abstract class CameraApiInterface {
   SonyCameraDevice cameraDevice;
@@ -40,8 +43,24 @@ abstract class CameraApiInterface {
     //how to send changes?
   }
 
-  Future<SettingsItem<WebApiVersionValue>> getWebApiVersions({ForceUpdate update}) async =>
+  ///server information
+
+  Future<SettingsItem<WebApiVersionValue>> getWebApiVersions(
+          {ForceUpdate update}) async =>
       device.cameraSettings.versions;
+
+  Future<SettingsItem<WebApiMethodValue>> getMethodTypes(
+          {ForceUpdate update}) async =>
+      device.cameraSettings.versions;
+
+  /*
+  Future<Map<SettingsId, List<SonyWebApiMethod>>> getAvailableApiList(
+
+  //TODO together to get functions
+  Future<List<CameraFunctionValue>> getSupportedFunctions(
+
+  getAvailableFunctions(
+*/
 
   ///usb so far
   Future<bool> setSettingsRaw(SettingsId id, int value);

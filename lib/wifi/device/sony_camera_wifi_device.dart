@@ -5,10 +5,10 @@ import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/camera_function_id.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
-import 'package:sonyalphacontrol/wifi/enums/sony_api_method_set.dart';
-import 'package:sonyalphacontrol/wifi/enums/sony_web_api_method.dart';
-import 'package:sonyalphacontrol/wifi/enums/sony_web_api_service_type.dart';
 import 'package:sonyalphacontrol/wifi/xml/camera_web_api_service.dart';
 import 'package:sonyalphacontrol/wifi/xml/wifi_camera_xml.dart';
 
@@ -22,7 +22,7 @@ class SonyCameraWifiDevice extends SonyCameraDevice<CameraWifiSettings> {
   @override
   InterfaceType get interfaceType => InterfaceType.Wifi_Interface;
 
-  CameraWebApiService getWebApiService(SonyWebApiServiceType service) =>
+  CameraWebApiService getWebApiService(SonyWebApiServiceTypeId service) =>
       info.scalarWebApiDeviceInfo.serviceList.services
           .firstWhere((element) => element.type == service.wifiValue);
 
@@ -43,8 +43,11 @@ class WifiCameraInfo {
 class WifiCameraFunctionality {
   final SettingsItem<WebApiVersionValue> webApiVersions;
   final List<WebApiMethod> webApiMethods;
-  final Map<SettingsId, List<SonyWebApiMethod>> availableApiList; //TODO in settings
-  final SettingsItem<SettingsValue<CameraFunctionId>> cameraWebFunctions; //TODO in settings
+  final Map<SettingsId, List<SonyWebApiMethodId>>
+      availableApiList; //TODO in settings
+  final SettingsItem<SettingsValue<CameraFunctionId>>
+      cameraWebFunctions; //TODO in settings
 
-  WifiCameraFunctionality(this.webApiVersions, this.webApiMethods, this.availableApiList, this.cameraWebFunctions);
+  WifiCameraFunctionality(this.webApiVersions, this.webApiMethods,
+      this.availableApiList, this.cameraWebFunctions);
 }

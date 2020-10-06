@@ -6,10 +6,10 @@ import 'package:http/http.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sonyalphacontrol/top_level_api/api/sony_api.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
 import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
-import 'package:sonyalphacontrol/wifi/enums/sony_web_api_method.dart';
-import 'package:sonyalphacontrol/wifi/enums/sony_web_api_service_type.dart';
-import 'file:///C:/Users/kilia/CloudStation/Dokumente/Projects/sony_alpha_control/lib/top_level_api/ids/web_api_version.dart';
 
 class WifiCommands {
   //TOdo in json
@@ -22,7 +22,7 @@ class WifiCommands {
 }
 
 class WifiCommand {
-  SonyWebApiServiceType service; //for url only
+  SonyWebApiServiceTypeId service; //for url only
 
   int id = 0;
   String method;
@@ -31,10 +31,12 @@ class WifiCommand {
 
   WifiCommand(this.id, this.method, this.version, this.params, {this.service});
 
-  static WifiCommand createCommand(SonyWebApiMethod method, SettingsId apiGroup,
-      {SonyWebApiServiceType service = SonyWebApiServiceType.CAMERA,
-        WebApiVersionId version = WebApiVersionId.V_1_0, //TOp supported version?
-        List<dynamic> params = const []}) =>
+  static WifiCommand createCommand(
+          SonyWebApiMethodId method, SettingsId apiGroup,
+          {SonyWebApiServiceTypeId service = SonyWebApiServiceTypeId.CAMERA,
+          WebApiVersionId version =
+              WebApiVersionId.V_1_0, //TOp supported version?
+          List<dynamic> params = const []}) =>
       WifiCommand(
           0, method.wifiValue + apiGroup.wifiValue.startCap, version, params,
           service: service);
@@ -43,9 +45,7 @@ class WifiCommand {
       {timeout: 80000}) async {
     //url
     //request json
-    var url = "${device
-        .getWebApiService(service)
-        .url}/${service.wifiValue}";
+    var url = "${device.getWebApiService(service).url}/${service.wifiValue}";
     id = WifiCommands.id; //update id right before creating json and sending
     var json = jsonEncode(this);
     try {
@@ -68,29 +68,25 @@ class WifiCommand {
   }
 
   logRequestAndResponse(WifiResponse wifiResponse) async {
-    var dir = Directory(
-        "${(await getApplicationSupportDirectory()).path}/wifiLog");
+    var dir =
+        Directory("${(await getApplicationSupportDirectory()).path}/wifiLog");
     dir.create(recursive: true);
     var file = File('${dir.path}/${method}_${version}_${params}_.json');
     file.create(recursive: true);
     var text = "$method $version $params \n\n "
-        "***************************REQUEST***************************\n\n ${wifiResponse
-        .request}  \n\n "
-        "---------------------------RESPONSE--------------------------\n\n  ${wifiResponse
-        .response}  \n\n ";
+        "***************************REQUEST***************************\n\n ${wifiResponse.request}  \n\n "
+        "---------------------------RESPONSE--------------------------\n\n  ${wifiResponse.response}  \n\n ";
     await file.writeAsString(text);
   }
 
-  factory WifiCommand.fromJson(Map<String, dynamic> json) =>
-      WifiCommand(
+  factory WifiCommand.fromJson(Map<String, dynamic> json) => WifiCommand(
         json['id'] as int,
         json['method'] as String,
         WebApiVersionIdExtension.fromWifiValue(json['version'] as String),
         json['params'] as List,
       );
 
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{
+  Map<String, dynamic> toJson() => <String, dynamic>{
         'id': this.id,
         'method': this.method,
         'version': this.version.wifiValue,
@@ -104,5 +100,7 @@ class WifiResponse {
 
   WifiResponse(this.request, this.response);
 
-  get isValid => jsonDecode(response)["result"][0] == 0; //TODO what error code? illegal argument/ unsupported etc
+  get isValid =>
+      jsonDecode(response)["result"][0] ==
+      0; //TODO what error code? illegal argument/ unsupported etc
 }

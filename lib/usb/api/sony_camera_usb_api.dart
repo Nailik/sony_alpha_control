@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_usb/flutter_usb.dart';
+import 'package:sonyalphacontrol/top_level_api/api/force_update.dart';
 import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/device/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
@@ -31,7 +32,6 @@ import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 import 'package:sonyalphacontrol/usb/commands/downloader.dart';
 import 'package:sonyalphacontrol/usb/commands/response_validation.dart';
 import 'package:sonyalphacontrol/usb/device/sony_camera_usb_device.dart';
-import 'package:sonyalphacontrol/wifi/enums/force_update.dart';
 
 import '../commands/usb_commands.dart';
 
