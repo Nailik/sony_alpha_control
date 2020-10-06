@@ -1,5 +1,4 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum FocusMagnifierDirectionId { Left, Right, Up, Down, Unknown }
 
@@ -38,28 +37,4 @@ extension FocusMagnifierDirectionIdExtension on FocusMagnifierDirectionId {
         Logger.n(FocusMagnifierDirectionId, wifiValue);
         return FocusMagnifierDirectionId.Unknown;
       });
-}
-
-class FocusMagnifierDirectionValue
-    extends SettingsValue<FocusMagnifierDirectionId> {
-  FocusMagnifierDirectionValue(FocusMagnifierDirectionId id) : super(id);
-
-  @override
-  factory FocusMagnifierDirectionValue.fromUSBValue(int usbValue) =>
-      FocusMagnifierDirectionValue(
-          FocusMagnifierDirectionIdExtension.getIdFromUsb(usbValue));
-
-  @override
-  factory FocusMagnifierDirectionValue.fromWifiValue(String wifiValue) =>
-      FocusMagnifierDirectionValue(
-          FocusMagnifierDirectionIdExtension.getIdFromWifi(wifiValue));
-
-  @override
-  int get usbValue => id.usbValue;
-
-  @override
-  String get wifiValue => id.wifiValue;
-
-  @override
-  String get name => id.name;
 }

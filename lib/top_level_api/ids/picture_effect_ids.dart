@@ -1,5 +1,4 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum PictureEffectId {
   Off,
@@ -133,25 +132,4 @@ extension PictureEffectIdExtension on PictureEffectId {
         Logger.n(PictureEffectId, wifiValue);
         return PictureEffectId.Unknown;
       });
-}
-
-class PictureEffectValue extends SettingsValue<PictureEffectId> {
-  PictureEffectValue(PictureEffectId id) : super(id);
-
-  @override
-  factory PictureEffectValue.fromUSBValue(int usbValue) =>
-      PictureEffectValue(PictureEffectIdExtension.getIdFromUsb(usbValue));
-
-  @override
-  factory PictureEffectValue.fromWifiValue(String wifiValue) =>
-      PictureEffectValue(PictureEffectIdExtension.getIdFromWifi(wifiValue));
-
-  @override
-  int get usbValue => id.usbValue;
-
-  @override
-  String get wifiValue => id.wifiValue;
-
-  @override
-  String get name => id.name;
 }

@@ -5,10 +5,11 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sonyalphacontrol/top_level_api/api/sony_api.dart';
+import 'package:sonyalphacontrol/top_level_api/device/value.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/web_api_version_ids.dart';
 import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
 
 class WifiCommands {

@@ -65,24 +65,3 @@ extension ImageFileFormatIdExtension on ImageFileFormatId {
         return ImageFileFormatId.Unknown;
       });
 }
-
-class ImageFileFormatValue extends SettingsValue<ImageFileFormatId> {
-  ImageFileFormatValue(ImageFileFormatId id) : super(id);
-
-  @override
-  factory ImageFileFormatValue.fromUSBValue(int usbValue) =>
-      ImageFileFormatValue(ImageFileFormatIdExtension.getIdFromUsb(usbValue));
-
-  @override
-  factory ImageFileFormatValue.fromWifiValue(String wifiValue) =>
-      ImageFileFormatValue(ImageFileFormatIdExtension.getIdFromWifi(wifiValue));
-
-  @override
-  int get usbValue => id.usbValue;
-
-  @override
-  String get wifiValue => id.wifiValue;
-
-  @override
-  String get name => id.name;
-}

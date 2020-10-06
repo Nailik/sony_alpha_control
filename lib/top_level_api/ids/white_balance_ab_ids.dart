@@ -1,5 +1,4 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 ///
 /// Warmth bias used by AB (amber-blue)
@@ -121,25 +120,4 @@ extension WhiteBalanceAbIdExtension on WhiteBalanceAbId {
         Logger.n(WhiteBalanceAbId, wifiValue);
         return WhiteBalanceAbId.Unknown;
       });
-}
-
-class WhiteBalanceAbValue extends SettingsValue<WhiteBalanceAbId> {
-  WhiteBalanceAbValue(WhiteBalanceAbId id) : super(id);
-
-  @override
-  factory WhiteBalanceAbValue.fromUSBValue(int usbValue) =>
-      WhiteBalanceAbValue(WhiteBalanceAbIdExtension.getIdFromUsb(usbValue));
-
-  @override
-  factory WhiteBalanceAbValue.fromWifiValue(String wifiValue) =>
-      WhiteBalanceAbValue(WhiteBalanceAbIdExtension.getIdFromWifi(wifiValue));
-
-  @override
-  int get usbValue => id.usbValue;
-
-  @override
-  String get wifiValue => id.wifiValue;
-
-  @override
-  String get name => id.name;
 }

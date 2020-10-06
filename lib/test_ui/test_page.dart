@@ -5,13 +5,9 @@ import 'package:sonyalphacontrol/top_level_api/api/sony_api.dart';
 import 'package:sonyalphacontrol/top_level_api/device/camera_settings.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/flash_mode_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/device/value.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 
 class TestsPage extends StatefulWidget {
   final SonyCameraDevice device;

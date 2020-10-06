@@ -1,5 +1,4 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum ImageSizeId {
   Large,
@@ -77,25 +76,4 @@ extension ImageSizeIdExtension on ImageSizeId {
         Logger.n(ImageSizeId, wifiValue);
         return ImageSizeId.Unknown;
       });
-}
-
-class ImageSizeValue extends SettingsValue<ImageSizeId> {
-  ImageSizeValue(ImageSizeId id) : super(id);
-
-  @override
-  factory ImageSizeValue.fromUSBValue(int usbValue) =>
-      ImageSizeValue(ImageSizeIdExtension.getIdFromUsb(usbValue));
-
-  @override
-  factory ImageSizeValue.fromWifiValue(String wifiValue) =>
-      ImageSizeValue(ImageSizeIdExtension.getIdFromWifi(wifiValue));
-
-  @override
-  int get usbValue => id.usbValue;
-
-  @override
-  String get wifiValue => id.wifiValue;
-
-  @override
-  String get name => id.name;
 }

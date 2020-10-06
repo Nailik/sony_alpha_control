@@ -9,27 +9,21 @@ import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dar
 import 'package:sonyalphacontrol/top_level_api/device/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
+import 'package:sonyalphacontrol/top_level_api/device/value.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/dro_hdr_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/flash_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_area_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_direction_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_phase_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 import 'package:sonyalphacontrol/usb/commands/downloader.dart';
 import 'package:sonyalphacontrol/usb/commands/response_validation.dart';
 import 'package:sonyalphacontrol/usb/device/sony_camera_usb_device.dart';
@@ -543,13 +537,13 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   @override
   Future<RecordVideoStateValue> getRecordingVideoState(
-      {ForceUpdate update}) async =>
+          {ForceUpdate update}) async =>
       device.cameraSettings.getItem(SettingsId.RecordVideoState).value
           as RecordVideoStateValue;
 
   @override
   Future<SettingsItem<ImageSizeValue>> getImageSize(
-      {ForceUpdate update}) async =>
+          {ForceUpdate update}) async =>
       device.cameraSettings.getItem(SettingsId.ImageSize);
 
   @override
@@ -614,8 +608,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
   }
 
   @override
-  Future<SettingsItem<StringValue>> getRecordingAudio(
-      {ForceUpdate update}) {
+  Future<SettingsItem<StringValue>> getRecordingAudio({ForceUpdate update}) {
     // TODO: implement getRecordingAudio
     throw UnimplementedError();
   }
@@ -647,7 +640,8 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   @override
   Future<SettingsItem<WebApiVersionsValue>> getWebApiVersions(
-      SonyWebApiServiceTypeId serviceTypeId, {ForceUpdate update}) {
+      SonyWebApiServiceTypeId serviceTypeId,
+      {ForceUpdate update}) {
     // TODO: implement getWebApiVersions
     throw UnimplementedError();
   }

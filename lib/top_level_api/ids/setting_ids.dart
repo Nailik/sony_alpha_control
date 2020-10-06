@@ -1,7 +1,4 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
-import 'file:///C:/Users/kilia/CloudStation/Dokumente/Projects/sony_alpha_control/lib/top_level_api/ids/sony_web_api_method_ids.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 enum SettingsId {
   /// <summary>
@@ -609,31 +606,4 @@ extension SettingsIdExtension on SettingsId {
         Logger.n(SettingsId, wifiValue);
         return SettingsId.Unknown;
       });
-}
-
-class SettingsIdValue extends SettingsValue<SettingsId> {
-  SettingsIdValue(SettingsId id) : super(id);
-
-  @override
-  factory SettingsIdValue.fromUSBValue(int usbValue) =>
-      SettingsIdValue(SettingsIdExtension.getIdFromUsb(usbValue));
-
-  @override
-  factory SettingsIdValue.fromWifiValue(String wifiValue) =>
-      SettingsIdValue(SettingsIdExtension.getIdFromWifi(wifiValue));
-
-  @override
-  int get usbValue => id.usbValue;
-
-  @override
-  String get wifiValue => id.wifiValue;
-
-  @override
-  String get name => id.name;
-}
-
-extension StringExtension on String {
-  String get startCap => "${this[0].toUpperCase()}${this.substring(1)}";
-
-  String get startLow => "${this[0].toLowerCase()}${this.substring(1)}";
 }

@@ -1,5 +1,4 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum CameraStatusId {
   Error,
@@ -105,25 +104,4 @@ extension CameraStatusIdExtension on CameraStatusId {
         Logger.n(CameraStatusId, wifiValue);
         return CameraStatusId.Unknown;
       });
-}
-
-class CameraStatusValue extends SettingsValue<CameraStatusId> {
-  CameraStatusValue(CameraStatusId id) : super(id);
-
-  @override
-  factory CameraStatusValue.fromUSBValue(int usbValue) =>
-      CameraStatusValue(CameraStatusIdExtension.getIdFromUsb(usbValue));
-
-  @override
-  factory CameraStatusValue.fromWifiValue(String wifiValue) =>
-      CameraStatusValue(CameraStatusIdExtension.getIdFromWifi(wifiValue));
-
-  @override
-  int get usbValue => id.usbValue;
-
-  @override
-  String get wifiValue => id.wifiValue;
-
-  @override
-  String get name => id.name;
 }

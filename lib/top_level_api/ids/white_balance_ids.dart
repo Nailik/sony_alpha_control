@@ -1,8 +1,5 @@
-import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum WhiteBalanceModeId {
   Auto,
@@ -117,32 +114,4 @@ extension WhiteBalanceIdExtension on WhiteBalanceModeId {
         Logger.n(WhiteBalanceModeId, wifiValue);
         return WhiteBalanceModeId.Unknown;
       });
-}
-
-class WhiteBalanceModeValue extends SettingsValue<WhiteBalanceModeId> {
-  final bool hasColorTemps;
-
-  WhiteBalanceModeValue(WhiteBalanceModeId id, {this.hasColorTemps = false})
-      : super(id);
-
-  @override
-  factory WhiteBalanceModeValue.fromUSBValue(int usbValue) =>
-      WhiteBalanceModeValue(WhiteBalanceIdExtension.getIdFromUsb(usbValue));
-
-  @override
-  factory WhiteBalanceModeValue.fromWifiValue(
-      String wifiValue, bool hasColorTemps) {
-    return WhiteBalanceModeValue(
-        WhiteBalanceIdExtension.getIdFromWifi(wifiValue),
-        hasColorTemps: hasColorTemps);
-  }
-
-  @override
-  int get usbValue => id.usbValue;
-
-  @override
-  String get wifiValue => id.wifiValue;
-
-  @override
-  String get name => id.name;
 }

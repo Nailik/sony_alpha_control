@@ -1,5 +1,4 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum AspectRatioId { Ar3_2, Ar16_9, Ar4_3, Ar1_1, Unknown }
 
@@ -47,25 +46,4 @@ extension AspectRatioIdExtension on AspectRatioId {
         Logger.n(AspectRatioId, wifiValue);
         return AspectRatioId.Unknown;
       });
-}
-
-class AspectRatioValue extends SettingsValue<AspectRatioId> {
-  AspectRatioValue(AspectRatioId id) : super(id);
-
-  @override
-  factory AspectRatioValue.fromUSBValue(int usbValue) =>
-      AspectRatioValue(AspectRatioIdExtension.getIdFromUsb(usbValue));
-
-  @override
-  factory AspectRatioValue.fromWifiValue(String wifiValue) =>
-      AspectRatioValue(AspectRatioIdExtension.getIdFromWifi(wifiValue));
-
-  @override
-  int get usbValue => id.usbValue;
-
-  @override
-  String get wifiValue => id.wifiValue;
-
-  @override
-  String get name => id.name;
 }

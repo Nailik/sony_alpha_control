@@ -1,5 +1,4 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 import 'aspect_ratio_ids.dart';
 
@@ -84,25 +83,4 @@ extension AutoFocusStateIdExtension on AutoFocusStateId {
         Logger.n(AspectRatioId, wifiValue);
         return AutoFocusStateId.Unknown;
       });
-}
-
-class AutoFocusStateValue extends SettingsValue<AutoFocusStateId> {
-  AutoFocusStateValue(AutoFocusStateId id) : super(id);
-
-  @override
-  factory AutoFocusStateValue.fromUSBValue(int usbValue) =>
-      AutoFocusStateValue(AutoFocusStateIdExtension.getIdFromUsb(usbValue));
-
-  @override
-  factory AutoFocusStateValue.fromWifiValue(String wifiValue) =>
-      AutoFocusStateValue(AutoFocusStateIdExtension.getIdFromWifi(wifiValue));
-
-  @override
-  int get usbValue => id.usbValue;
-
-  @override
-  String get wifiValue => id.wifiValue;
-
-  @override
-  String get name => id.name;
 }

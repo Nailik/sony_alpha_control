@@ -1,5 +1,4 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum MeteringModeId {
   Multi,
@@ -67,25 +66,4 @@ extension MeteringModeIdExtension on MeteringModeId {
         Logger.n(MeteringModeId, wifiValue);
         return MeteringModeId.Unknown;
       });
-}
-
-class MeteringModeValue extends SettingsValue<MeteringModeId> {
-  MeteringModeValue(MeteringModeId id) : super(id);
-
-  @override
-  factory MeteringModeValue.fromUSBValue(int usbValue) =>
-      MeteringModeValue(MeteringModeIdExtension.getIdFromUsb(usbValue));
-
-  @override
-  factory MeteringModeValue.fromWifiValue(String wifiValue) =>
-      MeteringModeValue(MeteringModeIdExtension.getIdFromWifi(wifiValue));
-
-  @override
-  int get usbValue => id.usbValue;
-
-  @override
-  String get wifiValue => id.wifiValue;
-
-  @override
-  String get name => id.name;
 }

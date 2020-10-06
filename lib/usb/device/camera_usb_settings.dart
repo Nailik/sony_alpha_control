@@ -118,7 +118,7 @@ class CameraUsbSettings extends CameraSettings {
           offset += 3;
 
           setting.updateItem(setting.fromUsb(bytes.getUint8(offset)),
-              setting.subValue, setting.available, setting.supported);
+              setting.available, setting.supported);
 
           offset++;
           var subDataType = bytes.getUint8(offset);
@@ -135,7 +135,7 @@ class CameraUsbSettings extends CameraSettings {
         case 2:
           offset += 3;
           setting.updateItem(setting.fromUsb(bytes.getUint8(offset)),
-              setting.subValue, setting.available, setting.supported);
+              setting.available, setting.supported);
           offset++;
           var subDataType = bytes.getUint8(offset);
           offset++;
@@ -197,7 +197,6 @@ class CameraUsbSettings extends CameraSettings {
           offset += 4;
           setting.updateItem(
               setting.fromUsb(bytes.getInt16(offset, Endian.little)),
-              setting.subValue,
               setting.available,
               setting.supported);
 
@@ -230,7 +229,6 @@ class CameraUsbSettings extends CameraSettings {
           offset += 4;
           setting.updateItem(
               setting.fromUsb(bytes.getUint16(offset, Endian.little)),
-              setting.subValue,
               setting.available,
               setting.supported);
 
@@ -282,15 +280,12 @@ class CameraUsbSettings extends CameraSettings {
             offset += 2;
             var subValue = bytes.getUint16(offset, Endian.little);
             offset += 2;
-            setting.updateItem(
-                setting.fromUsb(value, subValue: subValue),
-                setting.fromUsb(subValue),
-                setting.available,
-                setting.supported);
+            //TODO  setting.fromUsb(subValue), for sub value?
+            setting.updateItem(setting.fromUsb(value, subValue: subValue),
+                setting.available, setting.supported);
           } else {
             setting.updateItem(
                 setting.fromUsb(bytes.getUint32(offset, Endian.little)),
-                setting.subValue,
                 setting.available,
                 setting.supported);
             offset += 4;

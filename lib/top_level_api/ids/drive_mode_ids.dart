@@ -1,5 +1,4 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum DriveModeId {
   SingleShooting,
@@ -214,25 +213,4 @@ extension DriveModeIdExtension on DriveModeId {
         Logger.n(DriveModeId, wifiValue);
         return DriveModeId.Unknown;
       });
-}
-
-class DriveModeValue extends SettingsValue<DriveModeId> {
-  DriveModeValue(DriveModeId id) : super(id);
-
-  @override
-  factory DriveModeValue.fromUSBValue(int usbValue) =>
-      DriveModeValue(DriveModeIdExtension.getIdFromUsb(usbValue));
-
-  @override
-  factory DriveModeValue.fromWifiValue(String wifiValue) =>
-      DriveModeValue(DriveModeIdExtension.getIdFromWifi(wifiValue));
-
-  @override
-  int get usbValue => id.usbValue;
-
-  @override
-  String get wifiValue => id.wifiValue;
-
-  @override
-  String get name => id.name;
 }

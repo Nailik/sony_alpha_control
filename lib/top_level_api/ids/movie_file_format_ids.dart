@@ -1,5 +1,4 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum MovieFileFormatId { MP4, XAVC_S, XAVC_S_4K, Unknown }
 
@@ -30,25 +29,4 @@ extension MovieFileFormatIdExtension on MovieFileFormatId {
       return MovieFileFormatId.Unknown;
     });
   }
-}
-
-class MovieFileFormatValue extends SettingsValue<MovieFileFormatId> {
-  MovieFileFormatValue(MovieFileFormatId id) : super(id);
-
-  @override
-  factory MovieFileFormatValue.fromUSBValue(int usbValue) =>
-      throw UnsupportedError;
-
-  @override
-  factory MovieFileFormatValue.fromWifiValue(String wifiValue) =>
-      MovieFileFormatValue(MovieFileFormatIdExtension.getIdFromWifi(wifiValue));
-
-  @override
-  String get name => id.name;
-
-  @override
-  int get usbValue => throw UnsupportedError;
-
-  @override
-  String get wifiValue => id.wifiValue;
 }

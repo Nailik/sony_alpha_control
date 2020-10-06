@@ -1,63 +1,35 @@
 //a set function is like "fmode" you have available settings and choose one
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/camera_function_id.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/camera_status_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/dro_hdr_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/flash_mode_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/focus_area_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_phase_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/live_view_size_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/movie_file_format_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/movie_quality_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/device/value.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/zoom_settings_ids.dart';
 
-class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
+//TODO settingsItem and info item
+//TODO also settingsId and Info id? -> info (only info) -> settings, things to set?
+
+class SettingsItem<T extends Value> extends ChangeNotifier {
   SettingsId settingsId;
 
+  T get value => _value;
   T _value;
 
-  T get value => _value;
-  T _subValue;
-
-  T get subValue => _subValue;
+  List<T> get available => _available;
   List<T> _available = new List.unmodifiable({});
 
-  List<T> get available => _available;
+  List<T> get supported => _supported;
   List<T> _supported = new List.unmodifiable({});
 
-  List<T> get supported => _supported;
-
-  List<SonyWebApiMethodId> get supportedMethods => new List.unmodifiable({});//TODO setup this
+  List<SonyWebApiMethodId> get supportedMethods =>
+      new List.unmodifiable({}); //TODO setup this
 
   //not different setter to not notify layout changes too often when multiple values are updated at the same time one after another
-  updateItem(T newValue, T newSubValue, List<T> newAvailable,
-      List<T> newSupported) {
-    if (value != newValue ||
-        subValue != newSubValue ||
-        available != newAvailable ||
-        supported != newSupported) {
+  updateItem(T newValue, List<T> newAvailable, List<T> newSupported) {
+    if (_value != newValue ||
+        _available != newAvailable ||
+        _supported != newSupported) {
       //TODO list check all items?
       _value = newValue;
-      _subValue = newSubValue;
       _available = new List.unmodifiable(newAvailable);
       _supported = new List.unmodifiable(newSupported);
 
@@ -77,7 +49,6 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
   //TODO für wifi available apilist nutzen, für usb nur ob diese funktion implementiert ist
   //TODO methoden beim erstellen hinzufügen?
 
-
   //TODO stillsize(usb) - size and aspect ratio (wifi)
   //TODO drivemode cont and timer (usb) - single on wifi (different methods) TODO test
   //TODO cont shooting on wifi - on off via "start cont shooting" (bracket not wupporte?)
@@ -86,7 +57,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
   //TODO zusammengefasstes "teilen" auch in usb -> man wählt das eine aus,
 
 //SettingsIdExtension.getSettingsIdWifi(value["type"].toString(
-  SettingsValue fromWifi(dynamic wifiValue) {
+  Value fromWifi(dynamic wifiValue) {
     switch (settingsId) {
       case SettingsId.Versions:
         return WebApiVersionsValue.fromWifiValue(wifiValue);
@@ -206,7 +177,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
     }
   }
 
-  SettingsValue fromUsb(int usbValue, {int subValue = 1}) {
+  Value fromUsb(int usbValue, {int subValue = 1}) {
     switch (settingsId) {
       case SettingsId.ImageFileFormat:
         return ImageFileFormatValue.fromUSBValue(usbValue);
@@ -355,188 +326,4 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
 
   createListFromWifiJson(List<dynamic> list) =>
       list.map<T>((e) => fromWifi(e)).toList();
-}
-
-class StringValue extends SettingsValue<String> {
-  StringValue(String id) : super(id);
-
-  @override
-  String get name => id.toString();
-
-  @override
-  int get usbValue => throw UnimplementedError();
-
-  @override
-  String get wifiValue => id;
-}
-
-class BoolValue extends SettingsValue<bool> {
-  BoolValue(bool id) : super(id);
-
-  @override
-  String get name => id.toString();
-
-  @override
-  int get usbValue => id ? 1 : 0;
-
-  @override
-  String get wifiValue => id.toString();
-}
-
-class OnOffValue extends SettingsValue<String> {
-  OnOffValue(String id) : super(id); //"on" or "off"
-
-  @override
-  String get name => id.toString();
-
-  @override
-  int get usbValue => id == "on" ? 1 : 0;
-
-  @override
-  String get wifiValue => id.toString();
-}
-
-class PointValue extends SettingsValue<Point> {
-  PointValue(Point<num> id) : super(id);
-
-  @override
-  String get name => id.toString();
-
-  @override
-  int get usbValue => null;
-
-  @override
-  String get wifiValue => id.toString();
-}
-
-class DoubleValue extends SettingsValue<double> {
-  DoubleValue(double id) : super(id);
-
-  @override
-  String get name => id.toString();
-
-  @override
-  int get usbValue => id.toInt();
-
-  @override
-  String get wifiValue => id.toString();
-}
-
-class EvValue extends DoubleValue {
-  final int index;
-  final int step; //0 = problem, 2 = 2/3, 3 = 1/3;
-
-  EvValue(this.index, this.step, double id) : super(id);
-}
-
-class ShutterSpeedValue extends DoubleValue {
-  var subValue;
-  var _name;
-
-  ShutterSpeedValue(double id, this.subValue) : super(id);
-
-  @override
-  String get name => _name;
-
-  @override
-  String get wifiValue => _name; //TODO really parse the id value
-
-  @override
-  factory ShutterSpeedValue.fromWifiValue(String wifiValue) {
-    double value = wifiValue.contains("/")
-        ? double.parse(wifiValue.split("/")[0]) /
-        double.parse(wifiValue.split("/")[1])
-        : wifiValue == "BULB"
-        ? 0xFFFFFF
-        : double.parse(wifiValue.replaceAll("\"", "").replaceAll(",", "."));
-    var it = ShutterSpeedValue(value, 0);
-    it._name = wifiValue;
-    return it;
-  }
-
-  @override
-  factory ShutterSpeedValue.fromUsbValue(double usbValue, double subValue) {
-    //TODO bulb value? even used or just up and down one step?
-    var it = ShutterSpeedValue(usbValue, subValue);
-    if (subValue == -1) {
-      it._name = it.id.toString();
-    } else if (subValue == 1) {
-      it._name = "1/${it.id.toInt()}";
-    } else {
-      it._name = "0.$subValue\"";
-    }
-    return it;
-  }
-}
-
-class IsoValue extends IntValue {
-  IsoValue(int id) : super(id);
-
-  @override
-  factory IsoValue.fromWifiValue(String wifiValue) =>
-      IsoValue(wifiValue == "AUTO" ? 0xFFFFFF : int.parse(wifiValue));
-
-  @override
-  String get wifiValue => id == 0xFFFFFF ? "AUTO" : id.toString();
-
-  @override
-  String get name {
-    var multiFrame = id > (2 * 0xFFFFFF)
-        ? "MultiFrame RM High"
-        : id > 0xFFFFFF
-        ? "MultiFrame RM Standard"
-        : "";
-    var auto =
-    id == 0xFFFFFF || id == (2 * 0xFFFFFF) + 1 || id == (3 * 0xFFFFFF) + 2
-        ? "Auto"
-        : "";
-    var value = id % 0xFFFFFF - id ~/ 0xFFFFFF;
-    return "${auto.isEmpty ? value : auto} $multiFrame"; //TODO enums for text?
-  }
-}
-
-class IntValue extends SettingsValue<int> {
-  IntValue(int id) : super(id);
-
-  @override
-  String get name => id.toString();
-
-  @override
-  int get usbValue => id;
-
-  @override
-  String get wifiValue => id.toString();
-}
-
-class WhiteBalanceColorTempValue extends IntValue {
-  final WhiteBalanceModeId whiteBalanceModeId;
-
-  WhiteBalanceColorTempValue(int id, this.whiteBalanceModeId) : super(id);
-
-  static WhiteBalanceColorTempValue fromUSBValue(int value) {}
-}
-
-abstract class SettingsValue<T> {
-  T id;
-
-  SettingsValue(this.id);
-
-  SettingsValue.fromUSBValue(int usbValue);
-
-  SettingsValue.fromWifiValue(String wifiValue);
-
-  int get usbValue;
-
-  String get wifiValue;
-
-  String get name;
-
-  @override
-  String toString() => name;
-
-  @override
-  bool operator ==(o) => o is SettingsValue<T> && id == o.id;
-
-  @override
-  int get hashCode => id.hashCode;
 }

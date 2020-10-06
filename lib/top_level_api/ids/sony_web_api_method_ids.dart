@@ -53,9 +53,10 @@ extension SonyWebApiMethodExtension on SonyWebApiMethodId {
     }
   }
 
-  static SonyWebApiMethodId getIdFromWifi(String wifiValue) => SonyWebApiMethodId.values
-      .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
-    Logger.n(SonyWebApiMethodId, wifiValue);
-    return SonyWebApiMethodId.Unknown;
-  });
+  static SonyWebApiMethodId getIdFromWifi(String wifiValue) =>
+      SonyWebApiMethodId.values
+          .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
+        Logger.n(SonyWebApiMethodId, wifiValue);
+        return SonyWebApiMethodId.Unknown;
+      });
 }

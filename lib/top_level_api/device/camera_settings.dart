@@ -1,27 +1,8 @@
-import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/dro_hdr_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/flash_mode_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/focus_area_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_direction_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_phase_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/live_view_size_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/device/value.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 
 abstract class CameraSettings extends ChangeNotifier {
   Future<bool> update();
@@ -71,17 +52,24 @@ abstract class CameraSettings extends ChangeNotifier {
       SettingsItem<DoubleValue>(SettingsId.FocusMagnifier);
 
   //versions for all the different SonyWebApiServiceTypeIds
-  SettingsItem<WebApiVersionsValue> versionsCamera = SettingsItem<WebApiVersionsValue>(SettingsId.Versions);
-  SettingsItem<WebApiVersionsValue> versionsAvContent = SettingsItem<WebApiVersionsValue>(SettingsId.Versions);
-  SettingsItem<WebApiVersionsValue> versionsSystem = SettingsItem<WebApiVersionsValue>(SettingsId.Versions);
-  SettingsItem<WebApiVersionsValue> versionsGuide = SettingsItem<WebApiVersionsValue>(SettingsId.Versions);
+  SettingsItem<WebApiVersionsValue> versionsCamera =
+      SettingsItem<WebApiVersionsValue>(SettingsId.Versions);
+  SettingsItem<WebApiVersionsValue> versionsAvContent =
+      SettingsItem<WebApiVersionsValue>(SettingsId.Versions);
+  SettingsItem<WebApiVersionsValue> versionsSystem =
+      SettingsItem<WebApiVersionsValue>(SettingsId.Versions);
+  SettingsItem<WebApiVersionsValue> versionsGuide =
+      SettingsItem<WebApiVersionsValue>(SettingsId.Versions);
 
   //TODO method types for all different SonyWebApiServiceTypeIds with versions?
-  SettingsItem methodTypesCamera = SettingsItem<WebApiMethodValue>(SettingsId.MethodTypes);
-  SettingsItem methodTypesAvContent = SettingsItem<WebApiMethodValue>(SettingsId.MethodTypes);
-  SettingsItem methodTypesSystem = SettingsItem<WebApiMethodValue>(SettingsId.MethodTypes);
-  SettingsItem methodTypesGuide = SettingsItem<WebApiMethodValue>(SettingsId.MethodTypes);
-
+  SettingsItem methodTypesCamera =
+      SettingsItem<WebApiMethodValue>(SettingsId.MethodTypes);
+  SettingsItem methodTypesAvContent =
+      SettingsItem<WebApiMethodValue>(SettingsId.MethodTypes);
+  SettingsItem methodTypesSystem =
+      SettingsItem<WebApiMethodValue>(SettingsId.MethodTypes);
+  SettingsItem methodTypesGuide =
+      SettingsItem<WebApiMethodValue>(SettingsId.MethodTypes);
 
   SettingsItem applicationInfo =
       SettingsItem<StringValue>(SettingsId.ApplicationInfo);
@@ -123,7 +111,7 @@ abstract class CameraSettings extends ChangeNotifier {
   //TODO getter future, da wenn current value "leer" evtl nochmal requesten? (vtl einstellbar falls nie ?)
   //TODO update mit boolean request -> falls immer geupdttet werden soll
   //TODO remove this method
-  SettingsItem<T> getItem<T extends SettingsValue>(SettingsId settingsId) {
+  SettingsItem<T> getItem<T extends Value>(SettingsId settingsId) {
     switch (settingsId) {
       case SettingsId.FNumber:
         return fNumber;

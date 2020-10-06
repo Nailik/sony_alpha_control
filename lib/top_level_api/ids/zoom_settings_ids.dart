@@ -1,5 +1,4 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum ZoomSettingId {
   Optical_Zoom_Only,
@@ -37,25 +36,4 @@ extension ZoomSettingIdExtension on ZoomSettingId {
         Logger.n(ZoomSettingId, wifiValue);
         return ZoomSettingId.Unknown;
       });
-}
-
-class ZoomSettingValue extends SettingsValue<ZoomSettingId> {
-  ZoomSettingValue(ZoomSettingId id) : super(id);
-
-  @override
-  factory ZoomSettingValue.fromUSBValue(int usbValue) =>
-      throw UnimplementedError;
-
-  @override
-  factory ZoomSettingValue.fromWifiValue(String wifiValue) =>
-      ZoomSettingValue(ZoomSettingIdExtension.getIdFromWifi(wifiValue));
-
-  @override
-  int get usbValue => throw UnimplementedError;
-
-  @override
-  String get wifiValue => id.wifiValue;
-
-  @override
-  String get name => id.name;
 }

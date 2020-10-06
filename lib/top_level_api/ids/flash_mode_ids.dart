@@ -1,5 +1,4 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum FlashModeId {
   AutoFlash,
@@ -87,25 +86,4 @@ extension FlashModeIdExtension on FlashModeId {
         Logger.n(FlashModeId, wifiValue);
         return FlashModeId.Unknown;
       });
-}
-
-class FlashModeValue extends SettingsValue<FlashModeId> {
-  FlashModeValue(FlashModeId id) : super(id);
-
-  @override
-  factory FlashModeValue.fromUSBValue(int usbValue) =>
-      FlashModeValue(FlashModeIdExtension.getIdFromUsb(usbValue));
-
-  @override
-  factory FlashModeValue.fromWifiValue(String wifiValue) =>
-      FlashModeValue(FlashModeIdExtension.getIdFromWifi(wifiValue));
-
-  @override
-  int get usbValue => id.usbValue;
-
-  @override
-  String get wifiValue => id.wifiValue;
-
-  @override
-  String get name => id.name;
 }

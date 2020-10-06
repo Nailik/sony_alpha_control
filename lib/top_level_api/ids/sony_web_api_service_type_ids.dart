@@ -4,7 +4,8 @@ enum SonyWebApiServiceTypeId {
   SYSTEM,
   GUIDE,
   ACCESS_CONTROL,
-  Unknown }
+  Unknown
+}
 
 extension SonyWebApiServiceTypeIdExtension on SonyWebApiServiceTypeId {
   String get wifiValue {

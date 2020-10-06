@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -7,29 +6,22 @@ import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dar
 import 'package:sonyalphacontrol/top_level_api/device/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
+import 'package:sonyalphacontrol/top_level_api/device/value.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/dro_hdr_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/flash_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_area_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_direction_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_phase_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/web_api_version_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 import 'package:sonyalphacontrol/wifi/commands/wifi_command.dart';
 import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
 
@@ -169,7 +161,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
       if (result.isValid) {
         SettingsItem<DoubleValue> item =
             device.cameraSettings.getItem<DoubleValue>(SettingsId.FNumber);
-        item.updateItem(value, item.subValue, item.available, item.supported);
+        item.updateItem(value, item.available, item.supported);
       }
       return result.isValid;
     });
@@ -202,7 +194,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
       if (result.isValid) {
         SettingsItem<IsoValue> item =
             device.cameraSettings.getItem<IsoValue>(SettingsId.ISO);
-        item.updateItem(value, item.subValue, item.available, item.supported);
+        item.updateItem(value, item.available, item.supported);
       }
       return result.isValid;
     });
@@ -236,7 +228,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
       if (result.isValid) {
         SettingsItem<ShutterSpeedValue> item = device.cameraSettings
             .getItem<ShutterSpeedValue>(SettingsId.ShutterSpeed);
-        item.updateItem(value, item.subValue, item.available, item.supported);
+        item.updateItem(value, item.available, item.supported);
       }
       return result.isValid;
     });
@@ -305,7 +297,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
       if (result.isValid) {
         SettingsItem<EvValue> item =
             device.cameraSettings.getItem<EvValue>(SettingsId.EV);
-        item.updateItem(value, item.subValue, item.available, item.supported);
+        item.updateItem(value, item.available, item.supported);
       }
       return result.isValid;
     });
@@ -326,7 +318,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
       if (result.isValid) {
         SettingsItem<FlashModeValue> item =
             device.cameraSettings.getItem<FlashModeValue>(SettingsId.FlashMode);
-        item.updateItem(value, item.subValue, item.available, item.supported);
+        item.updateItem(value, item.available, item.supported);
       }
       return result.isValid;
     });
@@ -346,7 +338,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
         if (result.isValid) {
           SettingsItem<FocusModeValue> item = device.cameraSettings
               .getItem<FocusModeValue>(SettingsId.FocusMode);
-          item.updateItem(value, item.subValue, item.available, item.supported);
+          item.updateItem(value, item.available, item.supported);
         }
         return result.isValid;
       });
@@ -368,7 +360,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
         if (result.isValid) {
           SettingsItem<WhiteBalanceModeValue> item = device.cameraSettings
               .getItem<WhiteBalanceModeValue>(SettingsId.WhiteBalanceMode);
-          item.updateItem(value, item.subValue, item.available, item.supported);
+          item.updateItem(value, item.available, item.supported);
         }
 
         await getWhiteBalanceColorTemp(update: ForceUpdate.Available);
@@ -456,7 +448,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
         SettingsItem<WhiteBalanceColorTempValue> item = device.cameraSettings
             .getItem<WhiteBalanceColorTempValue>(
                 SettingsId.WhiteBalanceColorTemp);
-        item.updateItem(value, item.subValue, item.available, item.supported);
+        item.updateItem(value, item.available, item.supported);
       }
       return result.isValid;
     });
@@ -477,7 +469,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
       if (result.isValid) {
         SettingsItem<ImageFileFormatValue> item = device.cameraSettings
             .getItem<ImageFileFormatValue>(SettingsId.ImageFileFormat);
-        item.updateItem(value, item.subValue, item.available, item.supported);
+        item.updateItem(value, item.available, item.supported);
       }
       return result.isValid;
     });
@@ -497,7 +489,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
         if (result.isValid) {
           SettingsItem<MeteringModeValue> item = device.cameraSettings
               .getItem<MeteringModeValue>(SettingsId.MeteringMode);
-          item.updateItem(value, item.subValue, item.available, item.supported);
+          item.updateItem(value, item.available, item.supported);
         }
         return result.isValid;
       });
@@ -861,7 +853,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   //update for the getters
   //TODO update only current?? (if developer only wants to show things without change no need for supported)
-  Future<SettingsItem<T>> _updateIf<T extends SettingsValue>(
+  Future<SettingsItem<T>> _updateIf<T extends Value>(
       ForceUpdate update, SettingsItem settingsItem) async {
     switch (update) {
       case ForceUpdate.Available:

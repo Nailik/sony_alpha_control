@@ -1,6 +1,4 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
 
 enum WebApiVersionId {
   V_1_0,
@@ -75,25 +73,4 @@ extension WebApiVersionIdExtension on WebApiVersionId {
         Logger.n(WebApiVersionId, wifiValue);
         return WebApiVersionId.Unknown;
       });
-}
-
-class WebApiVersionsValue extends SettingsValue<WebApiVersionId> {
-  WebApiVersionsValue(WebApiVersionId id) : super(id);
-
-  @override
-  factory WebApiVersionsValue.fromUSBValue(int usbValue) =>
-      throw UnsupportedError;
-
-  @override
-  factory WebApiVersionsValue.fromWifiValue(String wifiValue) =>
-      WebApiVersionsValue(WebApiVersionIdExtension.getIdFromWifi(wifiValue));
-
-  @override
-  int get usbValue => throw UnsupportedError;
-
-  @override
-  String get wifiValue => id.wifiValue;
-
-  @override
-  String get name => id.name;
 }

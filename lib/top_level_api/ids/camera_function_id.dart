@@ -1,5 +1,4 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum CameraFunctionId {
   REMOTE_SHOOTING,
@@ -35,25 +34,4 @@ extension CameraFunctionIdExtension on CameraFunctionId {
       return CameraFunctionId.Unknown;
     });
   }
-}
-
-class CameraFunctionValue extends SettingsValue<CameraFunctionId> {
-  CameraFunctionValue(CameraFunctionId id) : super(id);
-
-  @override
-  factory CameraFunctionValue.fromUSBValue(int usbValue) =>
-      throw UnsupportedError;
-
-  @override
-  factory CameraFunctionValue.fromWifiValue(String wifiValue) =>
-      CameraFunctionValue(CameraFunctionIdExtension.getIdFromWifi(wifiValue));
-
-  @override
-  String get name => id.name;
-
-  @override
-  int get usbValue => throw UnsupportedError;
-
-  @override
-  String get wifiValue => id.wifiValue;
 }

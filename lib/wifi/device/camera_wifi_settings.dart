@@ -3,12 +3,10 @@ import 'dart:convert';
 
 import 'package:sonyalphacontrol/top_level_api/device/camera_settings.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/device/value.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/web_api_version_ids.dart';
 import 'package:sonyalphacontrol/wifi/commands/wifi_command.dart';
 import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
 
@@ -64,9 +62,8 @@ class CameraWifiSettings extends CameraSettings {
             if (availableList != null) {
               setting.updateItem(
                   setting.value,
-                  setting.subValue,
                   element["names"]
-                      .map<SettingsValue<dynamic>>(
+                      .map<Value<dynamic>>(
                           (element) => setting.fromWifi(element))
                       .toList(),
                   setting.supported);
@@ -79,7 +76,7 @@ class CameraWifiSettings extends CameraSettings {
           case SettingsId.LiveViewOrientation:
             //there is only a current value
             setting.updateItem(setting.fromWifi(element[settingsIdWifiValue]),
-                setting.subValue, setting.available, setting.supported);
+                setting.available, setting.supported);
             break;
           case SettingsId.WhiteBalanceMode:
             //   setting.updateItem(setting.fromWifi(element[settingsIdWifiValue]),
@@ -119,7 +116,6 @@ class CameraWifiSettings extends CameraSettings {
         List<EvValue> listOfValues = getEvList(list[2], list[1], list[3]);
         settingsItem.updateItem(
             listOfValues.elementAt(list[0] + (list[2]).abs()),
-            settingsItem.subValue,
             listOfValues,
             settingsItem.supported);
         break;
@@ -128,7 +124,7 @@ class CameraWifiSettings extends CameraSettings {
             List<WhiteBalanceColorTempValue>();
         List<WhiteBalanceColorTempValue> availableColorTempList =
             List<WhiteBalanceColorTempValue>();
-        SettingsValue currentWhiteBalance = WhiteBalanceModeValue.fromWifiValue(
+        Value currentWhiteBalance = WhiteBalanceModeValue.fromWifiValue(
             list[0]["whiteBalanceMode"], list[0]["colorTemperature"] != -1);
 
         //colorTemperature
@@ -139,7 +135,6 @@ class CameraWifiSettings extends CameraSettings {
 
         settingsItem.updateItem(
             currentWhiteBalance,
-            settingsItem.subValue,
             list[1].map<WhiteBalanceModeValue>((e) {
               var value = WhiteBalanceModeValue.fromWifiValue(
                   e["whiteBalanceMode"],
@@ -163,14 +158,12 @@ class CameraWifiSettings extends CameraSettings {
         settingsItemColorTemp.updateItem(
             WhiteBalanceColorTempValue(
                 list[0]["colorTemperature"], currentWhiteBalance.id),
-            settingsItemColorTemp.subValue,
             availableColorTempList,
             settingsItemColorTemp.supported);
         break;
       default:
         settingsItem.updateItem(
             settingsItem.fromWifi(list[0]),
-            settingsItem.subValue,
             settingsItem.createListFromWifiJson(list[1] as List),
             settingsItem.supported);
         break;
@@ -193,8 +186,8 @@ class CameraWifiSettings extends CameraSettings {
               getEvList(list[1][index], list[0][index], list[2][index]));
         }
 
-        settingsItem.updateItem(settingsItem.value, settingsItem.subValue,
-            settingsItem.available, listOfValues);
+        settingsItem.updateItem(
+            settingsItem.value, settingsItem.available, listOfValues);
         break;
       case SettingsId.WhiteBalanceMode:
         List<WhiteBalanceColorTempValue> supportedColorTempList =
@@ -210,7 +203,6 @@ class CameraWifiSettings extends CameraSettings {
 
         settingsItem.updateItem(
             settingsItem.value,
-            settingsItem.subValue,
             settingsItem.available,
             list[0].map<WhiteBalanceModeValue>((e) {
               var value = WhiteBalanceModeValue.fromWifiValue(
@@ -231,17 +223,11 @@ class CameraWifiSettings extends CameraSettings {
               return value;
             }).toList());
 
-        settingsItemColorTemp.updateItem(
-            settingsItemColorTemp.value,
-            settingsItemColorTemp.subValue,
-            settingsItemColorTemp.available,
-            availableColorTempList);
+        settingsItemColorTemp.updateItem(settingsItemColorTemp.value,
+            settingsItemColorTemp.available, availableColorTempList);
         break;
       default:
-        settingsItem.updateItem(
-            settingsItem.value,
-            settingsItem.subValue,
-            settingsItem.available,
+        settingsItem.updateItem(settingsItem.value, settingsItem.available,
             settingsItem.createListFromWifiJson(list[0] as List));
         break;
     }
@@ -254,8 +240,7 @@ class CameraWifiSettings extends CameraSettings {
     switch (settingsItem.settingsId) {
       case SettingsId.Versions:
         var itemsList = settingsItem.createListFromWifiJson(list[0] as List);
-        settingsItem.updateItem(
-            settingsItem.value, settingsItem.subValue, itemsList, itemsList);
+        settingsItem.updateItem(settingsItem.value, itemsList, itemsList);
         break;
       case SettingsId.MethodTypes:
         list = jsonD["results"];
@@ -269,13 +254,12 @@ class CameraWifiSettings extends CameraSettings {
           }
         });
 
-        settingsItem.updateItem(
-            settingsItem.value, settingsItem.subValue, newList, newList);
+        settingsItem.updateItem(settingsItem.value, newList, newList);
         break;
       default:
         //TODO
-        settingsItem.updateItem(settingsItem.value, settingsItem.subValue,
-            settingsItem.available, settingsItem.supported);
+        settingsItem.updateItem(
+            settingsItem.value, settingsItem.available, settingsItem.supported);
         break;
     }
   }
@@ -284,8 +268,8 @@ class CameraWifiSettings extends CameraSettings {
       String availableName) {
     print("getDefaultSettings json $json availableName $availableName");
 
-    List<SettingsValue> availableList;
-    SettingsValue current;
+    List<Value> availableList;
+    Value current;
 
     switch (settingsItem.settingsId) {
       case SettingsId.EV:
@@ -305,7 +289,6 @@ class CameraWifiSettings extends CameraSettings {
 
     settingsItem.updateItem(
         current,
-        settingsItem.subValue,
         availableList != null ? availableList : settingsItem.available,
         settingsItem.supported);
   }

@@ -1,5 +1,4 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum MovieQualityId {
   MP4_PS, //MP4, 1920x1080 60p/50p
@@ -34,7 +33,7 @@ enum MovieQualityId {
   Unknown
 }
 
-extension MovieFileFormatIdExtension on MovieQualityId {
+extension MovieFileQualityIdExtension on MovieQualityId {
   String get name => toString().split('.')[1];
 
   String get wifiValue {
@@ -113,25 +112,4 @@ extension MovieFileFormatIdExtension on MovieQualityId {
       return MovieQualityId.Unknown;
     });
   }
-}
-
-class MovieQualityValue extends SettingsValue<MovieQualityId> {
-  MovieQualityValue(MovieQualityId id) : super(id);
-
-  @override
-  factory MovieQualityValue.fromUSBValue(int usbValue) =>
-      throw UnsupportedError;
-
-  @override
-  factory MovieQualityValue.fromWifiValue(String wifiValue) =>
-      MovieQualityValue(MovieFileFormatIdExtension.getIdFromWifi(wifiValue));
-
-  @override
-  String get name => id.name;
-
-  @override
-  int get usbValue => throw UnsupportedError;
-
-  @override
-  String get wifiValue => id.wifiValue;
 }

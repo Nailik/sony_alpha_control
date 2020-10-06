@@ -1,5 +1,4 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 
 enum LiveViewSizeId { L, M, Unknown }
 
@@ -24,25 +23,4 @@ extension LiveViewSizeIdExtension on LiveViewSizeId {
         Logger.n(LiveViewSizeId, wifiValue);
         return LiveViewSizeId.Unknown;
       });
-}
-
-class LiveViewSizeValue extends SettingsValue<LiveViewSizeId> {
-  LiveViewSizeValue(LiveViewSizeId id) : super(id);
-
-  @override
-  factory LiveViewSizeValue.fromUSBValue(int usbValue) =>
-      throw UnimplementedError;
-
-  @override
-  factory LiveViewSizeValue.fromWifiValue(String wifiValue) =>
-      LiveViewSizeValue(LiveViewSizeIdExtension.getIdFromWifi(wifiValue));
-
-  @override
-  int get usbValue => throw UnimplementedError;
-
-  @override
-  String get wifiValue => id.wifiValue;
-
-  @override
-  String get name => id.name;
 }

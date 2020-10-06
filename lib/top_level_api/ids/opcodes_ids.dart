@@ -1,6 +1,4 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/movie_quality_ids.dart';
 
 enum OpCodeId {
   Connect,
@@ -76,25 +74,4 @@ extension OpCodesExtension on OpCodeId {
         Logger.n(OpCodeId, wifiValue);
         return OpCodeId.Unknown;
       });
-}
-
-class OpCodeValue extends SettingsValue<OpCodeId> {
-  OpCodeValue(OpCodeId id) : super(id);
-
-  @override
-  factory OpCodeValue.fromUSBValue(int usbValue) =>
-      OpCodeValue(OpCodesExtension.getIdFromUsb(usbValue));
-
-  @override
-  factory OpCodeValue.fromWifiValue(String wifiValue) =>
-      OpCodeValue(OpCodesExtension.getIdFromWifi(wifiValue));
-
-  @override
-  int get usbValue => id.usbValue;
-
-  @override
-  String get wifiValue => id.wifiValue;
-
-  @override
-  String get name => id.name;
 }
