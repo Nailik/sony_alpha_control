@@ -69,8 +69,17 @@ abstract class CameraSettings extends ChangeNotifier {
       SettingsItem<FocusMagnifierPhaseValue>(SettingsId.FocusMagnifierPhase);
   SettingsItem focusMagnifier =
       SettingsItem<DoubleValue>(SettingsId.FocusMagnifier);
-  SettingsItem versions = SettingsItem<WebApiVersionValue>(SettingsId.Versions);
+
+  //versions for all the different SonyWebApiServiceTypeIds
+  SettingsItem<WebApiVersionsValue> versionsCamera = SettingsItem<WebApiVersionsValue>(SettingsId.Versions);
+  SettingsItem<WebApiVersionsValue> versionsAvContent = SettingsItem<WebApiVersionsValue>(SettingsId.Versions);
+  SettingsItem<WebApiVersionsValue> versionsSystem = SettingsItem<WebApiVersionsValue>(SettingsId.Versions);
+  SettingsItem<WebApiVersionsValue> versionsGuide = SettingsItem<WebApiVersionsValue>(SettingsId.Versions);
+
+  //TODO method types for all different SonyWebApiServiceTypeIds with versions?
   SettingsItem methodTypes = SettingsItem<WebApiMethodValue>(SettingsId.MethodTypes);
+
+
   SettingsItem applicationInfo =
       SettingsItem<StringValue>(SettingsId.ApplicationInfo);
   SettingsItem apiList = SettingsItem<StringValue>(SettingsId.ApiList);
@@ -110,6 +119,7 @@ abstract class CameraSettings extends ChangeNotifier {
 
   //TODO getter future, da wenn current value "leer" evtl nochmal requesten? (vtl einstellbar falls nie ?)
   //TODO update mit boolean request -> falls immer geupdttet werden soll
+  //TODO remove this method
   SettingsItem<T> getItem<T extends SettingsValue>(SettingsId settingsId) {
     switch (settingsId) {
       case SettingsId.FNumber:
@@ -171,7 +181,7 @@ abstract class CameraSettings extends ChangeNotifier {
       case SettingsId.FocusMagnifier:
         return focusMagnifier;
       case SettingsId.Versions:
-        return versions;
+        throw UnsupportedError;
       case SettingsId.MethodTypes:
         return methodTypes;
       case SettingsId.ApplicationInfo:

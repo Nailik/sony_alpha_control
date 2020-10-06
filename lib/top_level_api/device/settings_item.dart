@@ -86,7 +86,7 @@ class SettingsItem<T extends SettingsValue> extends ChangeNotifier {
   SettingsValue fromWifi(dynamic wifiValue) {
     switch (settingsId) {
       case SettingsId.Versions:
-        return WebApiVersionValue.fromWifiValue(wifiValue);
+        return WebApiVersionsValue.fromWifiValue(wifiValue);
       case SettingsId.MethodTypes:
         return WebApiMethodValue.fromWifiValue(wifiValue);
       case SettingsId.ImageFileFormat: //StillQuality

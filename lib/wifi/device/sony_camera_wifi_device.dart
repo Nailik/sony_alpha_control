@@ -41,7 +41,7 @@ class WifiCameraInfo {
 }
 
 class WifiCameraFunctionality {
-  final SettingsItem<WebApiVersionValue> webApiVersions;
+  final SettingsItem<WebApiVersionsValue> webApiVersions;
   final List<WebApiMethod> webApiMethods;
   final Map<SettingsId, List<SonyWebApiMethodId>>
       availableApiList; //TODO in settings

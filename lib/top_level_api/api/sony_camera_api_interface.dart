@@ -21,6 +21,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
@@ -44,13 +45,38 @@ abstract class CameraApiInterface {
 
   ///server information
 
-  Future<SettingsItem<WebApiVersionValue>> getWebApiVersions(
-          {ForceUpdate update}) async =>
-      device.cameraSettings.versions;
+  ///This method checks teh available versions for the web api
+  ///serviceTypeId means for which service
+  ///forceupdate
+  ///   IfNull/Available/Supported -> if a field is null it will be read from camera
+  ///   Current/On -> will load even if field is set
+  ///   Off -> will only give back
+  Future<SettingsItem<WebApiVersionsValue>> getWebApiVersions(
+      SonyWebApiServiceTypeId serviceTypeId,
+      {ForceUpdate update}) async {
+    switch (serviceTypeId) {
+      case SonyWebApiServiceTypeId.CAMERA:
+        return device.cameraSettings.versionsCamera;
+      case SonyWebApiServiceTypeId.AV_CONTENT:
+        return device.cameraSettings.versionsAvContent;
+      case SonyWebApiServiceTypeId.SYSTEM:
+        return device.cameraSettings.versionsSystem;
+      case SonyWebApiServiceTypeId.GUIDE:
+        return device.cameraSettings.versionsGuide;
+      case SonyWebApiServiceTypeId.Unknown:
+      default:
+        throw UnsupportedError;
+    }
+  }
 
+  //TODO web api version id unkown sollte bei sowas einen fehler werfen
+
+  //eine speziell web api version ...nur letzte -> selbst machen
+  //alle (wenn null)
   Future<SettingsItem<WebApiMethodValue>> getMethodTypes(
+          {SonyWebApiServiceTypeId serviceTypeId,
           WebApiVersionId webApiVersion,
-          {ForceUpdate update}) async =>
+          ForceUpdate update}) async =>
       device.cameraSettings.methodTypes;
 
   /*

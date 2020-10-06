@@ -25,6 +25,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
@@ -35,6 +36,7 @@ import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
 class SonyCameraWifiApi extends CameraApiInterface {
   SonyCameraWifiDevice get device => cameraDevice;
 
+  //TODO modify/set ... maybe available and supported is null, eg when camera is in A mode and uses automatic shutter
   SonyCameraWifiApi(SonyCameraDevice cameraDevice) : super(cameraDevice);
 
   @override
@@ -43,40 +45,51 @@ class SonyCameraWifiApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
-  //TODO modify/set ... maybe available and supported is null, eg when camera is in A mode and uses automatic shutter
-
-  Future<SettingsItem<WebApiVersionValue>> getWebApiVersions(
+  //TOdo servicetypeid null _> all else only one
+  Future<SettingsItem<WebApiVersionsValue>> getWebApiVersions(
+      SonyWebApiServiceTypeId serviceTypeId,
       {update = ForceUpdate.IfNull}) async {
-    var settingsItem = await super.getWebApiVersions();
+    var settingsItem = await super.getWebApiVersions(serviceTypeId);
 
     switch (update) {
       case ForceUpdate.Available:
       case ForceUpdate.Supported:
+      case ForceUpdate.IfNull:
         if (settingsItem.supported == null ||
             settingsItem.supported.isEmpty ||
             settingsItem.available == null ||
             settingsItem.available.isEmpty) {
           //supported is necessary for available to now the step sizes
-          await _updateCurrent(settingsItem);
+          await _getWebApiVersions(settingsItem, serviceTypeId);
         }
         break;
       case ForceUpdate.Current:
-      case ForceUpdate.IfNull:
       case ForceUpdate.On:
-        await _updateCurrent(settingsItem);
-        break;
-      case ForceUpdate.Off:
+        await _getWebApiVersions(settingsItem, serviceTypeId);
         break;
     }
-    return await super.getWebApiVersions();
+    return await super.getWebApiVersions(serviceTypeId);
   }
 
-  //TODO WebApiVersionId webApiVersion -> latest available, special or all? (after another)
+  Future _getWebApiVersions(
+      SettingsItem settingsItem, SonyWebApiServiceTypeId serviceTypeId) async {
+    return await WifiCommand.createCommand(
+            SonyWebApiMethodId.GET, SettingsId.MethodTypes,
+            service: serviceTypeId)
+        .send(device)
+        .then((wifiResponse) => wifiResponse.response)
+        .then((response) =>
+            device.cameraSettings.updateCurrent(settingsItem, response));
+  }
+
+  //TODO web api version wenn keine angegeben für alle
   //WebApiVersionId webApiVersion,
+  //wip
   Future<SettingsItem<WebApiMethodValue>> getMethodTypes(
+      {SonyWebApiServiceTypeId serviceTypeId,
       WebApiVersionId webApiVersion,
-      {update = ForceUpdate.IfNull}) async {
-    var settingsItem = await super.getMethodTypes(webApiVersion);
+      update = ForceUpdate.IfNull}) async {
+    var settingsItem = await super.getMethodTypes();
 
     switch (update) {
       case ForceUpdate.Available:
@@ -85,19 +98,20 @@ class SonyCameraWifiApi extends CameraApiInterface {
             settingsItem.supported.isEmpty ||
             settingsItem.available == null ||
             settingsItem.available.isEmpty) {
-          //supported is necessary for available to now the step sizes
-          await _getMethodTypes(settingsItem, webApiVersion);
+          if (webApiVersion != null) {
+            //supported is necessary for available to now the step sizes
+            await _getMethodTypes(settingsItem, webApiVersion);
+          } else {}
         }
         break;
       case ForceUpdate.Current:
       case ForceUpdate.IfNull:
+      //TODO null für eine unterstützte web api version, oder für diese unterstützte web api version?
       case ForceUpdate.On:
         await _getMethodTypes(settingsItem, webApiVersion);
         break;
-      case ForceUpdate.Off:
-        break;
     }
-    return await super.getMethodTypes(webApiVersion);
+    return await super.getMethodTypes();
   }
 
   Future _getMethodTypes(
@@ -249,8 +263,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
           await _updateSupported(settingsItem);
         }
         break;
-      case ForceUpdate.Off:
-        break;
     }
 
     return device.cameraSettings.getItem(settingsItem.settingsId);
@@ -393,8 +405,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
                   .updateSupported(settingsItemWhiteBalanceMode, response));
         }
         break;
-      case ForceUpdate.Off:
-        break;
     }
 
     return settingsItemWhiteColorTemp;
@@ -418,7 +428,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   Future<bool> setWhiteBalanceColorTemp(
       WhiteBalanceColorTempValue value) async {
     SettingsItem<WhiteBalanceModeValue> settingsItemWhiteBalanceMode =
-        await super.getWhiteBalanceMode(update: ForceUpdate.Off);
+        await super.getWhiteBalanceMode();
 
     return WifiCommand.createCommand(
         SonyWebApiMethodId.SET, SettingsId.WhiteBalanceMode, params: [
@@ -823,8 +833,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<RecordVideoStateValue> getRecordingVideoState(
-      {update = ForceUpdate.Off}) {
+  Future<RecordVideoStateValue> getRecordingVideoState({ForceUpdate update}) {
     // TODO: implement getRecordingVideoState
     throw UnimplementedError();
   }
@@ -860,8 +869,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
         if (settingsItem.supported == null || settingsItem.supported.isEmpty) {
           await _updateSupported(settingsItem);
         }
-        break;
-      case ForceUpdate.Off:
         break;
     }
 

@@ -9,6 +9,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/flash_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 
@@ -39,8 +40,17 @@ class TestsPageState extends State<TestsPage> {
                 child: Consumer<CameraSettings>(
                   builder: (context, model, _) => ListView(
                     children: <Widget>[
-                      ///Versions (get)
-                      getVersionsRow(),
+                      ///Versions (get) camera
+                      getVersionsRowCamera(),
+
+                      ///Versions (get) avContent
+                      getVersionsRowAvContent(),
+
+                      ///Versions (get) system
+                      getVersionsRowSystem(),
+
+                      ///Versions (get) guide
+                      getVersionsRowGuide(),
 
                       ///MethodTypes (get)
                       getMethodTypesRow(),
@@ -154,10 +164,10 @@ class TestsPageState extends State<TestsPage> {
             )));
   }
 
-  ///Versions (get)
-  Widget getVersionsRow() {
+  ///Versions (get) camera
+  Widget getVersionsRowCamera() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.versions,
+      create: (context) => device.cameraSettings.versionsCamera,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(
@@ -166,19 +176,135 @@ class TestsPageState extends State<TestsPage> {
               children: [
                 ListTile(
                     title: Text(SettingsId.Versions.name),
-                    onTap: () => device.api.getWebApiVersions()),
+                    onTap: () => device.api
+                        .getWebApiVersions(SonyWebApiServiceTypeId.CAMERA)),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Expanded(
                           child: Padding(
                               padding: EdgeInsets.all(16),
-                              child: DropdownButton<WebApiVersionValue>(
+                              child: DropdownButton<WebApiVersionsValue>(
                                 hint: Text("available"),
-                                items: device.cameraSettings.versions.available
-                                    .map<DropdownMenuItem<WebApiVersionValue>>(
+                                items: device
+                                    .cameraSettings.versionsCamera.available
+                                    .map<DropdownMenuItem<WebApiVersionsValue>>(
                                         (e) => DropdownMenuItem<
-                                                WebApiVersionValue>(
+                                                WebApiVersionsValue>(
+                                            child: Text(e.name), value: e))
+                                    .toList(),
+                                onChanged: (value) {},
+                              )))
+                    ]),
+              ]),
+        ),
+      ),
+    );
+  }
+
+  ///Versions (get) avContent
+  Widget getVersionsRowAvContent() {
+    return ListenableProvider<SettingsItem>(
+      create: (context) => device.cameraSettings.versionsAvContent,
+      child: Consumer<SettingsItem>(
+        builder: (context, model, _) => Card(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                    title: Text(SettingsId.Versions.name),
+                    onTap: () => device.api
+                        .getWebApiVersions(SonyWebApiServiceTypeId.AV_CONTENT)),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                          child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: DropdownButton<WebApiVersionsValue>(
+                                hint: Text("available"),
+                                items: device
+                                    .cameraSettings.versionsAvContent.available
+                                    .map<DropdownMenuItem<WebApiVersionsValue>>(
+                                        (e) => DropdownMenuItem<
+                                                WebApiVersionsValue>(
+                                            child: Text(e.name), value: e))
+                                    .toList(),
+                                onChanged: (value) {},
+                              )))
+                    ]),
+              ]),
+        ),
+      ),
+    );
+  }
+
+  ///Versions (get) system
+  Widget getVersionsRowSystem() {
+    return ListenableProvider<SettingsItem>(
+      create: (context) => device.cameraSettings.versionsSystem,
+      child: Consumer<SettingsItem>(
+        builder: (context, model, _) => Card(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                    title: Text(SettingsId.Versions.name),
+                    onTap: () => device.api
+                        .getWebApiVersions(SonyWebApiServiceTypeId.SYSTEM)),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                          child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: DropdownButton<WebApiVersionsValue>(
+                                hint: Text("available"),
+                                items: device
+                                    .cameraSettings.versionsSystem.available
+                                    .map<DropdownMenuItem<WebApiVersionsValue>>(
+                                        (e) => DropdownMenuItem<
+                                                WebApiVersionsValue>(
+                                            child: Text(e.name), value: e))
+                                    .toList(),
+                                onChanged: (value) {},
+                              )))
+                    ]),
+              ]),
+        ),
+      ),
+    );
+  }
+
+  ///Versions (get) guide
+  Widget getVersionsRowGuide() {
+    return ListenableProvider<SettingsItem>(
+      create: (context) => device.cameraSettings.versionsGuide,
+      child: Consumer<SettingsItem>(
+        builder: (context, model, _) => Card(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                    title: Text(SettingsId.Versions.name),
+                    onTap: () => device.api
+                        .getWebApiVersions(SonyWebApiServiceTypeId.GUIDE)),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                          child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: DropdownButton<WebApiVersionsValue>(
+                                hint: Text("available"),
+                                items: device
+                                    .cameraSettings.versionsGuide.available
+                                    .map<DropdownMenuItem<WebApiVersionsValue>>(
+                                        (e) => DropdownMenuItem<
+                                                WebApiVersionsValue>(
                                             child: Text(e.name), value: e))
                                     .toList(),
                                 onChanged: (value) {},
@@ -199,7 +325,7 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
                 title: Text(SettingsId.MethodTypes.name),
-                onTap: () => device.api.getMethodTypes(WebApiVersionId.V_1_3)),
+                onTap: () => device.api.getMethodTypes()),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(

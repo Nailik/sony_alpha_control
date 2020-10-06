@@ -1,12 +1,13 @@
-import 'dart:convert';
-
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
 
 class WebApiMethod {
+  SonyWebApiServiceTypeId serviceTypeId;
   SonyWebApiMethodId apiName;
+
   SettingsId settingsId;
   List<String> parameterTypes;
   List<String> responseTypes;

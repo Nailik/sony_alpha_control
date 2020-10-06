@@ -3,7 +3,7 @@ enum SonyWebApiServiceTypeId {
   AV_CONTENT,
   SYSTEM,
   GUIDE,
-  UNKNOWN }
+  Unknown }
 
 extension SonyWebApiServiceTypeIdExtension on SonyWebApiServiceTypeId {
   String get wifiValue {
@@ -16,9 +16,10 @@ extension SonyWebApiServiceTypeIdExtension on SonyWebApiServiceTypeId {
         return "system";
       case SonyWebApiServiceTypeId.GUIDE:
         return "guide";
-      case SonyWebApiServiceTypeId.UNKNOWN:
+      case SonyWebApiServiceTypeId.Unknown:
+        return "Unknown";
       default:
-        return "";
+        return "Unsupported";
     }
   }
 }

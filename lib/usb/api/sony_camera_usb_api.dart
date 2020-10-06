@@ -25,6 +25,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
@@ -252,7 +253,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
   }
 
   @override
-  Future<int> getBatteryPercentage({update = ForceUpdate.Off}) async {
+  Future<int> getBatteryPercentage({ForceUpdate update}) async {
     return device.cameraSettings.getItem(SettingsId.BatteryInfo).value.usbValue;
   }
 
@@ -542,13 +543,13 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   @override
   Future<RecordVideoStateValue> getRecordingVideoState(
-          {update = ForceUpdate.Off}) async =>
+      {ForceUpdate update}) async =>
       device.cameraSettings.getItem(SettingsId.RecordVideoState).value
           as RecordVideoStateValue;
 
   @override
   Future<SettingsItem<ImageSizeValue>> getImageSize(
-          {update = ForceUpdate.Off}) async =>
+      {ForceUpdate update}) async =>
       device.cameraSettings.getItem(SettingsId.ImageSize);
 
   @override
@@ -564,7 +565,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
         ((item.value.usbValue >> 8) & 0xFF) == 0x80;
    */
   @override
-  Future<bool> getPhotoAvailable({update = ForceUpdate.Off}) async =>
+  Future<bool> getPhotoAvailable({ForceUpdate update}) async =>
       ((device.cameraSettings
                   .getItem(SettingsId.PhotoTransferQueue)
                   .value
@@ -614,7 +615,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   @override
   Future<SettingsItem<StringValue>> getRecordingAudio(
-      {update = ForceUpdate.Off}) {
+      {ForceUpdate update}) {
     // TODO: implement getRecordingAudio
     throw UnimplementedError();
   }
@@ -645,8 +646,8 @@ class SonyCameraUsbApi extends CameraApiInterface {
   }
 
   @override
-  Future<SettingsItem<WebApiVersionValue>> getWebApiVersions(
-      {ForceUpdate update}) {
+  Future<SettingsItem<WebApiVersionsValue>> getWebApiVersions(
+      SonyWebApiServiceTypeId serviceTypeId, {ForceUpdate update}) {
     // TODO: implement getWebApiVersions
     throw UnimplementedError();
   }

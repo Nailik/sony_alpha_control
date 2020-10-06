@@ -5,6 +5,7 @@ import 'package:sonyalphacontrol/top_level_api/device/camera_settings.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/setting_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 import 'package:sonyalphacontrol/wifi/commands/wifi_command.dart';
@@ -245,7 +246,7 @@ class CameraWifiSettings extends CameraSettings {
     }
   }
 
-  updateCurrent(SettingsItem settingsItem, String json) async {
+  updateCurrent(SettingsItem settingsItem, String json, {SonyWebApiServiceTypeId webApiServiceTypeId}) async {
     var jsonD = jsonDecode(json);
     var list = jsonD["result"];
     switch (settingsItem.settingsId) {

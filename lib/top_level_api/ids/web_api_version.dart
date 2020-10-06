@@ -1,6 +1,6 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
 
 enum WebApiVersionId {
   V_1_0,
@@ -77,16 +77,16 @@ extension WebApiVersionIdExtension on WebApiVersionId {
       });
 }
 
-class WebApiVersionValue extends SettingsValue<WebApiVersionId> {
-  WebApiVersionValue(WebApiVersionId id) : super(id);
+class WebApiVersionsValue extends SettingsValue<WebApiVersionId> {
+  WebApiVersionsValue(WebApiVersionId id) : super(id);
 
   @override
-  factory WebApiVersionValue.fromUSBValue(int usbValue) =>
+  factory WebApiVersionsValue.fromUSBValue(int usbValue) =>
       throw UnsupportedError;
 
   @override
-  factory WebApiVersionValue.fromWifiValue(String wifiValue) =>
-      WebApiVersionValue(WebApiVersionIdExtension.getIdFromWifi(wifiValue));
+  factory WebApiVersionsValue.fromWifiValue(dynamic wifiValue) =>
+      WebApiVersionsValue(WebApiVersionIdExtension.getIdFromWifi(wifiValue[1]));
 
   @override
   int get usbValue => throw UnsupportedError;
