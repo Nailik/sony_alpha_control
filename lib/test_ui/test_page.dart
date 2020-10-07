@@ -79,9 +79,6 @@ class TestsPageState extends State<TestsPage> {
                       ///ApplicationInfo (get)
                       getApplicationInfoRow(),
 
-                      ///ApiList (getAvailable)
-                      getApiListRow(),
-
                       ///AvailableSettings (get)
                       getAvailableSettingsRow(),
 
@@ -190,8 +187,7 @@ class TestsPageState extends State<TestsPage> {
   //orange = supported and not available
   //red = unsupported
   Text getText(ItemId itemId, ApiMethodId apiMethodId,
-      {SonyWebApiServiceTypeId serviceId =
-          SonyWebApiServiceTypeId.CAMERA}) {
+      {SonyWebApiServiceTypeId serviceId = SonyWebApiServiceTypeId.CAMERA}) {
     Color color = Colors.black12;
 
     switch (device.api.checkFunction(itemId, apiMethodId)) {
@@ -223,7 +219,7 @@ class TestsPageState extends State<TestsPage> {
                     title: Text(ItemId.Versions.name + " Camera"),
                     subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: [ getText(ItemId.Versions, ApiMethodId.GET)]),
+                        children: [getText(ItemId.Versions, ApiMethodId.GET)]),
                     onTap: () => device.api
                         .getWebApiVersions(SonyWebApiServiceTypeId.CAMERA)),
                 Row(
@@ -262,6 +258,12 @@ class TestsPageState extends State<TestsPage> {
               children: [
                 ListTile(
                     title: Text(ItemId.Versions.name + " AvContent"),
+                    subtitle: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          getText(ItemId.Versions, ApiMethodId.GET,
+                              serviceId: SonyWebApiServiceTypeId.AV_CONTENT)
+                        ]),
                     onTap: () => device.api
                         .getWebApiVersions(SonyWebApiServiceTypeId.AV_CONTENT)),
                 Row(
@@ -300,6 +302,12 @@ class TestsPageState extends State<TestsPage> {
               children: [
                 ListTile(
                     title: Text(ItemId.Versions.name + " System"),
+                    subtitle: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          getText(ItemId.Versions, ApiMethodId.GET,
+                              serviceId: SonyWebApiServiceTypeId.SYSTEM)
+                        ]),
                     onTap: () => device.api
                         .getWebApiVersions(SonyWebApiServiceTypeId.SYSTEM)),
                 Row(
@@ -338,6 +346,12 @@ class TestsPageState extends State<TestsPage> {
               children: [
                 ListTile(
                     title: Text(ItemId.Versions.name + " Guide"),
+                    subtitle: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          getText(ItemId.Versions, ApiMethodId.GET,
+                              serviceId: SonyWebApiServiceTypeId.GUIDE)
+                        ]),
                     onTap: () => device.api
                         .getWebApiVersions(SonyWebApiServiceTypeId.GUIDE)),
                 Row(
@@ -376,6 +390,12 @@ class TestsPageState extends State<TestsPage> {
               children: [
                 ListTile(
                     title: Text(ItemId.Versions.name + " AccessControl"),
+                    subtitle: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          getText(ItemId.Versions, ApiMethodId.GET,
+                              serviceId: SonyWebApiServiceTypeId.ACCESS_CONTROL)
+                        ]),
                     onTap: () => device.api.getWebApiVersions(
                         SonyWebApiServiceTypeId.ACCESS_CONTROL)),
                 Row(
@@ -411,6 +431,9 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
                 title: Text(ItemId.MethodTypes.name + " Camera"),
+                subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [getText(ItemId.MethodTypes, ApiMethodId.GET)]),
                 onTap: () =>
                     device.api.getMethodTypes(SonyWebApiServiceTypeId.CAMERA)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -443,6 +466,11 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
                 title: Text(ItemId.MethodTypes.name + " AvContent"),
+                subtitle:
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  getText(ItemId.MethodTypes, ApiMethodId.GET,
+                      serviceId: SonyWebApiServiceTypeId.AV_CONTENT)
+                ]),
                 onTap: () => device.api
                     .getMethodTypes(SonyWebApiServiceTypeId.AV_CONTENT)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -475,6 +503,11 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
                 title: Text(ItemId.MethodTypes.name + " System"),
+                subtitle:
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  getText(ItemId.MethodTypes, ApiMethodId.GET,
+                      serviceId: SonyWebApiServiceTypeId.SYSTEM)
+                ]),
                 onTap: () =>
                     device.api.getMethodTypes(SonyWebApiServiceTypeId.SYSTEM)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -507,6 +540,11 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
                 title: Text(ItemId.MethodTypes.name + " Guide"),
+                subtitle:
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  getText(ItemId.MethodTypes, ApiMethodId.GET,
+                      serviceId: SonyWebApiServiceTypeId.GUIDE)
+                ]),
                 onTap: () =>
                     device.api.getMethodTypes(SonyWebApiServiceTypeId.GUIDE)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -539,6 +577,11 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
                 title: Text(ItemId.MethodTypes.name + " AccessControl"),
+                subtitle:
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  getText(ItemId.MethodTypes, ApiMethodId.GET,
+                      serviceId: SonyWebApiServiceTypeId.ACCESS_CONTROL)
+                ]),
                 onTap: () => device.api
                     .getMethodTypes(SonyWebApiServiceTypeId.ACCESS_CONTROL)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -572,6 +615,9 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
                 title: Text(ItemId.ApiList.name),
+                subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [getText(ItemId.ApiList, ApiMethodId.GET_AVAILABLE)]),
                 onTap: () => device.api.getAvailableFunctions()),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -603,27 +649,9 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
               title: Text(ItemId.ApplicationInfo.name),
-              subtitle: Text(
-                  device.cameraSettings.applicationInfo.value?.name ??
-                      "NotAvailable"),
-            ),
-          ]),
-        ),
-      ),
-    );
-  }
-
-  ///ApiList (getAvailable)
-  Widget getApiListRow() {
-    return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.apiList,
-      child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(
-          child: Column(children: [
-            ListTile(
-              title: Text(ItemId.ApiList.name),
-              subtitle: Text(
-                  device.cameraSettings.apiList.value?.name ?? "NotAvailable"),
+              subtitle: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [getText(ItemId.ApplicationInfo, ApiMethodId.GET)]),
             ),
           ]),
         ),
