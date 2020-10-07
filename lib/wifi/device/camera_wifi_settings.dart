@@ -2,7 +2,7 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:sonyalphacontrol/top_level_api/device/camera_settings.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/device/items.dart';
 import 'package:sonyalphacontrol/top_level_api/device/value.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
@@ -64,7 +64,7 @@ class CameraWifiSettings extends CameraSettings {
                   setting.value,
                   element["names"]
                       .map<Value<dynamic>>(
-                          (element) => setting.fromWifi(element))
+                          (element) => Value.fromWifi(setting.itemId, element))
                       .toList(),
                   setting.supported);
             }
@@ -75,8 +75,10 @@ class CameraWifiSettings extends CameraSettings {
           case ItemId.LiveViewState:
           case ItemId.LiveViewOrientation:
             //there is only a current value
-            setting.updateItem(setting.fromWifi(element[settingsIdWifiValue]),
-                setting.available, setting.supported);
+            setting.updateItem(
+                Value.fromWifi(setting.itemId, element[settingsIdWifiValue]),
+                setting.available,
+                setting.supported);
             break;
           case ItemId.WhiteBalanceMode:
             //   setting.updateItem(setting.fromWifi(element[settingsIdWifiValue]),
@@ -163,7 +165,7 @@ class CameraWifiSettings extends CameraSettings {
         break;
       default:
         settingsItem.updateItem(
-            settingsItem.fromWifi(list[0]),
+            Value.fromWifi(settingsItem.itemId, list[0]),
             settingsItem.createListFromWifiJson(list[1] as List),
             settingsItem.supported);
         break;
@@ -233,37 +235,6 @@ class CameraWifiSettings extends CameraSettings {
     }
   }
 
-  updateCurrent(SettingsItem settingsItem, String json,
-      {WebApiVersionId webApiVersion}) async {
-    var jsonD = jsonDecode(json);
-    var list = jsonD["result"];
-    switch (settingsItem.itemId) {
-      case ItemId.Versions:
-        var itemsList = settingsItem.createListFromWifiJson(list[0] as List);
-        settingsItem.updateItem(settingsItem.value, itemsList, itemsList);
-        break;
-      case ItemId.MethodTypes:
-        list = jsonD["results"];
-        var itemsList = settingsItem.createListFromWifiJson(list as List);
-        List<WebApiMethodValue> newList =
-            new List<WebApiMethodValue>.from(settingsItem.available);
-
-        itemsList.forEach((element) {
-          if (!settingsItem.available.contains(element)) {
-            newList.add(element);
-          }
-        });
-
-        settingsItem.updateItem(settingsItem.value, newList, newList);
-        break;
-      default:
-        //TODO
-        settingsItem.updateItem(
-            settingsItem.value, settingsItem.available, settingsItem.supported);
-        break;
-    }
-  }
-
   getDefaultSettings(json, SettingsItem settingsItem, String currentName,
       String availableName) {
     print("getDefaultSettings json $json availableName $availableName");
@@ -277,13 +248,14 @@ class CameraWifiSettings extends CameraSettings {
             json["minExposureCompensation"],
             json["maxExposureCompensation"],
             json["stepIndexOfExposureCompensation"]);
-        current = settingsItem.fromWifi(json["currentExposureCompensation"]);
+        current = Value.fromWifi(
+            settingsItem.itemId, json["currentExposureCompensation"]);
         break;
       default:
         availableList = json[availableName]
-            ?.map((e) => settingsItem.fromWifi(e))
+            ?.map((e) => Value.fromWifi(settingsItem.itemId, e))
             ?.toList(); //maybe there is no candidates/available list (e.g. camera status)
-        current = settingsItem.fromWifi(json[currentName]);
+        current = Value.fromWifi(settingsItem.itemId, json[currentName]);
         break;
     }
 
@@ -314,5 +286,35 @@ class CameraWifiSettings extends CameraSettings {
     }
 
     return listOfValues;
+  }
+
+  updateListInfoItem(ListInfoItem listInfoItem, String json,
+      {WebApiVersionId webApiVersion}) {
+    var jsonD = jsonDecode(json);
+    var list = jsonD["result"];
+    switch (listInfoItem.itemId) {
+      case ItemId.Versions:
+        var itemsList = listInfoItem.createListFromWifiJson(list[0] as List);
+        listInfoItem.updateItem(itemsList);
+        break;
+      case ItemId.MethodTypes:
+        list = jsonD["results"];
+        var itemsList = listInfoItem.createListFromWifiJson(list as List);
+        List<WebApiMethodValue> newList =
+            new List<WebApiMethodValue>.from(listInfoItem.values);
+
+        itemsList.forEach((element) {
+          if (!listInfoItem.values.contains(element)) {
+            newList.add(element);
+          }
+        });
+
+        listInfoItem.updateItem(newList);
+        break;
+      default:
+        //TODO
+        listInfoItem.updateItem(listInfoItem.values);
+        break;
+    }
   }
 }

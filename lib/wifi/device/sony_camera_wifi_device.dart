@@ -1,7 +1,7 @@
 import 'dart:core';
 
 import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/device/items.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/device/value.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/camera_function_id.dart';

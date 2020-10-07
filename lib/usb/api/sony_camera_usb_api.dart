@@ -7,7 +7,7 @@ import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/api/force_update.dart';
 import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/device/camera_image.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/device/items.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/device/value.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
@@ -625,7 +625,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
       var mills = DateTime.now().millisecondsSinceEpoch;
       var imgData = (await getImage(device, liveView: true));
       if (imgData != null) {
-        var img = Image.memory(imgData.data, key: Key("livviewimage"));
+        var img = Image.memory(imgData.data, key: Key("liveviewimage"));
         print("Frame Took ${DateTime.now().millisecondsSinceEpoch - mills}");
         yield img;
       }
@@ -639,7 +639,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
   }
 
   @override
-  Future<SettingsItem<WebApiVersionsValue>> getWebApiVersions(
+  Future<ListInfoItem<WebApiVersionsValue>> getWebApiVersions(
       SonyWebApiServiceTypeId serviceTypeId,
       {ForceUpdate update}) {
     // TODO: implement getWebApiVersions

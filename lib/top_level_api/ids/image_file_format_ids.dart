@@ -1,5 +1,5 @@
 import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/device/items.dart';
 
 enum ImageFileFormatId {
   JpegStandard,

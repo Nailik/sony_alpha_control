@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sonyalphacontrol/top_level_api/api/force_update.dart';
 import 'package:sonyalphacontrol/top_level_api/api/sony_api.dart';
 import 'package:sonyalphacontrol/top_level_api/device/camera_settings.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/device/items.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/device/value.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
@@ -38,15 +38,23 @@ class TestsPageState extends State<TestsPage> {
                     children: <Widget>[
                       ///Versions (get) camera
                       getVersionsRowCamera(),
+                      //TODO show available only when camera url exists?
 
                       ///Versions (get) avContent
                       getVersionsRowAvContent(),
+                      //TODO show available only when avContent url exists?
 
                       ///Versions (get) system
                       getVersionsRowSystem(),
+                      //TODO show available only when system url exists?
 
                       ///Versions (get) guide
                       getVersionsRowGuide(),
+                      //TODO show available only when guide url exists?
+
+                      ///Versions (get) accessControl
+                      getVersionsRowAccessControl(),
+                      //TODO show available only when accessControl url exists?
 
                       ///MethodTypes (get) camera
                       getMethodTypesRowCamera(),
@@ -59,6 +67,9 @@ class TestsPageState extends State<TestsPage> {
 
                       ///MethodTypes (get) guide
                       getMethodTypesRowGuide(),
+
+                      ///MethodTypes (get) accessControl
+                      getMethodTypesRowAccessControl(),
 
                       ///ApplicationInfo (get)
                       getApplicationInfoRow(),
@@ -171,9 +182,9 @@ class TestsPageState extends State<TestsPage> {
 
   ///Versions (get) Camera
   Widget getVersionsRowCamera() {
-    return ListenableProvider<SettingsItem>(
+    return ListenableProvider<ListInfoItem>(
       create: (context) => device.cameraSettings.versionsCamera,
-      child: Consumer<SettingsItem>(
+      child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -192,7 +203,7 @@ class TestsPageState extends State<TestsPage> {
                               child: DropdownButton<WebApiVersionsValue>(
                                 hint: Text("available"),
                                 items: device
-                                    .cameraSettings.versionsCamera.available
+                                    .cameraSettings.versionsCamera.values
                                     .map<DropdownMenuItem<WebApiVersionsValue>>(
                                         (e) => DropdownMenuItem<
                                                 WebApiVersionsValue>(
@@ -209,9 +220,9 @@ class TestsPageState extends State<TestsPage> {
 
   ///Versions (get) avContent
   Widget getVersionsRowAvContent() {
-    return ListenableProvider<SettingsItem>(
+    return ListenableProvider<ListInfoItem>(
       create: (context) => device.cameraSettings.versionsAvContent,
-      child: Consumer<SettingsItem>(
+      child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -230,7 +241,7 @@ class TestsPageState extends State<TestsPage> {
                               child: DropdownButton<WebApiVersionsValue>(
                                 hint: Text("available"),
                                 items: device
-                                    .cameraSettings.versionsAvContent.available
+                                    .cameraSettings.versionsAvContent.values
                                     .map<DropdownMenuItem<WebApiVersionsValue>>(
                                         (e) => DropdownMenuItem<
                                                 WebApiVersionsValue>(
@@ -247,9 +258,9 @@ class TestsPageState extends State<TestsPage> {
 
   ///Versions (get) system
   Widget getVersionsRowSystem() {
-    return ListenableProvider<SettingsItem>(
+    return ListenableProvider<ListInfoItem>(
       create: (context) => device.cameraSettings.versionsSystem,
-      child: Consumer<SettingsItem>(
+      child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -268,7 +279,7 @@ class TestsPageState extends State<TestsPage> {
                               child: DropdownButton<WebApiVersionsValue>(
                                 hint: Text("available"),
                                 items: device
-                                    .cameraSettings.versionsSystem.available
+                                    .cameraSettings.versionsSystem.values
                                     .map<DropdownMenuItem<WebApiVersionsValue>>(
                                         (e) => DropdownMenuItem<
                                                 WebApiVersionsValue>(
@@ -285,9 +296,9 @@ class TestsPageState extends State<TestsPage> {
 
   ///Versions (get) guide
   Widget getVersionsRowGuide() {
-    return ListenableProvider<SettingsItem>(
+    return ListenableProvider<ListInfoItem>(
       create: (context) => device.cameraSettings.versionsGuide,
-      child: Consumer<SettingsItem>(
+      child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -306,7 +317,45 @@ class TestsPageState extends State<TestsPage> {
                               child: DropdownButton<WebApiVersionsValue>(
                                 hint: Text("available"),
                                 items: device
-                                    .cameraSettings.versionsGuide.available
+                                    .cameraSettings.versionsGuide.values
+                                    .map<DropdownMenuItem<WebApiVersionsValue>>(
+                                        (e) => DropdownMenuItem<
+                                                WebApiVersionsValue>(
+                                            child: Text(e.name), value: e))
+                                    .toList(),
+                                onChanged: (value) {},
+                              )))
+                    ]),
+              ]),
+        ),
+      ),
+    );
+  }
+
+  ///Versions (get) accessControl
+  Widget getVersionsRowAccessControl() {
+    return ListenableProvider<ListInfoItem>(
+      create: (context) => device.cameraSettings.versionsAccessControl,
+      child: Consumer<ListInfoItem>(
+        builder: (context, model, _) => Card(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                    title: Text(ItemId.Versions.name + " AccessControl"),
+                    onTap: () => device.api.getWebApiVersions(
+                        SonyWebApiServiceTypeId.ACCESS_CONTROL)),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                          child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: DropdownButton<WebApiVersionsValue>(
+                                hint: Text("available"),
+                                items: device
+                                    .cameraSettings.versionsAccessControl.values
                                     .map<DropdownMenuItem<WebApiVersionsValue>>(
                                         (e) => DropdownMenuItem<
                                                 WebApiVersionsValue>(
@@ -323,9 +372,9 @@ class TestsPageState extends State<TestsPage> {
 
   ///MethodTypes (get) camera
   Widget getMethodTypesRowCamera() {
-    return ListenableProvider<SettingsItem>(
+    return ListenableProvider<ListInfoItem>(
       create: (context) => device.cameraSettings.methodTypesCamera,
-      child: Consumer<SettingsItem>(
+      child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
@@ -339,7 +388,7 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<WebApiMethodValue>(
                         isExpanded: true,
                         hint: Text("available"),
-                        items: device.cameraSettings.methodTypesCamera.available
+                        items: device.cameraSettings.methodTypesCamera.values
                             .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
                                 DropdownMenuItem<WebApiMethodValue>(
                                     child: Text(e.name), value: e))
@@ -355,9 +404,9 @@ class TestsPageState extends State<TestsPage> {
 
   ///MethodTypes (get) avContent
   Widget getMethodTypesRowAvContent() {
-    return ListenableProvider<SettingsItem>(
+    return ListenableProvider<ListInfoItem>(
       create: (context) => device.cameraSettings.methodTypesAvContent,
-      child: Consumer<SettingsItem>(
+      child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
@@ -371,8 +420,7 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<WebApiMethodValue>(
                         isExpanded: true,
                         hint: Text("available"),
-                        items: device
-                            .cameraSettings.methodTypesAvContent.available
+                        items: device.cameraSettings.methodTypesAvContent.values
                             .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
                                 DropdownMenuItem<WebApiMethodValue>(
                                     child: Text(e.name), value: e))
@@ -388,9 +436,9 @@ class TestsPageState extends State<TestsPage> {
 
   ///MethodTypes (get) system
   Widget getMethodTypesRowSystem() {
-    return ListenableProvider<SettingsItem>(
+    return ListenableProvider<ListInfoItem>(
       create: (context) => device.cameraSettings.methodTypesSystem,
-      child: Consumer<SettingsItem>(
+      child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
@@ -404,7 +452,7 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<WebApiMethodValue>(
                         isExpanded: true,
                         hint: Text("available"),
-                        items: device.cameraSettings.methodTypesSystem.available
+                        items: device.cameraSettings.methodTypesSystem.values
                             .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
                                 DropdownMenuItem<WebApiMethodValue>(
                                     child: Text(e.name), value: e))
@@ -420,9 +468,9 @@ class TestsPageState extends State<TestsPage> {
 
   ///MethodTypes (get) guide
   Widget getMethodTypesRowGuide() {
-    return ListenableProvider<SettingsItem>(
+    return ListenableProvider<ListInfoItem>(
       create: (context) => device.cameraSettings.methodTypesGuide,
-      child: Consumer<SettingsItem>(
+      child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
@@ -436,7 +484,40 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<WebApiMethodValue>(
                         isExpanded: true,
                         hint: Text("available"),
-                        items: device.cameraSettings.methodTypesGuide.available
+                        items: device.cameraSettings.methodTypesGuide.values
+                            .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
+                                DropdownMenuItem<WebApiMethodValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) {},
+                      )))
+            ]),
+          ]),
+        ),
+      ),
+    );
+  }
+
+  ///MethodTypes (get) accessControl
+  Widget getMethodTypesRowAccessControl() {
+    return ListenableProvider<ListInfoItem>(
+      create: (context) => device.cameraSettings.methodTypesAccessControl,
+      child: Consumer<ListInfoItem>(
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+                title: Text(ItemId.MethodTypes.name + " AccessControl"),
+                onTap: () => device.api
+                    .getMethodTypes(SonyWebApiServiceTypeId.ACCESS_CONTROL)),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<WebApiMethodValue>(
+                        isExpanded: true,
+                        hint: Text("available"),
+                        items: device
+                            .cameraSettings.methodTypesAccessControl.values
                             .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
                                 DropdownMenuItem<WebApiMethodValue>(
                                     child: Text(e.name), value: e))

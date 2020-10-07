@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:sonyalphacontrol/top_level_api/device/camera_image.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/device/items.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/device/value.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
@@ -13,8 +13,8 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_direction_ids
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_phase_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
@@ -43,7 +43,7 @@ abstract class CameraApiInterface {
   ///ForceUpdate
   ///   IfNull/Available/Supported -> if a field is null it will be read from camera
   ///   Current/On -> will load even if field is set
-  Future<SettingsItem<WebApiVersionsValue>> getWebApiVersions(
+  Future<ListInfoItem<WebApiVersionsValue>> getWebApiVersions(
       SonyWebApiServiceTypeId serviceTypeId,
       {ForceUpdate update}) async {
     switch (serviceTypeId) {
@@ -55,6 +55,8 @@ abstract class CameraApiInterface {
         return device.cameraSettings.versionsSystem;
       case SonyWebApiServiceTypeId.GUIDE:
         return device.cameraSettings.versionsGuide;
+      case SonyWebApiServiceTypeId.ACCESS_CONTROL:
+        return device.cameraSettings.versionsAccessControl;
       case SonyWebApiServiceTypeId.Unknown:
       default:
         throw UnsupportedError;
@@ -66,7 +68,7 @@ abstract class CameraApiInterface {
   ///ForceUpdate
   ///   IfNull/Available/Supported -> if a field is null it will be read from camera
   ///   Current/On -> will load even if field is set
-  Future<SettingsItem<WebApiMethodValue>> getMethodTypes(
+  Future<ListInfoItem<WebApiMethodValue>> getMethodTypes(
       SonyWebApiServiceTypeId serviceTypeId,
       {WebApiVersionId webApiVersion,
       ForceUpdate update}) async {
@@ -79,6 +81,8 @@ abstract class CameraApiInterface {
         return device.cameraSettings.methodTypesSystem;
       case SonyWebApiServiceTypeId.GUIDE:
         return device.cameraSettings.methodTypesGuide;
+      case SonyWebApiServiceTypeId.ACCESS_CONTROL:
+        return device.cameraSettings.methodTypesAccessControl;
       case SonyWebApiServiceTypeId.Unknown:
       default:
         throw UnsupportedError;

@@ -1,6 +1,5 @@
-
 import 'package:flutter/material.dart';
-import 'package:sonyalphacontrol/top_level_api/device/settings_item.dart';
+import 'package:sonyalphacontrol/top_level_api/device/items.dart';
 import 'package:sonyalphacontrol/top_level_api/device/value.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 
@@ -16,13 +15,12 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem focusMode = SettingsItem<FocusModeValue>(ItemId.FocusMode);
   SettingsItem whiteBalanceMode =
       SettingsItem<WhiteBalanceModeValue>(ItemId.WhiteBalanceMode);
-  SettingsItem whiteBalanceColorTemp = SettingsItem<WhiteBalanceColorTempValue>(
-      ItemId.WhiteBalanceColorTemp);
+  SettingsItem whiteBalanceColorTemp =
+      SettingsItem<WhiteBalanceColorTempValue>(ItemId.WhiteBalanceColorTemp);
   SettingsItem aelState = SettingsItem<BoolValue>(ItemId.AEL_State);
   SettingsItem fel = SettingsItem<BoolValue>(ItemId.FEL);
   SettingsItem focusArea = SettingsItem<FocusAreaValue>(ItemId.FocusArea);
-  SettingsItem focusAreaSpot =
-      SettingsItem<PointValue>(ItemId.FocusAreaSpot);
+  SettingsItem focusAreaSpot = SettingsItem<PointValue>(ItemId.FocusAreaSpot);
   SettingsItem autoFocusState =
       SettingsItem<AutoFocusStateValue>(ItemId.AutoFocusState);
   SettingsItem flashValue = SettingsItem<IntValue>(ItemId.FlashValue);
@@ -32,12 +30,10 @@ abstract class CameraSettings extends ChangeNotifier {
       SettingsItem<PictureEffectValue>(ItemId.PictureEffect);
   SettingsItem droHdr = SettingsItem<DroHdrValue>(ItemId.DroHdr);
   SettingsItem imageSize = SettingsItem<ImageSizeValue>(ItemId.ImageSize);
-  SettingsItem aspectRatio =
-      SettingsItem<AspectRatioValue>(ItemId.AspectRatio);
+  SettingsItem aspectRatio = SettingsItem<AspectRatioValue>(ItemId.AspectRatio);
   SettingsItem focusModeToggleResponse =
       SettingsItem<FocusModeToggleValue>(ItemId.FocusModeToggleResponse);
-  SettingsItem shootingMode =
-      SettingsItem<DriveModeValue>(ItemId.ShootingMode);
+  SettingsItem shootingMode = SettingsItem<DriveModeValue>(ItemId.ShootingMode);
   SettingsItem whiteBalanceAB =
       SettingsItem<WhiteBalanceAbValue>(ItemId.WhiteBalanceAB);
   SettingsItem whiteBalanceGM =
@@ -52,24 +48,28 @@ abstract class CameraSettings extends ChangeNotifier {
       SettingsItem<DoubleValue>(ItemId.FocusMagnifier);
 
   //versions for all the different SonyWebApiServiceTypeIds
-  SettingsItem<WebApiVersionsValue> versionsCamera =
-      SettingsItem<WebApiVersionsValue>(ItemId.Versions);
-  SettingsItem<WebApiVersionsValue> versionsAvContent =
-      SettingsItem<WebApiVersionsValue>(ItemId.Versions);
-  SettingsItem<WebApiVersionsValue> versionsSystem =
-      SettingsItem<WebApiVersionsValue>(ItemId.Versions);
-  SettingsItem<WebApiVersionsValue> versionsGuide =
-      SettingsItem<WebApiVersionsValue>(ItemId.Versions);
+  ListInfoItem<WebApiVersionsValue> versionsCamera =
+      ListInfoItem<WebApiVersionsValue>(ItemId.Versions);
+  ListInfoItem<WebApiVersionsValue> versionsAvContent =
+      ListInfoItem<WebApiVersionsValue>(ItemId.Versions);
+  ListInfoItem<WebApiVersionsValue> versionsSystem =
+      ListInfoItem<WebApiVersionsValue>(ItemId.Versions);
+  ListInfoItem<WebApiVersionsValue> versionsGuide =
+      ListInfoItem<WebApiVersionsValue>(ItemId.Versions);
+  ListInfoItem<WebApiVersionsValue> versionsAccessControl =
+      ListInfoItem<WebApiVersionsValue>(ItemId.Versions);
 
   //TODO method types for all different SonyWebApiServiceTypeIds with versions?
-  SettingsItem methodTypesCamera =
-      SettingsItem<WebApiMethodValue>(ItemId.MethodTypes);
-  SettingsItem methodTypesAvContent =
-      SettingsItem<WebApiMethodValue>(ItemId.MethodTypes);
-  SettingsItem methodTypesSystem =
-      SettingsItem<WebApiMethodValue>(ItemId.MethodTypes);
-  SettingsItem methodTypesGuide =
-      SettingsItem<WebApiMethodValue>(ItemId.MethodTypes);
+  ListInfoItem methodTypesCamera =
+      ListInfoItem<WebApiMethodValue>(ItemId.MethodTypes);
+  ListInfoItem methodTypesAvContent =
+      ListInfoItem<WebApiMethodValue>(ItemId.MethodTypes);
+  ListInfoItem methodTypesSystem =
+      ListInfoItem<WebApiMethodValue>(ItemId.MethodTypes);
+  ListInfoItem methodTypesGuide =
+      ListInfoItem<WebApiMethodValue>(ItemId.MethodTypes);
+  ListInfoItem methodTypesAccessControl =
+      ListInfoItem<WebApiMethodValue>(ItemId.MethodTypes);
 
   SettingsItem applicationInfo =
       SettingsItem<StringValue>(ItemId.ApplicationInfo);
@@ -78,8 +78,7 @@ abstract class CameraSettings extends ChangeNotifier {
       SettingsItem<StringValue>(ItemId.AvailableSettings);
   SettingsItem cameraFunction =
       SettingsItem<StringValue>(ItemId.CameraFunction);
-  SettingsItem capturePhoto =
-      SettingsItem<StringValue>(ItemId.CapturePhoto);
+  SettingsItem capturePhoto = SettingsItem<StringValue>(ItemId.CapturePhoto);
   SettingsItem cameraSetup = SettingsItem<StringValue>(ItemId.CameraSetup);
   SettingsItem liveView = SettingsItem<StringValue>(ItemId.LiveView);
   SettingsItem liveViewWithSize =
@@ -98,13 +97,11 @@ abstract class CameraSettings extends ChangeNotifier {
       SettingsItem<LiveViewSizeValue>(ItemId.LiveViewSize);
   SettingsItem postViewImageSize =
       SettingsItem<StringValue>(ItemId.PostViewImageSize);
-  SettingsItem programShift =
-      SettingsItem<StringValue>(ItemId.ProgramShift);
+  SettingsItem programShift = SettingsItem<StringValue>(ItemId.ProgramShift);
   SettingsItem zoomSetting = SettingsItem<StringValue>(ItemId.ZoomSetting);
   SettingsItem storageInformation =
       SettingsItem<StringValue>(ItemId.StorageInformation);
-  SettingsItem liveViewInfo =
-      SettingsItem<StringValue>(ItemId.LiveViewInfo);
+  SettingsItem liveViewInfo = SettingsItem<StringValue>(ItemId.LiveViewInfo);
   SettingsItem silentShootingSettings =
       SettingsItem<StringValue>(ItemId.SilentShootingSettings);
 

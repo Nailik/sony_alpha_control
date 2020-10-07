@@ -1,5 +1,6 @@
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:html';
+
+import 'dart:math';
 
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
@@ -15,6 +16,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/live_view_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/metering_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/movie_file_format_ids.dart';
@@ -22,7 +24,6 @@ import 'package:sonyalphacontrol/top_level_api/ids/movie_quality_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
@@ -55,6 +56,273 @@ abstract class Value<T> {
 
   @override
   int get hashCode => id.hashCode;
+
+  static Value fromWifi(ItemId itemId, dynamic wifiValue) {
+    switch (itemId) {
+      case ItemId.Versions:
+        return WebApiVersionsValue.fromWifiValue(wifiValue);
+      case ItemId.MethodTypes:
+        return WebApiMethodValue.fromWifiValue(wifiValue);
+      case ItemId.ImageFileFormat: //StillQuality
+        return ImageFileFormatValue.fromWifiValue(wifiValue);
+      case ItemId.ApiList:
+        return StringValue(wifiValue);
+      case ItemId.CameraStatus:
+        return CameraStatusValue.fromWifiValue(wifiValue);
+      case ItemId.ZoomInformation:
+      //TODO return StringValue(wifiValue);
+      case ItemId.LiveViewState:
+        return BoolValue(wifiValue);
+      case ItemId.LiveViewOrientation:
+        return StringValue(wifiValue); //TODO enum 0,90,180,270
+      case ItemId.PostViewUrlSet:
+      //TODO
+      case ItemId.LiveViewSize:
+        return LiveViewSizeValue.fromWifiValue(wifiValue);
+      case ItemId.ContShootingUrlSet:
+      //TODO
+      case ItemId.StorageInformation:
+      //TODO return StringValue(wifiValue);
+      case ItemId.BeepMode:
+        return StringValue(wifiValue); //TODO enum
+      case ItemId.CameraFunction:
+        return CameraFunctionValue.fromWifiValue(wifiValue);
+      case ItemId.EV: //exposureCompensation
+        throw UnsupportedError; //this should never be called //EvValue(double.parse(wifiValue));
+      case ItemId.MovieQuality:
+        return MovieQualityValue.fromWifiValue(wifiValue);
+      case ItemId.CameraFunctionResult:
+      //TODO
+      case ItemId.SteadyMode:
+        return OnOffValue(wifiValue);
+      case ItemId.ViewAngle:
+        return IntValue(int.parse(wifiValue));
+      case ItemId.FlipSetting:
+        return OnOffValue(wifiValue);
+      case ItemId.SceneSelection:
+      //TODO
+      case ItemId.IntervalTime:
+      //TODO
+      case ItemId.ColorSetting:
+      //TODO
+      case ItemId.MovieFileFormat:
+        return MovieFileFormatValue.fromWifiValue(wifiValue);
+      case ItemId.IRRemoteControl:
+        return OnOffValue(wifiValue);
+      case ItemId.TvColorSystem:
+      //TODO
+      case ItemId.PostViewImageSize:
+        return StringValue(wifiValue);
+      case ItemId.SelfTimer:
+        return IntValue(wifiValue);
+      case ItemId.ShootingMode:
+      //TODO  return ShootingModeValue.fromWifiValue(wifiValue);
+      case ItemId.MeteringMode: //exposureMode
+      //TODO  return MeteringModeValue.fromWifiValue(wifiValue);
+      case ItemId.FlashMode:
+        return FlashModeValue.fromWifiValue(wifiValue);
+      case ItemId.FNumber:
+        return DoubleValue(
+            double.parse(wifiValue.replaceAll(",", "."))); //durch 100
+      case ItemId.FocusMode:
+        return FocusModeValue.fromWifiValue(wifiValue);
+      case ItemId.ISO:
+        return IsoValue.fromWifiValue(
+            wifiValue); //TODO test noise reduction, auto ...
+      case ItemId.ProgramShift:
+      //TODO  return StringValue(wifiValue);
+      case ItemId.ShutterSpeed:
+        return ShutterSpeedValue.fromWifiValue(wifiValue);
+      case ItemId.WhiteBalanceMode:
+        throw UnsupportedError; //should never be called return WhiteBalanceModeValue.fromWifiValue(wifiValue);
+      case ItemId.FocusAreaSpot: //touchAFPosition
+      //TODO  return IntValue(wifiValue);
+      case ItemId.AutoFocusState:
+      //TODO  return AutoFocusStateValue.fromWifiValue(wifiValue);
+      case ItemId.TrackingFocusStatus:
+      //TODO
+      case ItemId.TrackingFocus:
+        return OnOffValue(wifiValue);
+      case ItemId.ZoomSetting: //FocusStatus
+      //TODO   return StringValue(wifiValue);
+      case ItemId.ZoomSetting: //FocusStatus
+        return ZoomSettingValue.fromWifiValue(wifiValue);
+      case ItemId.ContShootingMode:
+      //TODO return ContShootingModeValue.fromWifiValue(wifiValue);
+      case ItemId.ContShootingSpeed:
+      //TODO  return ContShootingSpeedValue.fromWifiValue(wifiValue);
+      case ItemId.BatteryInfo: //BatteryInformation
+      //TODO   return IntValue(wifiValue);
+      case ItemId.SilentShooting:
+      //TODO  return StringValue(wifiValue); //bool value?
+      case ItemId.RecordingTime:
+      //TODO
+      case ItemId.NumberOfShots:
+      //TODO
+      case ItemId.AutoPowerOff:
+      //TODO
+      case ItemId.LoopRecordingTime:
+      //TODO
+      case ItemId.AudioRecordingSetting:
+      //TODO
+      case ItemId.WindNoiseReduction:
+      //TODO
+      case ItemId.SilentShootingSetting:
+      //TODO
+      case ItemId.BulbCapturingTime:
+      //TODO
+      default:
+        return null;
+        break;
+    }
+  }
+
+  static fromUsb(ItemId itemId, int usbValue, {int subValue = 1}) {
+    switch (itemId) {
+      case ItemId.ImageFileFormat:
+        return ImageFileFormatValue.fromUSBValue(usbValue);
+      case ItemId.WhiteBalanceMode:
+        return WhiteBalanceModeValue.fromUSBValue(usbValue);
+      case ItemId.FNumber:
+        return DoubleValue(usbValue as double); //TODO test
+      case ItemId.FocusMode:
+        return FocusModeValue.fromUSBValue(usbValue);
+      case ItemId.MeteringMode:
+        return MeteringModeValue.fromUSBValue(usbValue);
+      case ItemId.FlashMode:
+        return FlashModeValue.fromUSBValue(usbValue);
+      case ItemId.ShootingMode:
+        return ShootingModeValue.fromUSBValue(usbValue);
+      case ItemId.EV:
+        return IntValue(usbValue);
+      case ItemId.DriveMode:
+        return DriveModeValue.fromUSBValue(usbValue);
+      case ItemId.FlashValue:
+        return IntValue(usbValue);
+      case ItemId.DroHdr:
+        return DroHdrValue.fromUSBValue(usbValue);
+      case ItemId.ImageSize:
+        return ImageSizeValue.fromUSBValue(usbValue);
+      case ItemId.ShutterSpeed:
+        return ShutterSpeedValue(usbValue.toDouble(), subValue);
+      case ItemId.UnkD20E:
+        print("UnkD20E $usbValue");
+        return IntValue(usbValue);
+      case ItemId.WhiteBalanceColorTemp:
+        return IntValue(usbValue);
+      case ItemId.WhiteBalanceGM:
+        return WhiteBalanceGmValue.fromUSBValue(usbValue);
+      case ItemId.AspectRatio:
+        return AspectRatioValue.fromUSBValue(usbValue);
+      case ItemId.UnkD212:
+        print("UnkD212 $usbValue");
+        return IntValue(usbValue);
+      case ItemId.AutoFocusState:
+        return AutoFocusStateValue.fromUSBValue(usbValue);
+      case ItemId.Zoom:
+        return IntValue(usbValue);
+      case ItemId.PhotoTransferQueue:
+        return IntValue(usbValue); //32769  & 0xFF
+      case ItemId.AEL_State:
+        return BoolValue(usbValue == 2);
+      case ItemId.BatteryInfo:
+        return IntValue(usbValue);
+      case ItemId.SensorCrop:
+        return BoolValue(usbValue == 2);
+      case ItemId.PictureEffect:
+        return PictureEffectValue.fromUSBValue(usbValue);
+      case ItemId.WhiteBalanceAB:
+        return WhiteBalanceAbValue.fromUSBValue(usbValue);
+      case ItemId.RecordVideoState:
+        return RecordVideoStateValue.fromUSBValue(usbValue);
+      case ItemId.ISO:
+        return IsoValue(usbValue);
+      case ItemId.FEL_State:
+        return BoolValue(usbValue == 2);
+      case ItemId.LiveViewState:
+        return BoolValue(usbValue == 2);
+      case ItemId.UnkD222:
+        print("UnkD222 $usbValue");
+        return IntValue(usbValue);
+      case ItemId.FocusArea:
+        return FocusAreaValue.fromUSBValue(usbValue);
+      case ItemId.FocusMagnifierPhase:
+        return FocusMagnifierPhaseValue.fromUSBValue(usbValue);
+      case ItemId.UnkD22E:
+        print("UnkD22E $usbValue");
+        return IntValue(usbValue);
+      case ItemId.FocusMagnifier:
+        return IntValue(usbValue);
+      case ItemId.FocusMagnifierPosition:
+        return IntValue(usbValue);
+      case ItemId.UseLiveViewDisplayEffect:
+        return BoolValue(usbValue == 2);
+      case ItemId.FocusAreaSpot:
+        return IntValue(usbValue);
+      case ItemId.FocusMagnifierState:
+        return BoolValue(usbValue == 2);
+      case ItemId.FocusModeToggleResponse:
+        return IntValue(usbValue);
+      case ItemId.UnkD236:
+        print("UnkD236 $usbValue");
+        return IntValue(usbValue);
+      case ItemId.HalfPressShutter:
+        return BoolValue(usbValue == 2);
+      case ItemId.CapturePhoto:
+        return BoolValue(usbValue == 2);
+      case ItemId.AEL:
+        return IntValue(usbValue);
+      case ItemId.UnkD2C5:
+        print("UnkD2C5 $usbValue");
+        return IntValue(usbValue);
+      case ItemId.UnkD2C7:
+        print("UnkD2C7 $usbValue");
+        return IntValue(usbValue);
+      case ItemId.RecordVideo:
+        return BoolValue(usbValue == 2);
+      case ItemId.FEL:
+        return BoolValue(usbValue == 2);
+      case ItemId.FocusMagnifierRequest:
+        return IntValue(usbValue);
+      case ItemId.FocusMagnifierResetRequest:
+        return IntValue(usbValue);
+      case ItemId.FocusMagnifierMoveUpRequest:
+        return IntValue(usbValue);
+      case ItemId.FocusMagnifierMoveDownRequest:
+        return IntValue(usbValue);
+      case ItemId.FocusMagnifierMoveLeftRequest:
+        return IntValue(usbValue);
+      case ItemId.FocusMagnifierMoveRightRequest:
+        return IntValue(usbValue);
+      case ItemId.FocusDistance:
+        return IntValue(usbValue);
+      case ItemId.FocusModeToggleRequest:
+        return IntValue(usbValue);
+      case ItemId.UnkD2D3:
+        print("UnkD2D3 $usbValue");
+        return IntValue(usbValue);
+      case ItemId.UnkD2D4:
+        print("UnkD2D4 $usbValue");
+        return IntValue(usbValue);
+      case ItemId.LiveViewInfo:
+        return IntValue(usbValue);
+      case ItemId.PhotoInfo:
+        return IntValue(usbValue);
+      case ItemId.Unknown:
+        print("Unknown $usbValue");
+        return IntValue(usbValue);
+      case ItemId.AvailableSettings:
+        return IntValue(usbValue);
+      case ItemId.CameraInfo:
+        return IntValue(usbValue);
+      case ItemId.Connect:
+        return IntValue(usbValue);
+      case ItemId.Versions:
+        throw UnsupportedError;
+      default:
+        throw UnsupportedError;
+    }
+  }
 }
 
 extension StringExtension on String {
