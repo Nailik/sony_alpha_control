@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter_usb/Response.dart';
-import 'package:flutter_usb/UsbDevice.dart';
-import 'package:flutter_usb/flutter_usb.dart';
+/*import 'package:flutter_usb/Response.dart';
+import 'package:flutter_usb/UsbDevice.dart';*/
+//import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/test_ui/test_page.dart';
 import 'package:sonyalphacontrol/top_level_api/device/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
@@ -15,7 +15,7 @@ class Downloader {
   static SonyCameraDevice device;
 
   static Future<List<CameraImage>> download() async {
-    fetchPhotos((device as SonyCameraUsbDevice).device.toJson());
+   /* fetchPhotos((device as SonyCameraUsbDevice).device.toJson());*/
     /*
     var result = await FlutterIsolate.spawn(fetchPhotos, (device as SonyCameraUsbDevice).device.toJson());
     print(result);
@@ -27,7 +27,7 @@ class Downloader {
 
 //TODO pass sony camera device as json?
 Future<List<CameraImage>> fetchPhotos(Map<String, dynamic> deviceJson) async {
-  SonyCameraUsbDevice device =
+ /* SonyCameraUsbDevice device =
       SonyCameraUsbDevice(UsbDevice.fromJson(deviceJson));
   //wait until available
   //  sleep(Duration(milliseconds: 100));
@@ -71,7 +71,7 @@ Future<List<CameraImage>> fetchPhotos(Map<String, dynamic> deviceJson) async {
     print(photoAvailable);
   }
 
-  return imageList;
+  return imageList;*/
 }
 
 Future<CameraImage> getImage(SonyCameraDevice device,
@@ -88,9 +88,9 @@ Future<CameraImage> getImage(SonyCameraDevice device,
 */
 
   var mills = DateTime.now().millisecondsSinceEpoch;
-  Response response = await UsbCommands.getImageCommand(liveView, false,
+ /* Response response = await UsbCommands.getImageCommand(liveView, false,
           imageSizeInBytes: 307200)
-      .send();
+      .send();*/
 
   print("Frame Response ${DateTime.now().millisecondsSinceEpoch - mills}");
   // TODO if (!response.isValidResponse()) {
@@ -98,7 +98,7 @@ Future<CameraImage> getImage(SonyCameraDevice device,
   //   return null;
   //  }
 
-  var bytelist = response.inData.toByteList();
+  var bytelist = null;// response.inData.toByteList();
   var buffer = bytelist.buffer;
   var bytes = buffer.asByteData();
 

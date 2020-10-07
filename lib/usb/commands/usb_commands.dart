@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter_usb/Command.dart';
-import 'package:flutter_usb/Response.dart';
-import 'package:flutter_usb/flutter_usb.dart';
+
+/*import 'package:flutter_usb/Command.dart';
+import 'package:flutter_usb/Response.dart';*/
+//import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 
@@ -52,7 +53,7 @@ class UsbCommands {
       addValueToCommand(list, value1, value1DataSize);
       addValueToCommand(list, value2, value2DataSize);
 
-      return SonyUsbCommand(Command(list, outDataLength: outDataLength));
+      /*return SonyUsbCommand(Command(list, outDataLength: outDataLength));*/
     } else if (Platform.isAndroid) {
       Uint8List list = CommandT.createCommand(16);
       //TODO not always 2 lists
@@ -92,7 +93,7 @@ class UsbCommands {
 
       if (value1DataSize == 0 && value2DataSize == 0) {
         //only one command, eg when reading settings
-        return SonyUsbCommand(Command(list, outDataLength: outDataLength));
+      /*  return SonyUsbCommand(Command(list, outDataLength: outDataLength));*/
       }
 
       Uint8List list2 = CommandT.createCommand(16);
@@ -120,8 +121,8 @@ class UsbCommands {
       addValueToCommand(
           list2, value2, value2DataSize); //write max 16 bit value at moment
 
-      return SonyUsbCommand(Command(list),
-          command2: Command(list2, outDataLength: outDataLength));
+      /*return SonyUsbCommand(Command(list),
+          command2: Command(list2, outDataLength: outDataLength));*/
     }
 
     return null;
@@ -187,12 +188,12 @@ class UsbCommands {
       list.writeUInt8(0xFF);
     }
 
-    Uint8List end = Uint8List.fromList([0xFF, 0xD9]);
+   /* Uint8List end = Uint8List.fromList([0xFF, 0xD9]);
     return SonyUsbCommand(Command(list,
         outDataLength: imageSizeInBytes,
         sendTimeout: 100,
         receiveTimeout: 50,
-        endIdentifier: end));
+        endIdentifier: end));*/
     //imageSizeInBytes -> 0124
     //imageSizeInBytes -> 307200
 
@@ -243,12 +244,13 @@ extension CommandT on Uint8List {
 }
 
 class SonyUsbCommand {
-  Command command1;
+  /*Command command1;
   Command command2;
 
   SonyUsbCommand(this.command1, {this.command2});
-
-  Future<Response> send() async {
+*/
+  Future/*<Response>*/ send() async {
+    /*
     if (command2 != null) {
       command1.outDataLength = 0;
       var re = await FlutterUsb.sendCommand(command1);
@@ -259,5 +261,6 @@ class SonyUsbCommand {
     var re = await FlutterUsb.sendCommand(command1);
     print("Frame Data ${DateTime.now().millisecondsSinceEpoch - mills}");
     return re;
+  */
   }
 }

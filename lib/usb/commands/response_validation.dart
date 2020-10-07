@@ -1,4 +1,4 @@
-import 'package:flutter_usb/Response.dart';
+/*import 'package:flutter_usb/Response.dart';
 
 extension ResponseValidation on Response {
   bool isSuccess() {
@@ -14,4 +14,4 @@ extension ResponseValidation on Response {
     }
     return inData[0] == 1 && inData[1] == 0x20;
   }
-}
+}*/

@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:flutter_usb/Command.dart';
-import 'package:flutter_usb/flutter_usb.dart';
+//import 'package:flutter_usb/Command.dart';
+//import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/api/sony_api.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
@@ -18,20 +18,21 @@ class SonyUsbApi extends SonyApiInterface {
 
   @override
   Future<bool> initialize() async {
-    await FlutterUsb.initializeUsb;
+   // await FlutterUsb.initializeUsb;
     _initialized = true;
     return _initialized;
   }
 
   @override
-  Future<List<SonyCameraUsbDevice>> getAvailableCameras() => FlutterUsb
+  Future<List<SonyCameraUsbDevice>> getAvailableCameras() => throw UnimplementedError;
+  /*FlutterUsb
       .getUsbDevices
-      .then((value) => value.map((e) => new SonyCameraUsbDevice(e)).toList());
+      .then((value) => value.map((e) => new SonyCameraUsbDevice(e)).toList());*/
 
   @override
   Future<bool> connectCamera(SonyCameraDevice device) async {
-    var str = await FlutterUsb.connectToUsbDevice(
-        (device as SonyCameraUsbDevice).device);
+    //var str = await FlutterUsb.connectToUsbDevice(
+   //     (device as SonyCameraUsbDevice).device);
     //TODO check str
     if (Platform.isAndroid) {
       //send these two commands before the actual connect command  (not needed on windows, done by wia)
@@ -47,8 +48,8 @@ class SonyUsbApi extends SonyApiInterface {
       list.goTo(12);
       list.writeUInt8(1);
 
-      var r = await SonyUsbCommand(Command(list)).send();
-      print(r);
+    /*  var r = await SonyUsbCommand(Command(list)).send();
+      print(r);*/
 /*
       0000   0c 00 00 00 01 00 04 10 02 00 00 00
       */
@@ -62,18 +63,18 @@ class SonyUsbApi extends SonyApiInterface {
       list.goTo(12);
       list.writeUInt8(1);
 
-      await SonyUsbCommand(Command(list)).send();
+     /* await SonyUsbCommand(Command(list)).send();*/
       print("return true android connection no idea what result is correct");
       return true;
     } else if (Platform.isWindows) {
-      return (await UsbCommands.getCommandSetting(ItemId.Connect,
+     /* return (await UsbCommands.getCommandSetting(ItemId.Connect,
                   opCodeId: OpCodeId.Connect,
                   value1: 3,
                   value2: 0,
                   value1DataSize: 3,
                   value2DataSize: 0)
               .send())
-          .isValidResponse();
+          .isValidResponse();*/
     }
 
     return false;

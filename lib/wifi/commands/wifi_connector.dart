@@ -58,7 +58,7 @@ class WifiConnector {
     try {
       if (socket == null) {
         int i = 100;
-        while (socket == null) {
+        while (socket == null) {//TODO not bind with my own computer
           try {
             socket = await RawDatagramSocket.bind(
                 InternetAddress("192.168.122.$i"), 0); //TODO
@@ -79,7 +79,7 @@ class WifiConnector {
 
       //   await socket.forEach((RawSocketEvent event) {
       //  if (event == RawSocketEvent.read) {
-      Datagram dg;
+      Datagram dg;//TODO locks if doesnt receive (bindet do own computer)
       while (dg == null) {
         dg = socket.receive();
       }

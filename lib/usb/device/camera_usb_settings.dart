@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter_usb/Response.dart';
-import 'package:flutter_usb/flutter_usb.dart';
+//import 'package:flutter_usb/Response.dart';
+//import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/device/camera_settings.dart';
 import 'package:sonyalphacontrol/top_level_api/device/items.dart';
 import 'package:sonyalphacontrol/top_level_api/device/value.dart';
@@ -18,34 +18,34 @@ class CameraUsbSettings extends CameraSettings {
 
   @override
   Future<bool> update() async {
-    var response = await UsbCommands.getCommandSetting(ItemId.AvailableSettings,
+  /*  var response = await UsbCommands.getCommandSetting(ItemId.AvailableSettings,
             opCodeId: OpCodeId.SettingsList,
             value1: 0,
             value2: 0,
             value1DataSize: 0,
             value2DataSize: 0)
-        .send();
+        .send();*/
     //1, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     // 200, 0, 31, 0, 0, 0, 4, 80, 5, 80, 7, 80, 10
 
     //on android
     //98, 0, 0, 0, 2, 0, 2, 146, 4, 0, 0, 0,
     //299...
-    analyzeSettingsAvailable(response);
+   // analyzeSettingsAvailable(response);
 
-    response = await UsbCommands.getCommandSetting(ItemId.CameraInfo,
+   /* response = await UsbCommands.getCommandSetting(ItemId.CameraInfo,
             opCodeId: OpCodeId.Settings,
             value1: 0,
             value2: 0,
             value1DataSize: 0,
             value2DataSize: 0,
             outDataLength: 4000)
-        .send();
+        .send();*/
 
     //1, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     //37, 0, 0, 0, 0, 0, 0, 0, 4, 80, 2, 0, 1, 1, 2, 16, 2, 5, 0,
     try {
-      analyzeSettings(response);
+     /* analyzeSettings(response);*/
     } catch (e) {
       print(e);
     }
@@ -55,9 +55,9 @@ class CameraUsbSettings extends CameraSettings {
     return true;
   }
 
-  analyzeSettingsAvailable(Response response) {
-    if (!isValidResponse(response)) return;
-    var bytes = Uint8List.fromList(response.inData).buffer.asByteData();
+  analyzeSettingsAvailable(/*Response response*/) {
+    /*if (!isValidResponse(response)) return;*/
+    var bytes = null;//Uint8List.fromList(response.inData).buffer.asByteData();
 
     int offset = 30; //TODO maybe only wia offset?
     if (Platform.isAndroid) {
@@ -83,10 +83,10 @@ class CameraUsbSettings extends CameraSettings {
     }
   }
 
-  analyzeSettings(Response response) {
+  analyzeSettings(/*Response response*/) {
     // if (!isValidResponse(response)) return;
 
-    var byteList = response.inData.toByteList();
+    var byteList = null;//response.inData.toByteList();
     var bytes = byteList.buffer.asByteData();
 
     int offset = 30; //TODO maybe only wia offset?
@@ -335,10 +335,10 @@ class CameraUsbSettings extends CameraSettings {
     }
   }
 
-  bool isValidResponse(Response response) {
-    return response.inData != null &&
+  bool isValidResponse(/*Response response*/) {
+    /*return response.inData != null &&
         response.inData.length > 2 &&
         response.inData[0] == 0x01 &&
-        response.inData[1] == 0x20;
+        response.inData[1] == 0x20;*/
   }
 }

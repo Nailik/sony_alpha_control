@@ -1,4 +1,6 @@
-import 'file:///C:/Users/kilia/CloudStation/Dokumente/Projects/sony_alpha_control/lib/top_level_api/ids/web_api_version_ids.dart';
+
+
+import 'package:sonyalphacontrol/top_level_api/ids/web_api_version_ids.dart';
 
 class CameraWebApiService {
   String type;

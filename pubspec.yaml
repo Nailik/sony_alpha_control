@@ -23,10 +23,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_usb:
-    git:
-      url: https://github.com/Nailik/flutter_usb.git
-      ref: '809d753'
+ # flutter_usb:
+ #   git:
+  #    url: https://github.com/Nailik/flutter_usb.git
+   #   ref: '809d753'
   wifi_iot:
     git: https://github.com/alternadom/WiFiFlutter.git
   xml2json:

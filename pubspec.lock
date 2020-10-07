@@ -251,15 +251,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_usb:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: "809d753"
-      resolved-ref: "809d7530245f703ccb3bb932bff132d94f3a7f3e"
-      url: "https://github.com/Nailik/flutter_usb.git"
-    source: git
-    version: "0.0.7"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -335,13 +326,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.5.0"
-  logger:
-    dependency: transitive
-    description:
-      name: logger
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.9.4"
   logging:
     dependency: transitive
     description:

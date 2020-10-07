@@ -3,7 +3,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_usb/flutter_usb.dart';
+//import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/api/force_update.dart';
 import 'package:sonyalphacontrol/top_level_api/api/function_availability.dart';
 import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dart';
@@ -573,6 +573,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
   @override
   Future<CameraImageRequest> requestPhotoAvailable(
       {bool liveView = false}) async {
+    /*
     var response = await UsbCommands.getImageCommand(liveView, true).send();
 
     int offset = 32; //TODO maybe only wia offset?
@@ -595,6 +596,8 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
     return CameraImageRequest(
         numImages == 1, imageInfoUnk, imageSizeInBytes, name);
+
+     */
   }
 
   @override

@@ -4,7 +4,6 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   file_chooser
-  flutter_usb
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)
