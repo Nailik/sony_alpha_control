@@ -66,7 +66,7 @@ abstract class Value<T> {
       case ItemId.ImageFileFormat: //StillQuality
         return ImageFileFormatValue.fromWifiValue(wifiValue);
       case ItemId.ApiList:
-        return StringValue(wifiValue);
+        return ApiFunctionValue.fromWifiValue(wifiValue);
       case ItemId.CameraStatus:
         return CameraStatusValue.fromWifiValue(wifiValue);
       case ItemId.ZoomInformation:
@@ -1009,7 +1009,7 @@ class WebApiMethodValue extends Value<WebApiMethod> {
 
   @override
   factory WebApiMethodValue.fromWifiValue(dynamic wifiValue) {
-    var methodId = SonyWebApiMethodId.values
+    var methodId = ApiMethodId.values
         .firstWhere((element) => wifiValue[0].startsWith(element.wifiValue));
     return WebApiMethodValue(WebApiMethod(
         methodId,
@@ -1120,4 +1120,33 @@ class ZoomSettingValue extends Value<ZoomSettingId> {
 
   @override
   String get name => id.name;
+}
+
+class ApiFunctionValue extends Value<ItemId> {
+  List<ApiMethodId> methods;
+
+  ApiFunctionValue(ItemId id, this.methods) : super(id);
+
+  @override
+  factory ApiFunctionValue.fromUSBValue(int usbValue) =>
+      throw UnimplementedError;
+
+  @override
+  factory ApiFunctionValue.fromWifiValue(String wifiValue) {
+    var methodId = ApiMethodId.values
+        .firstWhere((element) => wifiValue.startsWith(element.wifiValue));
+    return ApiFunctionValue(
+        SettingsIdExtension.getIdFromWifi(
+            wifiValue.replaceFirst(methodId.wifiValue, "").startLow),
+        [methodId]);
+  }
+
+  @override
+  int get usbValue => throw UnimplementedError;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => "${id.name} $methods";
 }

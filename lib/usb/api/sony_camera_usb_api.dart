@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/api/force_update.dart';
+import 'package:sonyalphacontrol/top_level_api/api/function_availability.dart';
 import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/device/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/device/items.dart';
@@ -21,6 +22,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
@@ -643,6 +645,14 @@ class SonyCameraUsbApi extends CameraApiInterface {
       SonyWebApiServiceTypeId serviceTypeId,
       {ForceUpdate update}) {
     // TODO: implement getWebApiVersions
+    throw UnimplementedError();
+  }
+
+  //TODO difference only by itemId? because "get" and set then always available? or battery only info = only get
+  @override
+  FunctionAvailability checkFunction(ItemId itemId, ApiMethodId apiMethodId,
+      {SonyWebApiServiceTypeId service = SonyWebApiServiceTypeId.CAMERA}) {
+    // TODO: implement getInfo
     throw UnimplementedError();
   }
 }

@@ -4,6 +4,7 @@ import 'package:sonyalphacontrol/top_level_api/api/sony_api.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
 import 'package:sonyalphacontrol/wifi/commands/wifi_command.dart';
 import 'package:sonyalphacontrol/wifi/commands/wifi_connector.dart';
 import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
@@ -32,6 +33,11 @@ class SonyWifiApi extends SonyApiInterface {
 
   @override
   Future<bool> connectCamera(SonyCameraDevice device) async {
+    await device.api.getWebApiVersions(SonyWebApiServiceTypeId.CAMERA);
+    await device.api.getMethodTypes(SonyWebApiServiceTypeId.CAMERA);
+    await device.api.getAvailableFunctions();
+
+    await startConnection(device);
     /*
     var versions = await device.api.getWebApiVersions();
 
@@ -48,7 +54,6 @@ class SonyWifiApi extends SonyApiInterface {
 
     //TODO wait until start content transfer / remote shooting is available
 
-    startConnection(device);
 
     var apiList = await getAvailableApiList(
         device); //available api (all methods of this camera in current Function)
@@ -135,9 +140,9 @@ class SonyWifiApi extends SonyApiInterface {
   }*/
 
   Future<bool> startConnection(SonyCameraWifiDevice device) async {
-    var webResponse = await WifiCommand.createCommand(
-            SonyWebApiMethodId.START, ItemId.CameraSetup)
-        .send(device);
+    var webResponse =
+        await WifiCommand.createCommand(ApiMethodId.START, ItemId.CameraSetup)
+            .send(device);
     //[0] if success
     return jsonDecode(webResponse.response)["0"] == 0;
   }

@@ -26,7 +26,7 @@ class CameraWifiSettings extends CameraSettings {
   Future<String> getSettings(WebApiVersionId version, bool longPolling,
       SonyCameraWifiDevice device) async {
     var webResponse = await WifiCommand.createCommand(
-        SonyWebApiMethodId.GET, ItemId.AvailableSettings,
+        ApiMethodId.GET, ItemId.AvailableSettings,
         params: [longPolling]).send(device, timeout: 80000);
     //a list
     var jsonD = jsonDecode(webResponse.response);

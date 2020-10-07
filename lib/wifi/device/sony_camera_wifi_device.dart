@@ -24,7 +24,7 @@ class SonyCameraWifiDevice extends SonyCameraDevice<CameraWifiSettings> {
 
   CameraWebApiService getWebApiService(SonyWebApiServiceTypeId service) =>
       info.scalarWebApiDeviceInfo.serviceList.services
-          .firstWhere((element) => element.type == service.wifiValue);
+          .firstWhere((element) => element.type == service.wifiValue, orElse: () => null);
 
   @override
   CameraWifiSettings createSettings() => CameraWifiSettings(this);
@@ -43,7 +43,7 @@ class WifiCameraInfo {
 class WifiCameraFunctionality {
   final SettingsItem<WebApiVersionsValue> webApiVersions;
   final List<WebApiMethod> webApiMethods;
-  final Map<ItemId, List<SonyWebApiMethodId>>
+  final Map<ItemId, List<ApiMethodId>>
       availableApiList; //TODO in settings
   final SettingsItem<Value<CameraFunctionId>>
       cameraWebFunctions; //TODO in settings

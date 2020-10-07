@@ -168,6 +168,7 @@ enum ItemId {
   Versions,
   MethodTypes,
   ApiList,
+  EnableMethods,
   ApplicationInfo,
   BeepMode,
   CameraFunction,
@@ -374,6 +375,8 @@ extension SettingsIdExtension on ItemId {
         return "applicationInfo";
       case ItemId.ApiList: //TODO supported api list?
         return "apiList";
+      case ItemId.EnableMethods: //TODO supported api list?
+        return "enableMethods";
       case ItemId.AvailableSettings:
         return "event";
       case ItemId.CapturePhoto:

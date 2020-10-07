@@ -4,7 +4,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart'
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version_ids.dart';
 
 class WebApiMethod {
-  final SonyWebApiMethodId apiName;
+  final ApiMethodId apiName;
 
   final ItemId settingsId;
   final List<String> parameterTypes;

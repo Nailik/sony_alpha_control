@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:sonyalphacontrol/top_level_api/api/function_availability.dart';
 import 'package:sonyalphacontrol/top_level_api/device/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/device/items.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
@@ -15,6 +16,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
@@ -37,6 +39,9 @@ abstract class CameraApiInterface {
   }
 
   ///server information
+  /////TODO usb
+  FunctionAvailability checkFunction(ItemId itemId, ApiMethodId apiMethodId,
+      {SonyWebApiServiceTypeId service = SonyWebApiServiceTypeId.CAMERA});
 
   ///This method checks teh available versions for the web api
   ///serviceTypeId means for which service
@@ -89,14 +94,9 @@ abstract class CameraApiInterface {
     }
   }
 
-  /*
-  Future<Map<SettingsId, List<SonyWebApiMethod>>> getAvailableApiList(
-
-  //TODO together to get functions
-  Future<List<CameraFunctionValue>> getSupportedFunctions(
-
-  getAvailableFunctions(
-*/
+  Future<ListInfoItem<ApiFunctionValue>> getAvailableFunctions(
+          {ForceUpdate update}) async =>
+      device.cameraSettings.availableFunctions;
 
   ///usb so far
   Future<bool> setSettingsRaw(ItemId id, int value);

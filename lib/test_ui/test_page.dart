@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sonyalphacontrol/top_level_api/api/force_update.dart';
+import 'package:sonyalphacontrol/top_level_api/api/function_availability.dart';
 import 'package:sonyalphacontrol/top_level_api/api/sony_api.dart';
 import 'package:sonyalphacontrol/top_level_api/device/camera_settings.dart';
 import 'package:sonyalphacontrol/top_level_api/device/items.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/device/value.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
 
 class TestsPage extends StatefulWidget {
@@ -70,6 +72,9 @@ class TestsPageState extends State<TestsPage> {
 
                       ///MethodTypes (get) accessControl
                       getMethodTypesRowAccessControl(),
+
+                      ///AvailableApiList (get)
+                      getAvailableFunctionsRow(),
 
                       ///ApplicationInfo (get)
                       getApplicationInfoRow(),
@@ -180,6 +185,30 @@ class TestsPageState extends State<TestsPage> {
             )));
   }
 
+  //service, function, method
+  //green = supported and available
+  //orange = supported and not available
+  //red = unsupported
+  Text getText(ItemId itemId, ApiMethodId apiMethodId,
+      {SonyWebApiServiceTypeId serviceId =
+          SonyWebApiServiceTypeId.CAMERA}) {
+    Color color = Colors.black12;
+
+    switch (device.api.checkFunction(itemId, apiMethodId)) {
+      case FunctionAvailability.Available:
+        color = Colors.green;
+        break;
+      case FunctionAvailability.Supported:
+        color = Colors.orange;
+        break;
+      case FunctionAvailability.Unsupported:
+        color = Colors.red;
+        break;
+    }
+
+    return Text(ApiMethodId.GET.name, style: TextStyle(color: color));
+  }
+
   ///Versions (get) Camera
   Widget getVersionsRowCamera() {
     return ListenableProvider<ListInfoItem>(
@@ -192,6 +221,9 @@ class TestsPageState extends State<TestsPage> {
               children: [
                 ListTile(
                     title: Text(ItemId.Versions.name + " Camera"),
+                    subtitle: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [ getText(ItemId.Versions, ApiMethodId.GET)]),
                     onTap: () => device.api
                         .getWebApiVersions(SonyWebApiServiceTypeId.CAMERA)),
                 Row(
@@ -520,6 +552,37 @@ class TestsPageState extends State<TestsPage> {
                             .cameraSettings.methodTypesAccessControl.values
                             .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
                                 DropdownMenuItem<WebApiMethodValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) {},
+                      )))
+            ]),
+          ]),
+        ),
+      ),
+    );
+  }
+
+  ///AvailableApiList (get)
+  Widget getAvailableFunctionsRow() {
+    return ListenableProvider<ListInfoItem>(
+      create: (context) => device.cameraSettings.availableFunctions,
+      child: Consumer<ListInfoItem>(
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+                title: Text(ItemId.ApiList.name),
+                onTap: () => device.api.getAvailableFunctions()),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<ApiFunctionValue>(
+                        isExpanded: true,
+                        hint: Text("available"),
+                        items: device.cameraSettings.availableFunctions.values
+                            .map<DropdownMenuItem<ApiFunctionValue>>((e) =>
+                                DropdownMenuItem<ApiFunctionValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
                         onChanged: (value) {},

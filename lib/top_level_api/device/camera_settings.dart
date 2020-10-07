@@ -71,6 +71,9 @@ abstract class CameraSettings extends ChangeNotifier {
   ListInfoItem methodTypesAccessControl =
       ListInfoItem<WebApiMethodValue>(ItemId.MethodTypes);
 
+  ListInfoItem availableFunctions =
+      ListInfoItem<ApiFunctionValue>(ItemId.ApiList);
+
   SettingsItem applicationInfo =
       SettingsItem<StringValue>(ItemId.ApplicationInfo);
   SettingsItem apiList = SettingsItem<StringValue>(ItemId.ApiList);

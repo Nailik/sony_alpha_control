@@ -19,7 +19,7 @@ class SettingsItem<T extends Value> extends ChangeNotifier {
   List<T> get supported => _supported;
   List<T> _supported = new List.unmodifiable({});
 
-  List<SonyWebApiMethodId> get supportedMethods =>
+  List<ApiMethodId> get supportedMethods =>
       new List.unmodifiable({}); //TODO setup this
 
   //not different setter to not notify layout changes too often when multiple values are updated at the same time one after another
