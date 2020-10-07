@@ -41,7 +41,8 @@ dependencies:
     git:
       url: git://github.com/google/flutter-desktop-embedding.git
       path: plugins/file_chooser
-      ref: 4df2037
+      ref: 5b3b930
+
 
 dev_dependencies:
   build_runner:
