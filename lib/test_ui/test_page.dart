@@ -190,7 +190,7 @@ class TestsPageState extends State<TestsPage> {
       {SonyWebApiServiceTypeId serviceId = SonyWebApiServiceTypeId.CAMERA}) {
     Color color = Colors.black12;
 
-    switch (device.api.checkFunction(itemId, apiMethodId)) {
+    switch (device.api.checkFunction(itemId, apiMethodId, service: serviceId)) {
       case FunctionAvailability.Available:
         color = Colors.green;
         break;
