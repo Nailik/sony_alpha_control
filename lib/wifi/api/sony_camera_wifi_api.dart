@@ -155,6 +155,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
     return await super.getMethodTypes(serviceTypeId);
   }
 
+  ///MethodTypes (get) accessControl
+
   Future _getMethodTypes(
       ListInfoItem listInfoItem,
       SonyWebApiServiceTypeId serviceTypeId,
@@ -167,6 +169,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
             listInfoItem, response,
             webApiVersion: webApiVersion));
   }
+
+  ///AvailableApiList (get)
 
   @override
   Future<ListInfoItem<ApiFunctionValue>> getAvailableFunctions(
@@ -207,6 +211,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
     return await super.getAvailableFunctions();
   }
 
+  ///ApplicationInfo (get)
+
   @override
   Future<ListInfoItem<StringValue>> getApplicationInfo(
       {update = ForceUpdate.IfNull}) async {
@@ -217,6 +223,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
     return await super.getApplicationInfo();
   }
+
+  ///AvailableSettings (get)
 
   @override
   Future<ListInfoItem<StringValue>> getAvailableSettings(bool longPolling,
@@ -235,25 +243,68 @@ class SonyCameraWifiApi extends CameraApiInterface {
     return await super.getAvailableSettings(longPolling);
   }
 
+  ///CameraFunction (set, get, getSupported, getAvailable)
+
   @override
   Future<SettingsItem<CameraFunctionValue>> getCameraFunction(
           {update = ForceUpdate.IfNull}) async =>
       _updateIf(update, await super.getCameraFunction());
 
   @override
-  Future<bool> setCameraFunction(CameraFunctionValue value) async {
-    return await WifiCommand.createCommand(
-            ApiMethodId.SET, ItemId.CameraFunction, params: [value.wifiValue])
-        .send(device)
-        .then((result) {
-      if (result.isValid) {
-        SettingsItem<CameraFunctionValue> item =
-            device.cameraSettings.cameraFunction;
-        item.updateItem(value, item.available, item.supported);
-      }
-      return result.isValid;
-    });
-  }
+  Future<bool> setCameraFunction(CameraFunctionValue value) async =>
+      await WifiCommand.createCommand(ApiMethodId.SET, ItemId.CameraFunction,
+          params: [value.wifiValue]).send(device).then((result) {
+        if (result.isValid) {
+          SettingsItem<CameraFunctionValue> item =
+              device.cameraSettings.cameraFunction;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///CapturePhoto (act)
+
+  @override
+  Future<ListInfoItem<StringValue>> actCapturePhoto() async =>
+      await WifiCommand.createCommand(ApiMethodId.ACT, ItemId.CapturePhoto)
+          .send(device)
+          .then((result) {
+        var jsonD = jsonDecode(result.response);
+        var list = jsonD["result"][0];
+        //TODo event -> same as postview urls
+        List<StringValue> values =
+            device.cameraSettings.capturePhoto.createListFromWifiJson(list);
+        device.cameraSettings.capturePhoto.updateItem(values);
+        return device.cameraSettings.capturePhoto;
+      });
+
+  @override
+  Future<ListInfoItem<StringValue>> awaitCapturePhoto() async =>
+      await WifiCommand.createCommand(ApiMethodId.AWAIT, ItemId.CapturePhoto)
+          .send(device)
+          .then((result) {
+        var jsonD = jsonDecode(result.response);
+        var list = jsonD["result"][0];
+        //TODo event -> same as postview urls
+        List<StringValue> values =
+            device.cameraSettings.capturePhoto.createListFromWifiJson(list);
+        device.cameraSettings.capturePhoto.updateItem(values);
+        return device.cameraSettings.capturePhoto;
+      });
+
+  ///Camera Setup
+
+  @override
+  Future<bool> startRecMode() async =>
+      await WifiCommand.createCommand(ApiMethodId.ACT, ItemId.CapturePhoto)
+          .send(device)
+          .then((result) => result.isValid);
+
+  @override
+  Future<bool> stopRecMode() async =>
+      await WifiCommand.createCommand(ApiMethodId.AWAIT, ItemId.CapturePhoto)
+          .send(device)
+          .then((result) => result.isValid);
 
   /// FNumber
 

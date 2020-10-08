@@ -97,20 +97,37 @@ abstract class CameraApiInterface {
     }
   }
 
+  ///Available Functions
+
   Future<ListInfoItem<ApiFunctionValue>> getAvailableFunctions(
           {ForceUpdate update}) async =>
       device.cameraSettings.availableFunctions;
+
+  ///Application Info
 
   Future<ListInfoItem<StringValue>> getApplicationInfo(
           {ForceUpdate update}) async =>
       device.cameraSettings.applicationInfo;
 
+  ///Camera Function
+
   Future<SettingsItem<CameraFunctionValue>> getCameraFunction(
           {ForceUpdate update}) async =>
       device.cameraSettings.cameraFunction;
 
-
   Future<bool> setCameraFunction(CameraFunctionValue value);
+
+  ///Capture Photo
+
+  Future<ListInfoItem<StringValue>> actCapturePhoto();
+
+  Future<ListInfoItem<StringValue>> awaitCapturePhoto();
+
+  ///Camera Setup
+
+  Future<bool> startRecMode();
+
+  Future<bool> stopRecMode();
 
   ///long polling:
   ///Long polling flag

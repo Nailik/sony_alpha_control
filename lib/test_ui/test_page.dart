@@ -778,36 +778,53 @@ class TestsPageState extends State<TestsPage> {
     );
   }
 
-  ///CapturePhoto (act)
+  ///CapturePhoto (act, await)
   Widget getCapturePhotoRow() {
-    return ListenableProvider<SettingsItem>(
+    return ListenableProvider<ListInfoItem>(
       create: (context) => device.cameraSettings.capturePhoto,
-      child: Consumer<SettingsItem>(
+      child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(ItemId.CapturePhoto.name),
-              subtitle: Text(device.cameraSettings.capturePhoto.value?.name ??
-                  "NotAvailable"),
+                title: Text(ItemId.CapturePhoto.name + " ACT"),
+                subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [getText(ItemId.CapturePhoto, ApiMethodId.ACT)]),
+                onTap: () => device.api.actCapturePhoto()),
+            ListTile(
+              title: Text(ItemId.CapturePhoto.name + " AWAIT"),
+              subtitle: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [getText(ItemId.CapturePhoto, ApiMethodId.AWAIT)]),
+              onTap: () => device.api.awaitCapturePhoto(),
             ),
+            Text(device.cameraSettings.capturePhoto.values.toString()),
           ]),
         ),
       ),
     );
   }
 
-  ///CameraSetup (stop)
+  ///CameraSetup (start, stop)
   Widget getCameraSetupRow() {
-    return ListenableProvider<SettingsItem>(
+    return ListenableProvider<ListInfoItem>(
       create: (context) => device.cameraSettings.cameraSetup,
-      child: Consumer<SettingsItem>(
+      child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(ItemId.CameraSetup.name),
-              subtitle: Text(device.cameraSettings.cameraSetup.value?.name ??
-                  "NotAvailable"),
-            ),
+                title: Text(ItemId.CameraSetup.name + " START"),
+                subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [getText(ItemId.CameraSetup, ApiMethodId.START)]),
+                onTap: () => device.api.startRecMode()),
+            ListTile(
+              title: Text(ItemId.CameraSetup.name + " STOP"),
+              subtitle: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [getText(ItemId.CameraSetup, ApiMethodId.STOP)]),
+              onTap: () => device.api.stopRecMode(),
+            )
           ]),
         ),
       ),

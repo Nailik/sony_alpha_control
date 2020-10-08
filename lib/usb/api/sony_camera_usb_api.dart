@@ -1,8 +1,7 @@
-import 'dart:io';
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+
 //import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/api/force_update.dart';
 import 'package:sonyalphacontrol/top_level_api/api/function_availability.dart';
@@ -19,15 +18,14 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_direction_ids
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_phase_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
 import 'package:sonyalphacontrol/usb/commands/downloader.dart';
-import 'package:sonyalphacontrol/usb/commands/response_validation.dart';
 import 'package:sonyalphacontrol/usb/device/sony_camera_usb_device.dart';
 
 import '../commands/usb_commands.dart';
@@ -368,10 +366,8 @@ class SonyCameraUsbApi extends CameraApiInterface {
                   opCodeId: OpCodeId.MainSetting, value1: 2)
               .send())
           .isValidResponse()) {
-        if ((await UsbCommands.getCommandSetting(
-                    ItemId.FocusMagnifierRequest,
-                    opCodeId: OpCodeId.MainSetting,
-                    value1: 1)
+        if ((await UsbCommands.getCommandSetting(ItemId.FocusMagnifierRequest,
+                    opCodeId: OpCodeId.MainSetting, value1: 1)
                 .send())
             .isValidResponse()) {
           //next when successful
@@ -662,6 +658,30 @@ class SonyCameraUsbApi extends CameraApiInterface {
   @override
   Future<bool> setCameraFunction(CameraFunctionValue value) {
     // TODO: implement setCameraFunction
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<ListInfoItem<StringValue>> actCapturePhoto() {
+    // TODO: implement actCapturePhoto
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<ListInfoItem<StringValue>> awaitCapturePhoto() {
+    // TODO: implement awaitCapturePhoto
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> startRecMode() {
+    // TODO: implement startRecMode
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> stopRecMode() {
+    // TODO: implement stopRecMode
     throw UnimplementedError();
   }
 }

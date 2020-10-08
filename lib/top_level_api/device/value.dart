@@ -87,6 +87,8 @@ abstract class Value<T> {
         return StringValue(wifiValue);
       case ItemId.StorageInformation:
       //TODO return StringValue(wifiValue);
+      case ItemId.CapturePhoto:
+        return StringValue(wifiValue);
       case ItemId.BeepMode:
         return StringValue(wifiValue); //TODO enum
       case ItemId.CameraFunction:

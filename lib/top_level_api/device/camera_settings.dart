@@ -82,8 +82,12 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem<CameraFunctionValue> cameraFunction =
       SettingsItem<CameraFunctionValue>(ItemId.CameraFunction);
 
-  SettingsItem capturePhoto = SettingsItem<StringValue>(ItemId.CapturePhoto);
-  SettingsItem cameraSetup = SettingsItem<StringValue>(ItemId.CameraSetup);
+  ListInfoItem<StringValue> capturePhoto =
+      ListInfoItem<StringValue>(ItemId.CapturePhoto);
+
+  ListInfoItem<StringValue> cameraSetup =
+      ListInfoItem<StringValue>(ItemId.CameraSetup);
+
   SettingsItem liveView = SettingsItem<StringValue>(ItemId.LiveView);
   SettingsItem liveViewWithSize =
       SettingsItem<StringValue>(ItemId.LiveViewWithSize);
@@ -185,7 +189,7 @@ abstract class CameraSettings extends ChangeNotifier {
       case ItemId.CameraFunction:
         throw UnsupportedError;
       case ItemId.CameraSetup:
-        return cameraSetup;
+        throw UnsupportedError;
       case ItemId.LiveView:
         return liveView;
       case ItemId.LiveViewWithSize:
