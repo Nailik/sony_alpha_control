@@ -38,6 +38,9 @@ abstract class CameraApiInterface {
     //how to send changes?
   }
 
+  ///usb so far
+  Future<bool> setSettingsRaw(ItemId id, int value);
+
   ///server information
   /////TODO usb
   FunctionAvailability checkFunction(ItemId itemId, ApiMethodId apiMethodId,
@@ -98,8 +101,26 @@ abstract class CameraApiInterface {
           {ForceUpdate update}) async =>
       device.cameraSettings.availableFunctions;
 
-  ///usb so far
-  Future<bool> setSettingsRaw(ItemId id, int value);
+  Future<ListInfoItem<StringValue>> getApplicationInfo(
+          {ForceUpdate update}) async =>
+      device.cameraSettings.applicationInfo;
+
+  Future<SettingsItem<CameraFunctionValue>> getCameraFunction(
+          {ForceUpdate update}) async =>
+      device.cameraSettings.cameraFunction;
+
+
+  Future<bool> setCameraFunction(CameraFunctionValue value);
+
+  ///long polling:
+  ///Long polling flag
+  ///true: Callback when timeout or change point detection.
+  ///   to get callbacks when some settings change
+  ///false: Callback immediately.
+  ///   (useful for initialization and then call the other get methods to receive information missin)
+  Future<ListInfoItem<StringValue>> getAvailableSettings(bool longPolling,
+          {ForceUpdate update}) async =>
+      device.cameraSettings.availableSettings;
 
   ///FNumber
   ///

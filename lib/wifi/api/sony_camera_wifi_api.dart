@@ -38,8 +38,13 @@ class SonyCameraWifiApi extends CameraApiInterface {
       {SonyWebApiServiceTypeId service = SonyWebApiServiceTypeId.CAMERA}) {
     FunctionAvailability functionAvailability =
         FunctionAvailability.Unsupported;
+
     //check sonyWebApiServiceTypeId first
     if (device.getWebApiService(service) != null) {
+      if (itemId == ItemId.Versions || itemId == ItemId.MethodTypes) {
+        //for versions function or MethodTypes the method Types function is not yet executed
+        return FunctionAvailability.Available;
+      }
       //check itemId and apiMethodId
       //TODO initialized flag?
       ListInfoItem listInfoItem;
@@ -75,6 +80,9 @@ class SonyCameraWifiApi extends CameraApiInterface {
     }
 
     if (functionAvailability == FunctionAvailability.Supported) {
+      if (itemId == ItemId.ApiList) {
+        return FunctionAvailability.Available;
+      }
       if (service == SonyWebApiServiceTypeId.CAMERA) {
         //now check if available
         ListInfoItem<ApiFunctionValue> functions =
@@ -85,11 +93,11 @@ class SonyCameraWifiApi extends CameraApiInterface {
             orElse: () => null);
 
         if (apiFunctionValue != null) {
-          functionAvailability = FunctionAvailability.Available;
+          return FunctionAvailability.Available;
         }
       } else {
         //all functions that are supported and not from "camera" are available (i hope)
-        functionAvailability = FunctionAvailability.Available;
+        return FunctionAvailability.Available;
       }
     }
 
@@ -197,6 +205,54 @@ class SonyCameraWifiApi extends CameraApiInterface {
     }
 
     return await super.getAvailableFunctions();
+  }
+
+  @override
+  Future<ListInfoItem<StringValue>> getApplicationInfo(
+      {update = ForceUpdate.IfNull}) async {
+    //TODO other Force Update options for info?
+    ListInfoItem<StringValue> listInfoItem = await super.getApplicationInfo();
+
+    _updateListInfoItem(listInfoItem);
+
+    return await super.getApplicationInfo();
+  }
+
+  @override
+  Future<ListInfoItem<StringValue>> getAvailableSettings(bool longPolling,
+      {update = ForceUpdate.IfNull}) async {
+    //TODO other Force Update options for info?
+    ListInfoItem<StringValue> listInfoItem =
+        await super.getAvailableSettings(longPolling);
+
+    await WifiCommand.createCommand(ApiMethodId.GET, listInfoItem.itemId,
+            params: [longPolling])
+        .send(device)
+        .then((wifiResponse) => wifiResponse.response)
+        .then((response) =>
+            device.cameraSettings.updateListInfoItem(listInfoItem, response));
+
+    return await super.getAvailableSettings(longPolling);
+  }
+
+  @override
+  Future<SettingsItem<CameraFunctionValue>> getCameraFunction(
+          {update = ForceUpdate.IfNull}) async =>
+      _updateIf(update, await super.getCameraFunction());
+
+  @override
+  Future<bool> setCameraFunction(CameraFunctionValue value) async {
+    return await WifiCommand.createCommand(
+            ApiMethodId.SET, ItemId.CameraFunction, params: [value.wifiValue])
+        .send(device)
+        .then((result) {
+      if (result.isValid) {
+        SettingsItem<CameraFunctionValue> item =
+            device.cameraSettings.cameraFunction;
+        item.updateItem(value, item.available, item.supported);
+      }
+      return result.isValid;
+    });
   }
 
   /// FNumber
@@ -937,14 +993,21 @@ class SonyCameraWifiApi extends CameraApiInterface {
         break;
     }
 
-    return device.cameraSettings.getItem(settingsItem.itemId);
+    return settingsItem;
   }
 
   Future _updateCurrent(SettingsItem settingsItem) async {
     //TODO
-    return await _getCurrent(settingsItem.itemId)
+    return await _get(settingsItem.itemId)
         .then((response) => throw UnimplementedError());
   }
+
+  Future _updateListInfoItem(ListInfoItem listInfoItem) async =>
+      await WifiCommand.createCommand(ApiMethodId.GET, listInfoItem.itemId)
+          .send(device)
+          .then((wifiResponse) => wifiResponse.response)
+          .then((response) =>
+              device.cameraSettings.updateListInfoItem(listInfoItem, response));
 
   Future _updateAvailable(SettingsItem settingsItem) async {
     return await _getAvailable(settingsItem.itemId).then((response) =>
@@ -970,7 +1033,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
         .then((wifiResponse) => wifiResponse.response);
   }
 
-  Future<String> _getCurrent(ItemId settingsId) async {
+  Future<String> _get(ItemId settingsId) async {
     return await WifiCommand.createCommand(ApiMethodId.GET, settingsId)
         .send(device)
         .then((wifiResponse) => wifiResponse.response);

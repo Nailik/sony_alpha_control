@@ -658,4 +658,10 @@ class SonyCameraUsbApi extends CameraApiInterface {
     // TODO: implement getInfo
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool> setCameraFunction(CameraFunctionValue value) {
+    // TODO: implement setCameraFunction
+    throw UnimplementedError();
+  }
 }

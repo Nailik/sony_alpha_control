@@ -186,7 +186,7 @@ class TestsPageState extends State<TestsPage> {
   //green = supported and available
   //orange = supported and not available
   //red = unsupported
-  Text getText(ItemId itemId, ApiMethodId apiMethodId,
+  Widget getText(ItemId itemId, ApiMethodId apiMethodId,
       {SonyWebApiServiceTypeId serviceId = SonyWebApiServiceTypeId.CAMERA}) {
     Color color = Colors.black12;
 
@@ -202,7 +202,7 @@ class TestsPageState extends State<TestsPage> {
         break;
     }
 
-    return Text(ApiMethodId.GET.name, style: TextStyle(color: color));
+    return Text(apiMethodId.name, style: TextStyle(color: color));
   }
 
   ///Versions (get) Camera
@@ -229,6 +229,7 @@ class TestsPageState extends State<TestsPage> {
                           child: Padding(
                               padding: EdgeInsets.all(16),
                               child: DropdownButton<WebApiVersionsValue>(
+                                isExpanded: true,
                                 hint: Text("available"),
                                 items: device
                                     .cameraSettings.versionsCamera.values
@@ -273,6 +274,7 @@ class TestsPageState extends State<TestsPage> {
                           child: Padding(
                               padding: EdgeInsets.all(16),
                               child: DropdownButton<WebApiVersionsValue>(
+                                isExpanded: true,
                                 hint: Text("available"),
                                 items: device
                                     .cameraSettings.versionsAvContent.values
@@ -317,6 +319,7 @@ class TestsPageState extends State<TestsPage> {
                           child: Padding(
                               padding: EdgeInsets.all(16),
                               child: DropdownButton<WebApiVersionsValue>(
+                                isExpanded: true,
                                 hint: Text("available"),
                                 items: device
                                     .cameraSettings.versionsSystem.values
@@ -361,6 +364,7 @@ class TestsPageState extends State<TestsPage> {
                           child: Padding(
                               padding: EdgeInsets.all(16),
                               child: DropdownButton<WebApiVersionsValue>(
+                                isExpanded: true,
                                 hint: Text("available"),
                                 items: device
                                     .cameraSettings.versionsGuide.values
@@ -405,6 +409,7 @@ class TestsPageState extends State<TestsPage> {
                           child: Padding(
                               padding: EdgeInsets.all(16),
                               child: DropdownButton<WebApiVersionsValue>(
+                                isExpanded: true,
                                 hint: Text("available"),
                                 items: device
                                     .cameraSettings.versionsAccessControl.values
@@ -617,7 +622,9 @@ class TestsPageState extends State<TestsPage> {
                 title: Text(ItemId.ApiList.name),
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [getText(ItemId.ApiList, ApiMethodId.GET_AVAILABLE)]),
+                    children: [
+                      getText(ItemId.ApiList, ApiMethodId.GET_AVAILABLE)
+                    ]),
                 onTap: () => device.api.getAvailableFunctions()),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -642,17 +649,34 @@ class TestsPageState extends State<TestsPage> {
 
   ///ApplicationInfo (get)
   Widget getApplicationInfoRow() {
-    return ListenableProvider<SettingsItem>(
+    return ListenableProvider<ListInfoItem>(
       create: (context) => device.cameraSettings.applicationInfo,
-      child: Consumer<SettingsItem>(
+      child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(ItemId.ApplicationInfo.name),
-              subtitle: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [getText(ItemId.ApplicationInfo, ApiMethodId.GET)]),
-            ),
+                title: Text(ItemId.ApplicationInfo.name),
+                subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      getText(ItemId.ApplicationInfo, ApiMethodId.GET)
+                    ]),
+                onTap: () => device.api.getApplicationInfo()),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<StringValue>(
+                        isExpanded: true,
+                        hint: Text("available"),
+                        items: device.cameraSettings.applicationInfo.values
+                            .map<DropdownMenuItem<StringValue>>((e) =>
+                                DropdownMenuItem<StringValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) {},
+                      )))
+            ]),
           ]),
         ),
       ),
@@ -661,17 +685,34 @@ class TestsPageState extends State<TestsPage> {
 
   ///AvailableSettings (get)
   Widget getAvailableSettingsRow() {
-    return ListenableProvider<SettingsItem>(
+    return ListenableProvider<ListInfoItem>(
       create: (context) => device.cameraSettings.availableSettings,
-      child: Consumer<SettingsItem>(
+      child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(ItemId.AvailableSettings.name),
-              subtitle: Text(
-                  device.cameraSettings.availableSettings.value?.name ??
-                      "NotAvailable"),
-            ),
+                title: Text(ItemId.AvailableSettings.name),
+                subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      getText(ItemId.AvailableSettings, ApiMethodId.GET)
+                    ]),
+                onTap: () => device.api.getAvailableSettings(false)),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<StringValue>(
+                        isExpanded: true,
+                        hint: Text("available"),
+                        items: device.cameraSettings.availableSettings.values
+                            .map<DropdownMenuItem<StringValue>>((e) =>
+                                DropdownMenuItem<StringValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) {},
+                      )))
+            ]),
           ]),
         ),
       ),
@@ -687,9 +728,50 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
               title: Text(ItemId.CameraFunction.name),
-              subtitle: Text(device.cameraSettings.cameraFunction.value?.name ??
-                  "NotAvailable"),
+              subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        device.cameraSettings.cameraFunction.value?.name ??
+                            "NotAvailable",
+                        textAlign: TextAlign.start),
+                    getText(ItemId.CameraFunction, ApiMethodId.SET),
+                    getText(ItemId.CameraFunction, ApiMethodId.GET),
+                    getText(ItemId.CameraFunction, ApiMethodId.GET_AVAILABLE),
+                    getText(ItemId.CameraFunction, ApiMethodId.GET_SUPPORTED)
+                  ]),
+              onTap: () => device.api.getCameraFunction(update: ForceUpdate.On),
             ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<CameraFunctionValue>(
+                        isExpanded: true,
+                        hint: Text("available"),
+                        items: device.cameraSettings.cameraFunction.available
+                            .map<DropdownMenuItem<CameraFunctionValue>>((e) =>
+                                DropdownMenuItem<CameraFunctionValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) =>
+                            device.api.setCameraFunction(value),
+                      ))),
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<CameraFunctionValue>(
+                        isExpanded: true,
+                        hint: Text("supported"),
+                        items: device.cameraSettings.cameraFunction.supported
+                            .map<DropdownMenuItem<CameraFunctionValue>>((e) =>
+                                DropdownMenuItem<CameraFunctionValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) =>
+                            device.api.setCameraFunction(value),
+                      ))),
+            ]),
           ]),
         ),
       ),

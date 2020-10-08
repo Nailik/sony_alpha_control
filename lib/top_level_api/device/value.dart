@@ -81,6 +81,10 @@ abstract class Value<T> {
         return LiveViewSizeValue.fromWifiValue(wifiValue);
       case ItemId.ContShootingUrlSet:
       //TODO
+      case ItemId.AvailableSettings:
+        return StringValue(wifiValue.toString());
+      case ItemId.ApplicationInfo:
+        return StringValue(wifiValue);
       case ItemId.StorageInformation:
       //TODO return StringValue(wifiValue);
       case ItemId.BeepMode:

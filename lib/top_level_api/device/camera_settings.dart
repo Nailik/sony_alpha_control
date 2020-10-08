@@ -74,13 +74,14 @@ abstract class CameraSettings extends ChangeNotifier {
   ListInfoItem availableFunctions =
       ListInfoItem<ApiFunctionValue>(ItemId.ApiList);
 
-  SettingsItem applicationInfo =
-      SettingsItem<StringValue>(ItemId.ApplicationInfo);
-  SettingsItem apiList = SettingsItem<StringValue>(ItemId.ApiList);
-  SettingsItem availableSettings =
-      SettingsItem<StringValue>(ItemId.AvailableSettings);
-  SettingsItem cameraFunction =
-      SettingsItem<StringValue>(ItemId.CameraFunction);
+  ListInfoItem<StringValue> applicationInfo =
+      ListInfoItem<StringValue>(ItemId.ApplicationInfo);
+  ListInfoItem<StringValue> availableSettings =
+      ListInfoItem<StringValue>(ItemId.AvailableSettings);
+
+  SettingsItem<CameraFunctionValue> cameraFunction =
+      SettingsItem<CameraFunctionValue>(ItemId.CameraFunction);
+
   SettingsItem capturePhoto = SettingsItem<StringValue>(ItemId.CapturePhoto);
   SettingsItem cameraSetup = SettingsItem<StringValue>(ItemId.CameraSetup);
   SettingsItem liveView = SettingsItem<StringValue>(ItemId.LiveView);
@@ -176,13 +177,13 @@ abstract class CameraSettings extends ChangeNotifier {
       case ItemId.MethodTypes:
         throw UnsupportedError;
       case ItemId.ApplicationInfo:
-        return applicationInfo;
+        throw UnsupportedError;
       case ItemId.ApiList:
-        return apiList;
+        throw UnsupportedError;
       case ItemId.AvailableSettings:
-        return availableSettings;
+        throw UnsupportedError;
       case ItemId.CameraFunction:
-        return cameraFunction;
+        throw UnsupportedError;
       case ItemId.CameraSetup:
         return cameraSetup;
       case ItemId.LiveView:

@@ -311,9 +311,12 @@ class CameraWifiSettings extends CameraSettings {
 
         listInfoItem.updateItem(newList);
         break;
+      case ItemId.AvailableSettings: //TODO for now only strings
+        listInfoItem.updateItem(listInfoItem.createListFromWifiJson(list));
+        break;
+      case ItemId.ApplicationInfo:
       default:
-        //TODO
-        listInfoItem.updateItem(listInfoItem.values);
+        listInfoItem.updateItem(listInfoItem.createListFromWifiJson(list));
         break;
     }
   }
