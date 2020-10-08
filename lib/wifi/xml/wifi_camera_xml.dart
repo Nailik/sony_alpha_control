@@ -18,7 +18,7 @@ class WifiCameraXML {
   CameraWebApi scalarWebApiDeviceInfo;
 
   @override
-  bool operator ==(o) => o is WifiCameraXML && this.toJson() == o.toJson(); //TODO sth better than to json? (slow?)
+  bool operator ==(o) => o is WifiCameraXML && this.toJson().toString() == o.toJson().toString(); //TODO sth better than to json? (slow?)
 
   @override
   int get hashCode => this.toJson().hashCode;

@@ -77,7 +77,9 @@ class WifiCommand {
     var text = "$method $version $params \n\n "
         "***************************REQUEST***************************\n\n ${wifiResponse.request}  \n\n "
         "---------------------------RESPONSE--------------------------\n\n  ${wifiResponse.response}  \n\n ";
-    await file.writeAsString(text);
+    if(Platform.isAndroid) {
+      await file.writeAsString(text);
+    }
   }
 
   factory WifiCommand.fromJson(Map<String, dynamic> json) => WifiCommand(

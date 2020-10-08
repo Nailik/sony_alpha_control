@@ -25,7 +25,7 @@ class SonyUsbApi extends SonyApiInterface {
   }
 
   @override
-  ValueNotifier<List<SonyCameraUsbDevice>> getAvailableCameras() => throw UnimplementedError;
+  Stream<List<SonyCameraUsbDevice>> getAvailableCameras(Duration updateDuration) => throw UnimplementedError;
   /*FlutterUsb
       .getUsbDevices
       .then((value) => value.map((e) => new SonyCameraUsbDevice(e)).toList());*/

@@ -45,6 +45,9 @@ class WifiCameraInfo {
   String st;
 
   WifiCameraInfo(this.usn, this.uuid, this.location, this.server, this.st);
+
+  @override
+  String toString() => "usn: $usn \n uuid: $uuid \n location: $location \n server: $server \n st: $st";
 }
 
 class WifiCameraFunctionality {

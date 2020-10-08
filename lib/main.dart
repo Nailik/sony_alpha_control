@@ -31,11 +31,13 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initPlatformState() async {
+
     await SonyApi.initialize(usb: false, wifi: true);
 
     setState(() {
       _initialized = true;
     });
+
   }
 
   @override
@@ -57,9 +59,7 @@ class _MyAppState extends State<MyApp> {
                 child: Text("reload"),
                 color: Colors.blue,
                 onPressed: () {
-                  setState(() {
-                    /*reload*/
-                  });
+                  SonyApi.getDevices(new Duration(seconds: 10));
                 },
               )
             ],
@@ -70,6 +70,7 @@ class _MyAppState extends State<MyApp> {
   Widget deviceList() {
     if (_initialized) {
       return StreamBuilder<List<SonyCameraDevice>>(
+        stream: SonyApi.getDevices(new Duration(seconds: 10)),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
@@ -82,7 +83,6 @@ class _MyAppState extends State<MyApp> {
             return Container();
           }
         },
-        stream: SonyApi.getDevices(new Duration(seconds: 5)),
       );
     }
     return Container();

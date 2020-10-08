@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -24,10 +25,7 @@ class SonyWifiApi extends SonyApiInterface {
   }
 
   @override
-  ValueNotifier<List<SonyCameraDevice>> getAvailableCameras() {
-    WifiConnector.ssdpDiscover(); //TODO stop etd
-    return WifiConnector.availableCameras;
-  }
+  Stream<List<SonyCameraDevice>> getAvailableCameras(Duration updateDuration) => WifiConnector.getAvailableCameras(updateDuration);
 
   @override
   Future<bool> connectCamera(SonyCameraDevice device) async {
