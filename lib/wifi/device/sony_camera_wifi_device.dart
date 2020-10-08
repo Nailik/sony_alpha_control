@@ -28,6 +28,13 @@ class SonyCameraWifiDevice extends SonyCameraDevice<CameraWifiSettings> {
 
   @override
   CameraWifiSettings createSettings() => CameraWifiSettings(this);
+
+  @override
+  bool operator ==(o) => o is SonyCameraWifiDevice && info == o.info;
+
+  @override
+  int get hashCode => info.hashCode;
+
 }
 
 class WifiCameraInfo {

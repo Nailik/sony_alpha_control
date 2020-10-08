@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/usb/api/sony_usb_api.dart';
 import 'package:sonyalphacontrol/wifi/api/sony_wifi_api.dart';
+import 'package:sonyalphacontrol/wifi/commands/wifi_connector.dart';
 
 //TODO
 //connect, init, get devices
@@ -26,7 +28,7 @@ class SonyApi {
 
   static bool get usbEnabled => _usbApi.initialized;
 
-  ///intitialize usb and wifi api, everything else will call an error if not done
+  ///initialize usb and wifi api, everything else will call an error if not done
   static Future<bool> initialize({bool usb = true, bool wifi = true}) async {
     if (usb) {
       await _usbApi.initialize();
@@ -45,11 +47,13 @@ class SonyApi {
         var devices = new List<SonyCameraDevice>();
 
         if (usbEnabled) {
-          devices.addAll(await _usbApi.getAvailableCameras());
+     //     devices.addAll(await _usbApi.getAvailableCameras());
         }
 
         if (wifiEnabled) {
-          devices.addAll(await _wifiApi.getAvailableCameras());
+          _wifiApi.getAvailableCameras().addListener(() {
+            devices.addAll(WifiConnector.availableCameras.value);
+          });
         }
         if (!controller.isClosed) {
           controller.add(devices);
@@ -93,7 +97,7 @@ abstract class SonyApiInterface {
 
   Future<bool> initialize();
 
-  Future<List<SonyCameraDevice>> getAvailableCameras();
+  ValueNotifier<List<SonyCameraDevice>> getAvailableCameras();
 
   Future<bool> connectCamera(SonyCameraDevice sonyCameraDevice);
 }

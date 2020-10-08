@@ -2,6 +2,7 @@ import 'dart:io';
 
 //import 'package:flutter_usb/Command.dart';
 //import 'package:flutter_usb/flutter_usb.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:sonyalphacontrol/top_level_api/api/sony_api.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
@@ -24,7 +25,7 @@ class SonyUsbApi extends SonyApiInterface {
   }
 
   @override
-  Future<List<SonyCameraUsbDevice>> getAvailableCameras() => throw UnimplementedError;
+  ValueNotifier<List<SonyCameraUsbDevice>> getAvailableCameras() => throw UnimplementedError;
   /*FlutterUsb
       .getUsbDevices
       .then((value) => value.map((e) => new SonyCameraUsbDevice(e)).toList());*/

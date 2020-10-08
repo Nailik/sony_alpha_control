@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:sonyalphacontrol/top_level_api/api/sony_api.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
@@ -23,12 +24,9 @@ class SonyWifiApi extends SonyApiInterface {
   }
 
   @override
-  Future<List<SonyCameraDevice>> getAvailableCameras() async {
-    var list = await WifiConnector.getCamera();
-    if (list != null) {
-      return [list];
-    }
-    return List<SonyCameraDevice>();
+  ValueNotifier<List<SonyCameraDevice>> getAvailableCameras() {
+    WifiConnector.ssdpDiscover(); //TODO stop etd
+    return WifiConnector.availableCameras;
   }
 
   @override

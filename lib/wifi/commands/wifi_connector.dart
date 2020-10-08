@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
 import 'package:sonyalphacontrol/wifi/xml/root.dart';
 import 'package:wifi_iot/wifi_iot.dart';
@@ -11,6 +12,8 @@ class WifiConnector {
   static var SSDP_PORT = 1900;
   static var SSDP_MX = 1;
   static var SSDP_ADDRESS = "239.255.255.250";
+
+  // static var SSDP_ST = "ssdp:all";
   static var SSDP_ST = "ssdp:all";
 
   static var request =
@@ -18,83 +21,79 @@ class WifiConnector {
 
   static RawDatagramSocket socket;
 
-  static Future<SonyCameraWifiDevice> getCamera() async {
-    WifiCameraInfo cameraInfo = await ssdpRequest();
+  static ValueNotifier<
+      List<SonyCameraWifiDevice>> availableCameras = ValueNotifier(
+      List<SonyCameraWifiDevice>());
 
-    if (cameraInfo != null) {
-      //else it will use mobile internet on android when trying to read camera info
-      if (Platform.isAndroid) {
-        WiFiForIoTPlugin.forceWifiUsage(true);
-      }
 
-      final completer = Completer<SonyCameraWifiDevice>();
-      final contents = StringBuffer();
-
-      new HttpClient()
-          .getUrl(Uri.parse(cameraInfo.location))
-          .then((HttpClientRequest request) => request.close())
-          .then((HttpClientResponse response) {
-        return response.transform(new Utf8Decoder()).listen((data) {
-          contents.write(data);
-        }, onDone: () {
-          Xml2Json xml2Json = new Xml2Json();
-          xml2Json.parse(contents.toString());
-          var jsonString = xml2Json.toParker();
-          var d = Root.fromJson(jsonDecode(jsonString)["root"]);
-          completer
-              .complete(SonyCameraWifiDevice(d.device.friendlyName, d.device));
-        });
-      });
-
-      return completer.future;
-    }
-    return null;
+  static void stopDiscover() {
+    socket.close();
+    socket = null;
   }
 
-  static Future<WifiCameraInfo> ssdpRequest() async {
+  static void ssdpDiscover() async {
     //TODo stream der so
     //if (socket == null) {
     //when not on camera cannot access?
-    try {
-      if (socket == null) {
-        int i = 100;
-        while (socket == null) {//TODO not bind with my own computer
-          try {
-            socket = await RawDatagramSocket.bind(
-                InternetAddress("192.168.122.$i"), 0); //TODO
-            print("created socket with 192.168.122.$i");
-          } on Exception catch (e) {
-            print("failed socket with 192.168.122.$i");
-            i++;
-            socket = null;
-            if (i > 255) {
-              print("failed creating socket");
-              return null;
+    // try {
+    if (socket == null) {
+      //TODO not bind with my own computer
+      try {
+          socket = await RawDatagramSocket.bind(InternetAddress("192.168.42.218"), 0); //TODO
+
+
+        socket.broadcastEnabled = true;
+        socket.readEventsEnabled = true;
+        socket.multicastHops = 50;
+        print("created socket ${socket.address}");
+      } on Exception catch (e) {
+        print("failed creating socket");
+      }
+
+      socket.listen((event) {
+        switch (event) {
+          case RawSocketEvent.read:
+            print("RawSocketEvent read");
+            var packet = socket.receive();
+            socket.writeEventsEnabled = true;
+            socket.readEventsEnabled = true;
+            if (packet != null) {
+              ///read camera info
+              WifiCameraInfo cameraInfo = _SsdMessageProcessor.analyzeResponse(
+                  new String.fromCharCodes(packet.data));
+              final contents = StringBuffer();
+              new HttpClient()
+                  .getUrl(Uri.parse(cameraInfo.location))
+                  .then((HttpClientRequest request) => request.close())
+                  .then((HttpClientResponse response) {
+                return response.transform(new Utf8Decoder()).listen((data) {
+                  contents.write(data);
+                }, onDone: () {
+                  Xml2Json xml2Json = new Xml2Json();
+                  xml2Json.parse(contents.toString());
+                  var jsonString = xml2Json.toParker();
+                  var d = Root.fromJson(jsonDecode(jsonString)["root"]);
+                  var camera = SonyCameraWifiDevice(
+                      d.device.friendlyName, d.device);
+                  if (!availableCameras.value.contains(camera)) {
+                    availableCameras.value.add(camera);
+                  }
+                });
+              });
             }
-          }
+            return;
+          case RawSocketEvent.write:
+            print("RawSocketEvent write");
+            break;
         }
-      }
+      });
 
-      socket.send(request.codeUnits, InternetAddress(SSDP_ADDRESS), SSDP_PORT);
-
-      //   await socket.forEach((RawSocketEvent event) {
-      //  if (event == RawSocketEvent.read) {
-      Datagram dg;//TODO locks if doesnt receive (bindet do own computer)
-      while (dg == null) {
-        dg = socket.receive();
-      }
-      return _SsdMessageProcessor.analyzeResponse(
-          new String.fromCharCodes(dg.data));
-      //     }
-      //    });
-
-    } on SocketException catch (e) {
-      socket = null;
-      print(e);
-      return null;
-      //camera not connected
+      socket.joinMulticast(InternetAddress(SSDP_ADDRESS));
     }
-    //  }
+
+    var i = socket.send(
+        request.codeUnits, InternetAddress(SSDP_ADDRESS), SSDP_PORT);
+    print("socket.send $i");
   }
 }
 
@@ -115,12 +114,12 @@ class _SsdMessageProcessor {
 
       if (isFoundAction &&
           !((isAdv &&
-                  location != null &&
-                  usn != null &&
-                  st != null &&
-                  server != null &&
-                  uuid != null &&
-                  maxAge != -1) ||
+              location != null &&
+              usn != null &&
+              st != null &&
+              server != null &&
+              uuid != null &&
+              maxAge != -1) ||
               uuid == null)) {
         return WifiCameraInfo(usn, uuid, location, server, st);
       }
@@ -131,7 +130,7 @@ class _SsdMessageProcessor {
   static String _findValue(String message, String key) {
 //(?mis) multiline, insensitive, singleline (dot matches new line charakters)
     RegExpMatch regExp = new RegExp(".*^$key:\\s?([^\\r]+).*",
-            multiLine: true, caseSensitive: false, dotAll: true)
+        multiLine: true, caseSensitive: false, dotAll: true)
         .firstMatch(message);
     if (regExp != null) {
       return regExp.group(1);
