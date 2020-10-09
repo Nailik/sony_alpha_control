@@ -220,8 +220,9 @@ class TestsPageState extends State<TestsPage> {
                     subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [getText(ItemId.Versions, ApiMethodId.GET)]),
-                    onTap: () => device.api
-                        .getWebApiVersions(SonyWebApiServiceTypeId.CAMERA, update: ForceUpdate.On)),
+                    onTap: () => device.api.getWebApiVersions(
+                        SonyWebApiServiceTypeId.CAMERA,
+                        update: ForceUpdate.On)),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -265,8 +266,9 @@ class TestsPageState extends State<TestsPage> {
                           getText(ItemId.Versions, ApiMethodId.GET,
                               serviceId: SonyWebApiServiceTypeId.AV_CONTENT)
                         ]),
-                    onTap: () => device.api
-                        .getWebApiVersions(SonyWebApiServiceTypeId.AV_CONTENT, update: ForceUpdate.On)),
+                    onTap: () => device.api.getWebApiVersions(
+                        SonyWebApiServiceTypeId.AV_CONTENT,
+                        update: ForceUpdate.On)),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -310,8 +312,9 @@ class TestsPageState extends State<TestsPage> {
                           getText(ItemId.Versions, ApiMethodId.GET,
                               serviceId: SonyWebApiServiceTypeId.SYSTEM)
                         ]),
-                    onTap: () => device.api
-                        .getWebApiVersions(SonyWebApiServiceTypeId.SYSTEM, update: ForceUpdate.On)),
+                    onTap: () => device.api.getWebApiVersions(
+                        SonyWebApiServiceTypeId.SYSTEM,
+                        update: ForceUpdate.On)),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -355,8 +358,9 @@ class TestsPageState extends State<TestsPage> {
                           getText(ItemId.Versions, ApiMethodId.GET,
                               serviceId: SonyWebApiServiceTypeId.GUIDE)
                         ]),
-                    onTap: () => device.api
-                        .getWebApiVersions(SonyWebApiServiceTypeId.GUIDE, update: ForceUpdate.On)),
+                    onTap: () => device.api.getWebApiVersions(
+                        SonyWebApiServiceTypeId.GUIDE,
+                        update: ForceUpdate.On)),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -401,7 +405,8 @@ class TestsPageState extends State<TestsPage> {
                               serviceId: SonyWebApiServiceTypeId.ACCESS_CONTROL)
                         ]),
                     onTap: () => device.api.getWebApiVersions(
-                        SonyWebApiServiceTypeId.ACCESS_CONTROL, update: ForceUpdate.On)),
+                        SonyWebApiServiceTypeId.ACCESS_CONTROL,
+                        update: ForceUpdate.On)),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -439,8 +444,9 @@ class TestsPageState extends State<TestsPage> {
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [getText(ItemId.MethodTypes, ApiMethodId.GET)]),
-                onTap: () =>
-                    device.api.getMethodTypes(SonyWebApiServiceTypeId.CAMERA, update: ForceUpdate.On)),
+                onTap: () => device.api.getMethodTypes(
+                    SonyWebApiServiceTypeId.CAMERA,
+                    update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -476,8 +482,9 @@ class TestsPageState extends State<TestsPage> {
                   getText(ItemId.MethodTypes, ApiMethodId.GET,
                       serviceId: SonyWebApiServiceTypeId.AV_CONTENT)
                 ]),
-                onTap: () => device.api
-                    .getMethodTypes(SonyWebApiServiceTypeId.AV_CONTENT, update: ForceUpdate.On)),
+                onTap: () => device.api.getMethodTypes(
+                    SonyWebApiServiceTypeId.AV_CONTENT,
+                    update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -513,8 +520,9 @@ class TestsPageState extends State<TestsPage> {
                   getText(ItemId.MethodTypes, ApiMethodId.GET,
                       serviceId: SonyWebApiServiceTypeId.SYSTEM)
                 ]),
-                onTap: () =>
-                    device.api.getMethodTypes(SonyWebApiServiceTypeId.SYSTEM, update: ForceUpdate.On)),
+                onTap: () => device.api.getMethodTypes(
+                    SonyWebApiServiceTypeId.SYSTEM,
+                    update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -550,8 +558,9 @@ class TestsPageState extends State<TestsPage> {
                   getText(ItemId.MethodTypes, ApiMethodId.GET,
                       serviceId: SonyWebApiServiceTypeId.GUIDE)
                 ]),
-                onTap: () =>
-                    device.api.getMethodTypes(SonyWebApiServiceTypeId.GUIDE, update: ForceUpdate.On)),
+                onTap: () => device.api.getMethodTypes(
+                    SonyWebApiServiceTypeId.GUIDE,
+                    update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -587,8 +596,9 @@ class TestsPageState extends State<TestsPage> {
                   getText(ItemId.MethodTypes, ApiMethodId.GET,
                       serviceId: SonyWebApiServiceTypeId.ACCESS_CONTROL)
                 ]),
-                onTap: () => device.api
-                    .getMethodTypes(SonyWebApiServiceTypeId.ACCESS_CONTROL, update: ForceUpdate.On)),
+                onTap: () => device.api.getMethodTypes(
+                    SonyWebApiServiceTypeId.ACCESS_CONTROL,
+                    update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -662,7 +672,8 @@ class TestsPageState extends State<TestsPage> {
                     children: [
                       getText(ItemId.ApplicationInfo, ApiMethodId.GET)
                     ]),
-                onTap: () => device.api.getApplicationInfo(update: ForceUpdate.On)),
+                onTap: () =>
+                    device.api.getApplicationInfo(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -698,7 +709,8 @@ class TestsPageState extends State<TestsPage> {
                     children: [
                       getText(ItemId.AvailableSettings, ApiMethodId.GET)
                     ]),
-                onTap: () => device.api.getAvailableSettings(false, update: ForceUpdate.On)),
+                onTap: () => device.api
+                    .getAvailableSettings(false, update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -878,10 +890,41 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(ItemId.Zoom.name),
-              subtitle: Text(
-                  device.cameraSettings.zoom.value?.name ?? "NotAvailable"),
-            ),
+                title: Text(ItemId.Zoom.name),
+                subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                          device.cameraSettings.zoom.value?.name ??
+                              "NotAvailable",
+                          textAlign: TextAlign.start),
+                      getText(ItemId.Zoom, ApiMethodId.ACT)
+                    ]),
+                onTap: () {}),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                child: ListTile(
+                    title: Text("In"),
+                    onTap: () => device.api.actZoom("in", "1shot")),
+              ),
+              Expanded(
+                child: ListTile(
+                    title: Text("Out"),
+                    onTap: () => device.api.actZoom("out", "1shot")),
+              )
+            ]),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                child: ListTile(
+                    title: Text("In"),
+                    onTap: () => device.api.actZoom("in", "1shot")),
+              ),
+              Expanded(
+                child: ListTile(
+                    title: Text("Out"),
+                    onTap: () => device.api.actZoom("out", "1shot")),
+              )
+            ]),
           ]),
         ),
       ),

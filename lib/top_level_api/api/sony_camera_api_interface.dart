@@ -206,6 +206,14 @@ abstract class CameraApiInterface {
 
   Future<bool> setZoomSetting(ZoomSettingValue value);
 
+  ///Zoom
+
+  //direction: in/out  movementparameter: start, stop, 1shot -> when started, has to bee stopped with same direction param
+  //maybe only provide in,out with  oneshot or floating and onther stop method (and has to be stopped before value change?)
+  // (handle start stop in api)
+  @override
+  Future<bool> actZoom(String direction, String movementparameter);
+
   ///WhiteBalance Mode
 
   Future<SettingsItem<WhiteBalanceModeValue>> getWhiteBalanceMode(

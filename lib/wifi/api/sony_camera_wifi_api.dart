@@ -519,17 +519,29 @@ class SonyCameraWifiApi extends CameraApiInterface {
       await _updateIf(update, await super.getZoomSetting(update: update));
 
   @override
-  Future<bool> setZoomSetting(ZoomSettingValue value) =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.ZoomSetting, params: [
-        <String, dynamic>{'zoom': value.wifiValue}
-      ]).send(device).then((result) {
+  Future<bool> setZoomSetting(ZoomSettingValue value) async =>
+      await WifiCommand.createCommand(ApiMethodId.SET, ItemId.ZoomSetting,
+          params: [
+            <String, dynamic>{'zoom': value.wifiValue}
+          ]).send(device).then((result) {
         if (result.isValid) {
-          SettingsItem<ZoomSettingValue> item = device.cameraSettings
-              .getItem<ZoomSettingValue>(ItemId.ZoomSetting);
+          SettingsItem<ZoomSettingValue> item = device.cameraSettings.zoomSetting;
           item.updateItem(value, item.available, item.supported);
         }
         return result.isValid;
       });
+
+  ///Zoom
+
+  //direction: in/out  movementparameter: start, stop, 1shot -> when started, has to bee stopped with same direction param
+  //zoom item in settions updated by event (availablesettings) only
+  //TODO save direction and movement param in zoom settings item and autostop when reached end?
+  @override
+  Future<bool> actZoom(String direction, String movementparameter) async =>
+      await WifiCommand.createCommand(ApiMethodId.ACT, ItemId.Zoom,
+              params: [direction, movementparameter])
+          .send(device)
+          .then((result) => result.isValid);
 
   ///White Balance Mode
 

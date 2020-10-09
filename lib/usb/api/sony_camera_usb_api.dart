@@ -690,4 +690,11 @@ class SonyCameraUsbApi extends CameraApiInterface {
     // TODO: implement setZoomSetting
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool> actZoom(String direction, String movementparameter) {
+    // TODO: implement actZoom
+    throw UnimplementedError();
+  }
+
 }
