@@ -198,6 +198,14 @@ abstract class CameraApiInterface {
 
   Future<bool> setFocusMode(FocusModeValue value);
 
+  ///Zoom Setting
+
+  Future<SettingsItem<ZoomSettingValue>> getZoomSetting(
+          {ForceUpdate update}) async =>
+      device.cameraSettings.zoomSetting;
+
+  Future<bool> setZoomSetting(ZoomSettingValue value);
+
   ///WhiteBalance Mode
 
   Future<SettingsItem<WhiteBalanceModeValue>> getWhiteBalanceMode(

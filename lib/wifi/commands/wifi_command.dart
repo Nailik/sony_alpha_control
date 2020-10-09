@@ -32,8 +32,7 @@ class WifiCommand {
 
   WifiCommand(this.id, this.method, this.version, this.params, {this.service});
 
-  static WifiCommand createCommand(
-          ApiMethodId method, ItemId apiGroup,
+  static WifiCommand createCommand(ApiMethodId method, ItemId apiGroup,
           {SonyWebApiServiceTypeId service = SonyWebApiServiceTypeId.CAMERA,
           WebApiVersionId version =
               WebApiVersionId.V_1_0, //TOp supported version?
@@ -77,7 +76,7 @@ class WifiCommand {
     var text = "$method $version $params \n\n "
         "***************************REQUEST***************************\n\n ${wifiResponse.request}  \n\n "
         "---------------------------RESPONSE--------------------------\n\n  ${wifiResponse.response}  \n\n ";
-    if(Platform.isAndroid) {
+    if (Platform.isAndroid) {
       await file.writeAsString(text);
     }
   }
@@ -103,7 +102,9 @@ class WifiResponse {
 
   WifiResponse(this.request, this.response);
 
-  get isValid =>
-      jsonDecode(response)["result"][0] ==
-      0; //TODO what error code? illegal argument/ unsupported etc
+  get isValid {
+    var jsonD = jsonDecode(response)["result"] as List;
+    return jsonD.length == 0 ||
+        jsonD[0] == 0; //TODO what error code? illegal argument/ unsupported etc
+  }
 }

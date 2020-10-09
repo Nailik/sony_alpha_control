@@ -150,8 +150,6 @@ abstract class Value<T> {
       case ItemId.TrackingFocus:
         return OnOffValue(wifiValue);
       case ItemId.ZoomSetting: //FocusStatus
-      //TODO   return StringValue(wifiValue);
-      case ItemId.ZoomSetting: //FocusStatus
         return ZoomSettingValue.fromWifiValue(wifiValue);
       case ItemId.ContShootingMode:
       //TODO return ContShootingModeValue.fromWifiValue(wifiValue);

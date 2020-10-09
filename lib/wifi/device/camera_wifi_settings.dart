@@ -26,8 +26,8 @@ class CameraWifiSettings extends CameraSettings {
   Future<String> getSettings(WebApiVersionId version, bool longPolling,
       SonyCameraWifiDevice device) async {
     var webResponse = await WifiCommand.createCommand(
-        ApiMethodId.GET, ItemId.AvailableSettings,
-        params: [longPolling]).send(device, timeout: 80000);
+            ApiMethodId.GET, ItemId.AvailableSettings, params: [longPolling])
+        .send(device, timeout: 80000);
     //a list
     var jsonD = jsonDecode(webResponse.response);
 
@@ -163,6 +163,12 @@ class CameraWifiSettings extends CameraSettings {
             availableColorTempList,
             settingsItemColorTemp.supported);
         break;
+      case ItemId.ZoomSetting:
+        settingsItem.updateItem(
+            Value.fromWifi(settingsItem.itemId, list[0]["zoom"]),
+            settingsItem.createListFromWifiJson(list[0]["candidate"] as List),
+            settingsItem.supported);
+        break;
       default:
         settingsItem.updateItem(
             Value.fromWifi(settingsItem.itemId, list[0]),
@@ -227,6 +233,10 @@ class CameraWifiSettings extends CameraSettings {
 
         settingsItemColorTemp.updateItem(settingsItemColorTemp.value,
             settingsItemColorTemp.available, availableColorTempList);
+        break;
+      case ItemId.ZoomSetting:
+        settingsItem.updateItem(settingsItem.value, settingsItem.available,
+            settingsItem.createListFromWifiJson(list[0]["candidate"] as List));
         break;
       default:
         settingsItem.updateItem(settingsItem.value, settingsItem.available,

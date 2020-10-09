@@ -106,7 +106,7 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem postViewImageSize =
       SettingsItem<StringValue>(ItemId.PostViewImageSize);
   SettingsItem programShift = SettingsItem<StringValue>(ItemId.ProgramShift);
-  SettingsItem zoomSetting = SettingsItem<StringValue>(ItemId.ZoomSetting);
+  SettingsItem<ZoomSettingValue> zoomSetting = SettingsItem<ZoomSettingValue>(ItemId.ZoomSetting);
   SettingsItem storageInformation =
       SettingsItem<StringValue>(ItemId.StorageInformation);
   SettingsItem liveViewInfo = SettingsItem<StringValue>(ItemId.LiveViewInfo);
@@ -213,7 +213,7 @@ abstract class CameraSettings extends ChangeNotifier {
       case ItemId.ProgramShift:
         return programShift;
       case ItemId.ZoomSetting:
-        return zoomSetting;
+        throw UnsupportedError;
       case ItemId.StorageInformation:
         return storageInformation;
       case ItemId.ProgramShift:

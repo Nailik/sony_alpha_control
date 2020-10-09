@@ -684,4 +684,10 @@ class SonyCameraUsbApi extends CameraApiInterface {
     // TODO: implement stopRecMode
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool> setZoomSetting(ZoomSettingValue value) {
+    // TODO: implement setZoomSetting
+    throw UnimplementedError();
+  }
 }

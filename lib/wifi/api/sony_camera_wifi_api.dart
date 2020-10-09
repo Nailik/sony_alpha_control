@@ -179,7 +179,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
     ListInfoItem<ApiFunctionValue> listInfoItem =
         await super.getAvailableFunctions();
 
-    if (listInfoItem.values.isEmpty) {
+    if ((update == ForceUpdate.IfNull && listInfoItem.values.isEmpty) ||
+        update == ForceUpdate.On) {
       await WifiCommand.createCommand(
               ApiMethodId.GET_AVAILABLE, listInfoItem.itemId)
           .send(device)
@@ -505,6 +506,26 @@ class SonyCameraWifiApi extends CameraApiInterface {
         if (result.isValid) {
           SettingsItem<FocusModeValue> item =
               device.cameraSettings.getItem<FocusModeValue>(ItemId.FocusMode);
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///Zoom Setting
+
+  @override
+  Future<SettingsItem<ZoomSettingValue>> getZoomSetting(
+          {update = ForceUpdate.IfNull}) async =>
+      await _updateIf(update, await super.getZoomSetting(update: update));
+
+  @override
+  Future<bool> setZoomSetting(ZoomSettingValue value) =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.ZoomSetting, params: [
+        <String, dynamic>{'zoom': value.wifiValue}
+      ]).send(device).then((result) {
+        if (result.isValid) {
+          SettingsItem<ZoomSettingValue> item = device.cameraSettings
+              .getItem<ZoomSettingValue>(ItemId.ZoomSetting);
           item.updateItem(value, item.available, item.supported);
         }
         return result.isValid;
