@@ -219,6 +219,14 @@ abstract class CameraApiInterface {
 
   Future<bool> cancelHalfPressShutter();
 
+  ///Self Timer
+
+  Future<SettingsItem<IntValue>> getSelfTimer(
+      {ForceUpdate update}) async =>
+      device.cameraSettings.selfTimer;
+
+  Future<bool> setSelfTimer(IntValue value);
+
   ///WhiteBalance Mode
 
   Future<SettingsItem<WhiteBalanceModeValue>> getWhiteBalanceMode(

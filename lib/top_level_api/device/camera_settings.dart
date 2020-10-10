@@ -94,7 +94,7 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem zoom = SettingsItem<StringValue>(ItemId.Zoom);
   InfoItem<BoolValue> halfPressShutter = InfoItem<BoolValue>(
       ItemId.HalfPressShutter); //saves if is act (true) or cancel (false)
-  SettingsItem selfTimer = SettingsItem<StringValue>(ItemId.SelfTimer);
+  SettingsItem<IntValue> selfTimer = SettingsItem<IntValue>(ItemId.SelfTimer);
   SettingsItem contShootingMode =
       SettingsItem<StringValue>(ItemId.ContShootingMode);
   SettingsItem contShootingSpeed =
@@ -200,7 +200,7 @@ abstract class CameraSettings extends ChangeNotifier {
       case ItemId.HalfPressShutter:
         throw UnsupportedError;
       case ItemId.SelfTimer:
-        return selfTimer;
+        throw UnsupportedError;
       case ItemId.ContShootingMode:
         return contShootingMode;
       case ItemId.ContShootingSpeed:

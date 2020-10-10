@@ -483,7 +483,7 @@ class IntValue extends Value<int> {
   int get usbValue => id;
 
   @override
-  String get wifiValue => id.toString();
+  String get wifiValue => id.toString(); //TODO for ints wifi value has to be still an int no string :/
 }
 
 class WhiteBalanceColorTempValue extends IntValue {

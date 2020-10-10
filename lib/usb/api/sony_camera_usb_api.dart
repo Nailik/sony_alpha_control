@@ -709,4 +709,10 @@ class SonyCameraUsbApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
+  @override
+  Future<bool> setSelfTimer(IntValue value) {
+    // TODO: implement setSelfTimer
+    throw UnimplementedError();
+  }
+
 }

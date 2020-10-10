@@ -982,9 +982,50 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
               title: Text(ItemId.SelfTimer.name),
-              subtitle: Text(device.cameraSettings.selfTimer.value?.name ??
-                  "NotAvailable"),
+              subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        device.cameraSettings.selfTimer.value?.name ??
+                            "NotAvailable",
+                        textAlign: TextAlign.start),
+                    getText(ItemId.SelfTimer, ApiMethodId.SET),
+                    getText(ItemId.SelfTimer, ApiMethodId.GET),
+                    getText(ItemId.SelfTimer, ApiMethodId.GET_AVAILABLE),
+                    getText(ItemId.SelfTimer, ApiMethodId.GET_SUPPORTED)
+                  ]),
+              onTap: () => device.api.getSelfTimer(update: ForceUpdate.On),
             ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<IntValue>(
+                        isExpanded: true,
+                        hint: Text("available"),
+                        items: device.cameraSettings.selfTimer.available
+                            .map<DropdownMenuItem<IntValue>>((e) =>
+                            DropdownMenuItem<IntValue>(
+                                child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) =>
+                            device.api.setSelfTimer(value),
+                      ))),
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<IntValue>(
+                        isExpanded: true,
+                        hint: Text("supported"),
+                        items: device.cameraSettings.selfTimer.supported
+                            .map<DropdownMenuItem<IntValue>>((e) =>
+                            DropdownMenuItem<IntValue>(
+                                child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) =>
+                            device.api.setSelfTimer(value),
+                      ))),
+            ]),
           ]),
         ),
       ),

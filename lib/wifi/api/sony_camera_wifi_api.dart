@@ -504,8 +504,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
       WifiCommand.createCommand(ApiMethodId.SET, ItemId.FocusMode,
           params: [value.wifiValue]).send(device).then((result) {
         if (result.isValid) {
-          SettingsItem<FocusModeValue> item =
-              device.cameraSettings.getItem<FocusModeValue>(ItemId.FocusMode);
+          SettingsItem<FocusModeValue> item = device.cameraSettings.focusMode;
           item.updateItem(value, item.available, item.supported);
         }
         return result.isValid;
@@ -560,12 +559,31 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> cancelHalfPressShutter() async => //TODO error if not act?
-      await WifiCommand.createCommand(ApiMethodId.CANCEL, ItemId.HalfPressShutter)
+      await WifiCommand.createCommand(
+              ApiMethodId.CANCEL, ItemId.HalfPressShutter)
           .send(device)
           .then((result) {
         if (result.isValid) {
           InfoItem<BoolValue> item = device.cameraSettings.halfPressShutter;
           item.updateItem(BoolValue(false));
+        }
+        return result.isValid;
+      });
+
+  ///Self Timer
+
+  @override
+  Future<SettingsItem<IntValue>> getSelfTimer(
+          {update = ForceUpdate.IfNull}) async =>
+      await _updateIf(update, await super.getSelfTimer(update: update));
+
+  @override
+  Future<bool> setSelfTimer(IntValue value) =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.SelfTimer,
+          params: [value.id]).send(device).then((result) {
+        if (result.isValid) {
+          SettingsItem<IntValue> item = device.cameraSettings.selfTimer;
+          item.updateItem(value, item.available, item.supported);
         }
         return result.isValid;
       });
