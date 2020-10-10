@@ -933,21 +933,44 @@ class TestsPageState extends State<TestsPage> {
 
   ///HalfPressShutter (act, cancel)
   Widget getHalfPressShutterRow() {
-    return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.halfPressShutter,
-      child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(
-          child: Column(children: [
-            ListTile(
-              title: Text(ItemId.HalfPressShutter.name),
-              subtitle: Text(
-                  device.cameraSettings.halfPressShutter.value?.name ??
-                      "NotAvailable"),
-            ),
-          ]),
-        ),
-      ),
-    );
+    return ListenableProvider<InfoItem>(
+        //TODO Info item? is act is cancele
+        create: (context) => device.cameraSettings.halfPressShutter,
+        child: Consumer<InfoItem>(
+          builder: (context, model, _) => Card(
+            child: Column(children: [
+              ListTile(
+                  title: Text(ItemId.HalfPressShutter.name),
+                  subtitle: Text(
+                      device.cameraSettings.halfPressShutter.value?.name ??
+                          "NotAvailable",
+                      textAlign: TextAlign.start),
+                  onTap: () {}),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                Expanded(
+                  child: ListTile(
+                      title: Text(ItemId.HalfPressShutter.name + " ACT"),
+                      subtitle: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            getText(ItemId.HalfPressShutter, ApiMethodId.ACT)
+                          ]),
+                      onTap: () => device.api.actHalfPressShutter()),
+                ),
+                Expanded(
+                  child: ListTile(
+                      title: Text(ItemId.HalfPressShutter.name + " CANCEL"),
+                      subtitle: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            getText(ItemId.HalfPressShutter, ApiMethodId.CANCEL)
+                          ]),
+                      onTap: () => device.api.cancelHalfPressShutter()),
+                )
+              ]),
+            ]),
+          ),
+        ));
   }
 
   ///SelfTimer (set, get, getSupported, getAvailable)

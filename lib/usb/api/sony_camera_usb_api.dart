@@ -697,4 +697,16 @@ class SonyCameraUsbApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
+  @override
+  Future<bool> actHalfPressShutter() {
+    // TODO: implement actHalfPressShutter
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> cancelHalfPressShutter() {
+    // TODO: implement cancelHalfPressShutter
+    throw UnimplementedError();
+  }
+
 }

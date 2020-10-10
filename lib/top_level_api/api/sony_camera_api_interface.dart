@@ -211,8 +211,13 @@ abstract class CameraApiInterface {
   //direction: in/out  movementparameter: start, stop, 1shot -> when started, has to bee stopped with same direction param
   //maybe only provide in,out with  oneshot or floating and onther stop method (and has to be stopped before value change?)
   // (handle start stop in api)
-  @override
   Future<bool> actZoom(String direction, String movementparameter);
+
+  ///Half Press Shutter
+
+  Future<bool> actHalfPressShutter();
+
+  Future<bool> cancelHalfPressShutter();
 
   ///WhiteBalance Mode
 

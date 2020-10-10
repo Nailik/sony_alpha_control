@@ -525,7 +525,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
             <String, dynamic>{'zoom': value.wifiValue}
           ]).send(device).then((result) {
         if (result.isValid) {
-          SettingsItem<ZoomSettingValue> item = device.cameraSettings.zoomSetting;
+          SettingsItem<ZoomSettingValue> item =
+              device.cameraSettings.zoomSetting;
           item.updateItem(value, item.available, item.supported);
         }
         return result.isValid;
@@ -542,6 +543,32 @@ class SonyCameraWifiApi extends CameraApiInterface {
               params: [direction, movementparameter])
           .send(device)
           .then((result) => result.isValid);
+
+  ///Half Press Shutter
+
+  @override
+  Future<bool> actHalfPressShutter() async => //TODO error if not cancelled?
+      await WifiCommand.createCommand(ApiMethodId.ACT, ItemId.HalfPressShutter)
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          InfoItem<BoolValue> item = device.cameraSettings.halfPressShutter;
+          item.updateItem(BoolValue(true));
+        }
+        return result.isValid;
+      });
+
+  @override
+  Future<bool> cancelHalfPressShutter() async => //TODO error if not act?
+      await WifiCommand.createCommand(ApiMethodId.CANCEL, ItemId.HalfPressShutter)
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          InfoItem<BoolValue> item = device.cameraSettings.halfPressShutter;
+          item.updateItem(BoolValue(false));
+        }
+        return result.isValid;
+      });
 
   ///White Balance Mode
 

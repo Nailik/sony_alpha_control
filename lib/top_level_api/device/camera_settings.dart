@@ -92,8 +92,8 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem liveViewWithSize =
       SettingsItem<StringValue>(ItemId.LiveViewWithSize);
   SettingsItem zoom = SettingsItem<StringValue>(ItemId.Zoom);
-  SettingsItem halfPressShutter =
-      SettingsItem<StringValue>(ItemId.HalfPressShutter);
+  InfoItem<BoolValue> halfPressShutter = InfoItem<BoolValue>(
+      ItemId.HalfPressShutter); //saves if is act (true) or cancel (false)
   SettingsItem selfTimer = SettingsItem<StringValue>(ItemId.SelfTimer);
   SettingsItem contShootingMode =
       SettingsItem<StringValue>(ItemId.ContShootingMode);
@@ -106,7 +106,8 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem postViewImageSize =
       SettingsItem<StringValue>(ItemId.PostViewImageSize);
   SettingsItem programShift = SettingsItem<StringValue>(ItemId.ProgramShift);
-  SettingsItem<ZoomSettingValue> zoomSetting = SettingsItem<ZoomSettingValue>(ItemId.ZoomSetting);
+  SettingsItem<ZoomSettingValue> zoomSetting =
+      SettingsItem<ZoomSettingValue>(ItemId.ZoomSetting);
   SettingsItem storageInformation =
       SettingsItem<StringValue>(ItemId.StorageInformation);
   SettingsItem liveViewInfo = SettingsItem<StringValue>(ItemId.LiveViewInfo);
@@ -197,7 +198,7 @@ abstract class CameraSettings extends ChangeNotifier {
       case ItemId.Zoom:
         return zoom;
       case ItemId.HalfPressShutter:
-        return halfPressShutter;
+        throw UnsupportedError;
       case ItemId.SelfTimer:
         return selfTimer;
       case ItemId.ContShootingMode:
