@@ -99,7 +99,7 @@ abstract class CameraSettings extends ChangeNotifier {
       SettingsItem<StringValue>(ItemId.ContShootingMode);
   SettingsItem contShootingSpeed =
       SettingsItem<StringValue>(ItemId.ContShootingSpeed);
-  SettingsItem meteringMode =
+  SettingsItem<MeteringModeValue> meteringMode =
       SettingsItem<MeteringModeValue>(ItemId.MeteringMode);
   SettingsItem liveViewSize =
       SettingsItem<LiveViewSizeValue>(ItemId.LiveViewSize);

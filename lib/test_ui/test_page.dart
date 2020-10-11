@@ -1000,11 +1000,10 @@ class TestsPageState extends State<TestsPage> {
                         hint: Text("available"),
                         items: device.cameraSettings.selfTimer.available
                             .map<DropdownMenuItem<IntValue>>((e) =>
-                            DropdownMenuItem<IntValue>(
-                                child: Text(e.name), value: e))
+                                DropdownMenuItem<IntValue>(
+                                    child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) =>
-                            device.api.setSelfTimer(value),
+                        onChanged: (value) => device.api.setSelfTimer(value),
                       ))),
               Expanded(
                   child: Padding(
@@ -1014,11 +1013,10 @@ class TestsPageState extends State<TestsPage> {
                         hint: Text("supported"),
                         items: device.cameraSettings.selfTimer.supported
                             .map<DropdownMenuItem<IntValue>>((e) =>
-                            DropdownMenuItem<IntValue>(
-                                child: Text(e.name), value: e))
+                                DropdownMenuItem<IntValue>(
+                                    child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) =>
-                            device.api.setSelfTimer(value),
+                        onChanged: (value) => device.api.setSelfTimer(value),
                       ))),
             ]),
           ]),
@@ -1074,9 +1072,48 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
               title: Text(ItemId.MeteringMode.name),
-              subtitle: Text(device.cameraSettings.meteringMode.value?.name ??
-                  "NotAvailable"),
+              subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        device.cameraSettings.meteringMode.value?.name ??
+                            "NotAvailable",
+                        textAlign: TextAlign.start),
+                    getText(ItemId.MeteringMode, ApiMethodId.SET),
+                    getText(ItemId.MeteringMode, ApiMethodId.GET),
+                    getText(ItemId.MeteringMode, ApiMethodId.GET_AVAILABLE),
+                    getText(ItemId.MeteringMode, ApiMethodId.GET_SUPPORTED)
+                  ]),
+              onTap: () => device.api.getMeteringMode(update: ForceUpdate.On),
             ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<MeteringModeValue>(
+                        isExpanded: true,
+                        hint: Text("available"),
+                        items: device.cameraSettings.meteringMode.available
+                            .map<DropdownMenuItem<MeteringModeValue>>((e) =>
+                                DropdownMenuItem<MeteringModeValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) => device.api.setMeteringMode(value),
+                      ))),
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<MeteringModeValue>(
+                        isExpanded: true,
+                        hint: Text("supported"),
+                        items: device.cameraSettings.meteringMode.supported
+                            .map<DropdownMenuItem<MeteringModeValue>>((e) =>
+                                DropdownMenuItem<MeteringModeValue>(
+                                    child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) => device.api.setMeteringMode(value),
+                      ))),
+            ]),
           ]),
         ),
       ),
@@ -1092,8 +1129,16 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
               title: Text(ItemId.EV.name),
-              subtitle:
-                  Text(device.cameraSettings.ev.value?.name ?? "NotAvailable"),
+              subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(device.cameraSettings.ev.value?.name ?? "NotAvailable",
+                        textAlign: TextAlign.start),
+                    getText(ItemId.EV, ApiMethodId.SET),
+                    getText(ItemId.EV, ApiMethodId.GET),
+                    getText(ItemId.EV, ApiMethodId.GET_AVAILABLE),
+                    getText(ItemId.EV, ApiMethodId.GET_SUPPORTED)
+                  ]),
               onTap: () => device.api.getEV(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -1147,9 +1192,16 @@ class TestsPageState extends State<TestsPage> {
                   child: Column(children: [
                     ListTile(
                       title: Text(ItemId.FNumber.name),
-                      subtitle: Text(
-                          device.cameraSettings.fNumber.value?.name ??
-                              "NotAvailable"),
+                      subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(device.cameraSettings.fNumber.value?.name ?? "NotAvailable",
+                                textAlign: TextAlign.start),
+                            getText(ItemId.FNumber, ApiMethodId.SET),
+                            getText(ItemId.FNumber, ApiMethodId.GET),
+                            getText(ItemId.FNumber, ApiMethodId.GET_AVAILABLE),
+                            getText(ItemId.FNumber, ApiMethodId.GET_SUPPORTED)
+                          ]),
                       onTap: () =>
                           device.api.getFNumber(update: ForceUpdate.On),
                     ),
@@ -1216,8 +1268,16 @@ class TestsPageState extends State<TestsPage> {
                   child: Column(children: [
                     ListTile(
                       title: Text(ItemId.ISO.name),
-                      subtitle: Text(device.cameraSettings.iso.value?.name ??
-                          "NotAvailable"),
+                      subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(device.cameraSettings.iso.value?.name ?? "NotAvailable",
+                                textAlign: TextAlign.start),
+                            getText(ItemId.ISO, ApiMethodId.SET),
+                            getText(ItemId.ISO, ApiMethodId.GET),
+                            getText(ItemId.ISO, ApiMethodId.GET_AVAILABLE),
+                            getText(ItemId.ISO, ApiMethodId.GET_SUPPORTED)
+                          ]),
                       onTap: () => device.api.getIso(update: ForceUpdate.On),
                     ),
                     Row(
