@@ -44,7 +44,7 @@ class CameraWifiSettings extends CameraSettings {
         ItemId settingsIdEnum =
             SettingsIdExtension.getIdFromWifi(settingsIdWifiValue);
 
-        SettingsItem setting = getItem(settingsIdEnum);
+        SettingsItem setting; //TODO = getItem(settingsIdEnum);
         if (setting == null) {
           print("ERROR ******");
         }
@@ -131,9 +131,7 @@ class CameraWifiSettings extends CameraSettings {
 
         //colorTemperature
         SettingsItem<WhiteBalanceColorTempValue> settingsItemColorTemp =
-            sonyCameraWifiDevice.cameraSettings
-                .getItem<WhiteBalanceColorTempValue>(
-                    ItemId.WhiteBalanceColorTemp);
+            sonyCameraWifiDevice.cameraSettings.whiteBalanceColorTemp;
 
         settingsItem.updateItem(
             currentWhiteBalance,
@@ -205,9 +203,7 @@ class CameraWifiSettings extends CameraSettings {
 
         //colorTemperature
         SettingsItem<WhiteBalanceColorTempValue> settingsItemColorTemp =
-            sonyCameraWifiDevice.cameraSettings
-                .getItem<WhiteBalanceColorTempValue>(
-                    ItemId.WhiteBalanceColorTemp);
+            sonyCameraWifiDevice.cameraSettings.whiteBalanceColorTemp;
 
         settingsItem.updateItem(
             settingsItem.value,

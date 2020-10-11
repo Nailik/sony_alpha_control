@@ -248,7 +248,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   @override
   Future<int> getBatteryPercentage({ForceUpdate update}) async {
-    return device.cameraSettings.getItem(ItemId.BatteryInfo).value.usbValue;
+    return device.cameraSettings.batteryInfo.value.usbValue;
   }
 
   @override
@@ -536,13 +536,12 @@ class SonyCameraUsbApi extends CameraApiInterface {
   @override
   Future<RecordVideoStateValue> getRecordingVideoState(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(ItemId.RecordVideoState).value
-          as RecordVideoStateValue;
+      device.cameraSettings.recordVideoState.value;
 
   @override
   Future<SettingsItem<ImageSizeValue>> getImageSize(
           {ForceUpdate update}) async =>
-      device.cameraSettings.getItem(ItemId.ImageSize);
+      device.cameraSettings.imageSize;
 
   @override
   Future<bool> setImageSize(ImageSizeId value) async =>
@@ -559,7 +558,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
   @override
   Future<bool> getPhotoAvailable({ForceUpdate update}) async =>
       ((device.cameraSettings
-                  .getItem(ItemId.PhotoTransferQueue)
+                  .photoTransferQueue
                   .value
                   .usbValue >>
               8) &

@@ -104,7 +104,7 @@ class CameraUsbSettings extends CameraSettings {
 
       ItemId settingsIdEnum = SettingsIdExtension.getIdFromUsb(settingsId);
 
-      SettingsItem setting = getItem(settingsIdEnum);
+      SettingsItem setting;//TODO = getItem(settingsIdEnum);
       if (setting == null) {
         print("ERROR ******");
       }

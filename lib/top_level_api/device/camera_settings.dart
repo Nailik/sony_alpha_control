@@ -29,6 +29,9 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem pictureEffect =
       SettingsItem<PictureEffectValue>(ItemId.PictureEffect);
   SettingsItem droHdr = SettingsItem<DroHdrValue>(ItemId.DroHdr);
+  SettingsItem<RecordVideoStateValue> recordVideoState = SettingsItem<RecordVideoStateValue>(ItemId.RecordVideoState);
+  SettingsItem<BoolValue> photoTransferQueue = SettingsItem<BoolValue>(ItemId.PhotoTransferQueue);
+  InfoItem<StringValue> batteryInfo = InfoItem<StringValue>(ItemId.BatteryInfo);
   SettingsItem imageSize = SettingsItem<ImageSizeValue>(ItemId.ImageSize);
   SettingsItem aspectRatio = SettingsItem<AspectRatioValue>(ItemId.AspectRatio);
   SettingsItem focusModeToggleResponse =
@@ -113,118 +116,4 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem liveViewInfo = SettingsItem<StringValue>(ItemId.LiveViewInfo);
   SettingsItem silentShootingSettings =
       SettingsItem<StringValue>(ItemId.SilentShootingSettings);
-
-  //TODO getter future, da wenn current value "leer" evtl nochmal requesten? (vtl einstellbar falls nie ?)
-  //TODO update mit boolean request -> falls immer geupdttet werden soll
-  //TODO remove this method
-  SettingsItem<T> getItem<T extends Value>(ItemId settingsId) {
-    switch (settingsId) {
-      case ItemId.FNumber:
-        return fNumber;
-      case ItemId.EV:
-        return ev;
-      case ItemId.ISO:
-        return iso;
-      case ItemId.ShutterSpeed:
-        return shutterSpeed;
-      case ItemId.AEL_State:
-        return aelState;
-      case ItemId.FEL:
-        return fel;
-      case ItemId.FlashMode:
-        return flashMode;
-      case ItemId.FocusMode:
-        return focusMode;
-      case ItemId.MeteringMode:
-        return meteringMode;
-      case ItemId.WhiteBalanceMode:
-        return whiteBalanceMode;
-      case ItemId.WhiteBalanceColorTemp:
-        return whiteBalanceColorTemp;
-      case ItemId.FocusArea:
-        return focusArea;
-      case ItemId.FocusAreaSpot:
-        return focusAreaSpot;
-      case ItemId.AutoFocusState:
-        return autoFocusState;
-      case ItemId.ImageFileFormat:
-        return autoFocusState;
-      case ItemId.FlashValue:
-        return flashValue;
-      case ItemId.ImageFileFormat:
-        return imageFileFormat;
-      case ItemId.PictureEffect:
-        return pictureEffect;
-      case ItemId.DroHdr:
-        return droHdr;
-      case ItemId.ImageSize:
-        return imageSize;
-      case ItemId.AspectRatio:
-        return aspectRatio;
-      case ItemId.FocusModeToggleResponse:
-        return focusModeToggleResponse;
-      case ItemId.ShootingMode:
-        return shootingMode;
-      case ItemId.WhiteBalanceAB:
-        return whiteBalanceAB;
-      case ItemId.WhiteBalanceGM:
-        return whiteBalanceGM;
-      case ItemId.DriveMode:
-        return driveMode;
-      case ItemId.FocusMagnifierDirection:
-        return focusMagnifierDirection;
-      case ItemId.FocusMagnifierPhase:
-        return focusMagnifierPhase;
-      case ItemId.FocusMagnifier:
-        return focusMagnifier;
-      case ItemId.Versions:
-        throw UnsupportedError;
-      case ItemId.MethodTypes:
-        throw UnsupportedError;
-      case ItemId.ApplicationInfo:
-        throw UnsupportedError;
-      case ItemId.ApiList:
-        throw UnsupportedError;
-      case ItemId.AvailableSettings:
-        throw UnsupportedError;
-      case ItemId.CameraFunction:
-        throw UnsupportedError;
-      case ItemId.CameraSetup:
-        throw UnsupportedError;
-      case ItemId.LiveView:
-        return liveView;
-      case ItemId.LiveViewWithSize:
-        return liveViewWithSize;
-      case ItemId.Zoom:
-        return zoom;
-      case ItemId.HalfPressShutter:
-        throw UnsupportedError;
-      case ItemId.SelfTimer:
-        throw UnsupportedError;
-      case ItemId.ContShootingMode:
-        return contShootingMode;
-      case ItemId.ContShootingSpeed:
-        return contShootingSpeed;
-      case ItemId.MeteringMode:
-        return meteringMode;
-      case ItemId.LiveViewSize:
-        return liveViewSize;
-      case ItemId.PostViewImageSize:
-        return postViewImageSize;
-      case ItemId.ProgramShift:
-        return programShift;
-      case ItemId.ZoomSetting:
-        throw UnsupportedError;
-      case ItemId.StorageInformation:
-        return storageInformation;
-      case ItemId.ProgramShift:
-        return programShift;
-      case ItemId.LiveViewInfo:
-        return liveViewInfo;
-      case ItemId.SilentShootingSettings:
-        return silentShootingSettings;
-      default:
-        return null;
-    }
-  }
 }
