@@ -40,23 +40,18 @@ class TestsPageState extends State<TestsPage> {
                     children: <Widget>[
                       ///Versions (get) camera
                       getVersionsRowCamera(),
-                      //TODO show available only when camera url exists?
 
                       ///Versions (get) avContent
                       getVersionsRowAvContent(),
-                      //TODO show available only when avContent url exists?
 
                       ///Versions (get) system
                       getVersionsRowSystem(),
-                      //TODO show available only when system url exists?
 
                       ///Versions (get) guide
                       getVersionsRowGuide(),
-                      //TODO show available only when guide url exists?
 
                       ///Versions (get) accessControl
                       getVersionsRowAccessControl(),
-                      //TODO show available only when accessControl url exists?
 
                       ///MethodTypes (get) camera
                       getMethodTypesRowCamera(),
