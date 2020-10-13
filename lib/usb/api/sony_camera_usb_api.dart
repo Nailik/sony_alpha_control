@@ -726,4 +726,10 @@ class SonyCameraUsbApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
+  @override
+  Future<bool> setProgramShift(IntValue value) {
+    // TODO: implement setProgramShift
+    throw UnimplementedError();
+  }
+
 }

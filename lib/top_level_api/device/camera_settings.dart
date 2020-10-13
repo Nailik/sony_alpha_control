@@ -29,8 +29,10 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem pictureEffect =
       SettingsItem<PictureEffectValue>(ItemId.PictureEffect);
   SettingsItem droHdr = SettingsItem<DroHdrValue>(ItemId.DroHdr);
-  SettingsItem<RecordVideoStateValue> recordVideoState = SettingsItem<RecordVideoStateValue>(ItemId.RecordVideoState);
-  SettingsItem<BoolValue> photoTransferQueue = SettingsItem<BoolValue>(ItemId.PhotoTransferQueue);
+  SettingsItem<RecordVideoStateValue> recordVideoState =
+      SettingsItem<RecordVideoStateValue>(ItemId.RecordVideoState);
+  SettingsItem<BoolValue> photoTransferQueue =
+      SettingsItem<BoolValue>(ItemId.PhotoTransferQueue);
   InfoItem<StringValue> batteryInfo = InfoItem<StringValue>(ItemId.BatteryInfo);
   SettingsItem imageSize = SettingsItem<ImageSizeValue>(ItemId.ImageSize);
   SettingsItem aspectRatio = SettingsItem<AspectRatioValue>(ItemId.AspectRatio);
@@ -107,7 +109,7 @@ abstract class CameraSettings extends ChangeNotifier {
       SettingsItem<LiveViewSizeValue>(ItemId.LiveViewSize);
   SettingsItem postViewImageSize =
       SettingsItem<PostViewImageSizeValue>(ItemId.PostViewImageSize);
-  SettingsItem programShift = SettingsItem<StringValue>(ItemId.ProgramShift);
+  SettingsItem programShift = SettingsItem<IntValue>(ItemId.ProgramShift);
   SettingsItem<ZoomSettingValue> zoomSetting =
       SettingsItem<ZoomSettingValue>(ItemId.ZoomSetting);
   SettingsItem storageInformation =

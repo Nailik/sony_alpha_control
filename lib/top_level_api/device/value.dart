@@ -137,7 +137,7 @@ abstract class Value<T> {
         return IsoValue.fromWifiValue(
             wifiValue); //TODO test noise reduction, auto ...
       case ItemId.ProgramShift:
-      //TODO  return StringValue(wifiValue);
+        return IntValue(wifiValue);
       case ItemId.ShutterSpeed:
         return ShutterSpeedValue.fromWifiValue(wifiValue);
       case ItemId.WhiteBalanceMode:

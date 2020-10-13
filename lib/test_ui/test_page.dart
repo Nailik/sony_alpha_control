@@ -1,15 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sonyalphacontrol/top_level_api/api/force_update.dart';
-import 'package:sonyalphacontrol/top_level_api/api/function_availability.dart';
-import 'package:sonyalphacontrol/top_level_api/api/sony_api.dart';
-import 'package:sonyalphacontrol/top_level_api/device/camera_settings.dart';
-import 'package:sonyalphacontrol/top_level_api/device/items.dart';
-import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
-import 'package:sonyalphacontrol/top_level_api/device/value.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
+import 'package:sonyalphacontrol/sonyalphacontrol.dart';
 
 class TestsPage extends StatefulWidget {
   final SonyCameraDevice device;
@@ -1318,25 +1309,26 @@ class TestsPageState extends State<TestsPage> {
             builder: (context, model, _) => Card(
                   child: Column(children: [
                     ListTile(
-                        title: Text(ItemId.LiveViewSize.name),
-                        subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                  device.cameraSettings.liveViewSize.value
-                                          ?.name ??
-                                      "NotAvailable",
-                                  textAlign: TextAlign.start),
-                              getText(ItemId.LiveViewWithSize, ApiMethodId.START),
-                              //Start live view with size //TODO result is url where stored
-                              getText(ItemId.LiveViewSize, ApiMethodId.GET),
-                              getText(ItemId.LiveViewSize,
-                                  ApiMethodId.GET_AVAILABLE),
-                              getText(ItemId.LiveViewSize,
-                                  ApiMethodId.GET_SUPPORTED)
-                            ]),
-                        onTap: () => device.api.getLiveViewSize(update: ForceUpdate.On),
-                        ),
+                      title: Text(ItemId.LiveViewSize.name),
+                      subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                device.cameraSettings.liveViewSize.value
+                                        ?.name ??
+                                    "NotAvailable",
+                                textAlign: TextAlign.start),
+                            getText(ItemId.LiveViewWithSize, ApiMethodId.START),
+                            //Start live view with size //TODO result is url where stored
+                            getText(ItemId.LiveViewSize, ApiMethodId.GET),
+                            getText(
+                                ItemId.LiveViewSize, ApiMethodId.GET_AVAILABLE),
+                            getText(
+                                ItemId.LiveViewSize, ApiMethodId.GET_SUPPORTED)
+                          ]),
+                      onTap: () =>
+                          device.api.getLiveViewSize(update: ForceUpdate.On),
+                    ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -1344,36 +1336,34 @@ class TestsPageState extends State<TestsPage> {
                               child: Padding(
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<LiveViewSizeValue>(
-                                      hint: Text("available"),
-                                      items: device
-                                          .cameraSettings.liveViewSize.available
-                                          .map<
-                                              DropdownMenuItem<
-                                                  LiveViewSizeValue>>((e) =>
-                                              DropdownMenuItem<
-                                                      LiveViewSizeValue>(
-                                                  child: Text(e.name),
-                                                  value: e))
-                                          .toList(),
-                                      onChanged: (value) => device.api.startLiveViewWithSize(value),
-                                      ))),
+                                    hint: Text("available"),
+                                    items: device
+                                        .cameraSettings.liveViewSize.available
+                                        .map<
+                                            DropdownMenuItem<
+                                                LiveViewSizeValue>>((e) =>
+                                            DropdownMenuItem<LiveViewSizeValue>(
+                                                child: Text(e.name), value: e))
+                                        .toList(),
+                                    onChanged: (value) =>
+                                        device.api.startLiveViewWithSize(value),
+                                  ))),
                           Expanded(
                               child: Padding(
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<LiveViewSizeValue>(
-                                      hint: Text("supported"),
-                                      items: device
-                                          .cameraSettings.liveViewSize.supported
-                                          .map<
-                                              DropdownMenuItem<
-                                                  LiveViewSizeValue>>((e) =>
-                                              DropdownMenuItem<
-                                                      LiveViewSizeValue>(
-                                                  child: Text(e.name),
-                                                  value: e))
-                                          .toList(),
-                                      onChanged: (value) => device.api.startLiveViewWithSize(value),
-                                      ))),
+                                    hint: Text("supported"),
+                                    items: device
+                                        .cameraSettings.liveViewSize.supported
+                                        .map<
+                                            DropdownMenuItem<
+                                                LiveViewSizeValue>>((e) =>
+                                            DropdownMenuItem<LiveViewSizeValue>(
+                                                child: Text(e.name), value: e))
+                                        .toList(),
+                                    onChanged: (value) =>
+                                        device.api.startLiveViewWithSize(value),
+                                  ))),
                         ]),
                   ]),
                 )));
@@ -1387,26 +1377,25 @@ class TestsPageState extends State<TestsPage> {
             builder: (context, model, _) => Card(
                   child: Column(children: [
                     ListTile(
-                        title: Text(ItemId.PostViewImageSize.name),
-                        subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                  device.cameraSettings.postViewImageSize.value
-                                          ?.name ??
-                                      "NotAvailable",
-                                  textAlign: TextAlign.start),
-                              getText(
-                                  ItemId.PostViewImageSize, ApiMethodId.SET),
-                              getText(
-                                  ItemId.PostViewImageSize, ApiMethodId.GET),
-                              getText(ItemId.PostViewImageSize,
-                                  ApiMethodId.GET_AVAILABLE),
-                              getText(ItemId.PostViewImageSize,
-                                  ApiMethodId.GET_SUPPORTED)
-                            ]),
-                        onTap: () => device.api.getPostViewImageSize(update: ForceUpdate.On),
-                        ),
+                      title: Text(ItemId.PostViewImageSize.name),
+                      subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                device.cameraSettings.postViewImageSize.value
+                                        ?.name ??
+                                    "NotAvailable",
+                                textAlign: TextAlign.start),
+                            getText(ItemId.PostViewImageSize, ApiMethodId.SET),
+                            getText(ItemId.PostViewImageSize, ApiMethodId.GET),
+                            getText(ItemId.PostViewImageSize,
+                                ApiMethodId.GET_AVAILABLE),
+                            getText(ItemId.PostViewImageSize,
+                                ApiMethodId.GET_SUPPORTED)
+                          ]),
+                      onTap: () => device.api
+                          .getPostViewImageSize(update: ForceUpdate.On),
+                    ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -1414,36 +1403,36 @@ class TestsPageState extends State<TestsPage> {
                               child: Padding(
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<PostViewImageSizeValue>(
-                                      hint: Text("available"),
-                                      items: device.cameraSettings
-                                          .postViewImageSize.available
-                                          .map<
-                                                  DropdownMenuItem<
-                                                      PostViewImageSizeValue>>(
-                                              (e) => DropdownMenuItem<
-                                                      PostViewImageSizeValue>(
-                                                  child: Text(e.name),
-                                                  value: e))
-                                          .toList(),
-                                      onChanged: (value) => device.api.setPostViewImageSize(value),
-                                      ))),
+                                    hint: Text("available"),
+                                    items: device.cameraSettings
+                                        .postViewImageSize.available
+                                        .map<
+                                            DropdownMenuItem<
+                                                PostViewImageSizeValue>>((e) =>
+                                            DropdownMenuItem<
+                                                    PostViewImageSizeValue>(
+                                                child: Text(e.name), value: e))
+                                        .toList(),
+                                    onChanged: (value) =>
+                                        device.api.setPostViewImageSize(value),
+                                  ))),
                           Expanded(
                               child: Padding(
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<PostViewImageSizeValue>(
-                                      hint: Text("supported"),
-                                      items: device.cameraSettings
-                                          .postViewImageSize.supported
-                                          .map<
-                                                  DropdownMenuItem<
-                                                      PostViewImageSizeValue>>(
-                                              (e) => DropdownMenuItem<
-                                                      PostViewImageSizeValue>(
-                                                  child: Text(e.name),
-                                                  value: e))
-                                          .toList(),
-                                      onChanged: (value) => device.api.setPostViewImageSize(value),
-                                      ))),
+                                    hint: Text("supported"),
+                                    items: device.cameraSettings
+                                        .postViewImageSize.supported
+                                        .map<
+                                            DropdownMenuItem<
+                                                PostViewImageSizeValue>>((e) =>
+                                            DropdownMenuItem<
+                                                    PostViewImageSizeValue>(
+                                                child: Text(e.name), value: e))
+                                        .toList(),
+                                    onChanged: (value) =>
+                                        device.api.setPostViewImageSize(value),
+                                  ))),
                         ]),
                   ]),
                 )));
@@ -1452,19 +1441,64 @@ class TestsPageState extends State<TestsPage> {
   ///ProgramShift (set, get, getSupported, getAvailable)
   Widget getProgramShiftRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.programShift,
-      child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(
-          child: Column(children: [
-            ListTile(
-              title: Text(ItemId.ProgramShift.name),
-              subtitle: Text(device.cameraSettings.programShift.value?.name ??
-                  "NotAvailable"),
-            ),
-          ]),
-        ),
-      ),
-    );
+        create: (context) => device.cameraSettings.programShift,
+        child: Consumer<SettingsItem>(
+            builder: (context, model, _) => Card(
+                  child: Column(children: [
+                    ListTile(
+                      title: Text(ItemId.ProgramShift.name),
+                      subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                device.cameraSettings.programShift.value
+                                        ?.name ??
+                                    "NotAvailable",
+                                textAlign: TextAlign.start),
+                            getText(ItemId.ProgramShift, ApiMethodId.SET),
+                            getText(ItemId.ProgramShift, ApiMethodId.GET),
+                            getText(
+                                ItemId.ProgramShift, ApiMethodId.GET_AVAILABLE),
+                            getText(
+                                ItemId.ProgramShift, ApiMethodId.GET_SUPPORTED)
+                          ]),
+                      onTap: () =>
+                          device.api.getProgramShift(update: ForceUpdate.On),
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: DropdownButton<IntValue>(
+                                    hint: Text("available"),
+                                    items: device
+                                        .cameraSettings.programShift.available
+                                        .map<DropdownMenuItem<IntValue>>((e) =>
+                                            DropdownMenuItem<IntValue>(
+                                                child: Text(e.name), value: e))
+                                        .toList(),
+                                    onChanged: (value) =>
+                                        device.api.setProgramShift(value),
+                                  ))),
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: DropdownButton<IntValue>(
+                                    hint: Text("supported"),
+                                    items: device
+                                        .cameraSettings.programShift.supported
+                                        .map<DropdownMenuItem<IntValue>>((e) =>
+                                            DropdownMenuItem<IntValue>(
+                                                child: Text(e.name), value: e))
+                                        .toList(),
+                                    onChanged: (value) =>
+                                        device.api.setProgramShift(value),
+                                  ))),
+                        ]),
+                  ]),
+                )));
   }
 
   ///ShootingMode (set, get, getSupported, getAvailable)

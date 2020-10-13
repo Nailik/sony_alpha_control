@@ -594,7 +594,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
   Future<bool> startLiveViewWithSize(LiveViewSizeValue value) async =>
       WifiCommand.createCommand(ApiMethodId.START, ItemId.LiveViewWithSize,
           params: [value.wifiValue]).send(device).then((result) {
-        if (result.isValid) { //TODO store url
+        if (result.isValid) {
+          //TODO store url
           SettingsItem<LiveViewSizeValue> item =
               device.cameraSettings.liveViewSize;
           item.updateItem(value, item.available, item.supported);
@@ -616,6 +617,24 @@ class SonyCameraWifiApi extends CameraApiInterface {
         if (result.isValid) {
           SettingsItem<PostViewImageSizeValue> item =
               device.cameraSettings.postViewImageSize;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///Program Shift
+
+  @override
+  Future<SettingsItem<IntValue>> getProgramShift(
+          {update = ForceUpdate.IfNull}) async =>
+      await _updateIf(update, await super.getProgramShift(update: update));
+
+  @override
+  Future<bool> setProgramShift(IntValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.ProgramShift,
+          params: [value.wifiValue]).send(device).then((result) {
+        if (result.isValid) {
+          SettingsItem<IntValue> item = device.cameraSettings.programShift;
           item.updateItem(value, item.available, item.supported);
         }
         return result.isValid;

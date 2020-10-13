@@ -244,13 +244,20 @@ abstract class CameraApiInterface {
 
   //TODO change (stop and restart)
 
-  ///Post View Image SIze
+  ///Post View Image Size
 
   Future<SettingsItem<PostViewImageSizeValue>> getPostViewImageSize(
           {ForceUpdate update}) async =>
       device.cameraSettings.postViewImageSize;
 
   Future<bool> setPostViewImageSize(PostViewImageSizeValue value);
+
+  ///Program Shift
+
+  Future<SettingsItem<IntValue>> getProgramShift({ForceUpdate update}) async =>
+      device.cameraSettings.programShift;
+
+  Future<bool> setProgramShift(IntValue value);
 
   ///WhiteBalance Mode
 
