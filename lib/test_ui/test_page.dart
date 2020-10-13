@@ -1510,8 +1510,18 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
               title: Text(ItemId.ShootingMode.name),
-              subtitle: Text(device.cameraSettings.shootingMode.value?.name ??
-                  "NotAvailable"),
+              subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        device.cameraSettings.shootingMode.value?.name ??
+                            "NotAvailable",
+                        textAlign: TextAlign.start),
+                    getText(ItemId.ShootingMode, ApiMethodId.SET),
+                    getText(ItemId.ShootingMode, ApiMethodId.GET),
+                    getText(ItemId.ShootingMode, ApiMethodId.GET_AVAILABLE),
+                    getText(ItemId.ShootingMode, ApiMethodId.GET_SUPPORTED)
+                  ]),
             ),
           ]),
         ),
@@ -1528,8 +1538,18 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
               title: Text(ItemId.ShutterSpeed.name),
-              subtitle: Text(device.cameraSettings.shutterSpeed.value?.name ??
-                  "NotAvailable"),
+              subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        device.cameraSettings.shutterSpeed.value?.name ??
+                            "NotAvailable",
+                        textAlign: TextAlign.start),
+                    getText(ItemId.ShutterSpeed, ApiMethodId.SET),
+                    getText(ItemId.ShutterSpeed, ApiMethodId.GET),
+                    getText(ItemId.ShutterSpeed, ApiMethodId.GET_AVAILABLE),
+                    getText(ItemId.ShutterSpeed, ApiMethodId.GET_SUPPORTED)
+                  ]),
               onTap: () => device.api.getShutterSpeed(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -1585,8 +1605,18 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
               title: Text(ItemId.FocusAreaSpot.name),
-              subtitle: Text(device.cameraSettings.focusAreaSpot.value?.name ??
-                  "NotAvailable"),
+              subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        device.cameraSettings.focusAreaSpot.value?.name ??
+                            "NotAvailable",
+                        textAlign: TextAlign.start),
+                    getText(ItemId.FocusAreaSpot, ApiMethodId.SET),
+                    getText(ItemId.FocusAreaSpot, ApiMethodId.GET),
+                    getText(ItemId.FocusAreaSpot, ApiMethodId.GET_AVAILABLE),
+                    getText(ItemId.FocusAreaSpot, ApiMethodId.GET_SUPPORTED)
+                  ]),
             ),
           ]),
         ),
@@ -1603,9 +1633,18 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
               title: Text(ItemId.WhiteBalanceMode.name),
-              subtitle: Text(
-                  device.cameraSettings.whiteBalanceMode.value?.name ??
-                      "NotAvailable"),
+              subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        device.cameraSettings.whiteBalanceMode.value?.name ??
+                            "NotAvailable",
+                        textAlign: TextAlign.start),
+                    getText(ItemId.WhiteBalanceMode, ApiMethodId.SET),
+                    getText(ItemId.WhiteBalanceMode, ApiMethodId.GET),
+                    getText(ItemId.WhiteBalanceMode, ApiMethodId.GET_AVAILABLE),
+                    getText(ItemId.WhiteBalanceMode, ApiMethodId.GET_SUPPORTED)
+                  ]),
               onTap: () =>
                   device.api.getWhiteBalanceMode(update: ForceUpdate.On),
             ),
@@ -1643,6 +1682,8 @@ class TestsPageState extends State<TestsPage> {
     );
   }
 
+  ///White Balance Color Temp
+
   Widget getWhiteBalanceColorTempRow() {
     return ListenableProvider<SettingsItem>(
       create: (context) => device.cameraSettings.whiteBalanceColorTemp,
@@ -1651,9 +1692,21 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
               title: Text(ItemId.WhiteBalanceColorTemp.name),
-              subtitle: Text(
-                  device.cameraSettings.whiteBalanceColorTemp.value?.name ??
-                      "NotAvailable"),
+              subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        device.cameraSettings.whiteBalanceColorTemp.value
+                                ?.name ??
+                            "NotAvailable",
+                        textAlign: TextAlign.start),
+                    getText(ItemId.WhiteBalanceColorTemp, ApiMethodId.SET),
+                    getText(ItemId.WhiteBalanceColorTemp, ApiMethodId.GET),
+                    getText(ItemId.WhiteBalanceColorTemp,
+                        ApiMethodId.GET_AVAILABLE),
+                    getText(
+                        ItemId.WhiteBalanceColorTemp, ApiMethodId.GET_SUPPORTED)
+                  ]),
               onTap: () =>
                   device.api.getWhiteBalanceColorTemp(update: ForceUpdate.On),
             ),
@@ -1716,8 +1769,18 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
               title: Text(ItemId.FlashMode.name),
-              subtitle: Text(device.cameraSettings.flashMode.value?.name ??
-                  "NotAvailable"),
+              subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        device.cameraSettings.flashMode.value?.name ??
+                            "NotAvailable",
+                        textAlign: TextAlign.start),
+                    getText(ItemId.FlashMode, ApiMethodId.SET),
+                    getText(ItemId.FlashMode, ApiMethodId.GET),
+                    getText(ItemId.FlashMode, ApiMethodId.GET_AVAILABLE),
+                    getText(ItemId.FlashMode, ApiMethodId.GET_SUPPORTED)
+                  ]),
               onTap: () => device.api.getFlashMode(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -1761,8 +1824,18 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
               title: Text(ItemId.FocusMode.name),
-              subtitle: Text(device.cameraSettings.focusMode.value?.name ??
-                  "NotAvailable"),
+              subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        device.cameraSettings.focusMode.value?.name ??
+                            "NotAvailable",
+                        textAlign: TextAlign.start),
+                    getText(ItemId.FocusMode, ApiMethodId.SET),
+                    getText(ItemId.FocusMode, ApiMethodId.GET),
+                    getText(ItemId.FocusMode, ApiMethodId.GET_AVAILABLE),
+                    getText(ItemId.FocusMode, ApiMethodId.GET_SUPPORTED)
+                  ]),
               onTap: () => device.api.getFocusMode(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -1861,9 +1934,15 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
               title: Text(ItemId.StorageInformation.name),
-              subtitle: Text(
-                  device.cameraSettings.storageInformation.value?.name ??
-                      "NotAvailable"),
+              subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        device.cameraSettings.silentShooting.value?.name ??
+                            "NotAvailable",
+                        textAlign: TextAlign.start),
+                    getText(ItemId.StorageInformation, ApiMethodId.GET),
+                  ]),
             ),
           ]),
         ),
@@ -1880,8 +1959,16 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
               title: Text(ItemId.LiveViewInfo.name),
-              subtitle: Text(device.cameraSettings.liveViewInfo.value?.name ??
-                  "NotAvailable"),
+              subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        device.cameraSettings.silentShooting.value?.name ??
+                            "NotAvailable",
+                        textAlign: TextAlign.start),
+                    getText(ItemId.LiveViewInfo, ApiMethodId.SET),
+                    getText(ItemId.LiveViewInfo, ApiMethodId.GET),
+                  ]),
             ),
           ]),
         ),
@@ -1892,19 +1979,63 @@ class TestsPageState extends State<TestsPage> {
   ///SilentShootingSettings (set, get, getSupported, getAvailable)
   Widget getSilentShootingSettings() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.silentShootingSettings,
-      child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(
-          child: Column(children: [
-            ListTile(
-              title: Text(ItemId.SilentShootingSettings.name),
-              subtitle: Text(
-                  device.cameraSettings.silentShootingSettings.value?.name ??
-                      "NotAvailable"),
-            ),
-          ]),
-        ),
-      ),
-    );
+        create: (context) => device.cameraSettings.silentShooting,
+        child: Consumer<SettingsItem>(
+            builder: (context, model, _) => Card(
+                  child: Column(children: [
+                    ListTile(
+                      title: Text(ItemId.SilentShooting.name),
+                      subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                device.cameraSettings.silentShooting.value
+                                        ?.name ??
+                                    "NotAvailable",
+                                textAlign: TextAlign.start),
+                            getText(ItemId.SilentShooting, ApiMethodId.SET),
+                            getText(ItemId.SilentShooting, ApiMethodId.GET),
+                            getText(ItemId.SilentShooting,
+                                ApiMethodId.GET_AVAILABLE),
+                            getText(ItemId.SilentShooting,
+                                ApiMethodId.GET_SUPPORTED)
+                          ]),
+                      onTap: () =>
+                          device.api.getSilentShooting(update: ForceUpdate.On),
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: DropdownButton<OnOffValue>(
+                                    hint: Text("available"),
+                                    items: device
+                                        .cameraSettings.silentShooting.available
+                                        .map<DropdownMenuItem<OnOffValue>>(
+                                            (e) => DropdownMenuItem<OnOffValue>(
+                                                child: Text(e.name), value: e))
+                                        .toList(),
+                                    onChanged: (value) =>
+                                        device.api.setSilentShooting(value),
+                                  ))),
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: DropdownButton<OnOffValue>(
+                                    hint: Text("supported"),
+                                    items: device
+                                        .cameraSettings.silentShooting.supported
+                                        .map<DropdownMenuItem<OnOffValue>>(
+                                            (e) => DropdownMenuItem<OnOffValue>(
+                                                child: Text(e.name), value: e))
+                                        .toList(),
+                                    onChanged: (value) =>
+                                        device.api.setSilentShooting(value),
+                                  ))),
+                        ]),
+                  ]),
+                )));
   }
 }

@@ -12,8 +12,8 @@ class WifiConnector {
   static var SSDP_MX = 5;
   static var SSDP_ADDRESS = "239.255.255.250";
 
-   static var SSDP_ST = "ssdp:all";
-  //static var SSDP_ST = "urn:schemas-sony-com:service:ScalarWebAPI:1";
+  // static var SSDP_ST = "ssdp:all";
+  static var SSDP_ST = "urn:schemas-sony-com:service:ScalarWebAPI:1";
 
   static var request =
       "M-SEARCH * HTTP/1.1\r\nHOST: $SSDP_ADDRESS:$SSDP_PORT\r\nMAN: \"ssdp:discover\"\r\nMX: $SSDP_MX\r\nST: $SSDP_ST\r\n\r\n";

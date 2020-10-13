@@ -159,7 +159,7 @@ abstract class Value<T> {
       case ItemId.BatteryInfo: //BatteryInformation
       //TODO   return IntValue(wifiValue);
       case ItemId.SilentShooting:
-      //TODO  return StringValue(wifiValue); //bool value?
+        return OnOffValue(wifiValue); //bool value?
       case ItemId.RecordingTime:
       //TODO
       case ItemId.NumberOfShots:
@@ -171,8 +171,6 @@ abstract class Value<T> {
       case ItemId.AudioRecordingSetting:
       //TODO
       case ItemId.WindNoiseReduction:
-      //TODO
-      case ItemId.SilentShootingSetting:
       //TODO
       case ItemId.BulbCapturingTime:
       //TODO
@@ -363,13 +361,13 @@ class BoolValue extends Value<bool> {
 }
 
 class OnOffValue extends Value<String> {
-  OnOffValue(String id) : super(id); //"on" or "off"
+  OnOffValue(String id) : super(id); //"On" or "Off" //TODO enums
 
   @override
   String get name => id.toString();
 
   @override
-  int get usbValue => id == "on" ? 1 : 0;
+  int get usbValue => id == "On" ? 1 : 0;
 
   @override
   String get wifiValue => id.toString();

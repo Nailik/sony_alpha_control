@@ -178,7 +178,6 @@ enum ItemId {
   ViewAngle,
   PostViewImageSize,
   SelfTimer,
-  SilentShootingSettings,
   SilentShooting,
   ProgramShift,
   ContShooting,
@@ -216,7 +215,6 @@ enum ItemId {
   TrackingFocusStatus,
   RecordingTime,
   NumberOfShots,
-  SilentShootingSetting,
   BulbCapturingTime,
   Content,
   RequestTo,
@@ -443,10 +441,8 @@ extension SettingsIdExtension on ItemId {
         return "storageInformation";
       case ItemId.LiveViewInfo:
         return "liveviewFrameInfo";
-      case ItemId.SilentShootingSettings:
+      case ItemId.SilentShooting: //"silentShootingSetting"; //TODO??
         return "silentShootingSetting";
-      case ItemId.SilentShooting:
-        return "silentShooting";
       case ItemId.SteadyMode:
         return "steadyMode";
       case ItemId.BeepMode:

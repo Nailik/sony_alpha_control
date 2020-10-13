@@ -771,6 +771,27 @@ class SonyCameraWifiApi extends CameraApiInterface {
     });
   }
 
+  ///Silent Shooting
+
+  @override
+  Future<SettingsItem<OnOffValue>> getSilentShooting(
+          {update = ForceUpdate.IfNull}) async =>
+      await _updateIf(update, await super.getSilentShooting(update: update));
+
+  @override
+  Future<bool> setSilentShooting(OnOffValue value) async {
+    return await WifiCommand.createCommand(
+            ApiMethodId.SET, ItemId.SilentShooting, params: [value.wifiValue])
+        .send(device)
+        .then((result) {
+      if (result.isValid) {
+        SettingsItem<OnOffValue> item = device.cameraSettings.silentShooting;
+        item.updateItem(value, item.available, item.supported);
+      }
+      return result.isValid;
+    });
+  }
+
   ///Metering Mode TODO unsupported?
 
   @override

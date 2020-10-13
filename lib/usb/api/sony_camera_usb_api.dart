@@ -732,4 +732,10 @@ class SonyCameraUsbApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
+  @override
+  Future<bool> setSilentShooting(OnOffValue value) {
+    // TODO: implement setSilentShooting
+    throw UnimplementedError();
+  }
+
 }

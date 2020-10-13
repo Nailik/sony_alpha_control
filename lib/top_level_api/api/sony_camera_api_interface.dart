@@ -278,6 +278,14 @@ abstract class CameraApiInterface {
 
   Future<bool> setWhiteBalanceColorTemp(WhiteBalanceColorTempValue value);
 
+  ///Silent Shooting
+
+  Future<SettingsItem<OnOffValue>> getSilentShooting(
+          {ForceUpdate update}) async =>
+      device.cameraSettings.silentShooting;
+
+  Future<bool> setSilentShooting(OnOffValue value);
+
   ///unchecked (wifi) *******************************************
 
   Future<List<CameraImage>> capturePhoto(); //TODO return foto?

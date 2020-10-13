@@ -115,6 +115,6 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem storageInformation =
       SettingsItem<StringValue>(ItemId.StorageInformation);
   SettingsItem liveViewInfo = SettingsItem<StringValue>(ItemId.LiveViewInfo);
-  SettingsItem silentShootingSettings =
-      SettingsItem<StringValue>(ItemId.SilentShootingSettings);
+  SettingsItem<OnOffValue> silentShooting =
+      SettingsItem<OnOffValue>(ItemId.SilentShooting);
 }
