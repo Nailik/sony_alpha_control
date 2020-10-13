@@ -92,8 +92,7 @@ abstract class CameraSettings extends ChangeNotifier {
       ListInfoItem<StringValue>(ItemId.CameraSetup);
 
   SettingsItem liveView = SettingsItem<StringValue>(ItemId.LiveView);
-  SettingsItem liveViewWithSize =
-      SettingsItem<StringValue>(ItemId.LiveViewWithSize);
+
   SettingsItem zoom = SettingsItem<StringValue>(ItemId.Zoom);
   InfoItem<BoolValue> halfPressShutter = InfoItem<BoolValue>(
       ItemId.HalfPressShutter); //saves if is act (true) or cancel (false)
@@ -107,7 +106,7 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem liveViewSize =
       SettingsItem<LiveViewSizeValue>(ItemId.LiveViewSize);
   SettingsItem postViewImageSize =
-      SettingsItem<StringValue>(ItemId.PostViewImageSize);
+      SettingsItem<PostViewImageSizeValue>(ItemId.PostViewImageSize);
   SettingsItem programShift = SettingsItem<StringValue>(ItemId.ProgramShift);
   SettingsItem<ZoomSettingValue> zoomSetting =
       SettingsItem<ZoomSettingValue>(ItemId.ZoomSetting);

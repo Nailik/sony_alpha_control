@@ -714,4 +714,16 @@ class SonyCameraUsbApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
+  @override
+  Future<bool> setPostViewImageSize(PostViewImageSizeValue value) {
+    // TODO: implement setPostViewImageSize
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> startLiveViewWithSize(LiveViewSizeValue value) {
+    // TODO: implement startLiveViewWithSize
+    throw UnimplementedError();
+  }
+
 }

@@ -23,6 +23,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/movie_file_format_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/movie_quality_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/post_view_image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
@@ -118,13 +119,13 @@ abstract class Value<T> {
       case ItemId.TvColorSystem:
       //TODO
       case ItemId.PostViewImageSize:
-        return StringValue(wifiValue);
+        return PostViewImageSizeValue.fromWifiValue(wifiValue);
       case ItemId.SelfTimer:
         return IntValue(wifiValue);
       case ItemId.ShootingMode:
       //TODO  return ShootingModeValue.fromWifiValue(wifiValue);
       case ItemId.MeteringMode: //exposureMode
-      //TODO  return MeteringModeValue.fromWifiValue(wifiValue);
+        return MeteringModeValue.fromWifiValue(wifiValue);
       case ItemId.FlashMode:
         return FlashModeValue.fromWifiValue(wifiValue);
       case ItemId.FNumber:
@@ -483,7 +484,8 @@ class IntValue extends Value<int> {
   int get usbValue => id;
 
   @override
-  String get wifiValue => id.toString(); //TODO for ints wifi value has to be still an int no string :/
+  String get wifiValue => id
+      .toString(); //TODO for ints wifi value has to be still an int no string :/
 }
 
 class WhiteBalanceColorTempValue extends IntValue {
@@ -715,6 +717,28 @@ class LiveViewSizeValue extends Value<LiveViewSizeId> {
   @override
   factory LiveViewSizeValue.fromWifiValue(String wifiValue) =>
       LiveViewSizeValue(LiveViewSizeIdExtension.getIdFromWifi(wifiValue));
+
+  @override
+  int get usbValue => throw UnimplementedError;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
+}
+
+class PostViewImageSizeValue extends Value<PostViewImageSizeId> {
+  PostViewImageSizeValue(PostViewImageSizeId id) : super(id);
+
+  @override
+  factory PostViewImageSizeValue.fromUSBValue(int usbValue) =>
+      throw UnimplementedError;
+
+  @override
+  factory PostViewImageSizeValue.fromWifiValue(String wifiValue) =>
+      PostViewImageSizeValue(
+          PostViewImageSizeIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => throw UnimplementedError;

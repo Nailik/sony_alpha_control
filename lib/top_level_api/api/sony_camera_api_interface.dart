@@ -41,6 +41,8 @@ abstract class CameraApiInterface {
   ///usb so far
   Future<bool> setSettingsRaw(ItemId id, int value);
 
+  ///TODO like this and read itemId and apimethod and service through annotatin (1 or mutliple)
+  ///TODO FunctionAvailability checkFunctionA(Function function);
   ///server information
   /////TODO usb
   FunctionAvailability checkFunction(ItemId itemId, ApiMethodId apiMethodId,
@@ -139,28 +141,6 @@ abstract class CameraApiInterface {
           {ForceUpdate update}) async =>
       device.cameraSettings.availableSettings;
 
-  ///FNumber
-  ///
-  //Wifi checked
-  Future<SettingsItem<DoubleValue>> getFNumber({ForceUpdate update}) async =>
-      device.cameraSettings.fNumber;
-
-  //value -> up and down (1 or -1)
-  Future<bool> modifyFNumber(int direction);
-
-  //only available on wifi
-  Future<bool> setFNumber(DoubleValue value);
-
-  ///Iso
-
-  Future<SettingsItem<IsoValue>> getIso({ForceUpdate update}) async =>
-      device.cameraSettings.iso;
-
-  //TODO value or steps?
-  Future<bool> modifyIso(int direction);
-
-  Future<bool> setIso(IsoValue value);
-
   ///Shutter
 
   Future<SettingsItem<ShutterSpeedValue>> getShutterSpeed(
@@ -171,16 +151,6 @@ abstract class CameraApiInterface {
   Future<bool> modifyShutterSpeed(int direction);
 
   Future<bool> setShutterSpeed(ShutterSpeedValue value);
-
-  Future<SettingsItem<EvValue>> getEV({ForceUpdate update}) async =>
-      device.cameraSettings.ev;
-
-  ///EV
-
-  //value -> up and down (1 or -1)
-  Future<bool> modifyEV(int direction);
-
-  Future<bool> setEV(EvValue value);
 
   ///Flash Mode
 
@@ -226,6 +196,62 @@ abstract class CameraApiInterface {
 
   Future<bool> setSelfTimer(IntValue value);
 
+  ///Metering Mode
+
+  Future<SettingsItem<MeteringModeValue>> getMeteringMode(
+          {ForceUpdate update}) async =>
+      device.cameraSettings.meteringMode;
+
+  Future<bool> setMeteringMode(MeteringModeValue value);
+
+  ///EV
+
+  Future<SettingsItem<EvValue>> getEV({ForceUpdate update}) async =>
+      device.cameraSettings.ev;
+
+  //value -> up and down (1 or -1)
+  Future<bool> modifyEV(int direction);
+
+  Future<bool> setEV(EvValue value);
+
+  ///FNumber
+
+  Future<SettingsItem<DoubleValue>> getFNumber({ForceUpdate update}) async =>
+      device.cameraSettings.fNumber;
+
+  //value -> up and down (1 or -1)
+  Future<bool> modifyFNumber(int direction);
+
+  //only available on wifi
+  Future<bool> setFNumber(DoubleValue value);
+
+  ///Iso
+
+  Future<SettingsItem<IsoValue>> getIso({ForceUpdate update}) async =>
+      device.cameraSettings.iso;
+
+  Future<bool> modifyIso(int direction);
+
+  Future<bool> setIso(IsoValue value);
+
+  ///Live View Size
+
+  Future<SettingsItem<LiveViewSizeValue>> getLiveViewSize(
+          {ForceUpdate update}) async =>
+      device.cameraSettings.liveViewSize;
+
+  Future<bool> startLiveViewWithSize(LiveViewSizeValue value);
+
+  //TODO change (stop and restart)
+
+  ///Post View Image SIze
+
+  Future<SettingsItem<PostViewImageSizeValue>> getPostViewImageSize(
+          {ForceUpdate update}) async =>
+      device.cameraSettings.postViewImageSize;
+
+  Future<bool> setPostViewImageSize(PostViewImageSizeValue value);
+
   ///WhiteBalance Mode
 
   Future<SettingsItem<WhiteBalanceModeValue>> getWhiteBalanceMode(
@@ -269,12 +295,6 @@ abstract class CameraApiInterface {
   Future<bool> setRecordingAudio(String audioRecordingSetting);
 
   Future<SettingsItem<StringValue>> getRecordingAudio({ForceUpdate update});
-
-  Future<SettingsItem<MeteringModeValue>> getMeteringMode(
-          {ForceUpdate update}) async =>
-      device.cameraSettings.meteringMode;
-
-  Future<bool> setMeteringMode(MeteringModeValue value);
 
   Future<int> getBatteryPercentage(
       {ForceUpdate update}); //TODO multiple batteries
