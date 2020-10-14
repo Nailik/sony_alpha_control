@@ -1,9 +1,9 @@
 //actually only for wifi
 enum ForceUpdate {
   //force loads Available
-  Available,
+  Available,//TODO update only if supported or if available`??
   //force loads Supported
-  Supported,
+  Supported, //TODO update only if supported or if available`??
   //force loads Current
   Current,
   //force loads available, supported, current

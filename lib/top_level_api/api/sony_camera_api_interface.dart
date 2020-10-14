@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:sonyalphacontrol/top_level_api/api/function_availability.dart';
 import 'package:sonyalphacontrol/top_level_api/device/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/device/items.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
@@ -23,6 +22,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
 
 import 'force_update.dart';
+import 'function_availability.dart';
 
 abstract class CameraApiInterface {
   SonyCameraDevice cameraDevice;
@@ -45,7 +45,16 @@ abstract class CameraApiInterface {
   ///TODO FunctionAvailability checkFunctionA(Function function);
   ///server information
   /////TODO usb
-  FunctionAvailability checkFunction(ItemId itemId, ApiMethodId apiMethodId,
+
+  ///available yes no
+  bool isAvailable(Function function);
+
+  ///more detailed .. supported?
+  FunctionAvailability getAvailability(Function function);
+
+  ///more detailed .. supported?
+  FunctionAvailability checkFunctionAvailability(
+      ItemId itemId, ApiMethodId apiMethodId,
       {SonyWebApiServiceTypeId service = SonyWebApiServiceTypeId.CAMERA});
 
   ///This method checks teh available versions for the web api

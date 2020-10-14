@@ -34,74 +34,17 @@ class SonyCameraWifiApi extends CameraApiInterface {
   SonyCameraWifiApi(SonyCameraDevice cameraDevice) : super(cameraDevice);
 
   @override
-  FunctionAvailability checkFunction(ItemId itemId, ApiMethodId apiMethodId,
-      {SonyWebApiServiceTypeId service = SonyWebApiServiceTypeId.CAMERA}) {
-    FunctionAvailability functionAvailability =
-        FunctionAvailability.Unsupported;
+  bool isAvailable(Function function) {
+    //ItemId itemId, ApiMethodId apiMethodId,
+    //       {SonyWebApiServiceTypeId serviceId = SonyWebApiServiceTypeId.CAMERA}
+    // TODO: implement isAvailable
+    throw UnimplementedError();
+  }
 
-    //check sonyWebApiServiceTypeId first
-    if (device.getWebApiService(service) != null) {
-      if (itemId == ItemId.Versions || itemId == ItemId.MethodTypes) {
-        //for versions function or MethodTypes the method Types function is not yet executed
-        return FunctionAvailability.Available;
-      }
-      //check itemId and apiMethodId
-      //TODO initialized flag?
-      ListInfoItem listInfoItem;
-      switch (service) {
-        case SonyWebApiServiceTypeId.CAMERA:
-          listInfoItem = device.cameraSettings.methodTypesCamera;
-          break;
-        case SonyWebApiServiceTypeId.AV_CONTENT:
-          listInfoItem = device.cameraSettings.methodTypesAvContent;
-          break;
-        case SonyWebApiServiceTypeId.SYSTEM:
-          listInfoItem = device.cameraSettings.methodTypesSystem;
-          break;
-        case SonyWebApiServiceTypeId.GUIDE:
-          listInfoItem = device.cameraSettings.methodTypesGuide;
-          break;
-        case SonyWebApiServiceTypeId.ACCESS_CONTROL:
-          listInfoItem = device.cameraSettings.methodTypesAccessControl;
-          break;
-        case SonyWebApiServiceTypeId.Unknown:
-        default:
-          throw UnsupportedError;
-      }
-
-      WebApiMethodValue webApiMethod = listInfoItem.values.firstWhere(
-          (element) =>
-              element.id.settingsId == itemId &&
-              element.id.apiName == apiMethodId,
-          orElse: () => null);
-      if (webApiMethod != null) {
-        functionAvailability = FunctionAvailability.Supported;
-      }
-    }
-
-    if (functionAvailability == FunctionAvailability.Supported) {
-      if (itemId == ItemId.ApiList) {
-        return FunctionAvailability.Available;
-      }
-      if (service == SonyWebApiServiceTypeId.CAMERA) {
-        //now check if available
-        ListInfoItem<ApiFunctionValue> functions =
-            device.cameraSettings.availableFunctions;
-        ApiFunctionValue apiFunctionValue = functions.values.firstWhere(
-            (element) =>
-                element.id == itemId && element.methods.contains(apiMethodId),
-            orElse: () => null);
-
-        if (apiFunctionValue != null) {
-          return FunctionAvailability.Available;
-        }
-      } else {
-        //all functions that are supported and not from "camera" are available (i hope)
-        return FunctionAvailability.Available;
-      }
-    }
-
-    return functionAvailability;
+  @override
+  FunctionAvailability getAvailability(Function function) {
+    // TODO: implement isAvailable
+    throw UnimplementedError();
   }
 
   @override
@@ -1212,13 +1155,23 @@ class SonyCameraWifiApi extends CameraApiInterface {
               device.cameraSettings.updateListInfoItem(listInfoItem, response));
 
   Future _updateAvailable(SettingsItem settingsItem) async {
-    return await _getAvailable(settingsItem.itemId).then((response) =>
-        device.cameraSettings.updateAvailable(settingsItem, response));
+    if (checkFunctionAvailability(
+            settingsItem.itemId, ApiMethodId.GET_AVAILABLE) ==
+        FunctionAvailability.Available) {
+      return await _getAvailable(settingsItem.itemId).then((response) =>
+          device.cameraSettings.updateAvailable(settingsItem, response));
+    }
+    return;
   }
 
   Future _updateSupported(SettingsItem settingsItem) async {
-    return await _getSupported(settingsItem.itemId).then((response) =>
-        device.cameraSettings.updateSupported(settingsItem, response));
+    if (checkFunctionAvailability(
+            settingsItem.itemId, ApiMethodId.GET_AVAILABLE) ==
+        FunctionAvailability.Available) {
+      return await _getSupported(settingsItem.itemId).then((response) =>
+          device.cameraSettings.updateSupported(settingsItem, response));
+    }
+    return;
   }
 
   Future<String> _getSupported(ItemId settingsId) async {
@@ -1239,5 +1192,77 @@ class SonyCameraWifiApi extends CameraApiInterface {
     return await WifiCommand.createCommand(ApiMethodId.GET, settingsId)
         .send(device)
         .then((wifiResponse) => wifiResponse.response);
+  }
+
+  @override
+  FunctionAvailability checkFunctionAvailability(
+      ItemId itemId, ApiMethodId apiMethodId,
+      {SonyWebApiServiceTypeId service = SonyWebApiServiceTypeId.CAMERA}) {
+    FunctionAvailability functionAvailability =
+        FunctionAvailability.Unsupported;
+
+    //check sonyWebApiServiceTypeId first
+    if (device.getWebApiService(service) != null) {
+      if (itemId == ItemId.Versions || itemId == ItemId.MethodTypes) {
+        //for versions function or MethodTypes the method Types function is not yet executed
+        return FunctionAvailability.Available;
+      }
+      //check itemId and apiMethodId
+      //TODO initialized flag?
+      ListInfoItem listInfoItem;
+      switch (service) {
+        case SonyWebApiServiceTypeId.CAMERA:
+          listInfoItem = device.cameraSettings.methodTypesCamera;
+          break;
+        case SonyWebApiServiceTypeId.AV_CONTENT:
+          listInfoItem = device.cameraSettings.methodTypesAvContent;
+          break;
+        case SonyWebApiServiceTypeId.SYSTEM:
+          listInfoItem = device.cameraSettings.methodTypesSystem;
+          break;
+        case SonyWebApiServiceTypeId.GUIDE:
+          listInfoItem = device.cameraSettings.methodTypesGuide;
+          break;
+        case SonyWebApiServiceTypeId.ACCESS_CONTROL:
+          listInfoItem = device.cameraSettings.methodTypesAccessControl;
+          break;
+        case SonyWebApiServiceTypeId.Unknown:
+        default:
+          throw UnsupportedError;
+      }
+
+      WebApiMethodValue webApiMethod = listInfoItem.values.firstWhere(
+          (element) =>
+              element.id.settingsId == itemId &&
+              element.id.apiName == apiMethodId,
+          orElse: () => null);
+      if (webApiMethod != null) {
+        functionAvailability = FunctionAvailability.Supported;
+      }
+    }
+
+    if (functionAvailability == FunctionAvailability.Supported) {
+      if (itemId == ItemId.ApiList) {
+        return FunctionAvailability.Available;
+      }
+      if (service == SonyWebApiServiceTypeId.CAMERA) {
+        //now check if available
+        ListInfoItem<ApiFunctionValue> functions =
+            device.cameraSettings.availableFunctions;
+        ApiFunctionValue apiFunctionValue = functions.values.firstWhere(
+            (element) =>
+                element.id == itemId && element.methods.contains(apiMethodId),
+            orElse: () => null);
+
+        if (apiFunctionValue != null) {
+          return FunctionAvailability.Available;
+        }
+      } else {
+        //all functions that are supported and not from "camera" are available (i hope)
+        return FunctionAvailability.Available;
+      }
+    }
+
+    return functionAvailability;
   }
 }

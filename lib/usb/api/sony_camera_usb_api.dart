@@ -738,4 +738,24 @@ class SonyCameraUsbApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
+  //TODO return false for functions that are not supported by usb
+  @override
+  bool isAvailable(Function function) {
+    // TODO: implement isAvailable
+    throw UnimplementedError();
+  }
+
+  @override
+  FunctionAvailability getAvailability(Function function) {
+    // TODO: implement getAvailability
+    throw UnimplementedError();
+  }
+
+  @override
+  FunctionAvailability checkFunctionAvailability(ItemId itemId, ApiMethodId apiMethodId, {SonyWebApiServiceTypeId
+  service = SonyWebApiServiceTypeId.CAMERA}) {
+    // TODO: implement checkFunctionAvailability
+    throw UnimplementedError();
+  }
+
 }

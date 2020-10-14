@@ -173,7 +173,25 @@ class TestsPageState extends State<TestsPage> {
       {SonyWebApiServiceTypeId serviceId = SonyWebApiServiceTypeId.CAMERA}) {
     Color color = Colors.black12;
 
-    switch (device.api.checkFunction(itemId, apiMethodId, service: serviceId)) {
+    //switch (device.api.getAvailability(function)) {
+    //  case FunctionAvailability.Available:
+    color = Colors.blueGrey;
+    //    break;
+    //  case FunctionAvailability.Supported:
+    //    color = Colors.orange;
+    //    break;
+    // case FunctionAvailability.Unsupported:
+    //   color = Colors.red;
+    //   break;
+    //}
+
+    return Text(apiMethodId.name, style: TextStyle(color: color));
+  }
+
+  TextStyle getTextStyle(Function function) {
+    Color color = Colors.black12;
+
+    switch (function.availability()) {
       case FunctionAvailability.Available:
         color = Colors.green;
         break;
@@ -185,7 +203,7 @@ class TestsPageState extends State<TestsPage> {
         break;
     }
 
-    return Text(apiMethodId.name, style: TextStyle(color: color));
+    return TextStyle(color: color);
   }
 
   ///Versions (get) Camera
@@ -202,7 +220,10 @@ class TestsPageState extends State<TestsPage> {
                     title: Text(ItemId.Versions.name + " Camera"),
                     subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: [getText(ItemId.Versions, ApiMethodId.GET)]),
+                        children: [
+                          Text("getWebApiVersions",
+                              style: getTextStyle(device.api.getWebApiVersions))
+                        ]),
                     onTap: () => device.api.getWebApiVersions(
                         SonyWebApiServiceTypeId.CAMERA,
                         update: ForceUpdate.On)),
