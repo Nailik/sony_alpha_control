@@ -36,17 +36,6 @@ getTrackingFocus
 getSupportedTrackingFocus
 getAvailableTrackingFocus
 
-setContShootingMode
-getContShootingMode
-getSupportedContShootingMode
-getAvailableContShootingMode
-
-setContShootingSpeed
-getContShootingSpeed
-getSupportedContShootingSpeed
-getAvailableContShootingSpeed
-
-
 (setExposureMode)
 (getExposureMode, getSupportedExposureMode, getAvailableExposureMode)
 

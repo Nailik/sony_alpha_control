@@ -82,8 +82,14 @@ setWhiteBalanceColorTemp
 getImageFileFormat (setStillQuality)
 setImageFileFormat (getStillQuality, getSupportedStillQuality, getAvailableStillQuality)
 
-getShootMode (getShootMode)
-setShootMode (getShootMode, getSupportedShootMode, getAvailableShootMode)
+getShootMode (setShootMode)
+getShootMode (getShootMode, getSupportedShootMode, getAvailableShootMode)
+
+setContShootingSpeed (setContShootingSpeed)
+getContShootingSpeed (getContShootingSpeed, getSupportedContShootingSpeed, getAvailableContShootingSpeed)
+
+setContShootingMode (setContShootingMode)
+getContShootingMode (getContShootingMode, getSupportedContShootingMode, getAvailableContShootingMode)
 
 
 getSilentShooting
