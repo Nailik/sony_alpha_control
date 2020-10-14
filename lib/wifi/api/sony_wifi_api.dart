@@ -25,12 +25,13 @@ class SonyWifiApi extends SonyApiInterface {
   }
 
   @override
-  Stream<List<SonyCameraDevice>> getAvailableCameras(Duration updateDuration) => WifiConnector.getAvailableCameras(updateDuration);
+  Stream<List<SonyCameraDevice>> getAvailableCameras(Duration updateDuration) =>
+      WifiConnector.getAvailableCameras(updateDuration);
 
   @override
   Future<bool> connectCamera(SonyCameraDevice device) async {
-    await device.api.getWebApiVersions(SonyWebApiServiceTypeId.CAMERA);
-    await device.api.getMethodTypes(SonyWebApiServiceTypeId.CAMERA);
+    await device.api.getWebApiVersionsCamera();
+    await device.api.getMethodTypesCamera();
     await device.api.getAvailableFunctions();
 
     await startConnection(device);

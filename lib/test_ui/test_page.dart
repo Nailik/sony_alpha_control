@@ -220,32 +220,22 @@ class TestsPageState extends State<TestsPage> {
                     title: Text(ItemId.Versions.name + " Camera"),
                     subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text("getWebApiVersions",
-                              style: getTextStyle(device.api.getWebApiVersions))
-                        ]),
-                    onTap: () => device.api.getWebApiVersions(
-                        SonyWebApiServiceTypeId.CAMERA,
-                        update: ForceUpdate.On)),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                          child: Padding(
-                              padding: EdgeInsets.all(16),
-                              child: DropdownButton<WebApiVersionsValue>(
-                                isExpanded: true,
-                                hint: Text("available"),
-                                items: device
-                                    .cameraSettings.versionsCamera.values
-                                    .map<DropdownMenuItem<WebApiVersionsValue>>(
-                                        (e) => DropdownMenuItem<
-                                                WebApiVersionsValue>(
-                                            child: Text(e.name), value: e))
-                                    .toList(),
-                                onChanged: (value) {},
-                              )))
-                    ]),
+                        children: [Text("getWebApiVersions", style: getTextStyle(device.api.getWebApiVersionsCamera))]),
+                    onTap: () => device.api.getWebApiVersionsCamera(update: ForceUpdate.On)),
+                Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                  Expanded(
+                      child: Padding(
+                          padding: EdgeInsets.all(16),
+                          child: DropdownButton<WebApiVersionsValue>(
+                            isExpanded: true,
+                            hint: Text("available"),
+                            items: device.cameraSettings.versionsCamera.values
+                                .map<DropdownMenuItem<WebApiVersionsValue>>(
+                                    (e) => DropdownMenuItem<WebApiVersionsValue>(child: Text(e.name), value: e))
+                                .toList(),
+                            onChanged: (value) {},
+                          )))
+                ]),
               ]),
         ),
       ),
@@ -264,34 +254,24 @@ class TestsPageState extends State<TestsPage> {
               children: [
                 ListTile(
                     title: Text(ItemId.Versions.name + " AvContent"),
-                    subtitle: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          getText(ItemId.Versions, ApiMethodId.GET,
-                              serviceId: SonyWebApiServiceTypeId.AV_CONTENT)
-                        ]),
-                    onTap: () => device.api.getWebApiVersions(
-                        SonyWebApiServiceTypeId.AV_CONTENT,
-                        update: ForceUpdate.On)),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                          child: Padding(
-                              padding: EdgeInsets.all(16),
-                              child: DropdownButton<WebApiVersionsValue>(
-                                isExpanded: true,
-                                hint: Text("available"),
-                                items: device
-                                    .cameraSettings.versionsAvContent.values
-                                    .map<DropdownMenuItem<WebApiVersionsValue>>(
-                                        (e) => DropdownMenuItem<
-                                                WebApiVersionsValue>(
-                                            child: Text(e.name), value: e))
-                                    .toList(),
-                                onChanged: (value) {},
-                              )))
+                    subtitle: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                      Text("getWebApiVersionsAvContent", style: getTextStyle(device.api.getWebApiVersionsAvContent))
                     ]),
+                    onTap: () => device.api.getWebApiVersionsAvContent(update: ForceUpdate.On)),
+                Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                  Expanded(
+                      child: Padding(
+                          padding: EdgeInsets.all(16),
+                          child: DropdownButton<WebApiVersionsValue>(
+                            isExpanded: true,
+                            hint: Text("available"),
+                            items: device.cameraSettings.versionsAvContent.values
+                                .map<DropdownMenuItem<WebApiVersionsValue>>(
+                                    (e) => DropdownMenuItem<WebApiVersionsValue>(child: Text(e.name), value: e))
+                                .toList(),
+                            onChanged: (value) {},
+                          )))
+                ]),
               ]),
         ),
       ),
@@ -310,26 +290,18 @@ class TestsPageState extends State<TestsPage> {
               children: [
                 ListTile(
                     title: Text(ItemId.Versions.name + " System"),
-                    subtitle: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          getText(ItemId.Versions, ApiMethodId.GET,
-                              serviceId: SonyWebApiServiceTypeId.SYSTEM)
-                        ]),
-                    onTap: () => device.api.getWebApiVersions(
-                        SonyWebApiServiceTypeId.SYSTEM,
-                        update: ForceUpdate.On)),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                          child: Padding(
-                              padding: EdgeInsets.all(16),
-                              child: DropdownButton<WebApiVersionsValue>(
-                                isExpanded: true,
-                                hint: Text("available"),
-                                items: device
-                                    .cameraSettings.versionsSystem.values
+                    subtitle: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                      Text("getWebApiVersionsSystem", style: getTextStyle(device.api.getWebApiVersionsSystem))
+                    ]),
+                    onTap: () => device.api.getWebApiVersionsSystem(update: ForceUpdate.On)),
+                Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                  Expanded(
+                      child: Padding(
+                          padding: EdgeInsets.all(16),
+                          child: DropdownButton<WebApiVersionsValue>(
+                            isExpanded: true,
+                            hint: Text("available"),
+                            items: device.cameraSettings.versionsSystem.values
                                     .map<DropdownMenuItem<WebApiVersionsValue>>(
                                         (e) => DropdownMenuItem<
                                                 WebApiVersionsValue>(
@@ -359,12 +331,9 @@ class TestsPageState extends State<TestsPage> {
                     subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          getText(ItemId.Versions, ApiMethodId.GET,
-                              serviceId: SonyWebApiServiceTypeId.GUIDE)
+                          Text("getWebApiVersionsGuide", style: getTextStyle(device.api.getWebApiVersionsGuide))
                         ]),
-                    onTap: () => device.api.getWebApiVersions(
-                        SonyWebApiServiceTypeId.GUIDE,
-                        update: ForceUpdate.On)),
+                    onTap: () => device.api.getWebApiVersionsGuide(update: ForceUpdate.On)),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -405,12 +374,10 @@ class TestsPageState extends State<TestsPage> {
                     subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          getText(ItemId.Versions, ApiMethodId.GET,
-                              serviceId: SonyWebApiServiceTypeId.ACCESS_CONTROL)
+                          Text("getWebApiVersionsAccessControl",
+                              style: getTextStyle(device.api.getWebApiVersionsAccessControl))
                         ]),
-                    onTap: () => device.api.getWebApiVersions(
-                        SonyWebApiServiceTypeId.ACCESS_CONTROL,
-                        update: ForceUpdate.On)),
+                    onTap: () => device.api.getWebApiVersionsAccessControl(update: ForceUpdate.On)),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -447,10 +414,10 @@ class TestsPageState extends State<TestsPage> {
                 title: Text(ItemId.MethodTypes.name + " Camera"),
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [getText(ItemId.MethodTypes, ApiMethodId.GET)]),
-                onTap: () => device.api.getMethodTypes(
-                    SonyWebApiServiceTypeId.CAMERA,
-                    update: ForceUpdate.On)),
+                    children: [
+                      Text("getMethodTypesCamera", style: getTextStyle(device.api.getMethodTypesCamera))
+                    ]),
+                onTap: () => device.api.getMethodTypesCamera(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -460,8 +427,8 @@ class TestsPageState extends State<TestsPage> {
                         hint: Text("available"),
                         items: device.cameraSettings.methodTypesCamera.values
                             .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
-                                DropdownMenuItem<WebApiMethodValue>(
-                                    child: Text(e.name), value: e))
+                            DropdownMenuItem<WebApiMethodValue>(
+                                child: Text(e.name), value: e))
                             .toList(),
                         onChanged: (value) {},
                       )))
@@ -482,13 +449,11 @@ class TestsPageState extends State<TestsPage> {
             ListTile(
                 title: Text(ItemId.MethodTypes.name + " AvContent"),
                 subtitle:
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  getText(ItemId.MethodTypes, ApiMethodId.GET,
-                      serviceId: SonyWebApiServiceTypeId.AV_CONTENT)
-                ]),
-                onTap: () => device.api.getMethodTypes(
-                    SonyWebApiServiceTypeId.AV_CONTENT,
-                    update: ForceUpdate.On)),
+                Row(mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text("getMethodTypesAvContent", style: getTextStyle(device.api.getMethodTypesAvContent))
+                    ]),
+                onTap: () => device.api.getMethodTypesAvContent(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -498,8 +463,8 @@ class TestsPageState extends State<TestsPage> {
                         hint: Text("available"),
                         items: device.cameraSettings.methodTypesAvContent.values
                             .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
-                                DropdownMenuItem<WebApiMethodValue>(
-                                    child: Text(e.name), value: e))
+                            DropdownMenuItem<WebApiMethodValue>(
+                                child: Text(e.name), value: e))
                             .toList(),
                         onChanged: (value) {},
                       )))
@@ -520,13 +485,11 @@ class TestsPageState extends State<TestsPage> {
             ListTile(
                 title: Text(ItemId.MethodTypes.name + " System"),
                 subtitle:
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  getText(ItemId.MethodTypes, ApiMethodId.GET,
-                      serviceId: SonyWebApiServiceTypeId.SYSTEM)
-                ]),
-                onTap: () => device.api.getMethodTypes(
-                    SonyWebApiServiceTypeId.SYSTEM,
-                    update: ForceUpdate.On)),
+                Row(mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text("getMethodTypesSystem", style: getTextStyle(device.api.getMethodTypesSystem))
+                    ]),
+                onTap: () => device.api.getMethodTypesSystem(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -536,8 +499,8 @@ class TestsPageState extends State<TestsPage> {
                         hint: Text("available"),
                         items: device.cameraSettings.methodTypesSystem.values
                             .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
-                                DropdownMenuItem<WebApiMethodValue>(
-                                    child: Text(e.name), value: e))
+                            DropdownMenuItem<WebApiMethodValue>(
+                                child: Text(e.name), value: e))
                             .toList(),
                         onChanged: (value) {},
                       )))
@@ -558,13 +521,11 @@ class TestsPageState extends State<TestsPage> {
             ListTile(
                 title: Text(ItemId.MethodTypes.name + " Guide"),
                 subtitle:
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  getText(ItemId.MethodTypes, ApiMethodId.GET,
-                      serviceId: SonyWebApiServiceTypeId.GUIDE)
-                ]),
-                onTap: () => device.api.getMethodTypes(
-                    SonyWebApiServiceTypeId.GUIDE,
-                    update: ForceUpdate.On)),
+                Row(mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text("getWebApiVersionsAvContent", style: getTextStyle(device.api.getMethodTypesGuide))
+                    ]),
+                onTap: () => device.api.getMethodTypesGuide(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -574,8 +535,8 @@ class TestsPageState extends State<TestsPage> {
                         hint: Text("available"),
                         items: device.cameraSettings.methodTypesGuide.values
                             .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
-                                DropdownMenuItem<WebApiMethodValue>(
-                                    child: Text(e.name), value: e))
+                            DropdownMenuItem<WebApiMethodValue>(
+                                child: Text(e.name), value: e))
                             .toList(),
                         onChanged: (value) {},
                       )))
@@ -596,13 +557,11 @@ class TestsPageState extends State<TestsPage> {
             ListTile(
                 title: Text(ItemId.MethodTypes.name + " AccessControl"),
                 subtitle:
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  getText(ItemId.MethodTypes, ApiMethodId.GET,
-                      serviceId: SonyWebApiServiceTypeId.ACCESS_CONTROL)
-                ]),
-                onTap: () => device.api.getMethodTypes(
-                    SonyWebApiServiceTypeId.ACCESS_CONTROL,
-                    update: ForceUpdate.On)),
+                Row(mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text("getWebApiVersionsAvContent", style: getTextStyle(device.api.getMethodTypesAccessControl))
+                    ]),
+                onTap: () => device.api.getMethodTypesAccessControl(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(

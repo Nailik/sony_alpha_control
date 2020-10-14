@@ -301,7 +301,7 @@ class CameraWifiSettings extends CameraSettings {
     return listOfValues;
   }
 
-  updateListInfoItem(ListInfoItem listInfoItem, String json,
+  ListInfoItem updateListInfoItem(ListInfoItem listInfoItem, String json,
       {WebApiVersionId webApiVersion}) {
     var jsonD = jsonDecode(json);
     var list = jsonD["result"];
@@ -332,5 +332,6 @@ class CameraWifiSettings extends CameraSettings {
         listInfoItem.updateItem(listInfoItem.createListFromWifiJson(list));
         break;
     }
+    return listInfoItem;
   }
 }

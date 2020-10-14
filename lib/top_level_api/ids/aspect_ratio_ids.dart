@@ -35,8 +35,8 @@ extension AspectRatioIdExtension on AspectRatioId {
     }
   }
 
-  static AspectRatioId getIdFromUsb(int usbValue) => AspectRatioId.values
-          .firstWhere((element) => element.usbValue == usbValue, orElse: () {
+  static AspectRatioId getIdFromUsb(int usbValue) =>
+      AspectRatioId.values.firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(AspectRatioId, usbValue);
         return AspectRatioId.Unknown;
       });

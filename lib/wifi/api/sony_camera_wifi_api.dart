@@ -34,83 +34,125 @@ class SonyCameraWifiApi extends CameraApiInterface {
   SonyCameraWifiApi(SonyCameraDevice cameraDevice) : super(cameraDevice);
 
   @override
-  bool isAvailable(Function function) {
-    //ItemId itemId, ApiMethodId apiMethodId,
-    //       {SonyWebApiServiceTypeId serviceId = SonyWebApiServiceTypeId.CAMERA}
-    // TODO: implement isAvailable
-    throw UnimplementedError();
-  }
-
-  @override
-  FunctionAvailability getAvailability(Function function) {
-    // TODO: implement isAvailable
-    throw UnimplementedError();
-  }
-
-  @override
   Future<List<CameraImage>> capturePhoto() {
     // TODO: implement capturePhoto
     throw UnimplementedError();
   }
 
-  //TOdo servicetypeid null _> all else only one
+  ///Version
+  //TODO other Force Update options for info?
+
   @override
-  Future<ListInfoItem<WebApiVersionsValue>> getWebApiVersions(
-      SonyWebApiServiceTypeId serviceTypeId,
-      {update = ForceUpdate.IfNull}) async {
-    var listInfoItem = await super.getWebApiVersions(serviceTypeId);
-
-    //TODO other Force Update options for info?
+  Future<ListInfoItem<WebApiVersionsValue>> getWebApiVersionsCamera({update = ForceUpdate.IfNull}) async {
+    var listInfoItem = await super.getWebApiVersionsCamera();
     if (listInfoItem.values.isEmpty) {
-      await _getWebApiVersions(listInfoItem, serviceTypeId);
+      await _getWebApiVersions(listInfoItem, SonyWebApiServiceTypeId.CAMERA);
     }
-
-    return await super.getWebApiVersions(serviceTypeId);
+    return listInfoItem;
   }
 
-  Future _getWebApiVersions(
-      ListInfoItem listInfoItem, SonyWebApiServiceTypeId serviceTypeId) async {
-    return await WifiCommand.createCommand(ApiMethodId.GET, ItemId.Versions,
-            service: serviceTypeId)
+  @override
+  Future<ListInfoItem<WebApiVersionsValue>> getWebApiVersionsAvContent({ForceUpdate update}) async {
+    var listInfoItem = await super.getWebApiVersionsAvContent();
+    if (listInfoItem.values.isEmpty) {
+      await _getWebApiVersions(listInfoItem, SonyWebApiServiceTypeId.AV_CONTENT);
+    }
+    return listInfoItem;
+  }
+
+  @override
+  Future<ListInfoItem<WebApiVersionsValue>> getWebApiVersionsSystem({ForceUpdate update}) async {
+    var listInfoItem = await super.getWebApiVersionsSystem();
+    if (listInfoItem.values.isEmpty) {
+      await _getWebApiVersions(listInfoItem, SonyWebApiServiceTypeId.SYSTEM);
+    }
+    return listInfoItem;
+  }
+
+  @override
+  Future<ListInfoItem<WebApiVersionsValue>> getWebApiVersionsGuide({ForceUpdate update}) async {
+    var listInfoItem = await super.getWebApiVersionsGuide();
+    if (listInfoItem.values.isEmpty) {
+      await _getWebApiVersions(listInfoItem, SonyWebApiServiceTypeId.GUIDE);
+    }
+    return listInfoItem;
+  }
+
+  @override
+  Future<ListInfoItem<WebApiVersionsValue>> getWebApiVersionsAccessControl({ForceUpdate update}) async {
+    var listInfoItem = await super.getWebApiVersionsAccessControl();
+    if (listInfoItem.values.isEmpty) {
+      await _getWebApiVersions(listInfoItem, SonyWebApiServiceTypeId.ACCESS_CONTROL);
+    }
+    return listInfoItem;
+  }
+
+  _getWebApiVersions(ListInfoItem listInfoItem, SonyWebApiServiceTypeId serviceTypeId) async {
+    return await WifiCommand.createCommand(ApiMethodId.GET, ItemId.Versions, service: serviceTypeId)
         .send(device)
         .then((wifiResponse) => wifiResponse.response)
-        .then((response) =>
-            device.cameraSettings.updateListInfoItem(listInfoItem, response));
-  }
-
-  //TODO web api version wenn keine angegeben für alle
-  //WebApiVersionId webApiVersion,
-  //wip
-  //TODO availability only checked at apiList
-  @override
-  Future<ListInfoItem<WebApiMethodValue>> getMethodTypes(
-      SonyWebApiServiceTypeId serviceTypeId,
-      {WebApiVersionId webApiVersion,
-      update = ForceUpdate.IfNull}) async {
-    ListInfoItem<WebApiMethodValue> listInfoItem =
-        await super.getMethodTypes(serviceTypeId);
-
-    //TODO other Force Update options for info?
-    if (listInfoItem.values.isEmpty) {
-      await _getMethodTypes(listInfoItem, serviceTypeId, webApiVersion);
-    }
-
-    return await super.getMethodTypes(serviceTypeId);
+        .then((response) => device.cameraSettings.updateListInfoItem(listInfoItem, response));
   }
 
   ///MethodTypes (get) accessControl
+  //TODO web api version wenn keine angegeben für alle
+  //TODO availability only checked at apiList
+  //TODO other Force Update options for info?
 
-  Future _getMethodTypes(
-      ListInfoItem listInfoItem,
-      SonyWebApiServiceTypeId serviceTypeId,
-      WebApiVersionId webApiVersion) async {
+  @override
+  Future<ListInfoItem<WebApiMethodValue>> getMethodTypesCamera(
+      {WebApiVersionId webApiVersion, ForceUpdate update}) async {
+    ListInfoItem<WebApiMethodValue> listInfoItem = await super.getMethodTypesCamera();
+    if (listInfoItem.values.isEmpty) {
+      return await _getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.CAMERA, webApiVersion);
+    }
+    return await super.getMethodTypesCamera();
+  }
+
+  Future<ListInfoItem<WebApiMethodValue>> getMethodTypesAvContent(
+      {WebApiVersionId webApiVersion, ForceUpdate update}) async {
+    ListInfoItem<WebApiMethodValue> listInfoItem = await super.getMethodTypesAvContent();
+    if (listInfoItem.values.isEmpty) {
+      return await _getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.AV_CONTENT, webApiVersion);
+    }
+    return listInfoItem;
+  }
+
+  Future<ListInfoItem<WebApiMethodValue>> getMethodTypesSystem(
+      {WebApiVersionId webApiVersion, ForceUpdate update}) async {
+    ListInfoItem<WebApiMethodValue> listInfoItem = await super.getMethodTypesSystem();
+    if (listInfoItem.values.isEmpty) {
+      return await _getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.SYSTEM, webApiVersion);
+    }
+    return listInfoItem;
+  }
+
+  Future<ListInfoItem<WebApiMethodValue>> getMethodTypesGuide(
+      {WebApiVersionId webApiVersion, ForceUpdate update}) async {
+    ListInfoItem<WebApiMethodValue> listInfoItem = await super.getMethodTypesGuide();
+    if (listInfoItem.values.isEmpty) {
+      return await _getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.GUIDE, webApiVersion);
+    }
+    return listInfoItem;
+  }
+
+  Future<ListInfoItem<WebApiMethodValue>> getMethodTypesAccessControl(
+      {WebApiVersionId webApiVersion, ForceUpdate update}) async {
+    ListInfoItem<WebApiMethodValue> listInfoItem = await super.getMethodTypesAccessControl();
+    if (listInfoItem.values.isEmpty) {
+      return await _getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.ACCESS_CONTROL, webApiVersion);
+    }
+    return listInfoItem;
+  }
+
+  Future<ListInfoItem> _getMethodTypes(
+      ListInfoItem listInfoItem, SonyWebApiServiceTypeId serviceTypeId, WebApiVersionId webApiVersion) async {
     return await WifiCommand.createCommand(ApiMethodId.GET, ItemId.MethodTypes,
             params: [webApiVersion.wifiValue], service: serviceTypeId)
         .send(device)
         .then((wifiResponse) => wifiResponse.response)
-        .then((response) => device.cameraSettings.updateListInfoItem(
-            listInfoItem, response,
-            webApiVersion: webApiVersion));
+        .then((response) =>
+            device.cameraSettings.updateListInfoItem(listInfoItem, response, webApiVersion: webApiVersion));
   }
 
   ///AvailableApiList (get)

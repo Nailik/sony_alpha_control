@@ -13,14 +13,7 @@ extension FunctionExtension on Function {
       device = SonyApi.connectedCamera;
     }
 
-    if (this == device.api.getWebApiVersions) {
-      return device.api.checkFunctionAvailability(
-              ItemId.Versions, ApiMethodId.GET,
-              service: SonyWebApiServiceTypeId.ACCESS_CONTROL) ==
-          FunctionAvailability.Available;
-    }
-
-    return false;
+    return this.availability(device: device) == FunctionAvailability.Available;
   }
 
   FunctionAvailability availability({SonyCameraDevice device}) {
@@ -28,11 +21,43 @@ extension FunctionExtension on Function {
       device = SonyApi.connectedCamera;
     }
 
-    if (this == device.api.getWebApiVersions) {
-      return device.api.checkFunctionAvailability(
-          ItemId.Versions, ApiMethodId.GET,
+    if (this == device.api.getWebApiVersionsCamera)
+      return device.api.checkFunctionAvailability(ItemId.Versions, ApiMethodId.GET);
+
+    if (this == device.api.getWebApiVersionsAvContent)
+      return device.api
+          .checkFunctionAvailability(ItemId.Versions, ApiMethodId.GET, service: SonyWebApiServiceTypeId.AV_CONTENT);
+
+    if (this == device.api.getWebApiVersionsSystem)
+      return device.api
+          .checkFunctionAvailability(ItemId.Versions, ApiMethodId.GET, service: SonyWebApiServiceTypeId.SYSTEM);
+
+    if (this == device.api.getWebApiVersionsAccessControl)
+      return device.api
+          .checkFunctionAvailability(ItemId.Versions, ApiMethodId.GET, service: SonyWebApiServiceTypeId.ACCESS_CONTROL);
+
+    if (this == device.api.getWebApiVersionsGuide)
+      return device.api
+          .checkFunctionAvailability(ItemId.Versions, ApiMethodId.GET, service: SonyWebApiServiceTypeId.GUIDE);
+
+    if (this == device.api.getMethodTypesCamera)
+      return device.api.checkFunctionAvailability(ItemId.MethodTypes, ApiMethodId.GET);
+
+    if (this == device.api.getMethodTypesAvContent)
+      return device.api
+          .checkFunctionAvailability(ItemId.MethodTypes, ApiMethodId.GET, service: SonyWebApiServiceTypeId.AV_CONTENT);
+
+    if (this == device.api.getMethodTypesSystem)
+      return device.api
+          .checkFunctionAvailability(ItemId.MethodTypes, ApiMethodId.GET, service: SonyWebApiServiceTypeId.SYSTEM);
+
+    if (this == device.api.getMethodTypesAccessControl)
+      return device.api.checkFunctionAvailability(ItemId.MethodTypes, ApiMethodId.GET,
           service: SonyWebApiServiceTypeId.ACCESS_CONTROL);
-    }
+
+    if (this == device.api.getMethodTypesGuide)
+      return device.api
+          .checkFunctionAvailability(ItemId.MethodTypes, ApiMethodId.GET, service: SonyWebApiServiceTypeId.GUIDE);
 
     return FunctionAvailability.Unsupported;
   }
