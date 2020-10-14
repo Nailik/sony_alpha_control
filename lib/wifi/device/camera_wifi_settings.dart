@@ -113,7 +113,7 @@ class CameraWifiSettings extends CameraSettings {
     var list = jsonD["result"];
 
     switch (settingsItem.itemId) {
-      case ItemId.EV:
+      case ItemId.ExposureCompensation:
         //special case
         List<EvValue> listOfValues = getEvList(list[2], list[1], list[3]);
         settingsItem.updateItem(
@@ -187,7 +187,7 @@ class CameraWifiSettings extends CameraSettings {
     var list = jsonD["result"];
 
     switch (settingsItem.itemId) {
-      case ItemId.EV:
+      case ItemId.ExposureCompensation:
         //special case
         //0: int[] upper limit
         //1: int[] lower limit
@@ -256,7 +256,7 @@ class CameraWifiSettings extends CameraSettings {
     Value current;
 
     switch (settingsItem.itemId) {
-      case ItemId.EV:
+      case ItemId.ExposureCompensation:
         availableList = getEvList(
             json["minExposureCompensation"],
             json["maxExposureCompensation"],

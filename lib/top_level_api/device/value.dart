@@ -25,6 +25,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/post_view_image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/shoot_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
@@ -76,6 +77,8 @@ abstract class Value<T> {
         return BoolValue(wifiValue);
       case ItemId.LiveViewOrientation:
         return StringValue(wifiValue); //TODO enum 0,90,180,270
+      case ItemId.ShootMode:
+        return ShootModeValue.fromWifiValue(wifiValue);
       case ItemId.PostViewUrlSet:
       //TODO
       case ItemId.LiveViewSize:
@@ -94,7 +97,7 @@ abstract class Value<T> {
         return StringValue(wifiValue); //TODO enum
       case ItemId.CameraFunction:
         return CameraFunctionValue.fromWifiValue(wifiValue);
-      case ItemId.EV: //exposureCompensation
+      case ItemId.ExposureCompensation: //exposureCompensation
         throw UnsupportedError; //this should never be called //EvValue(double.parse(wifiValue));
       case ItemId.MovieQuality:
         return MovieQualityValue.fromWifiValue(wifiValue);
@@ -122,7 +125,7 @@ abstract class Value<T> {
         return PostViewImageSizeValue.fromWifiValue(wifiValue);
       case ItemId.SelfTimer:
         return IntValue(wifiValue);
-      case ItemId.ShootingMode:
+      case ItemId.ShootMode:
       //TODO  return ShootingModeValue.fromWifiValue(wifiValue);
       case ItemId.MeteringMode: //exposureMode
         return MeteringModeValue.fromWifiValue(wifiValue);
@@ -194,9 +197,9 @@ abstract class Value<T> {
         return MeteringModeValue.fromUSBValue(usbValue);
       case ItemId.FlashMode:
         return FlashModeValue.fromUSBValue(usbValue);
-      case ItemId.ShootingMode:
+      case ItemId.ShootMode:
         return ShootingModeValue.fromUSBValue(usbValue);
-      case ItemId.EV:
+      case ItemId.ExposureCompensation:
         return IntValue(usbValue);
       case ItemId.DriveMode:
         return DriveModeValue.fromUSBValue(usbValue);
@@ -621,16 +624,34 @@ class DriveModeValue extends Value<DriveModeId> {
   String get name => id.name;
 }
 
+class ShootModeValue extends Value<ShootModeId> {
+  ShootModeValue(ShootModeId id) : super(id);
+
+  @override
+  factory ShootModeValue.fromUSBValue(int usbValue) => throw UnsupportedError;
+
+  @override
+  factory ShootModeValue.fromWifiValue(String wifiValue) =>
+      ShootModeValue(ShootModeIdExtension.getIdFromWifi(wifiValue));
+
+  @override
+  int get usbValue => throw UnsupportedError;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
+}
+
 class DroHdrValue extends Value<DroHdrId> {
   DroHdrValue(DroHdrId id) : super(id);
 
   @override
-  factory DroHdrValue.fromUSBValue(int usbValue) =>
-      DroHdrValue(DroHdrIdExtension.getIdFromUsb(usbValue));
+  factory DroHdrValue.fromUSBValue(int usbValue) => DroHdrValue(DroHdrIdExtension.getIdFromUsb(usbValue));
 
   @override
-  factory DroHdrValue.fromWifiValue(String wifiValue) =>
-      DroHdrValue(DroHdrIdExtension.getIdFromWifi(wifiValue));
+  factory DroHdrValue.fromWifiValue(String wifiValue) => DroHdrValue(DroHdrIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;

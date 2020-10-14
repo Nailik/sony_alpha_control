@@ -8,15 +8,12 @@ abstract class CameraSettings extends ChangeNotifier {
 
   SettingsItem fNumber = SettingsItem<DoubleValue>(ItemId.FNumber);
   SettingsItem iso = SettingsItem<IsoValue>(ItemId.ISO);
-  SettingsItem shutterSpeed =
-      SettingsItem<ShutterSpeedValue>(ItemId.ShutterSpeed);
-  SettingsItem ev = SettingsItem<EvValue>(ItemId.EV);
+  SettingsItem shutterSpeed = SettingsItem<ShutterSpeedValue>(ItemId.ShutterSpeed);
+  SettingsItem exposureCompensation = SettingsItem<EvValue>(ItemId.ExposureCompensation);
   SettingsItem flashMode = SettingsItem<FlashModeValue>(ItemId.FlashMode);
   SettingsItem focusMode = SettingsItem<FocusModeValue>(ItemId.FocusMode);
-  SettingsItem whiteBalanceMode =
-      SettingsItem<WhiteBalanceModeValue>(ItemId.WhiteBalanceMode);
-  SettingsItem whiteBalanceColorTemp =
-      SettingsItem<WhiteBalanceColorTempValue>(ItemId.WhiteBalanceColorTemp);
+  SettingsItem whiteBalanceMode = SettingsItem<WhiteBalanceModeValue>(ItemId.WhiteBalanceMode);
+  SettingsItem whiteBalanceColorTemp = SettingsItem<WhiteBalanceColorTempValue>(ItemId.WhiteBalanceColorTemp);
   SettingsItem aelState = SettingsItem<BoolValue>(ItemId.AEL_State);
   SettingsItem fel = SettingsItem<BoolValue>(ItemId.FEL);
   SettingsItem focusArea = SettingsItem<FocusAreaValue>(ItemId.FocusArea);
@@ -30,25 +27,26 @@ abstract class CameraSettings extends ChangeNotifier {
       SettingsItem<PictureEffectValue>(ItemId.PictureEffect);
   SettingsItem droHdr = SettingsItem<DroHdrValue>(ItemId.DroHdr);
   SettingsItem<RecordVideoStateValue> recordVideoState =
-      SettingsItem<RecordVideoStateValue>(ItemId.RecordVideoState);
+  SettingsItem<RecordVideoStateValue>(ItemId.RecordVideoState);
   SettingsItem<BoolValue> photoTransferQueue =
-      SettingsItem<BoolValue>(ItemId.PhotoTransferQueue);
+  SettingsItem<BoolValue>(ItemId.PhotoTransferQueue);
   InfoItem<StringValue> batteryInfo = InfoItem<StringValue>(ItemId.BatteryInfo);
   SettingsItem imageSize = SettingsItem<ImageSizeValue>(ItemId.ImageSize);
   SettingsItem aspectRatio = SettingsItem<AspectRatioValue>(ItemId.AspectRatio);
   SettingsItem focusModeToggleResponse =
-      SettingsItem<FocusModeToggleValue>(ItemId.FocusModeToggleResponse);
-  SettingsItem shootingMode = SettingsItem<DriveModeValue>(ItemId.ShootingMode);
+  SettingsItem<FocusModeToggleValue>(ItemId.FocusModeToggleResponse);
+  SettingsItem shootingMode = SettingsItem<DriveModeValue>(ItemId.ShootMode);
+  SettingsItem<ShootModeValue> shootMode = SettingsItem<ShootModeValue>(ItemId.ShootMode);
   SettingsItem whiteBalanceAB =
-      SettingsItem<WhiteBalanceAbValue>(ItemId.WhiteBalanceAB);
+  SettingsItem<WhiteBalanceAbValue>(ItemId.WhiteBalanceAB);
   SettingsItem whiteBalanceGM =
-      SettingsItem<WhiteBalanceGmValue>(ItemId.WhiteBalanceGM);
+  SettingsItem<WhiteBalanceGmValue>(ItemId.WhiteBalanceGM);
   SettingsItem driveMode = SettingsItem<DriveModeValue>(ItemId.DriveMode);
   SettingsItem focusMagnifierDirection =
-      SettingsItem<FocusMagnifierDirectionValue>(
-          ItemId.FocusMagnifierDirection);
+  SettingsItem<FocusMagnifierDirectionValue>(
+      ItemId.FocusMagnifierDirection);
   SettingsItem focusMagnifierPhase =
-      SettingsItem<FocusMagnifierPhaseValue>(ItemId.FocusMagnifierPhase);
+  SettingsItem<FocusMagnifierPhaseValue>(ItemId.FocusMagnifierPhase);
   SettingsItem focusMagnifier =
       SettingsItem<DoubleValue>(ItemId.FocusMagnifier);
 

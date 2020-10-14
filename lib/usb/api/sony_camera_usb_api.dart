@@ -55,11 +55,11 @@ class SonyCameraUsbApi extends CameraApiInterface {
         return setMeteringMode(MeteringModeValue.fromUSBValue(value));
       case ItemId.FlashMode:
         return setFlashMode(FlashModeValue.fromUSBValue(value));
-      case ItemId.ShootingMode:
+      case ItemId.ShootMode:
         // TODO: Handle this case.
         break;
-      case ItemId.EV:
-        return modifyEV(value);
+      case ItemId.ExposureCompensation:
+        return modifyExposureCompensation(value);
       case ItemId.DriveMode:
         return setDriveMode(DriveModeIdExtension.getIdFromUsb(value));
       case ItemId.FlashValue:
@@ -288,14 +288,14 @@ class SonyCameraUsbApi extends CameraApiInterface {
           .isValidResponse();
 
   @override
-  Future<bool> modifyEV(int value) async =>
-      (await UsbCommands.getCommandSetting(ItemId.EV,
+  Future<bool> modifyExposureCompensation(int value) async =>
+      (await UsbCommands.getCommandSetting(ItemId.ExposureCompensation,
                   opCodeId: OpCodeId.MainSetting, value1: value)
               .send())
           .isValidResponse();
 
   @override
-  Future<bool> setEV(EvValue value) async => throw UnimplementedError;
+  Future<bool> setExposureCompensation(EvValue value) async => throw UnimplementedError;
 
   @override
   Future<bool> modifyFNumber(int value) async =>
@@ -755,6 +755,12 @@ class SonyCameraUsbApi extends CameraApiInterface {
   FunctionAvailability checkFunctionAvailability(ItemId itemId, ApiMethodId apiMethodId, {SonyWebApiServiceTypeId
   service = SonyWebApiServiceTypeId.CAMERA}) {
     // TODO: implement checkFunctionAvailability
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setShootMode(ShootModeValue value) {
+    // TODO: implement setShootMode
     throw UnimplementedError();
   }
 

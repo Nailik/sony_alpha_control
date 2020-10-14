@@ -1,65 +1,146 @@
 a6300 wifi
 
-Versions (get)
+(getVersions)
+getWebApiVersionsCamera
+getWebApiVersionsAvContent
+getWebApiVersionsSystem
+getWebApiVersionsGuide
+getWebApiVersionsAccessControl
 
-MethodTypes (get)
+(getMethodTypes)
+getMethodTypesCamera
+getMethodTypesAvContent
+getMethodTypesSystem
+getMethodTypesGuide
+getMethodTypesAccessControl
 
-ApplicationInfo (get)
+getAvailableFunctions (getAvailableApiList)
 
-ApiList (getAvailable)
+getApplicationInfo (getApplicationInfo)
 
-AvailableSettings (get)
+getAvailableSettings (getEvent (v1.0), getEvent (v1.1), getEvent (v1.2), getEvent (v1.3))
 
-CameraFunction (set, get, getSupported, getAvailable)
+getCameraFunction (getCameraFunction, getSupportedCameraFunction, getAvailableCameraFunction)
+setCameraFunction (setCameraFunction)
 
-CapturePhoto (act)
+actCapturePhoto (actTakePicture)
+awaitCapturePhoto (awaitTakePicture)
 
-CameraSetup (stop)
+startRecMode (startRecMode)
+stopRecMode (stopRecMode)
 
-LiveView (start, stop)
+getFNumber (getFNumber, getSupportedFNumber, getAvailableFNumber)
+modifyFNumber
+setFNumber (setFNumber)
 
-LiveViewWithSize (start)
+getIso (getIsoSpeedRate, getSupportedIsoSpeedRate, getAvailableIsoSpeedRate)
+modifyIso
+setIso (setIsoSpeedRate)
 
-Zoom (act)
+getShutterSpeed (getShutterSpeed, getSupportedShutterSpeed, getAvailableShutterSpeed)
+modifyShutterSpeed
+setShutterSpeed (setShutterSpeed)
 
-HalfPressShutter (act, cancel)
+getExposureCompensation (getExposureCompensation, getSupportedExposureCompensation, getAvailableExposureCompensation)
+modifyExposureCompensation
+setExposureCompensation (setExposureCompensation)
 
-SelfTimer (set, get, getSupported, getAvailable)
+getFlashMode (getFlashMode, getSupportedFlashMode, getAvailableFlashMode)
+setFlashMode (setFlashMode)
 
-ContShootingMode (set, get, getSupported, getAvailable)
+getFocusMode (getFocusMode, getSupportedFocusMode, getAvailableFocusMode)
+setFocusMode (setFocusMode)
 
-ContShootingSpeed (set, get, getSupported, getAvailable)
+getZoomSetting (getZoomSetting, getSupportedZoomSetting, getAvailableZoomSetting)
+setZoomSetting (setZoomSetting)
 
-MeteringMode (get, getSupported)
+getStorageInformation (getStorageInformation)
+actZoom (actZoom)
 
-Ev (set, get, getSupported, getAvailable)
+actHalfPressShutter (actHalfPressShutter)
+cancelHalfPressShutter (cancelHalfPressShutter)
 
-FNumber (set, get, getSupported, getAvailable)
+getSelfTimer (getSelfTimer, getSupportedSelfTimer, getAvailableSelfTimer)
+setSelfTimer (setSelfTimer)
 
-Iso (set, get, getSupported, getAvailable)
+getLiveViewSize (getLiveviewSize, getSupportedLiveviewSize, getAvailableLiveviewSize)
+startLiveViewWithSize (startLiveviewWithSize)
 
-LiveViewSize (set, get, getSupported, getAvailable)
+getPostViewImageSize (getPostviewImageSize, getSupportedPostviewImageSize, getAvailablePostviewImageSize)
+setPostViewImageSize (setPostviewImageSize)
 
-PostViewImageSize (set, get, getSupported, getAvailable)
+getProgramShift (setProgramShift)
+setProgramShift (getSupportedProgramShift)
 
-ProgramShift (set, get, getSupported, getAvailable)
+getWhiteBalanceMode (getWhiteBalance, getSupportedWhiteBalance, getAvailableWhiteBalance)
+setWhiteBalanceMode (setWhiteBalance)
 
-ShootingMode (set, get, getSupported, getAvailable)
+getWhiteBalanceColorTemp
+modifyWhiteBalanceColorTemp
+setWhiteBalanceColorTemp
 
-ShutterSpeed (set, get, getSupported, getAvailable)
+getImageFileFormat (setStillQuality)
+setImageFileFormat (getStillQuality, getSupportedStillQuality, getAvailableStillQuality)
 
-FocusAreaSpot (set, get)
+getShootMode (getShootMode)
+setShootMode (getShootMode, getSupportedShootMode, getAvailableShootMode)
 
-WhiteBalance (set, get, getSupported, getAvailable)
 
-FlashMode (set, get, getSupported, getAvailable)
+getSilentShooting
+setSilentShooting
 
-FocusMode (set, get, getSupported, getAvailable)
+getMeteringMode
+setMeteringMode
 
-ZoomSetting (set, get, getSupported, getAvailable)
+getAel (usb)
+getAspectRatio
+getAutoFocusState
+getBatteryPercentage
+getDriveMode
+getDroHdr
+getFel
+getFlashValue
+getFocusArea
+getFocusAreaSpot
+getFocusMagnifier
+getFocusMagnifierDirection
+getFocusMagnifierPhase
+getFocusModeToggle
+getImageSize
+getPhotoAvailable
+getPictureEffect
+getWhiteBalanceAb
+getWhiteBalanceGm
+pressShutter
+releaseShutter
+requestPhotoAvailable
+setAel
+setAspectRatio
+setDriveMode
+setDroHdr
+setFel
+setFlashValue
+setFocusArea
+setFocusAreaSpot
+setFocusDistance
+setFocusMagnifier
+setFocusMagnifierDirection
+setFocusMagnifierPhase
+setFocusModeToggle
+setImageSize
+setPictureEffect
+setSettingsRaw
+setWhiteBalanceAb
+setWhiteBalanceGm
 
-StorageInformation (get)
+startRecordingVideo
+stopRecordingVideo
 
-LiveViewInfo (set, get)
+startRecordingAudio
+stopRecordingAudio
+setRecordingAudio
 
-SilentShootingSettings (set, get, getSupported, getAvailable)
+getRecordingAudio
+getRecordingVideoState
+
+streamLiveView

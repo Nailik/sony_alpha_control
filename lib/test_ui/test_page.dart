@@ -145,7 +145,10 @@ class TestsPageState extends State<TestsPage> {
                       getLiveViewInfoRow(),
 
                       ///SilentShootingSettings (set, get, getSupported, getAvailable)
-                      getSilentShootingSettings()
+                      getSilentShootingSettingsRow(),
+
+                      ///ShootMode (set, get, getSupported, getAvailable)
+                      getShootModeRow()
                     ],
                   ),
                 )),
@@ -1072,32 +1075,28 @@ class TestsPageState extends State<TestsPage> {
   ///Ev (set, get, getSupported, getAvailable)
   Widget getEVRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.ev,
+      create: (context) => device.cameraSettings.exposureCompensation,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(ItemId.EV.name),
-              subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(device.cameraSettings.ev.value?.name ?? "NotAvailable",
-                        textAlign: TextAlign.start),
-                    getText(ItemId.EV, ApiMethodId.SET),
-                    getText(ItemId.EV, ApiMethodId.GET),
-                    getText(ItemId.EV, ApiMethodId.GET_AVAILABLE),
-                    getText(ItemId.EV, ApiMethodId.GET_SUPPORTED)
-                  ]),
-              onTap: () => device.api.getEV(update: ForceUpdate.On),
+              title: Text(ItemId.ExposureCompensation.name),
+              subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(device.cameraSettings.exposureCompensation.value?.name ?? "NotAvailable",
+                    textAlign: TextAlign.start),
+                getText(ItemId.ExposureCompensation, ApiMethodId.SET),
+                getText(ItemId.ExposureCompensation, ApiMethodId.GET),
+                getText(ItemId.ExposureCompensation, ApiMethodId.GET_AVAILABLE),
+                getText(ItemId.ExposureCompensation, ApiMethodId.GET_SUPPORTED)
+              ]),
+              onTap: () => device.api.getExposureCompensation(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
-                child: ListTile(
-                    title: Text("Up"), onTap: () => device.api.modifyEV(1)),
+                child: ListTile(title: Text("Up"), onTap: () => device.api.modifyExposureCompensation(1)),
               ),
               Expanded(
-                child: ListTile(
-                    title: Text("Down"), onTap: () => device.api.modifyEV(-1)),
+                child: ListTile(title: Text("Down"), onTap: () => device.api.modifyExposureCompensation(-1)),
               )
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -1106,24 +1105,24 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<EvValue>(
                         hint: Text("available"),
-                        items: device.cameraSettings.ev.available
+                        items: device.cameraSettings.exposureCompensation.available
                             .map<DropdownMenuItem<EvValue>>((e) =>
-                                DropdownMenuItem<EvValue>(
-                                    child: Text(e.name), value: e))
+                            DropdownMenuItem<EvValue>(
+                                child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setEV(value),
+                        onChanged: (value) => device.api.setExposureCompensation(value),
                       ))),
               Expanded(
                   child: Padding(
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<EvValue>(
                         hint: Text("supported"),
-                        items: device.cameraSettings.ev.supported
+                        items: device.cameraSettings.exposureCompensation.supported
                             .map<DropdownMenuItem<EvValue>>((e) =>
-                                DropdownMenuItem<EvValue>(
-                                    child: Text(e.name), value: e))
+                            DropdownMenuItem<EvValue>(
+                                child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setEV(value),
+                        onChanged: (value) => device.api.setExposureCompensation(value),
                       ))),
             ]),
           ]),
@@ -1489,7 +1488,7 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-              title: Text(ItemId.ShootingMode.name),
+              title: Text(ItemId.ShootMode.name),
               subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -1497,10 +1496,10 @@ class TestsPageState extends State<TestsPage> {
                         device.cameraSettings.shootingMode.value?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    getText(ItemId.ShootingMode, ApiMethodId.SET),
-                    getText(ItemId.ShootingMode, ApiMethodId.GET),
-                    getText(ItemId.ShootingMode, ApiMethodId.GET_AVAILABLE),
-                    getText(ItemId.ShootingMode, ApiMethodId.GET_SUPPORTED)
+                    getText(ItemId.ShootMode, ApiMethodId.SET),
+                    getText(ItemId.ShootMode, ApiMethodId.GET),
+                    getText(ItemId.ShootMode, ApiMethodId.GET_AVAILABLE),
+                    getText(ItemId.ShootMode, ApiMethodId.GET_SUPPORTED)
                   ]),
             ),
           ]),
@@ -1961,11 +1960,12 @@ class TestsPageState extends State<TestsPage> {
   }
 
   ///SilentShootingSettings (set, get, getSupported, getAvailable)
-  Widget getSilentShootingSettings() {
+  Widget getSilentShootingSettingsRow() {
     return ListenableProvider<SettingsItem>(
         create: (context) => device.cameraSettings.silentShooting,
         child: Consumer<SettingsItem>(
-            builder: (context, model, _) => Card(
+            builder: (context, model, _) =>
+                Card(
                   child: Column(children: [
                     ListTile(
                       title: Text(ItemId.SilentShooting.name),
@@ -1974,7 +1974,7 @@ class TestsPageState extends State<TestsPage> {
                           children: [
                             Text(
                                 device.cameraSettings.silentShooting.value
-                                        ?.name ??
+                                    ?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
                             getText(ItemId.SilentShooting, ApiMethodId.SET),
@@ -2012,11 +2012,74 @@ class TestsPageState extends State<TestsPage> {
                                     items: device
                                         .cameraSettings.silentShooting.supported
                                         .map<DropdownMenuItem<OnOffValue>>(
-                                            (e) => DropdownMenuItem<OnOffValue>(
+                                            (e) =>
+                                            DropdownMenuItem<OnOffValue>(
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
                                         device.api.setSilentShooting(value),
+                                  ))),
+                        ]),
+                  ]),
+                )));
+  }
+
+  ///Shoot Mode (set, get, getSupported, getAvailable)
+  Widget getShootModeRow() {
+    return ListenableProvider<SettingsItem>(
+        create: (context) => device.cameraSettings.shootMode,
+        child: Consumer<SettingsItem>(
+            builder: (context, model, _) =>
+                Card(
+                  child: Column(children: [
+                    ListTile(
+                      title: Text(ItemId.ShootMode.name),
+                      subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                device.cameraSettings.shootMode.value
+                                    ?.name ??
+                                    "NotAvailable",
+                                textAlign: TextAlign.start),
+                            Text("setShootMode", style: getTextStyle(device.api.setShootMode)),
+                            Text("getShootMode", style: getTextStyle(device.api.getShootMode))
+                          ]),
+                      onTap: () =>
+                          device.api.getShootMode(update: ForceUpdate.On),
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: DropdownButton<ShootModeValue>(
+                                    hint: Text("available"),
+                                    items: device
+                                        .cameraSettings.shootMode.available
+                                        .map<DropdownMenuItem<ShootModeValue>>(
+                                            (e) =>
+                                            DropdownMenuItem<ShootModeValue>(
+                                                child: Text(e.name), value: e))
+                                        .toList(),
+                                    onChanged: (value) =>
+                                        device.api.setShootMode(value),
+                                  ))),
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: DropdownButton<ShootModeValue>(
+                                    hint: Text("supported"),
+                                    items: device
+                                        .cameraSettings.shootMode.supported
+                                        .map<DropdownMenuItem<ShootModeValue>>(
+                                            (e) =>
+                                            DropdownMenuItem<ShootModeValue>(
+                                                child: Text(e.name), value: e))
+                                        .toList(),
+                                    onChanged: (value) =>
+                                        device.api.setShootMode(value),
                                   ))),
                         ]),
                   ]),

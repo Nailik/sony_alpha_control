@@ -192,12 +192,13 @@ abstract class CameraApiInterface {
 
   ///EV
 
-  Future<SettingsItem<EvValue>> getEV({ForceUpdate update}) async => device.cameraSettings.ev;
+  Future<SettingsItem<EvValue>> getExposureCompensation({ForceUpdate update}) async =>
+      device.cameraSettings.exposureCompensation;
 
   //value -> up and down (1 or -1)
-  Future<bool> modifyEV(int direction);
+  Future<bool> modifyExposureCompensation(int direction);
 
-  Future<bool> setEV(EvValue value);
+  Future<bool> setExposureCompensation(EvValue value);
 
   ///FNumber
 
@@ -262,6 +263,12 @@ abstract class CameraApiInterface {
       device.cameraSettings.silentShooting;
 
   Future<bool> setSilentShooting(OnOffValue value);
+
+  ///Shoot Mode
+
+  Future<SettingsItem<ShootModeValue>> getShootMode({ForceUpdate update}) async => device.cameraSettings.shootMode;
+
+  Future<bool> setShootMode(ShootModeValue value);
 
   ///unchecked (wifi) *******************************************
 
@@ -346,8 +353,6 @@ abstract class CameraApiInterface {
 // TODO: If the steps value is larger than 7 then use a loop?
   Future<bool> setFocusDistance(int value);
 
-  Future<SettingsItem<DriveModeValue>> getShootingMode({ForceUpdate update}) async =>
-      device.cameraSettings.shootingMode;
 
   Future<SettingsItem<WhiteBalanceAbValue>> getWhiteBalanceAb({ForceUpdate update}) async =>
       device.cameraSettings.whiteBalanceAB;

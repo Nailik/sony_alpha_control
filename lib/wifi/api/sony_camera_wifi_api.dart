@@ -391,8 +391,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
   ///EV
 
   @override
-  Future<SettingsItem<EvValue>> getEV({update = ForceUpdate.IfNull}) async {
-    SettingsItem<EvValue> settingsItem = device.cameraSettings.ev;
+  Future<SettingsItem<EvValue>> getExposureCompensation({update = ForceUpdate.IfNull}) async {
+    SettingsItem<EvValue> settingsItem = device.cameraSettings.exposureCompensation;
     switch (update) {
       case ForceUpdate.Available:
         if (settingsItem.supported == null || settingsItem.supported.isEmpty) {
@@ -429,24 +429,24 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> modifyEV(int direction) async {
-    SettingsItem<EvValue> ev = await getEV();
-    var newItem = ev.available
-        .firstWhere((element) => element.index == (ev.value.index + direction));
+  Future<bool> modifyExposureCompensation(int direction) async {
+    SettingsItem<EvValue> ev = await getExposureCompensation();
+    var newItem = ev.available.firstWhere((element) => element.index == (ev.value.index + direction));
     if (newItem == null) {
       return false; //would be out of range
     }
-    return _setEVIndex(newItem);
+    return _setExposureCompensationIndex(newItem);
   }
 
   @override
-  Future<bool> setEV(EvValue value) async => _setEVIndex(value);
+  Future<bool> setExposureCompensation(EvValue value) async => _setExposureCompensationIndex(value);
 
-  Future<bool> _setEVIndex(EvValue value) async {
-    return await WifiCommand.createCommand(ApiMethodId.SET, ItemId.EV,
-        params: [value.index]).send(device).then((result) {
+  Future<bool> _setExposureCompensationIndex(EvValue value) async {
+    return await WifiCommand.createCommand(ApiMethodId.SET, ItemId.ExposureCompensation, params: [value.index])
+        .send(device)
+        .then((result) {
       if (result.isValid) {
-        SettingsItem<EvValue> item = device.cameraSettings.ev;
+        SettingsItem<EvValue> item = device.cameraSettings.exposureCompensation;
         item.updateItem(value, item.available, item.supported);
       }
       return result.isValid;
@@ -769,8 +769,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setSilentShooting(OnOffValue value) async {
-    return await WifiCommand.createCommand(
-            ApiMethodId.SET, ItemId.SilentShooting, params: [value.wifiValue])
+    return await WifiCommand.createCommand(ApiMethodId.SET, ItemId.SilentShooting, params: [value.wifiValue])
         .send(device)
         .then((result) {
       if (result.isValid) {
@@ -781,20 +780,38 @@ class SonyCameraWifiApi extends CameraApiInterface {
     });
   }
 
+  ///Shoot Mode
+
+  @override
+  Future<SettingsItem<ShootModeValue>> getShootMode({update = ForceUpdate.IfNull}) async =>
+      await _updateIf(update, await super.getShootMode(update: update));
+
+  @override
+  Future<bool> setShootMode(ShootModeValue value) async {
+    return await WifiCommand.createCommand(ApiMethodId.SET, ItemId.ShootMode, params: [value.wifiValue])
+        .send(device)
+        .then((result) {
+      if (result.isValid) {
+        SettingsItem<ShootModeValue> item = device.cameraSettings.shootMode;
+        item.updateItem(value, item.available, item.supported);
+      }
+      return result.isValid;
+    });
+  }
+
   ///Metering Mode TODO unsupported?
 
   @override
-  Future<SettingsItem<MeteringModeValue>> getMeteringMode(
-          {update = ForceUpdate.IfNull}) async =>
+  Future<SettingsItem<MeteringModeValue>> getMeteringMode({update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getMeteringMode(update: update));
 
   @override
   Future<bool> setMeteringMode(MeteringModeValue value) =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.MeteringMode,
-          params: [value.wifiValue]).send(device).then((result) {
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.MeteringMode, params: [value.wifiValue])
+          .send(device)
+          .then((result) {
         if (result.isValid) {
-          SettingsItem<MeteringModeValue> item =
-              device.cameraSettings.meteringMode;
+          SettingsItem<MeteringModeValue> item = device.cameraSettings.meteringMode;
           item.updateItem(value, item.available, item.supported);
         }
         return result.isValid;
@@ -888,10 +905,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
           {update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getPictureEffect(update: update));
 
-  @override
-  Future<SettingsItem<DriveModeValue>> getShootingMode(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getShootingMode(update: update));
 
   @override
   Future<SettingsItem<WhiteBalanceAbValue>> getWhiteBalanceAb(

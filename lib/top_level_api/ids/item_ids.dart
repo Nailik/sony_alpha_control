@@ -10,8 +10,8 @@ enum ItemId {
   FocusMode,
   MeteringMode,
   FlashMode,
-  ShootingMode,
-  EV,
+  ShootMode,
+  ExposureCompensation,
 
   /// <summary>
   /// The camera drive mode (single shooting, continuous shooting, etc)
@@ -240,9 +240,9 @@ extension SettingsIdExtension on ItemId {
         return 0x500B;
       case ItemId.FlashMode:
         return 0x500C;
-      case ItemId.ShootingMode:
+      case ItemId.ShootMode:
         return 0x500E;
-      case ItemId.EV:
+      case ItemId.ExposureCompensation:
         return 0x5010;
       case ItemId.DriveMode:
         return 0x5013;
@@ -407,7 +407,7 @@ extension SettingsIdExtension on ItemId {
         return "contShootingMode";
       case ItemId.ContShootingSpeed:
         return "contShootingSpeed";
-      case ItemId.EV:
+      case ItemId.ExposureCompensation:
         return "exposureCompensation";
       case ItemId.FNumber:
         return "fNumber";
@@ -419,7 +419,7 @@ extension SettingsIdExtension on ItemId {
         return "programShift";
       case ItemId.MeteringMode:
         return "exposureMode"; //TODO exposure mode somehow together with shootmode
-      case ItemId.ShootingMode:
+      case ItemId.ShootMode:
         return "shootMode";
       case ItemId.ShutterSpeed:
         return "shutterSpeed";
