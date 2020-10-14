@@ -1700,12 +1700,10 @@ class TestsPageState extends State<TestsPage> {
                                 ?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    getText(ItemId.WhiteBalanceColorTemp, ApiMethodId.SET),
-                    getText(ItemId.WhiteBalanceColorTemp, ApiMethodId.GET),
-                    getText(ItemId.WhiteBalanceColorTemp,
-                        ApiMethodId.GET_AVAILABLE),
-                    getText(
-                        ItemId.WhiteBalanceColorTemp, ApiMethodId.GET_SUPPORTED)
+                    getText(ItemId.WhiteBalanceMode, ApiMethodId.SET),
+                    getText(ItemId.WhiteBalanceMode, ApiMethodId.GET),
+                    getText(ItemId.WhiteBalanceMode, ApiMethodId.GET_AVAILABLE),
+                    getText(ItemId.WhiteBalanceMode, ApiMethodId.GET_SUPPORTED)
                   ]),
               onTap: () =>
                   device.api.getWhiteBalanceColorTemp(update: ForceUpdate.On),
