@@ -764,4 +764,16 @@ class SonyCameraUsbApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
+  @override
+  Future<bool> setContShootingMode(ContShootingModeValue value) {
+    // TODO: implement setContShootingMode
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setContShootingSpeed(ContShootingSpeedValue value) {
+    // TODO: implement setContShootingSpeed
+    throw UnimplementedError();
+  }
+
 }

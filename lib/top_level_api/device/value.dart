@@ -6,6 +6,8 @@ import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/camera_function_id.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/camera_status_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/cont_shooting_mode_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/cont_shooting_speed_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/dro_hdr_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/flash_mode_ids.dart';
@@ -156,9 +158,9 @@ abstract class Value<T> {
       case ItemId.ZoomSetting: //FocusStatus
         return ZoomSettingValue.fromWifiValue(wifiValue);
       case ItemId.ContShootingMode:
-      //TODO return ContShootingModeValue.fromWifiValue(wifiValue);
+        return ContShootingModeValue.fromWifiValue(wifiValue);
       case ItemId.ContShootingSpeed:
-      //TODO  return ContShootingSpeedValue.fromWifiValue(wifiValue);
+        return ContShootingSpeedValue.fromWifiValue(wifiValue);
       case ItemId.BatteryInfo: //BatteryInformation
       //TODO   return IntValue(wifiValue);
       case ItemId.SilentShooting:
@@ -1196,4 +1198,44 @@ class ApiFunctionValue extends Value<ItemId> {
 
   @override
   String get name => "${id.name} $methods";
+}
+
+class ContShootingModeValue extends Value<ContShootingModeId> {
+  ContShootingModeValue(ContShootingModeId id) : super(id);
+
+  @override
+  factory ContShootingModeValue.fromUSBValue(int usbValue) => throw UnimplementedError;
+
+  @override
+  factory ContShootingModeValue.fromWifiValue(String wifiValue) =>
+      ContShootingModeValue(ContShootingModeIdExtension.getIdFromWifi(wifiValue));
+
+  @override
+  int get usbValue => throw UnimplementedError;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
+}
+
+class ContShootingSpeedValue extends Value<ContShootingSpeedId> {
+  ContShootingSpeedValue(ContShootingSpeedId id) : super(id);
+
+  @override
+  factory ContShootingSpeedValue.fromUSBValue(int usbValue) => throw UnimplementedError;
+
+  @override
+  factory ContShootingSpeedValue.fromWifiValue(String wifiValue) =>
+      ContShootingSpeedValue(ContShootingSpeedIdExtension.getIdFromWifi(wifiValue));
+
+  @override
+  int get usbValue => throw UnimplementedError;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
 }

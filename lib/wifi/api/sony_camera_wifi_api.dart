@@ -499,8 +499,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setZoomSetting(ZoomSettingValue value) async =>
-      await WifiCommand.createCommand(ApiMethodId.SET, ItemId.ZoomSetting,
-          params: [
+      await WifiCommand.createCommand(ApiMethodId.SET, ItemId.ZoomSetting, params: [
         <String, dynamic>{'zoom': value.wifiValue}
       ]).send(device).then((result) {
         if (result.isValid) {
@@ -806,12 +805,48 @@ class SonyCameraWifiApi extends CameraApiInterface {
       await _updateIf(update, await super.getMeteringMode(update: update));
 
   @override
-  Future<bool> setMeteringMode(MeteringModeValue value) =>
+  Future<bool> setMeteringMode(MeteringModeValue value) async =>
       WifiCommand.createCommand(ApiMethodId.SET, ItemId.MeteringMode, params: [value.wifiValue])
           .send(device)
           .then((result) {
         if (result.isValid) {
           SettingsItem<MeteringModeValue> item = device.cameraSettings.meteringMode;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///Continuous Shooting Mode
+
+  @override
+  Future<SettingsItem<ContShootingModeValue>> getContShootingMode({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getContShootingMode(update: update));
+
+  @override
+  Future<bool> setContShootingMode(ContShootingModeValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.ContShootingMode, params: [<String, dynamic>{'contShootingMode': value.wifiValue}])
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          SettingsItem<ContShootingModeValue> item = device.cameraSettings.contShootingMode;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///Continuous Shooting Speed
+
+  @override
+  Future<SettingsItem<ContShootingSpeedValue>> getContShootingSpeed({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getContShootingSpeed(update: update));
+
+  @override
+  Future<bool> setContShootingSpeed(ContShootingSpeedValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.ContShootingSpeed, params: [<String, dynamic>{'contShootingSpeed': value.wifiValue}])
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          SettingsItem<ContShootingSpeedValue> item = device.cameraSettings.contShootingSpeed;
           item.updateItem(value, item.available, item.supported);
         }
         return result.isValid;
@@ -824,8 +859,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
       await _updateIf(update, await super.getAel(update: update));
 
   @override
-  Future<SettingsItem<AspectRatioValue>> getAspectRatio(
-          {update = ForceUpdate.IfNull}) async =>
+  Future<SettingsItem<AspectRatioValue>> getAspectRatio({update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getAspectRatio(update: update));
 
   @override

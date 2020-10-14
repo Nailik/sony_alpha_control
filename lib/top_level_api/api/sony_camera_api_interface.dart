@@ -270,6 +270,18 @@ abstract class CameraApiInterface {
 
   Future<bool> setShootMode(ShootModeValue value);
 
+  ///Continuous Shooting Mode
+
+  Future<SettingsItem<ContShootingModeValue>> getContShootingMode({ForceUpdate update}) async => device.cameraSettings.contShootingMode;
+
+  Future<bool> setContShootingMode(ContShootingModeValue value);
+
+  ///Continuous Shooting Speed
+
+  Future<SettingsItem<ContShootingSpeedValue>> getContShootingSpeed({ForceUpdate update}) async => device.cameraSettings.contShootingSpeed;
+
+  Future<bool> setContShootingSpeed(ContShootingSpeedValue value);
+
   ///unchecked (wifi) *******************************************
 
   Future<List<CameraImage>> capturePhoto(); //TODO return foto?

@@ -77,41 +77,32 @@ abstract class CameraSettings extends ChangeNotifier {
   ListInfoItem availableFunctions =
       ListInfoItem<ApiFunctionValue>(ItemId.ApiList);
 
-  ListInfoItem<StringValue> applicationInfo =
-      ListInfoItem<StringValue>(ItemId.ApplicationInfo);
-  ListInfoItem<StringValue> availableSettings =
-      ListInfoItem<StringValue>(ItemId.AvailableSettings);
+  ListInfoItem<StringValue> applicationInfo = ListInfoItem<StringValue>(ItemId.ApplicationInfo);
+  ListInfoItem<StringValue> availableSettings = ListInfoItem<StringValue>(ItemId.AvailableSettings);
 
-  SettingsItem<CameraFunctionValue> cameraFunction =
-      SettingsItem<CameraFunctionValue>(ItemId.CameraFunction);
+  SettingsItem<CameraFunctionValue> cameraFunction = SettingsItem<CameraFunctionValue>(ItemId.CameraFunction);
 
-  ListInfoItem<StringValue> capturePhoto =
-      ListInfoItem<StringValue>(ItemId.CapturePhoto);
+  ListInfoItem<StringValue> capturePhoto = ListInfoItem<StringValue>(ItemId.CapturePhoto);
 
-  ListInfoItem<StringValue> cameraSetup =
-      ListInfoItem<StringValue>(ItemId.CameraSetup);
+  ListInfoItem<StringValue> cameraSetup = ListInfoItem<StringValue>(ItemId.CameraSetup);
 
   SettingsItem liveView = SettingsItem<StringValue>(ItemId.LiveView);
 
   SettingsItem zoom = SettingsItem<StringValue>(ItemId.Zoom);
-  InfoItem<BoolValue> halfPressShutter = InfoItem<BoolValue>(
-      ItemId.HalfPressShutter); //saves if is act (true) or cancel (false)
+  InfoItem<BoolValue> halfPressShutter =
+      InfoItem<BoolValue>(ItemId.HalfPressShutter); //saves if is act (true) or cancel (false)
   SettingsItem<IntValue> selfTimer = SettingsItem<IntValue>(ItemId.SelfTimer);
-  SettingsItem contShootingMode =
-      SettingsItem<StringValue>(ItemId.ContShootingMode);
-  SettingsItem contShootingSpeed =
-      SettingsItem<StringValue>(ItemId.ContShootingSpeed);
-  SettingsItem<MeteringModeValue> meteringMode =
-      SettingsItem<MeteringModeValue>(ItemId.MeteringMode);
-  SettingsItem liveViewSize =
-      SettingsItem<LiveViewSizeValue>(ItemId.LiveViewSize);
-  SettingsItem postViewImageSize =
-      SettingsItem<PostViewImageSizeValue>(ItemId.PostViewImageSize);
+
+  SettingsItem<ContShootingModeValue> contShootingMode = SettingsItem<ContShootingModeValue>(ItemId.ContShootingMode);
+  SettingsItem<ContShootingSpeedValue> contShootingSpeed =
+      SettingsItem<ContShootingSpeedValue>(ItemId.ContShootingSpeed);
+
+  SettingsItem<MeteringModeValue> meteringMode = SettingsItem<MeteringModeValue>(ItemId.MeteringMode);
+  SettingsItem liveViewSize = SettingsItem<LiveViewSizeValue>(ItemId.LiveViewSize);
+  SettingsItem postViewImageSize = SettingsItem<PostViewImageSizeValue>(ItemId.PostViewImageSize);
   SettingsItem programShift = SettingsItem<IntValue>(ItemId.ProgramShift);
-  SettingsItem<ZoomSettingValue> zoomSetting =
-      SettingsItem<ZoomSettingValue>(ItemId.ZoomSetting);
+  SettingsItem<ZoomSettingValue> zoomSetting = SettingsItem<ZoomSettingValue>(ItemId.ZoomSetting);
   ListInfoItem<StringValue> storageInformation = ListInfoItem<StringValue>(ItemId.StorageInformation);
   SettingsItem liveViewInfo = SettingsItem<StringValue>(ItemId.LiveViewInfo);
-  SettingsItem<OnOffValue> silentShooting =
-      SettingsItem<OnOffValue>(ItemId.SilentShooting);
+  SettingsItem<OnOffValue> silentShooting = SettingsItem<OnOffValue>(ItemId.SilentShooting);
 }

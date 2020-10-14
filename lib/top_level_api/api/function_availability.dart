@@ -62,6 +62,18 @@ extension FunctionExtension on Function {
     if (this == device.api.getStorageInformation)
       return device.api.checkFunctionAvailability(ItemId.StorageInformation, ApiMethodId.GET);
 
+    if (this == device.api.getContShootingSpeed)
+      return device.api.checkFunctionAvailability(ItemId.ContShootingSpeed, ApiMethodId.GET);
+
+    if (this == device.api.setContShootingSpeed)
+      return device.api.checkFunctionAvailability(ItemId.ContShootingSpeed, ApiMethodId.SET);
+
+    if (this == device.api.getContShootingMode)
+      return device.api.checkFunctionAvailability(ItemId.ContShootingMode, ApiMethodId.GET);
+
+    if (this == device.api.setContShootingMode)
+      return device.api.checkFunctionAvailability(ItemId.ContShootingMode, ApiMethodId.SET);
+
     if (this == device.api.getShootMode) return device.api.checkFunctionAvailability(ItemId.ShootMode, ApiMethodId.GET);
 
     if (this == device.api.setShootMode) return device.api.checkFunctionAvailability(ItemId.ShootMode, ApiMethodId.SET);

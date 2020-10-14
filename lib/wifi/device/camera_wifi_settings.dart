@@ -173,6 +173,18 @@ class CameraWifiSettings extends CameraSettings {
             settingsItem.createListFromWifiJson(list[0]["candidate"] as List),
             settingsItem.supported);
         break;
+      case ItemId.ContShootingMode:
+        settingsItem.updateItem(
+            Value.fromWifi(settingsItem.itemId, list[0]["contShootingMode"]),
+            settingsItem.createListFromWifiJson(list[0]["candidate"] as List),
+            settingsItem.supported);
+        break;
+      case ItemId.ContShootingSpeed:
+        settingsItem.updateItem(
+            Value.fromWifi(settingsItem.itemId, list[0]["contShootingSpeed"]),
+            settingsItem.createListFromWifiJson(list[0]["candidate"] as List),
+            settingsItem.supported);
+        break;
       default:
         settingsItem.updateItem(
             Value.fromWifi(settingsItem.itemId, list[0]),
@@ -238,6 +250,8 @@ class CameraWifiSettings extends CameraSettings {
         break;
       case ItemId.ZoomSetting:
       case ItemId.SilentShooting:
+      case ItemId.ContShootingSpeed:
+      case ItemId.ContShootingMode:
         settingsItem.updateItem(settingsItem.value, settingsItem.available,
             settingsItem.createListFromWifiJson(list[0]["candidate"] as List));
         break;

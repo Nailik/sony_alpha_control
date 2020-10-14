@@ -986,15 +986,45 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
               title: Text(ItemId.ContShootingMode.name),
-              subtitle: Text(
-                  device.cameraSettings.contShootingMode.value?.name ??
-                      "NotAvailable"),
+              subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(device.cameraSettings.contShootingMode.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+                Text("setContShootingMode", style: getTextStyle(device.api.setContShootingMode)),
+                Text("getContShootingMode", style: getTextStyle(device.api.getContShootingMode))
+              ]),
+              onTap: () => device.api.getContShootingMode(update: ForceUpdate.On),
             ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<ContShootingModeValue>(
+                        isExpanded: true,
+                        hint: Text("available"),
+                        items: device.cameraSettings.contShootingMode.available
+                            .map<DropdownMenuItem<ContShootingModeValue>>(
+                                (e) => DropdownMenuItem<ContShootingModeValue>(child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) => device.api.setContShootingMode(value),
+                      ))),
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<ContShootingModeValue>(
+                        isExpanded: true,
+                        hint: Text("supported"),
+                        items: device.cameraSettings.contShootingMode.supported
+                            .map<DropdownMenuItem<ContShootingModeValue>>(
+                                (e) => DropdownMenuItem<ContShootingModeValue>(child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) => device.api.setContShootingMode(value),
+                      ))),
+            ]),
           ]),
         ),
       ),
     );
   }
+
 
   ///ContShootingSpeed (set, get, getSupported, getAvailable)
   Widget getContShootingSpeedRow() {
@@ -1005,10 +1035,39 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
               title: Text(ItemId.ContShootingSpeed.name),
-              subtitle: Text(
-                  device.cameraSettings.contShootingSpeed.value?.name ??
-                      "NotAvailable"),
+              subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(device.cameraSettings.contShootingSpeed.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+                Text("setContShootingSpeed", style: getTextStyle(device.api.setContShootingSpeed)),
+                Text("getContShootingSpeed", style: getTextStyle(device.api.getContShootingSpeed))
+              ]),
+              onTap: () => device.api.getContShootingSpeed(update: ForceUpdate.On),
             ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<ContShootingSpeedValue>(
+                        isExpanded: true,
+                        hint: Text("available"),
+                        items: device.cameraSettings.contShootingSpeed.available
+                            .map<DropdownMenuItem<ContShootingSpeedValue>>(
+                                (e) => DropdownMenuItem<ContShootingSpeedValue>(child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) => device.api.setContShootingSpeed(value),
+                      ))),
+              Expanded(
+                  child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: DropdownButton<ContShootingSpeedValue>(
+                        isExpanded: true,
+                        hint: Text("supported"),
+                        items: device.cameraSettings.contShootingSpeed.supported
+                            .map<DropdownMenuItem<ContShootingSpeedValue>>(
+                                (e) => DropdownMenuItem<ContShootingSpeedValue>(child: Text(e.name), value: e))
+                            .toList(),
+                        onChanged: (value) => device.api.setContShootingSpeed(value),
+                      ))),
+            ]),
           ]),
         ),
       ),
@@ -1024,18 +1083,11 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
               title: Text(ItemId.MeteringMode.name),
-              subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                        device.cameraSettings.meteringMode.value?.name ??
-                            "NotAvailable",
-                        textAlign: TextAlign.start),
-                    getText(ItemId.MeteringMode, ApiMethodId.SET),
-                    getText(ItemId.MeteringMode, ApiMethodId.GET),
-                    getText(ItemId.MeteringMode, ApiMethodId.GET_AVAILABLE),
-                    getText(ItemId.MeteringMode, ApiMethodId.GET_SUPPORTED)
-                  ]),
+              subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text(device.cameraSettings.meteringMode.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+                Text("setContShootingSpeed TODO", style: getTextStyle(device.api.setContShootingSpeed)),
+                Text("getContShootingSpeedTODO ", style: getTextStyle(device.api.getContShootingSpeed))
+              ]),
               onTap: () => device.api.getMeteringMode(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
