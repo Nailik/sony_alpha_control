@@ -377,6 +377,9 @@ abstract class CameraApiInterface {
       device.cameraSettings.focusMagnifier;
 
   Future<bool> setFocusMagnifier(double value);
+
+  Future<ListInfoItem<StringValue>> getStorageInformation({ForceUpdate update}) async =>
+      device.cameraSettings.storageInformation;
 }
 
 enum InterfaceType { Wifi_Interface, USB_Interface }

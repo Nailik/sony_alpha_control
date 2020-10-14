@@ -501,15 +501,20 @@ class SonyCameraWifiApi extends CameraApiInterface {
   Future<bool> setZoomSetting(ZoomSettingValue value) async =>
       await WifiCommand.createCommand(ApiMethodId.SET, ItemId.ZoomSetting,
           params: [
-            <String, dynamic>{'zoom': value.wifiValue}
-          ]).send(device).then((result) {
+        <String, dynamic>{'zoom': value.wifiValue}
+      ]).send(device).then((result) {
         if (result.isValid) {
-          SettingsItem<ZoomSettingValue> item =
-              device.cameraSettings.zoomSetting;
+          SettingsItem<ZoomSettingValue> item = device.cameraSettings.zoomSetting;
           item.updateItem(value, item.available, item.supported);
         }
         return result.isValid;
       });
+
+  ///Storage Information
+
+  @override
+  Future<ListInfoItem<StringValue>> getStorageInformation({update = ForceUpdate.IfNull}) async =>
+      await _updateListInfoItem(await super.getStorageInformation(update: update));
 
   ///Zoom
 
@@ -518,8 +523,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   //TODO save direction and movement param in zoom settings item and autostop when reached end?
   @override
   Future<bool> actZoom(String direction, String movementparameter) async =>
-      await WifiCommand.createCommand(ApiMethodId.ACT, ItemId.Zoom,
-              params: [direction, movementparameter])
+      await WifiCommand.createCommand(ApiMethodId.ACT, ItemId.Zoom, params: [direction, movementparameter])
           .send(device)
           .then((result) => result.isValid);
 

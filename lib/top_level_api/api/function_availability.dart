@@ -59,6 +59,11 @@ extension FunctionExtension on Function {
       return device.api
           .checkFunctionAvailability(ItemId.MethodTypes, ApiMethodId.GET, service: SonyWebApiServiceTypeId.GUIDE);
 
+
+    if (this == device.api.getStorageInformation)
+      return device.api
+          .checkFunctionAvailability(ItemId.StorageInformation, ApiMethodId.GET);
+
     return FunctionAvailability.Unsupported;
   }
 }

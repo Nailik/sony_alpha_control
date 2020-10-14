@@ -112,8 +112,7 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem programShift = SettingsItem<IntValue>(ItemId.ProgramShift);
   SettingsItem<ZoomSettingValue> zoomSetting =
       SettingsItem<ZoomSettingValue>(ItemId.ZoomSetting);
-  SettingsItem storageInformation =
-      SettingsItem<StringValue>(ItemId.StorageInformation);
+  ListInfoItem<StringValue> storageInformation = ListInfoItem<StringValue>(ItemId.StorageInformation);
   SettingsItem liveViewInfo = SettingsItem<StringValue>(ItemId.LiveViewInfo);
   SettingsItem<OnOffValue> silentShooting =
       SettingsItem<OnOffValue>(ItemId.SilentShooting);

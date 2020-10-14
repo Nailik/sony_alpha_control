@@ -1905,23 +1905,29 @@ class TestsPageState extends State<TestsPage> {
 
   ///StorageInformation (get)
   Widget getStorageInformationRow() {
-    return ListenableProvider<SettingsItem>(
+    return ListenableProvider<ListInfoItem>(
       create: (context) => device.cameraSettings.storageInformation,
-      child: Consumer<SettingsItem>(
+      child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
               title: Text(ItemId.StorageInformation.name),
               subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                        device.cameraSettings.silentShooting.value?.name ??
-                            "NotAvailable",
-                        textAlign: TextAlign.start),
-                    getText(ItemId.StorageInformation, ApiMethodId.GET),
-                  ]),
+                  children: [Text("getStorageInformation", style: getTextStyle(device.api.getStorageInformation))]),
+              onTap: () => device.api.getStorageInformation(update: ForceUpdate.On),
             ),
+            Padding(
+                    padding: EdgeInsets.all(16),
+                    child: DropdownButton<StringValue>(
+                      isExpanded: true,
+                      hint: Text("available"),
+                      items: device.cameraSettings.storageInformation.values
+                          .map<DropdownMenuItem<StringValue>>(
+                              (e) => DropdownMenuItem<StringValue>(child: Text(e.name), value: e))
+                          .toList(),
+                      onChanged: (value) => {},
+                    )),
           ]),
         ),
       ),
