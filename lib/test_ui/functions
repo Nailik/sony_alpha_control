@@ -112,11 +112,11 @@ stopLiveView (stopLiveview)
 setLiveViewFrameInfo (setLiveviewFrameInfo)
 getLiveViewFrameInfo (getLiveviewFrameInfo)
 
-setImageSize (setStillSize)
-getImageSize (getStillSize, getSupportedStillSize, getAvailableStillSize)
+setImageSize (setStillSize) //TODO unable to test
+getImageSize (getStillSize, getSupportedStillSize, getAvailableStillSize)  //TODO unable to test
 
-setAspectRatio (setStillSize)
-getAspectRatio (getStillSize, getSupportedStillSize, getAvailableStillSize)
+setAspectRatio (setStillSize)  //TODO unable to test
+getAspectRatio (getStillSize, getSupportedStillSize, getAvailableStillSize)  //TODO unable to test
 
 getSilentShooting
 setSilentShooting

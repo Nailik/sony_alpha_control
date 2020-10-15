@@ -107,6 +107,19 @@ extension FunctionExtension on Function {
 
     if (this == device.api.stopLiveView) return device.api.checkFunctionAvailability(ItemId.LiveView, ApiMethodId.STOP);
 
+    if (this == device.api.getImageSize)
+      return device.api.checkFunctionAvailability(ItemId.ImageSize, ApiMethodId.GET);
+
+    if (this == device.api.setImageSize)
+      return device.api.checkFunctionAvailability(ItemId.ImageSize, ApiMethodId.SET);
+
+    if (this == device.api.getAspectRatio)
+      return device.api.checkFunctionAvailability(ItemId.AspectRatio, ApiMethodId.GET);
+
+    if (this == device.api.setAspectRatio)
+      return device.api.checkFunctionAvailability(ItemId.AspectRatio, ApiMethodId.SET);
+
+
     return FunctionAvailability.Unsupported;
   }
 }

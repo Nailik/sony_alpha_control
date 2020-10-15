@@ -123,6 +123,8 @@ abstract class Value<T> {
         return OnOffValue(wifiValue);
       case ItemId.TvColorSystem:
       //TODO
+      case ItemId.ImageSize:
+        return ImageSizeValue.fromWifiValue(wifiValue);
       case ItemId.PostViewImageSize:
         return PostViewImageSizeValue.fromWifiValue(wifiValue);
       case ItemId.SelfTimer:
@@ -815,15 +817,17 @@ class RecordVideoStateValue extends Value<RecordVideoStateId> {
 }
 
 class ImageSizeValue extends Value<ImageSizeId> {
-  ImageSizeValue(ImageSizeId id) : super(id);
+  final AspectRatioId aspectRatioId;
+
+  ImageSizeValue(ImageSizeId id, this.aspectRatioId) : super(id);
 
   @override
   factory ImageSizeValue.fromUSBValue(int usbValue) =>
-      ImageSizeValue(ImageSizeIdExtension.getIdFromUsb(usbValue));
+      ImageSizeValue(ImageSizeIdExtension.getIdFromUsb(usbValue), null);
 
   @override
-  factory ImageSizeValue.fromWifiValue(String wifiValue) =>
-      ImageSizeValue(ImageSizeIdExtension.getIdFromWifi(wifiValue));
+  factory ImageSizeValue.fromWifiValue(dynamic wifiValue) => ImageSizeValue(
+      ImageSizeIdExtension.getIdFromWifi(wifiValue["size"]), AspectRatioIdExtension.getIdFromWifi(wifiValue["aspect"]));
 
   @override
   int get usbValue => id.usbValue;

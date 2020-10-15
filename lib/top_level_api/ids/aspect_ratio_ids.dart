@@ -25,7 +25,7 @@ extension AspectRatioIdExtension on AspectRatioId {
       case AspectRatioId.Ar16_9:
         return "16:9";
       case AspectRatioId.Ar3_2:
-        return "3_2";
+        return "3:2";
       case AspectRatioId.Ar1_1:
         return "1:1";
       case AspectRatioId.Unknown:

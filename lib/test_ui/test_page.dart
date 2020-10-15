@@ -2304,25 +2304,109 @@ class TestsPageState extends State<TestsPage> {
                                             DropdownMenuItem<ImageFileFormatValue>(
                                                 child: Text(e.name), value: e))
                                         .toList(),
-                                    onChanged: (value) =>
-                                        device.api.setImageFileFormat(value),
-                                  ))),
-                          Expanded(
-                              child: Padding(
-                                  padding: EdgeInsets.all(16),
-                                  child: DropdownButton<ImageFileFormatValue>(
-                                    hint: Text("supported"),
-                                    items: device
-                                        .cameraSettings.imageFileFormat.supported
-                                        .map<DropdownMenuItem<ImageFileFormatValue>>(
-                                            (e) =>
-                                            DropdownMenuItem<ImageFileFormatValue>(
-                                                child: Text(e.name), value: e))
-                                        .toList(),
-                                    onChanged: (value) =>
-                                        device.api.setImageFileFormat(value),
-                                  ))),
-                        ]),
+                                    onChanged: (value) => device.api.setImageFileFormat(value),
+                              ))),
+                      Expanded(
+                          child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: DropdownButton<ImageFileFormatValue>(
+                                hint: Text("supported"),
+                                items: device.cameraSettings.imageFileFormat.supported
+                                    .map<DropdownMenuItem<ImageFileFormatValue>>(
+                                        (e) => DropdownMenuItem<ImageFileFormatValue>(child: Text(e.name), value: e))
+                                    .toList(),
+                                onChanged: (value) => device.api.setImageFileFormat(value),
+                              ))),
+                    ]),
+                  ]),
+                )));
+  }
+
+  ///Image Size
+  Widget getImageSizeRow() {
+    return ListenableProvider<SettingsItem>(
+        create: (context) => device.cameraSettings.imageSize,
+        child: Consumer<SettingsItem>(
+            builder: (context, model, _) => Card(
+                  child: Column(children: [
+                    ListTile(
+                      title: Text(ItemId.ImageSize.name),
+                      subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                        Text(device.cameraSettings.imageSize.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+                        Text("setImageSize", style: getTextStyle(device.api.setImageSize)),
+                        Text("getImageSize", style: getTextStyle(device.api.getImageSize))
+                      ]),
+                      onTap: () => device.api.getImageSize(update: ForceUpdate.On),
+                    ),
+                    Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                      Expanded(
+                          child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: DropdownButton<ImageSizeValue>(
+                                hint: Text("available"),
+                                items: device.cameraSettings.imageSize.available
+                                    .map<DropdownMenuItem<ImageSizeValue>>(
+                                        (e) => DropdownMenuItem<ImageSizeValue>(child: Text(e.name), value: e))
+                                    .toList(),
+                                onChanged: (value) => device.api.setImageSize(value),
+                              ))),
+                      Expanded(
+                          child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: DropdownButton<ImageSizeValue>(
+                                hint: Text("supported"),
+                                items: device.cameraSettings.imageSize.supported
+                                    .map<DropdownMenuItem<ImageSizeValue>>(
+                                        (e) => DropdownMenuItem<ImageSizeValue>(child: Text(e.name), value: e))
+                                    .toList(),
+                                onChanged: (value) => device.api.setImageSize(value),
+                              ))),
+                    ]),
+                  ]),
+                )));
+  }
+
+  ///Aspect Ratio
+  Widget getAspectRatioRow() {
+    return ListenableProvider<SettingsItem>(
+        create: (context) => device.cameraSettings.aspectRatio,
+        child: Consumer<SettingsItem>(
+            builder: (context, model, _) => Card(
+                  child: Column(children: [
+                    ListTile(
+                      title: Text(ItemId.ImageFileFormat.name),
+                      subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                        Text(device.cameraSettings.aspectRatio.value?.name ?? "NotAvailable",
+                            textAlign: TextAlign.start),
+                        Text("setAspectRatio", style: getTextStyle(device.api.setAspectRatio)),
+                        Text("getAspectRatio", style: getTextStyle(device.api.getAspectRatio))
+                      ]),
+                      onTap: () => device.api.getAspectRatio(update: ForceUpdate.On),
+                    ),
+                    Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                      Expanded(
+                          child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: DropdownButton<AspectRatioValue>(
+                                hint: Text("available"),
+                                items: device.cameraSettings.aspectRatio.available
+                                    .map<DropdownMenuItem<AspectRatioValue>>(
+                                        (e) => DropdownMenuItem<AspectRatioValue>(child: Text(e.name), value: e))
+                                    .toList(),
+                                onChanged: (value) => device.api.setAspectRatio(value),
+                              ))),
+                      Expanded(
+                          child: Padding(
+                              padding: EdgeInsets.all(16),
+                              child: DropdownButton<AspectRatioValue>(
+                                hint: Text("supported"),
+                                items: device.cameraSettings.aspectRatio.supported
+                                    .map<DropdownMenuItem<AspectRatioValue>>(
+                                        (e) => DropdownMenuItem<AspectRatioValue>(child: Text(e.name), value: e))
+                                    .toList(),
+                                onChanged: (value) => device.api.setAspectRatio(value),
+                              ))),
+                    ]),
                   ]),
                 )));
   }

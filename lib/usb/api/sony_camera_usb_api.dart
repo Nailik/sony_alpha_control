@@ -64,7 +64,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
       case ItemId.DroHdr:
         return setDroHdr(DroHdrIdExtension.getIdFromUsb(value));
       case ItemId.ImageSize:
-        return setImageSize(ImageSizeIdExtension.getIdFromUsb(value));
+        return setImageSize(ImageSizeValue.fromUSBValue(value));
       case ItemId.ShutterSpeed:
         return setShutterSpeed(
             ShutterSpeedValue.fromUsbValue(value as double, 0));
@@ -538,7 +538,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
       device.cameraSettings.imageSize;
 
   @override
-  Future<bool> setImageSize(ImageSizeId value) async =>
+  Future<bool> setImageSize(ImageSizeValue value) async =>
       (await UsbCommands.getCommandSetting(ItemId.ImageSize,
                   value1: value.usbValue)
               .send())

@@ -322,7 +322,7 @@ abstract class CameraApiInterface {
 
   Future<SettingsItem<ImageSizeValue>> getImageSize({ForceUpdate update}) async => device.cameraSettings.imageSize;
 
-  Future<bool> setImageSize(ImageSizeId value);
+  Future<bool> setImageSize(ImageSizeValue value);
 
   ///Aspect Ratio
 

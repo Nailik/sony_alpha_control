@@ -8,14 +8,12 @@ import 'package:sonyalphacontrol/top_level_api/device/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/device/items.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/device/value.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/dro_hdr_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_area_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_direction_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_phase_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
@@ -851,6 +849,44 @@ class SonyCameraWifiApi extends CameraApiInterface {
         return result.isValid;
       });
 
+  ///Image Size
+
+  @override
+  Future<SettingsItem<ImageSizeValue>> getImageSize({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getImageSize(update: update));
+
+  @override
+  Future<bool> setImageSize(ImageSizeValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.ImageSize, params: [
+        //TODO current aspect ratio
+        <String, dynamic>{'contShootingSpeed': value.wifiValue}
+      ]).send(device).then((result) {
+        if (result.isValid) {
+          SettingsItem<ImageSizeValue> item = device.cameraSettings.imageSize;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///Aspect Ratio
+
+  @override
+  Future<SettingsItem<AspectRatioValue>> getAspectRatio({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getAspectRatio(update: update)); //TODO update item id image size?
+
+  @override
+  Future<bool> setAspectRatio(AspectRatioValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.AspectRatio, params: [
+        //TODO current image Size
+        <String, dynamic>{'contShootingSpeed': value.wifiValue}
+      ]).send(device).then((result) {
+        if (result.isValid) {
+          SettingsItem<AspectRatioValue> item = device.cameraSettings.aspectRatio;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
   ///Continuous Shooting
 
   @override
@@ -973,15 +1009,12 @@ class SonyCameraWifiApi extends CameraApiInterface {
         return result.isValid;
       });
 
+
   //TODO
 
   @override
   Future<SettingsItem<BoolValue>> getAel({update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getAel(update: update));
-
-  @override
-  Future<SettingsItem<AspectRatioValue>> getAspectRatio({update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getAspectRatio(update: update));
 
   @override
   Future<SettingsItem<AutoFocusStateValue>> getAutoFocusState(
@@ -1043,11 +1076,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
   Future<SettingsItem<FocusModeToggleValue>> getFocusModeToggle(
           {update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getFocusModeToggle(update: update));
-
-  @override
-  Future<SettingsItem<ImageSizeValue>> getImageSize(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getImageSize(update: update));
 
   @override
   Future<bool> getPhotoAvailable({update = ForceUpdate.IfNull}) {
@@ -1162,11 +1190,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
-  @override
-  Future<bool> setImageSize(ImageSizeId value) {
-    // TODO: implement setImageSize
-    throw UnimplementedError();
-  }
 
   @override
   Future<bool> setPictureEffect(PictureEffectId value) {
@@ -1400,8 +1423,11 @@ class SonyCameraWifiApi extends CameraApiInterface {
   FunctionAvailability checkFunctionAvailability(
       ItemId itemId, ApiMethodId apiMethodId,
       {SonyWebApiServiceTypeId service = SonyWebApiServiceTypeId.CAMERA}) {
-    FunctionAvailability functionAvailability =
-        FunctionAvailability.Unsupported;
+    FunctionAvailability functionAvailability = FunctionAvailability.Unsupported;
+
+    if (itemId == ItemId.AspectRatio) {
+      itemId = ItemId.ImageSize; // paired together
+    }
 
     //check sonyWebApiServiceTypeId first
     if (device.getWebApiService(service) != null) {
@@ -1466,11 +1492,5 @@ class SonyCameraWifiApi extends CameraApiInterface {
     }
 
     return functionAvailability;
-  }
-
-  @override
-  Future<bool> setAspectRatio(AspectRatioValue value) {
-    // TODO: implement setAspectRatio
-    throw UnimplementedError();
   }
 }
