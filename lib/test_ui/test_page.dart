@@ -95,6 +95,15 @@ class TestsPageState extends State<TestsPage> {
                       ///ContShootingSpeed (set, get, getSupported, getAvailable)
                       getContShootingSpeedRow(),
 
+                      ///ContShooting (start, stop)
+                      getContShootingRow(),
+
+                      ///Movie Recording (start, stop)
+                      getMovieRecordingRow(),
+
+                      ///Audio Recording (start, stop)
+                      getAudioRecordingRow(),
+
                       ///MeteringMode (get, getSupported)
                       getMeteringModeRow(),
 
@@ -881,7 +890,6 @@ class TestsPageState extends State<TestsPage> {
   ///HalfPressShutter (act, cancel)
   Widget getHalfPressShutterRow() {
     return ListenableProvider<InfoItem>(
-        //TODO Info item? is act is cancele
         create: (context) => device.cameraSettings.halfPressShutter,
         child: Consumer<InfoItem>(
           builder: (context, model, _) => Card(
@@ -1067,6 +1075,100 @@ class TestsPageState extends State<TestsPage> {
                             .toList(),
                         onChanged: (value) => device.api.setContShootingSpeed(value),
                       ))),
+            ]),
+          ]),
+        ),
+      ),
+    );
+  }
+
+  ///ContShooting (start, stop)
+  Widget getContShootingRow() {
+    return ListenableProvider<InfoItem>(
+      create: (context) => device.cameraSettings.contShooting,
+      child: Consumer<InfoItem>(
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(ItemId.ContShooting.name),
+              subtitle:
+                  Text(device.cameraSettings.contShooting.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                child: ListTile(
+                    title: Text(ItemId.ContShooting.name + " START"),
+                    subtitle: Text("startContShooting", style: getTextStyle(device.api.startContShooting)),
+                    onTap: () => device.api.startContShooting()),
+              ),
+              Expanded(
+                child: ListTile(
+                    title: Text(ItemId.ContShooting.name + " STOP"),
+                    subtitle: Text("stopContShooting", style: getTextStyle(device.api.stopContShooting)),
+                    onTap: () => device.api.stopContShooting()),
+              )
+            ]),
+          ]),
+        ),
+      ),
+    );
+  }
+
+  ///Movie Rec (start, stop)
+  Widget getMovieRecordingRow() {
+    return ListenableProvider<InfoItem>(
+      create: (context) => device.cameraSettings.movieRecording,
+      child: Consumer<InfoItem>(
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(ItemId.MovieRecording.name),
+              subtitle: Text(device.cameraSettings.movieRecording.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                child: ListTile(
+                    title: Text(ItemId.MovieRecording.name + " START"),
+                    subtitle: Text("startMovieRec", style: getTextStyle(device.api.startMovieRec)),
+                    onTap: () => device.api.startMovieRec()),
+              ),
+              Expanded(
+                child: ListTile(
+                    title: Text(ItemId.MovieRecording.name + " STOP"),
+                    subtitle: Text("stopMovieRec", style: getTextStyle(device.api.stopMovieRec)),
+                    onTap: () => device.api.stopMovieRec()),
+              )
+            ]),
+          ]),
+        ),
+      ),
+    );
+  }
+
+  ///Movie Rec (start, stop)
+  Widget getAudioRecordingRow() {
+    return ListenableProvider<InfoItem>(
+      create: (context) => device.cameraSettings.audioRecording,
+      child: Consumer<InfoItem>(
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(ItemId.AudioRecording.name),
+              subtitle: Text(device.cameraSettings.audioRecording.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                child: ListTile(
+                    title: Text(ItemId.AudioRecording.name + " START"),
+                    subtitle: Text("startAudioRec", style: getTextStyle(device.api.startAudioRec)),
+                    onTap: () => device.api.startAudioRec()),
+              ),
+              Expanded(
+                child: ListTile(
+                    title: Text(ItemId.AudioRecording.name + " STOP"),
+                    subtitle: Text("stopAudioRec", style: getTextStyle(device.api.stopAudioRec)),
+                    onTap: () => device.api.stopAudioRec()),
+              )
             ]),
           ]),
         ),

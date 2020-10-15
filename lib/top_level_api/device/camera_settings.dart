@@ -93,6 +93,9 @@ abstract class CameraSettings extends ChangeNotifier {
       InfoItem<BoolValue>(ItemId.HalfPressShutter); //saves if is act (true) or cancel (false)
   SettingsItem<IntValue> selfTimer = SettingsItem<IntValue>(ItemId.SelfTimer);
 
+  InfoItem<BoolValue> audioRecording = InfoItem<BoolValue>(ItemId.AudioRecording);
+  InfoItem<BoolValue> movieRecording = InfoItem<BoolValue>(ItemId.MovieRecording);
+  InfoItem<BoolValue> contShooting = InfoItem<BoolValue>(ItemId.ContShooting);
   SettingsItem<ContShootingModeValue> contShootingMode = SettingsItem<ContShootingModeValue>(ItemId.ContShootingMode);
   SettingsItem<ContShootingSpeedValue> contShootingSpeed =
       SettingsItem<ContShootingSpeedValue>(ItemId.ContShootingSpeed);

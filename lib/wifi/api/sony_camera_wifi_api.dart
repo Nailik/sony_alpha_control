@@ -842,12 +842,74 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setContShootingSpeed(ContShootingSpeedValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.ContShootingSpeed, params: [<String, dynamic>{'contShootingSpeed': value.wifiValue}])
-          .send(device)
-          .then((result) {
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.ContShootingSpeed, params: [
+        <String, dynamic>{'contShootingSpeed': value.wifiValue}
+      ]).send(device).then((result) {
         if (result.isValid) {
           SettingsItem<ContShootingSpeedValue> item = device.cameraSettings.contShootingSpeed;
           item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///Continuous Shooting
+
+  @override
+  Future<bool> startContShooting() async =>
+      WifiCommand.createCommand(ApiMethodId.START, ItemId.ContShooting).send(device).then((result) {
+        if (result.isValid) {
+          InfoItem<BoolValue> item = device.cameraSettings.contShooting;
+          item.updateItem(BoolValue(true));
+        }
+        return result.isValid;
+      });
+
+  @override
+  Future<bool> stopContShooting() async =>
+      WifiCommand.createCommand(ApiMethodId.STOP, ItemId.ContShooting).send(device).then((result) {
+        if (result.isValid) {
+          InfoItem<BoolValue> item = device.cameraSettings.contShooting;
+          item.updateItem(BoolValue(false));
+        }
+        return result.isValid;
+      });
+
+  ///Movie Rec
+
+  @override
+  Future<bool> startMovieRec() async =>
+      WifiCommand.createCommand(ApiMethodId.START, ItemId.MovieRecording).send(device).then((result) {
+        if (result.isValid) {
+          device.cameraSettings.movieRecording.updateItem(BoolValue(true));
+        }
+        return result.isValid;
+      });
+
+  @override
+  Future<bool> stopMovieRec() async =>
+      WifiCommand.createCommand(ApiMethodId.STOP, ItemId.MovieRecording).send(device).then((result) {
+        if (result.isValid) {
+          device.cameraSettings.movieRecording.updateItem(BoolValue(false));
+        }
+        return result.isValid;
+      });
+
+  ///Audio Rec
+
+  @override
+  Future<bool> startAudioRec() async =>
+      WifiCommand.createCommand(ApiMethodId.START, ItemId.AudioRecording).send(device).then((result) {
+        if (result.isValid) {
+          device.cameraSettings.audioRecording.updateItem(BoolValue(true));
+        }
+        return result.isValid;
+      });
+
+  @override
+  Future<bool> stopAudioRec() async =>
+      WifiCommand.createCommand(ApiMethodId.STOP, ItemId.AudioRecording).send(device).then((result) {
+        if (result.isValid) {
+          device.cameraSettings.audioRecording.updateItem(BoolValue(false));
         }
         return result.isValid;
       });

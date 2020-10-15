@@ -173,7 +173,7 @@ enum ItemId {
   BeepMode,
   CameraFunction,
   MovieQuality,
-  MovieRec,
+  MovieRecording,
   SteadyMode,
   ViewAngle,
   PostViewImageSize,
@@ -449,7 +449,7 @@ extension SettingsIdExtension on ItemId {
         return "beepMode";
       case ItemId.MovieQuality:
         return "movieQuality";
-      case ItemId.MovieRec:
+      case ItemId.MovieRecording:
         return "movieRec";
       case ItemId.ViewAngle:
         return "viewAngle";

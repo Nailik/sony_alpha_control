@@ -1,17 +1,6 @@
 
 
 
-
-
-startContShooting
-stopContShooting
-
-startMovieRec
-stopMovieRec
-
-startAudioRec
-stopAudioRec
-
 startIntervalStillRec
 stopIntervalStillRec
 

@@ -91,9 +91,24 @@ getContShootingSpeed (getContShootingSpeed, getSupportedContShootingSpeed, getAv
 setContShootingMode (setContShootingMode)
 getContShootingMode (getContShootingMode, getSupportedContShootingMode, getAvailableContShootingMode)
 
+startContShooting (startContShooting)
+stopContShooting (stopContShooting)
+
+startMovieRec (startMovieRec)
+stopMovieRec (stopMovieRec)
+
+startAudioRec (startAudioRec)
+stopAudioRec (stopAudioRec)
 
 getSilentShooting
 setSilentShooting
+
+
+
+
+
+
+
 
 getMeteringMode
 setMeteringMode

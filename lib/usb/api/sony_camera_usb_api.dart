@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
 //import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/api/force_update.dart';
 import 'package:sonyalphacontrol/top_level_api/api/function_availability.dart';
@@ -776,4 +775,39 @@ class SonyCameraUsbApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
+  @override
+  Future<bool> startContShooting() {
+    // TODO: implement startContShooting
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> stopContShooting() {
+    // TODO: implement stopContShooting
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> startMovieRec() {
+    // TODO: implement startMovieRec
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> stopMovieRec() {
+    // TODO: implement stopMovieRec
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> startAudioRec() {
+    // TODO: implement startAudioRec
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> stopAudioRec() {
+    // TODO: implement stopAudioRec
+    throw UnimplementedError();
+  }
 }

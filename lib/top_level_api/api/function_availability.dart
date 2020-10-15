@@ -74,6 +74,24 @@ extension FunctionExtension on Function {
     if (this == device.api.setContShootingMode)
       return device.api.checkFunctionAvailability(ItemId.ContShootingMode, ApiMethodId.SET);
 
+    if (this == device.api.startContShooting)
+      return device.api.checkFunctionAvailability(ItemId.ContShooting, ApiMethodId.START);
+
+    if (this == device.api.stopContShooting)
+      return device.api.checkFunctionAvailability(ItemId.ContShooting, ApiMethodId.STOP);
+
+    if (this == device.api.startMovieRec)
+      return device.api.checkFunctionAvailability(ItemId.MovieRecording, ApiMethodId.START);
+
+    if (this == device.api.stopMovieRec)
+      return device.api.checkFunctionAvailability(ItemId.MovieRecording, ApiMethodId.STOP);
+
+    if (this == device.api.startAudioRec)
+      return device.api.checkFunctionAvailability(ItemId.AudioRecording, ApiMethodId.START);
+
+    if (this == device.api.stopAudioRec)
+      return device.api.checkFunctionAvailability(ItemId.AudioRecording, ApiMethodId.STOP);
+
     if (this == device.api.getShootMode) return device.api.checkFunctionAvailability(ItemId.ShootMode, ApiMethodId.GET);
 
     if (this == device.api.setShootMode) return device.api.checkFunctionAvailability(ItemId.ShootMode, ApiMethodId.SET);
