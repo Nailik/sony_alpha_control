@@ -96,9 +96,16 @@ extension FunctionExtension on Function {
 
     if (this == device.api.setShootMode) return device.api.checkFunctionAvailability(ItemId.ShootMode, ApiMethodId.SET);
 
-    if (this == device.api.getImageFileFormat) return device.api.checkFunctionAvailability(ItemId.ImageFileFormat, ApiMethodId.GET);
+    if (this == device.api.getImageFileFormat)
+      return device.api.checkFunctionAvailability(ItemId.ImageFileFormat, ApiMethodId.GET);
 
-    if (this == device.api.setImageFileFormat) return device.api.checkFunctionAvailability(ItemId.ImageFileFormat, ApiMethodId.SET);
+    if (this == device.api.setImageFileFormat)
+      return device.api.checkFunctionAvailability(ItemId.ImageFileFormat, ApiMethodId.SET);
+
+    if (this == device.api.startLiveView)
+      return device.api.checkFunctionAvailability(ItemId.LiveView, ApiMethodId.START);
+
+    if (this == device.api.stopLiveView) return device.api.checkFunctionAvailability(ItemId.LiveView, ApiMethodId.STOP);
 
     return FunctionAvailability.Unsupported;
   }

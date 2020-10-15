@@ -2,14 +2,12 @@
 
 
 
-startLoopRec
-stopLoopRec
- startLiveview
-stopLiveview
 
 
- setLiveviewFrameInfo
-getLiveviewFrameInfo
+
+
+
+
 
  setTouchAFPosition
 getTouchAFPosition

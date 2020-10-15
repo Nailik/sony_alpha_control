@@ -103,9 +103,17 @@ stopAudioRec (stopAudioRec)
 startIntervalStillRec (startIntervalStillRec)
 stopIntervalStillRec (stopIntervalStillRec)
 
+startLoopRecording (startLoopRec)
+stopLoopRecording (stopLoopRec)
+
+startLiveView (startLiveview)
+stopLiveView (stopLiveview)
+
+setLiveViewFrameInfo (setLiveviewFrameInfo)
+getLiveViewFrameInfo (getLiveviewFrameInfo)
+
 getSilentShooting
 setSilentShooting
-
 
 
 

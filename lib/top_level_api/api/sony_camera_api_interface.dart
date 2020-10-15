@@ -33,11 +33,6 @@ abstract class CameraApiInterface {
 
   Stream<Image> streamLiveView(); //steps?
 
-  startLiveView() {
-    //TODO on usb running within update loop?
-    //how to send changes?
-  }
-
   ///usb so far
   Future<bool> setSettingsRaw(ItemId id, int value);
 
@@ -314,6 +309,18 @@ abstract class CameraApiInterface {
   Future<bool> startIntervalStillRecording();
 
   Future<bool> stopIntervalStillRecording();
+
+  ///Interval Still Recording
+
+  Future<bool> startLoopRecording();
+
+  Future<bool> stopLoopRecording();
+
+  ///Interval Still Recording
+
+  Future<bool> startLiveView();
+
+  Future<bool> stopLiveView();
 
 
   ///unchecked (wifi) *******************************************

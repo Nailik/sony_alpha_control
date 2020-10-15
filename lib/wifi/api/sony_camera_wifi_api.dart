@@ -874,7 +874,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
         return result.isValid;
       });
 
-  ///Movie Rec
+  ///Movie Recording
 
   @override
   Future<bool> startMovieRecording() async =>
@@ -894,7 +894,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
         return result.isValid;
       });
 
-  ///Audio Rec
+  ///Audio Recording
 
   @override
   Future<bool> startAudioRecording() async =>
@@ -914,14 +914,13 @@ class SonyCameraWifiApi extends CameraApiInterface {
         return result.isValid;
       });
 
-
-  ///Audio Rec
+  ///Audio Recording
 
   @override
   Future<bool> startIntervalStillRecording() async =>
       WifiCommand.createCommand(ApiMethodId.START, ItemId.IntervalStillRecording).send(device).then((result) {
         if (result.isValid) {
-          device.cameraSettings.intervallStillRecording.updateItem(BoolValue(true));
+          device.cameraSettings.intervalStillRecording.updateItem(BoolValue(true));
         }
         return result.isValid;
       });
@@ -930,7 +929,47 @@ class SonyCameraWifiApi extends CameraApiInterface {
   Future<bool> stopIntervalStillRecording() async =>
       WifiCommand.createCommand(ApiMethodId.STOP, ItemId.IntervalStillRecording).send(device).then((result) {
         if (result.isValid) {
-          device.cameraSettings.intervallStillRecording.updateItem(BoolValue(false));
+          device.cameraSettings.intervalStillRecording.updateItem(BoolValue(false));
+        }
+        return result.isValid;
+      });
+
+  ///Loop Recording
+
+  @override
+  Future<bool> startLoopRecording() async =>
+      WifiCommand.createCommand(ApiMethodId.START, ItemId.LoopRecording).send(device).then((result) {
+        if (result.isValid) {
+          device.cameraSettings.loopRecording.updateItem(BoolValue(true));
+        }
+        return result.isValid;
+      });
+
+  @override
+  Future<bool> stopLoopRecording() async =>
+      WifiCommand.createCommand(ApiMethodId.STOP, ItemId.LoopRecording).send(device).then((result) {
+        if (result.isValid) {
+          device.cameraSettings.loopRecording.updateItem(BoolValue(false));
+        }
+        return result.isValid;
+      });
+
+  ///Live View
+
+  @override
+  Future<bool> startLiveView() async =>
+      WifiCommand.createCommand(ApiMethodId.START, ItemId.LiveView).send(device).then((result) {
+        if (result.isValid) {
+          device.cameraSettings.liveView.updateItem(BoolValue(true)); //TODO url?
+        }
+        return result.isValid;
+      });
+
+  @override
+  Future<bool> stopLiveView() async =>
+      WifiCommand.createCommand(ApiMethodId.STOP, ItemId.LiveView).send(device).then((result) {
+        if (result.isValid) {
+          device.cameraSettings.liveView.updateItem(BoolValue(false));
         }
         return result.isValid;
       });

@@ -822,4 +822,28 @@ class SonyCameraUsbApi extends CameraApiInterface {
     // TODO: implement stopIntervalStillRecording
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool> startLiveView() {
+    // TODO: implement startLiveView
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> startLoopRecording() {
+    // TODO: implement startLoopRecording
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> stopLiveView() {
+    // TODO: implement stopLiveView
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> stopLoopRecording() {
+    // TODO: implement stopLoopRecording
+    throw UnimplementedError();
+  }
 }

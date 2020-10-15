@@ -104,6 +104,9 @@ class TestsPageState extends State<TestsPage> {
                       ///Audio Recording (start, stop)
                       getAudioRecordingRow(),
 
+                      ///Loop Recording (start, stop)
+                      getLoopRecordingRow(),
+
                       ///MeteringMode (get, getSupported)
                       getMeteringModeRow(),
 
@@ -819,25 +822,6 @@ class TestsPageState extends State<TestsPage> {
     );
   }
 
-  ///LiveView (start, stop)
-  Widget getLiveViewRow() {
-    return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.liveView,
-      //TODO availabilty of functions?
-      child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(
-          child: Column(children: [
-            ListTile(
-              title: Text(ItemId.LiveView.name),
-              subtitle: Text(
-                  device.cameraSettings.liveView.value?.name ?? "NotAvailable"),
-            ),
-          ]),
-        ),
-      ),
-    );
-  }
-
   ///Zoom (act)
   Widget getZoomRow() {
     return ListenableProvider<SettingsItem>(
@@ -1168,6 +1152,68 @@ class TestsPageState extends State<TestsPage> {
                     title: Text(ItemId.AudioRecording.name + " STOP"),
                     subtitle: Text("stopAudioRec", style: getTextStyle(device.api.stopAudioRecording)),
                     onTap: () => device.api.stopAudioRecording()),
+              )
+            ]),
+          ]),
+        ),
+      ),
+    );
+  }
+
+  ///Loop Rec (start, stop)
+  Widget getLoopRecordingRow() {
+    return ListenableProvider<InfoItem>(
+      create: (context) => device.cameraSettings.loopRecording,
+      child: Consumer<InfoItem>(
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(ItemId.LoopRecording.name),
+              subtitle: Text(device.cameraSettings.loopRecording.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                child: ListTile(
+                    title: Text(ItemId.LoopRecording.name + " START"),
+                    subtitle: Text("startLoopRecording", style: getTextStyle(device.api.startLoopRecording)),
+                    onTap: () => device.api.startLoopRecording()),
+              ),
+              Expanded(
+                child: ListTile(
+                    title: Text(ItemId.LoopRecording.name + " STOP"),
+                    subtitle: Text("stopLoopRecording", style: getTextStyle(device.api.stopLoopRecording)),
+                    onTap: () => device.api.stopLoopRecording()),
+              )
+            ]),
+          ]),
+        ),
+      ),
+    );
+  }
+
+  ///Live View (start, stop)
+  Widget getLiveViewRow() {
+    return ListenableProvider<InfoItem>(
+      create: (context) => device.cameraSettings.liveView,
+      child: Consumer<InfoItem>(
+        builder: (context, model, _) => Card(
+          child: Column(children: [
+            ListTile(
+              title: Text(ItemId.LiveView.name),
+              subtitle: Text(device.cameraSettings.liveView.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Expanded(
+                child: ListTile(
+                    title: Text(ItemId.LiveView.name + " START"),
+                    subtitle: Text("startLiveView", style: getTextStyle(device.api.startLiveView)),
+                    onTap: () => device.api.startLiveView()),
+              ),
+              Expanded(
+                child: ListTile(
+                    title: Text(ItemId.LiveView.name + " STOP"),
+                    subtitle: Text("stopLiveView", style: getTextStyle(device.api.stopLiveView)),
+                    onTap: () => device.api.stopLiveView()),
               )
             ]),
           ]),

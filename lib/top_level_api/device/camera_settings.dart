@@ -86,15 +86,16 @@ abstract class CameraSettings extends ChangeNotifier {
 
   ListInfoItem<StringValue> cameraSetup = ListInfoItem<StringValue>(ItemId.CameraSetup);
 
-  SettingsItem liveView = SettingsItem<StringValue>(ItemId.LiveView);
+  InfoItem<BoolValue> liveView = InfoItem<BoolValue>(ItemId.LiveView);
 
   SettingsItem zoom = SettingsItem<StringValue>(ItemId.Zoom);
   InfoItem<BoolValue> halfPressShutter =
       InfoItem<BoolValue>(ItemId.HalfPressShutter); //saves if is act (true) or cancel (false)
   SettingsItem<IntValue> selfTimer = SettingsItem<IntValue>(ItemId.SelfTimer);
 
-  InfoItem<BoolValue> intervallStillRecording = InfoItem<BoolValue>(ItemId.IntervalStillRecording);
+  InfoItem<BoolValue> intervalStillRecording = InfoItem<BoolValue>(ItemId.IntervalStillRecording);
   InfoItem<BoolValue> audioRecording = InfoItem<BoolValue>(ItemId.AudioRecording);
+  InfoItem<BoolValue> loopRecording = InfoItem<BoolValue>(ItemId.LoopRecording);
   InfoItem<BoolValue> movieRecording = InfoItem<BoolValue>(ItemId.MovieRecording);
   InfoItem<BoolValue> contShooting = InfoItem<BoolValue>(ItemId.ContShooting);
   SettingsItem<ContShootingModeValue> contShootingMode = SettingsItem<ContShootingModeValue>(ItemId.ContShootingMode);
