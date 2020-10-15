@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:sonyalphacontrol/top_level_api/api/force_update.dart';
 import 'package:sonyalphacontrol/top_level_api/api/function_availability.dart';
 import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dart';
@@ -1310,12 +1309,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<RecordVideoStateValue> getRecordingVideoState({ForceUpdate update}) {
     // TODO: implement getRecordingVideoState
-    throw UnimplementedError();
-  }
-
-  @override
-  Stream<Image> streamLiveView() {
-    // TODO: implement streamLiveView
     throw UnimplementedError();
   }
 

@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:sonyalphacontrol/top_level_api/device/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/device/items.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
@@ -29,8 +28,6 @@ abstract class CameraApiInterface {
   SonyCameraDevice get device;
 
   CameraApiInterface(this.cameraDevice);
-
-  Stream<Image> streamLiveView(); //steps?
 
   ///usb so far
   Future<bool> setSettingsRaw(ItemId id, int value);
