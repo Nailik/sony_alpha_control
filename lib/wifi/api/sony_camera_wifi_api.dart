@@ -1097,12 +1097,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> setAspectRatio(AspectRatioId value) {
-    // TODO: implement setAspectRatio
-    throw UnimplementedError();
-  }
-
-  @override
   Future<bool> setDriveMode(DriveModeId value) {
     // TODO: implement setDriveMode
     throw UnimplementedError();
@@ -1479,5 +1473,11 @@ class SonyCameraWifiApi extends CameraApiInterface {
     }
 
     return functionAvailability;
+  }
+
+  @override
+  Future<bool> setAspectRatio(AspectRatioValue value) {
+    // TODO: implement setAspectRatio
+    throw UnimplementedError();
   }
 }

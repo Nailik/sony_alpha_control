@@ -5,7 +5,6 @@ import 'package:sonyalphacontrol/top_level_api/device/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/device/items.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/device/value.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/dro_hdr_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_area_ids.dart';
@@ -322,6 +321,18 @@ abstract class CameraApiInterface {
 
   Future<bool> stopLiveView();
 
+  ///Image Size
+
+  Future<SettingsItem<ImageSizeValue>> getImageSize({ForceUpdate update}) async => device.cameraSettings.imageSize;
+
+  Future<bool> setImageSize(ImageSizeId value);
+
+  ///Aspect Ratio
+
+  Future<SettingsItem<AspectRatioValue>> getAspectRatio({ForceUpdate update}) async =>
+      device.cameraSettings.aspectRatio;
+
+  Future<bool> setAspectRatio(AspectRatioValue value);
 
   ///unchecked (wifi) *******************************************
 
@@ -332,7 +343,6 @@ abstract class CameraApiInterface {
 
   Future<bool> pressShutter(ShutterPressType shutterPressType); //TODO half and full
   Future<bool> releaseShutter(ShutterPressType shutterPressType);
-
 
   Future<RecordVideoStateValue> getRecordingVideoState({ForceUpdate update});
 
@@ -377,14 +387,6 @@ abstract class CameraApiInterface {
 
   Future<bool> setDroHdr(DroHdrId value);
 
-  Future<SettingsItem<ImageSizeValue>> getImageSize({ForceUpdate update}) async => device.cameraSettings.imageSize;
-
-  Future<bool> setImageSize(ImageSizeId value);
-
-  Future<SettingsItem<AspectRatioValue>> getAspectRatio({ForceUpdate update}) async =>
-      device.cameraSettings.aspectRatio;
-
-  Future<bool> setAspectRatio(AspectRatioId value);
 
   Future<SettingsItem<FocusModeToggleValue>> getFocusModeToggle({ForceUpdate update}) async =>
       device.cameraSettings.focusModeToggleResponse;

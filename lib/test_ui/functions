@@ -112,6 +112,12 @@ stopLiveView (stopLiveview)
 setLiveViewFrameInfo (setLiveviewFrameInfo)
 getLiveViewFrameInfo (getLiveviewFrameInfo)
 
+setImageSize (setStillSize)
+getImageSize (getStillSize, getSupportedStillSize, getAvailableStillSize)
+
+setAspectRatio (setStillSize)
+getAspectRatio (getStillSize, getSupportedStillSize, getAvailableStillSize)
+
 getSilentShooting
 setSilentShooting
 
@@ -125,7 +131,6 @@ getMeteringMode
 setMeteringMode
 
 getAel (usb)
-getAspectRatio
 getAutoFocusState
 getBatteryPercentage
 getDriveMode
@@ -147,7 +152,6 @@ pressShutter
 releaseShutter
 requestPhotoAvailable
 setAel
-setAspectRatio
 setDriveMode
 setDroHdr
 setFel

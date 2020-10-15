@@ -1,37 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
- setTouchAFPosition
-getTouchAFPosition
-cancelTouchAFPosition
-
-actTrackingFocus
-cancelTrackingFocus
-setTrackingFocus
-getTrackingFocus
-
-getSupportedTrackingFocus
-getAvailableTrackingFocus
-
-(setExposureMode)
-(getExposureMode, getSupportedExposureMode, getAvailableExposureMode)
-
-
-actWhiteBalanceOnePushCustom
-
- setStillSize
-getStillSize
-getSupportedStillSize
-getAvailableStillSize
-
 setMovieFileFormat
 getMovieFileFormat
 getSupportedMovieFileFormat
@@ -92,26 +58,12 @@ getTvColorSystem
 getSupportedTvColorSystem
 getAvailableTvColorSystem
 
- getSchemeList
-getSourceList
-getContentCount (v1.2)
-getContentList (v1.3)
-
- setStreamingContent
-startStreaming
-pauseStreaming
-seekStreamingPosition
-stopStreaming
-requestToNotifyStreamingStatus
-
-deleteContent (v1.1)
-
 setInfraredRemoteControl
 getInfraredRemoteControl
 getSupportedInfraredRemoteControl
 getAvailableInfraredRemoteControl
 
- setAutoPowerOff
+setAutoPowerOff
 getAutoPowerOff
 getSupportedAutoPowerOff
 getAvailableAutoPowerOff
@@ -121,8 +73,46 @@ getBeepMode
 getSupportedBeepMode
 getAvailableBeepMode
 
+
+
+
+
+
+
+
+getSchemeList
+getSourceList
+getContentCount (v1.2)
+getContentList (v1.3)
+
+setStreamingContent
+startStreaming
+pauseStreaming
+seekStreamingPosition
+stopStreaming
+requestToNotifyStreamingStatus
+
+deleteContent (v1.1)
+
 setCurrentTime
 
+setTouchAFPosition
+getTouchAFPosition
+cancelTouchAFPosition
+
+actTrackingFocus
+cancelTrackingFocus
+setTrackingFocus
+getTrackingFocus
+
+getSupportedTrackingFocus
+getAvailableTrackingFocus
+
+(setExposureMode)
+(getExposureMode, getSupportedExposureMode, getAvailableExposureMode)
+
+
+actWhiteBalanceOnePushCustom
 
 
 

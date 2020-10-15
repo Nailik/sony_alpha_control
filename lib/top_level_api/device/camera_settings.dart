@@ -31,8 +31,8 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem<BoolValue> photoTransferQueue =
   SettingsItem<BoolValue>(ItemId.PhotoTransferQueue);
   InfoItem<StringValue> batteryInfo = InfoItem<StringValue>(ItemId.BatteryInfo);
-  SettingsItem imageSize = SettingsItem<ImageSizeValue>(ItemId.ImageSize);
-  SettingsItem aspectRatio = SettingsItem<AspectRatioValue>(ItemId.AspectRatio);
+  SettingsItem<ImageSizeValue> imageSize = SettingsItem<ImageSizeValue>(ItemId.ImageSize);
+  SettingsItem<AspectRatioValue> aspectRatio = SettingsItem<AspectRatioValue>(ItemId.AspectRatio);
   SettingsItem focusModeToggleResponse =
   SettingsItem<FocusModeToggleValue>(ItemId.FocusModeToggleResponse);
   SettingsItem shootingMode = SettingsItem<DriveModeValue>(ItemId.ShootMode);

@@ -9,7 +9,6 @@ import 'package:sonyalphacontrol/top_level_api/device/camera_image.dart';
 import 'package:sonyalphacontrol/top_level_api/device/items.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
 import 'package:sonyalphacontrol/top_level_api/device/value.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/dro_hdr_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_area_ids.dart';
@@ -76,7 +75,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
       case ItemId.WhiteBalanceGM:
         return setWhiteBalanceGm(WhiteBalanceGmIdExtension.getIdFromUsb(value));
       case ItemId.AspectRatio:
-        return setAspectRatio(AspectRatioIdExtension.getIdFromUsb(value));
+        return setAspectRatio(AspectRatioValue.fromUSBValue(value));
       case ItemId.UnkD212:
         return false;
       case ItemId.Zoom:
@@ -264,13 +263,10 @@ class SonyCameraUsbApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> setAspectRatio(AspectRatioId value) async =>
-      (await UsbCommands.getCommandSetting(ItemId.AspectRatio,
-                  opCodeId: OpCodeId.SubSetting,
-                  value1: value.usbValue,
-                  value1DataSize: 1)
-              .send())
-          .isValidResponse();
+  Future<bool> setAspectRatio(AspectRatioValue value) async => (await UsbCommands.getCommandSetting(ItemId.AspectRatio,
+              opCodeId: OpCodeId.SubSetting, value1: value.usbValue, value1DataSize: 1)
+          .send())
+      .isValidResponse();
 
   @override
   Future<bool> setDriveMode(DriveModeId value) async =>

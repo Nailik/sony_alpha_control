@@ -160,7 +160,13 @@ class TestsPageState extends State<TestsPage> {
                       getShootModeRow(),
 
                       ///Image File Format (set, get, getSupported, getAvailable)
-                      getImageFileFormatRow()
+                      getImageFileFormatRow(),
+
+                      ///Image Size (set, get, getSupported, getAvailable)
+                      getImageSizeRow(),
+
+                      ///Aspect Ratio (set, get, getSupported, getAvailable)
+                      getAspectRatioRow()
                     ],
                   ),
                 )),
