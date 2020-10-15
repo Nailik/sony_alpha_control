@@ -18,41 +18,45 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem fel = SettingsItem<BoolValue>(ItemId.FEL);
   SettingsItem focusArea = SettingsItem<FocusAreaValue>(ItemId.FocusArea);
   SettingsItem focusAreaSpot = SettingsItem<PointValue>(ItemId.FocusAreaSpot);
-  SettingsItem autoFocusState =
-      SettingsItem<AutoFocusStateValue>(ItemId.AutoFocusState);
+  SettingsItem autoFocusState = SettingsItem<AutoFocusStateValue>(ItemId.AutoFocusState);
   SettingsItem flashValue = SettingsItem<IntValue>(ItemId.FlashValue);
-  SettingsItem imageFileFormat =
-      SettingsItem<ImageFileFormatValue>(ItemId.ImageFileFormat);
-  SettingsItem pictureEffect =
-      SettingsItem<PictureEffectValue>(ItemId.PictureEffect);
+  SettingsItem imageFileFormat = SettingsItem<ImageFileFormatValue>(ItemId.ImageFileFormat);
+  SettingsItem pictureEffect = SettingsItem<PictureEffectValue>(ItemId.PictureEffect);
   SettingsItem droHdr = SettingsItem<DroHdrValue>(ItemId.DroHdr);
-  SettingsItem<RecordVideoStateValue> recordVideoState =
-  SettingsItem<RecordVideoStateValue>(ItemId.RecordVideoState);
-  SettingsItem<BoolValue> photoTransferQueue =
-  SettingsItem<BoolValue>(ItemId.PhotoTransferQueue);
+  SettingsItem<RecordVideoStateValue> recordVideoState = SettingsItem<RecordVideoStateValue>(ItemId.RecordVideoState);
+  SettingsItem<BoolValue> photoTransferQueue = SettingsItem<BoolValue>(ItemId.PhotoTransferQueue);
   InfoItem<StringValue> batteryInfo = InfoItem<StringValue>(ItemId.BatteryInfo);
   SettingsItem<ImageSizeValue> imageSize = SettingsItem<ImageSizeValue>(ItemId.ImageSize);
   SettingsItem<AspectRatioValue> aspectRatio = SettingsItem<AspectRatioValue>(ItemId.AspectRatio);
-  SettingsItem focusModeToggleResponse =
-  SettingsItem<FocusModeToggleValue>(ItemId.FocusModeToggleResponse);
+  SettingsItem<MovieFileFormatValue> movieFileFormat = SettingsItem<MovieFileFormatValue>(ItemId.MovieFileFormat);
+  SettingsItem<MovieQualityValue> movieQuality = SettingsItem<MovieQualityValue>(ItemId.MovieQuality);
+  SettingsItem<OnOffValue> steadyMode = SettingsItem<OnOffValue>(ItemId.SteadyMode);
+  SettingsItem<IntValue> viewAngle = SettingsItem<IntValue>(ItemId.ViewAngle);
+  SettingsItem<SceneSelectionValue> sceneSelection = SettingsItem<SceneSelectionValue>(ItemId.SceneSelection);
+  SettingsItem<ColorSettingValue> colorSetting = SettingsItem<ColorSettingValue>(ItemId.ColorSetting);
+  SettingsItem<StringValue> intervalTime = SettingsItem<StringValue>(ItemId.IntervalTime);
+  SettingsItem<StringValue> loopRecordingTime = SettingsItem<StringValue>(ItemId.LoopRecordingTime);
+  SettingsItem<OnOffValue> windNoiseReduction = SettingsItem<OnOffValue>(ItemId.WindNoiseReduction);
+  SettingsItem<OnOffValue> audioRecordingSetting = SettingsItem<OnOffValue>(ItemId.AudioRecording);
+  InfoItem<BoolValue> audioRecording = InfoItem<BoolValue>(ItemId.AudioRecording);
+  SettingsItem<OnOffValue> flipSetting = SettingsItem<OnOffValue>(ItemId.FlipSetting);
+  SettingsItem<TvColorSystemValue> tvColorSystem = SettingsItem<TvColorSystemValue>(ItemId.TvColorSystem);
+  SettingsItem<OnOffValue> infraredRemoteControl = SettingsItem<OnOffValue>(ItemId.InfraredRemoteControl);
+  SettingsItem<IntValue> autoPowerOff = SettingsItem<IntValue>(ItemId.AutoPowerOff);
+  SettingsItem<BeepModeValue> beepMode = SettingsItem<BeepModeValue>(ItemId.BeepMode);
+
+  SettingsItem focusModeToggleResponse = SettingsItem<FocusModeToggleValue>(ItemId.FocusModeToggleResponse);
   SettingsItem shootingMode = SettingsItem<DriveModeValue>(ItemId.ShootMode);
   SettingsItem<ShootModeValue> shootMode = SettingsItem<ShootModeValue>(ItemId.ShootMode);
-  SettingsItem whiteBalanceAB =
-  SettingsItem<WhiteBalanceAbValue>(ItemId.WhiteBalanceAB);
-  SettingsItem whiteBalanceGM =
-  SettingsItem<WhiteBalanceGmValue>(ItemId.WhiteBalanceGM);
+  SettingsItem whiteBalanceAB = SettingsItem<WhiteBalanceAbValue>(ItemId.WhiteBalanceAB);
+  SettingsItem whiteBalanceGM = SettingsItem<WhiteBalanceGmValue>(ItemId.WhiteBalanceGM);
   SettingsItem driveMode = SettingsItem<DriveModeValue>(ItemId.DriveMode);
-  SettingsItem focusMagnifierDirection =
-  SettingsItem<FocusMagnifierDirectionValue>(
-      ItemId.FocusMagnifierDirection);
-  SettingsItem focusMagnifierPhase =
-  SettingsItem<FocusMagnifierPhaseValue>(ItemId.FocusMagnifierPhase);
-  SettingsItem focusMagnifier =
-      SettingsItem<DoubleValue>(ItemId.FocusMagnifier);
+  SettingsItem focusMagnifierDirection = SettingsItem<FocusMagnifierDirectionValue>(ItemId.FocusMagnifierDirection);
+  SettingsItem focusMagnifierPhase = SettingsItem<FocusMagnifierPhaseValue>(ItemId.FocusMagnifierPhase);
+  SettingsItem focusMagnifier = SettingsItem<DoubleValue>(ItemId.FocusMagnifier);
 
   //versions for all the different SonyWebApiServiceTypeIds
-  ListInfoItem<WebApiVersionsValue> versionsCamera =
-      ListInfoItem<WebApiVersionsValue>(ItemId.Versions);
+  ListInfoItem<WebApiVersionsValue> versionsCamera = ListInfoItem<WebApiVersionsValue>(ItemId.Versions);
   ListInfoItem<WebApiVersionsValue> versionsAvContent =
       ListInfoItem<WebApiVersionsValue>(ItemId.Versions);
   ListInfoItem<WebApiVersionsValue> versionsSystem =
@@ -94,7 +98,6 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem<IntValue> selfTimer = SettingsItem<IntValue>(ItemId.SelfTimer);
 
   InfoItem<BoolValue> intervalStillRecording = InfoItem<BoolValue>(ItemId.IntervalStillRecording);
-  InfoItem<BoolValue> audioRecording = InfoItem<BoolValue>(ItemId.AudioRecording);
   InfoItem<BoolValue> loopRecording = InfoItem<BoolValue>(ItemId.LoopRecording);
   InfoItem<BoolValue> movieRecording = InfoItem<BoolValue>(ItemId.MovieRecording);
   InfoItem<BoolValue> contShooting = InfoItem<BoolValue>(ItemId.ContShooting);

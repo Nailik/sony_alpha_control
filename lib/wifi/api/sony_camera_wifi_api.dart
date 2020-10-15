@@ -1493,4 +1493,94 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
     return functionAvailability;
   }
+
+  @override
+  Future<bool> setAudioRecordingSetting(OnOffValue value) {
+    // TODO: implement setAudioRecordingSetting
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setAutoPowerOff(IntValue value) {
+    // TODO: implement setAutoPowerOff
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setBeepMode(BeepModeValue value) {
+    // TODO: implement setBeepMode
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setColorSetting(ColorSettingValue value) {
+    // TODO: implement setColorSetting
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setFlipSetting(OnOffValue value) {
+    // TODO: implement setFlipSetting
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setInfraredRemoteControl(OnOffValue value) {
+    // TODO: implement setInfraredRemoteControl
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setIntervalTime(StringValue value) {
+    // TODO: implement setIntervalTime
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setLoopRecordingTime(StringValue value) {
+    // TODO: implement setLoopRecordingTime
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setMovieFileFormat(MovieFileFormatValue value) {
+    // TODO: implement setMovieFileFormat
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setMovieQuality(MovieQualityValue value) {
+    // TODO: implement setMovieQuality
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setSceneSelection(SceneSelectionValue value) {
+    // TODO: implement setSceneSelection
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setSteadyMode(OnOffValue value) {
+    // TODO: implement setSteadyMode
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setTvColorSystem(TvColorSystemValue value) {
+    // TODO: implement setTvColorSystem
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setViewAngle(IntValue value) {
+    // TODO: implement setViewAngle
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setWindNoiseReduction(OnOffValue value) {
+    // TODO: implement setWindNoiseReduction
+    throw UnimplementedError();
+  }
 }

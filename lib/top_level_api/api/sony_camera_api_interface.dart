@@ -10,7 +10,6 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_area_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_direction_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_phase_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
@@ -331,6 +330,114 @@ abstract class CameraApiInterface {
 
   Future<bool> setAspectRatio(AspectRatioValue value);
 
+  ///Movie File Format
+
+  Future<SettingsItem<MovieFileFormatValue>> getMovieFileFormat({ForceUpdate update}) async =>
+      device.cameraSettings.movieFileFormat;
+
+  Future<bool> setMovieFileFormat(MovieFileFormatValue value);
+
+  ///Movie Quality
+
+  Future<SettingsItem<MovieQualityValue>> getMovieQuality({ForceUpdate update}) async =>
+      device.cameraSettings.movieQuality;
+
+  Future<bool> setMovieQuality(MovieQualityValue value);
+
+  ///Movie Quality
+
+  Future<SettingsItem<OnOffValue>> getSteadyMode({ForceUpdate update}) async => device.cameraSettings.steadyMode;
+
+  Future<bool> setSteadyMode(OnOffValue value);
+
+  ///View Angle
+
+  Future<SettingsItem<IntValue>> getViewAngle({ForceUpdate update}) async => device.cameraSettings.viewAngle;
+
+  Future<bool> setViewAngle(IntValue value);
+
+  ///Scene Selection
+
+  Future<SettingsItem<SceneSelectionValue>> getSceneSelection({ForceUpdate update}) async =>
+      device.cameraSettings.sceneSelection;
+
+  Future<bool> setSceneSelection(SceneSelectionValue value);
+
+  ///Color Setting
+
+  Future<SettingsItem<ColorSettingValue>> getColorSetting({ForceUpdate update}) async =>
+      device.cameraSettings.colorSetting;
+
+  Future<bool> setColorSetting(ColorSettingValue value);
+
+  ///Interval Time
+
+  Future<SettingsItem<StringValue>> getIntervalTime({ForceUpdate update}) async =>
+      device.cameraSettings.intervalTime;
+
+  Future<bool> setIntervalTime(StringValue value);
+
+  ///Loop Recording Time
+
+  Future<SettingsItem<StringValue>> getLoopRecordingTime({ForceUpdate update}) async =>
+      device.cameraSettings.loopRecordingTime;
+
+  Future<bool> setLoopRecordingTime(StringValue value);
+
+  ///Wind Noise Reduction
+
+  Future<SettingsItem<OnOffValue>> getWindNoiseReduction({ForceUpdate update}) async =>
+      device.cameraSettings.windNoiseReduction;
+
+  Future<bool> setWindNoiseReduction(OnOffValue value);
+
+  ///Audio Recording
+
+  Future<SettingsItem<OnOffValue>> getAudioRecordingSetting({ForceUpdate update}) async =>
+      device.cameraSettings.audioRecordingSetting;
+
+  Future<bool> setAudioRecordingSetting(OnOffValue value);
+
+  ///Flip Setting
+
+  Future<SettingsItem<OnOffValue>> getFlipSetting({ForceUpdate update}) async =>
+      device.cameraSettings.flipSetting;
+
+  Future<bool> setFlipSetting(OnOffValue value);
+
+  ///Tv Color System
+
+  Future<SettingsItem<TvColorSystemValue>> getTvColorSystem({ForceUpdate update}) async =>
+      device.cameraSettings.tvColorSystem;
+
+  Future<bool> setTvColorSystem(TvColorSystemValue value);
+
+  ///Infrared Remote Control
+
+  Future<SettingsItem<OnOffValue>> getInfraredRemoteControl({ForceUpdate update}) async =>
+      device.cameraSettings.infraredRemoteControl;
+
+  Future<bool> setInfraredRemoteControl(OnOffValue value);
+
+  ///Auto Power Off
+
+  Future<SettingsItem<IntValue>> getAutoPowerOff({ForceUpdate update}) async =>
+      device.cameraSettings.autoPowerOff;
+
+  Future<bool> setAutoPowerOff(IntValue value);
+
+  ///Beep Mode
+
+  Future<SettingsItem<BeepModeValue>> getBeepMode({ForceUpdate update}) async =>
+      device.cameraSettings.beepMode;
+
+  Future<bool> setBeepMode(BeepModeValue value);
+
+  ///Storage Information
+
+  Future<ListInfoItem<StringValue>> getStorageInformation({ForceUpdate update}) async =>
+      device.cameraSettings.storageInformation;
+
   ///unchecked (wifi) *******************************************
 
   Future<List<CameraImage>> capturePhoto(); //TODO return foto?
@@ -340,12 +447,6 @@ abstract class CameraApiInterface {
 
   Future<bool> pressShutter(ShutterPressType shutterPressType); //TODO half and full
   Future<bool> releaseShutter(ShutterPressType shutterPressType);
-
-  Future<RecordVideoStateValue> getRecordingVideoState({ForceUpdate update});
-
-  Future<bool> setRecordingAudio(String audioRecordingSetting);
-
-  Future<SettingsItem<StringValue>> getRecordingAudio({ForceUpdate update});
 
   Future<int> getBatteryPercentage({ForceUpdate update}); //TODO multiple batteries
 
@@ -422,9 +523,6 @@ abstract class CameraApiInterface {
       device.cameraSettings.focusMagnifier;
 
   Future<bool> setFocusMagnifier(double value);
-
-  Future<ListInfoItem<StringValue>> getStorageInformation({ForceUpdate update}) async =>
-      device.cameraSettings.storageInformation;
 }
 
 enum InterfaceType { Wifi_Interface, USB_Interface }

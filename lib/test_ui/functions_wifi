@@ -23,12 +23,17 @@ getSceneSelection
 getSupportedSceneSelection
 getAvailableSceneSelection
 
+
+
+
+
+
 setColorSetting
 getColorSetting
 getSupportedColorSetting
 getAvailableColorSetting
 
- setIntervalTime
+setIntervalTime
 getIntervalTime
 getSupportedIntervalTime
 getAvailableIntervalTime
@@ -47,6 +52,10 @@ setAudioRecording
 getAudioRecording
 getSupportedAudioRecording
 getAvailableAudioRecording
+
+
+
+
 
 setFlipSetting
 getFlipSetting

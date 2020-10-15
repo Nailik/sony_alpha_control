@@ -4,8 +4,10 @@ import 'dart:math';
 
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/beep_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/camera_function_id.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/camera_status_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/color_setting_parameter_value.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/cont_shooting_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/cont_shooting_speed_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/drive_mode_ids.dart';
@@ -27,10 +29,12 @@ import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/post_view_image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/record_video_state_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/scene_selection_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/shoot_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/tv_color_system_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
@@ -586,6 +590,25 @@ class CameraFunctionValue extends Value<CameraFunctionId> {
   String get wifiValue => id.wifiValue;
 }
 
+class BeepModeValue extends Value<BeepModeId> {
+  BeepModeValue(BeepModeId id) : super(id);
+
+  @override
+  factory BeepModeValue.fromUSBValue(int usbValue) => throw UnsupportedError;
+
+  @override
+  factory BeepModeValue.fromWifiValue(String wifiValue) => BeepModeValue(BeepModeIdExtension.getIdFromWifi(wifiValue));
+
+  @override
+  String get name => id.name;
+
+  @override
+  int get usbValue => throw UnsupportedError;
+
+  @override
+  String get wifiValue => id.wifiValue;
+}
+
 class CameraStatusValue extends Value<CameraStatusId> {
   CameraStatusValue(CameraStatusId id) : super(id);
 
@@ -607,12 +630,31 @@ class CameraStatusValue extends Value<CameraStatusId> {
   String get name => id.name;
 }
 
+class TvColorSystemValue extends Value<TvColorSystemId> {
+  TvColorSystemValue(TvColorSystemId id) : super(id);
+
+  @override
+  factory TvColorSystemValue.fromUSBValue(int usbValue) => throw UnsupportedError;
+
+  @override
+  factory TvColorSystemValue.fromWifiValue(String wifiValue) =>
+      TvColorSystemValue(TvColorSystemIdExtension.getIdFromWifi(wifiValue));
+
+  @override
+  int get usbValue => throw UnsupportedError;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
+}
+
 class DriveModeValue extends Value<DriveModeId> {
   DriveModeValue(DriveModeId id) : super(id);
 
   @override
-  factory DriveModeValue.fromUSBValue(int usbValue) =>
-      DriveModeValue(DriveModeIdExtension.getIdFromUsb(usbValue));
+  factory DriveModeValue.fromUSBValue(int usbValue) => DriveModeValue(DriveModeIdExtension.getIdFromUsb(usbValue));
 
   @override
   factory DriveModeValue.fromWifiValue(String wifiValue) =>
@@ -709,16 +751,54 @@ class MovieQualityValue extends Value<MovieQualityId> {
   String get wifiValue => id.wifiValue;
 }
 
+class SceneSelectionValue extends Value<SceneSelectionId> {
+  SceneSelectionValue(SceneSelectionId id) : super(id);
+
+  @override
+  factory SceneSelectionValue.fromUSBValue(int usbValue) => throw UnsupportedError;
+
+  @override
+  factory SceneSelectionValue.fromWifiValue(String wifiValue) =>
+      SceneSelectionValue(SceneSelectionIdExtension.getIdFromWifi(wifiValue));
+
+  @override
+  String get name => id.name;
+
+  @override
+  int get usbValue => throw UnsupportedError;
+
+  @override
+  String get wifiValue => id.wifiValue;
+}
+
+class ColorSettingValue extends Value<ColorSettingParameterId> {
+  ColorSettingValue(ColorSettingParameterId id) : super(id);
+
+  @override
+  factory ColorSettingValue.fromUSBValue(int usbValue) => throw UnsupportedError;
+
+  @override
+  factory ColorSettingValue.fromWifiValue(String wifiValue) =>
+      ColorSettingValue(ColorSettingParameterIdExtension.getIdFromWifi(wifiValue));
+
+  @override
+  String get name => id.name;
+
+  @override
+  int get usbValue => throw UnsupportedError;
+
+  @override
+  String get wifiValue => id.wifiValue;
+}
+
 class OpCodeValue extends Value<OpCodeId> {
   OpCodeValue(OpCodeId id) : super(id);
 
   @override
-  factory OpCodeValue.fromUSBValue(int usbValue) =>
-      OpCodeValue(OpCodesExtension.getIdFromUsb(usbValue));
+  factory OpCodeValue.fromUSBValue(int usbValue) => OpCodeValue(OpCodesExtension.getIdFromUsb(usbValue));
 
   @override
-  factory OpCodeValue.fromWifiValue(String wifiValue) =>
-      OpCodeValue(OpCodesExtension.getIdFromWifi(wifiValue));
+  factory OpCodeValue.fromWifiValue(String wifiValue) => OpCodeValue(OpCodesExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;

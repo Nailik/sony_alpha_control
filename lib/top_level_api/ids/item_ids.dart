@@ -495,6 +495,8 @@ extension SettingsIdExtension on ItemId {
         return "movieRecording";
       case ItemId.ImageSize:
         return "stillSize";
+      case ItemId.AspectRatio:
+        return "";//TODO?
       case ItemId.PhotoTransferQueue:
         return "transferringImages";
       case ItemId.PictureEffect:
@@ -520,8 +522,6 @@ extension SettingsIdExtension on ItemId {
       case ItemId.DroHdr:
         return "";
       case ItemId.UnkD20E:
-        return "";
-      case ItemId.AspectRatio:
         return "";
       case ItemId.UnkD212:
         return "";
