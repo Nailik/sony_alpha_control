@@ -257,6 +257,13 @@ abstract class CameraApiInterface {
 
   Future<bool> setWhiteBalanceColorTemp(WhiteBalanceColorTempValue value);
 
+  ///Image File Format
+
+  Future<SettingsItem<ImageFileFormatValue>> getImageFileFormat({ForceUpdate update}) async =>
+      device.cameraSettings.imageFileFormat;
+
+  Future<bool> setImageFileFormat(ImageFileFormatValue value);
+
   ///Silent Shooting
 
   Future<SettingsItem<OnOffValue>> getSilentShooting({ForceUpdate update}) async =>
@@ -292,15 +299,22 @@ abstract class CameraApiInterface {
 
   ///Movie Rec
 
-  Future<bool> startMovieRec();
+  Future<bool> startMovieRecording();
 
-  Future<bool> stopMovieRec();
+  Future<bool> stopMovieRecording();
 
   ///Audio Rec
 
-  Future<bool> startAudioRec();
+  Future<bool> startAudioRecording();
 
-  Future<bool> stopAudioRec();
+  Future<bool> stopAudioRecording();
+
+  ///Interval Still Recording
+
+  Future<bool> startIntervalStillRecording();
+
+  Future<bool> stopIntervalStillRecording();
+
 
   ///unchecked (wifi) *******************************************
 
@@ -312,15 +326,8 @@ abstract class CameraApiInterface {
   Future<bool> pressShutter(ShutterPressType shutterPressType); //TODO half and full
   Future<bool> releaseShutter(ShutterPressType shutterPressType);
 
-  Future<bool> startRecordingVideo();
-
-  Future<bool> stopRecordingVideo();
 
   Future<RecordVideoStateValue> getRecordingVideoState({ForceUpdate update});
-
-  Future<bool> startRecordingAudio();
-
-  Future<bool> stopRecordingAudio();
 
   Future<bool> setRecordingAudio(String audioRecordingSetting);
 
@@ -353,11 +360,6 @@ abstract class CameraApiInterface {
   Future<SettingsItem<IntValue>> getFlashValue({ForceUpdate update}) async => device.cameraSettings.flashValue;
 
   Future<bool> setFlashValue(int value);
-
-  Future<SettingsItem<ImageFileFormatValue>> getImageFileFormat({ForceUpdate update}) async =>
-      device.cameraSettings.imageFileFormat;
-
-  Future<bool> setImageFileFormat(ImageFileFormatValue value);
 
   Future<SettingsItem<PictureEffectValue>> getPictureEffect({ForceUpdate update}) async =>
       device.cameraSettings.pictureEffect;

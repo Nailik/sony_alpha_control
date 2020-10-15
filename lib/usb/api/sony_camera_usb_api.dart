@@ -788,26 +788,38 @@ class SonyCameraUsbApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> startMovieRec() {
+  Future<bool> startMovieRecording() {
     // TODO: implement startMovieRec
     throw UnimplementedError();
   }
 
   @override
-  Future<bool> stopMovieRec() {
+  Future<bool> stopMovieRecording() {
     // TODO: implement stopMovieRec
     throw UnimplementedError();
   }
 
   @override
-  Future<bool> startAudioRec() {
+  Future<bool> startAudioRecording() {
     // TODO: implement startAudioRec
     throw UnimplementedError();
   }
 
   @override
-  Future<bool> stopAudioRec() {
+  Future<bool> stopAudioRecording() {
     // TODO: implement stopAudioRec
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> startIntervalStillRecording() {
+    // TODO: implement startIntervalStillRecording
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> stopIntervalStillRecording() {
+    // TODO: implement stopIntervalStillRecording
     throw UnimplementedError();
   }
 }

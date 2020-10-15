@@ -125,9 +125,6 @@ class TestsPageState extends State<TestsPage> {
                       ///ProgramShift (set, get, getSupported, getAvailable)
                       getProgramShiftRow(),
 
-                      ///ShootingMode (set, get, getSupported, getAvailable)
-                      getShootingModeRow(),
-
                       ///ShutterSpeed (set, get, getSupported, getAvailable)
                       getShutterSpeedRow(),
 
@@ -157,7 +154,10 @@ class TestsPageState extends State<TestsPage> {
                       getSilentShootingSettingsRow(),
 
                       ///ShootMode (set, get, getSupported, getAvailable)
-                      getShootModeRow()
+                      getShootModeRow(),
+
+                      ///Image File Format (set, get, getSupported, getAvailable)
+                      getImageFileFormatRow()
                     ],
                   ),
                 )),
@@ -1129,14 +1129,14 @@ class TestsPageState extends State<TestsPage> {
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.MovieRecording.name + " START"),
-                    subtitle: Text("startMovieRec", style: getTextStyle(device.api.startMovieRec)),
-                    onTap: () => device.api.startMovieRec()),
+                    subtitle: Text("startMovieRec", style: getTextStyle(device.api.startMovieRecording)),
+                    onTap: () => device.api.startMovieRecording()),
               ),
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.MovieRecording.name + " STOP"),
-                    subtitle: Text("stopMovieRec", style: getTextStyle(device.api.stopMovieRec)),
-                    onTap: () => device.api.stopMovieRec()),
+                    subtitle: Text("stopMovieRec", style: getTextStyle(device.api.stopMovieRecording)),
+                    onTap: () => device.api.stopMovieRecording()),
               )
             ]),
           ]),
@@ -1160,14 +1160,14 @@ class TestsPageState extends State<TestsPage> {
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.AudioRecording.name + " START"),
-                    subtitle: Text("startAudioRec", style: getTextStyle(device.api.startAudioRec)),
-                    onTap: () => device.api.startAudioRec()),
+                    subtitle: Text("startAudioRec", style: getTextStyle(device.api.startAudioRecording)),
+                    onTap: () => device.api.startAudioRecording()),
               ),
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.AudioRecording.name + " STOP"),
-                    subtitle: Text("stopAudioRec", style: getTextStyle(device.api.stopAudioRec)),
-                    onTap: () => device.api.stopAudioRec()),
+                    subtitle: Text("stopAudioRec", style: getTextStyle(device.api.stopAudioRecording)),
+                    onTap: () => device.api.stopAudioRecording()),
               )
             ]),
           ]),
@@ -1632,34 +1632,6 @@ class TestsPageState extends State<TestsPage> {
                         ]),
                   ]),
                 )));
-  }
-
-  ///ShootingMode (set, get, getSupported, getAvailable)
-  Widget getShootingModeRow() {
-    return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.shootingMode,
-      child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(
-          child: Column(children: [
-            ListTile(
-              title: Text(ItemId.ShootMode.name),
-              subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                        device.cameraSettings.shootingMode.value?.name ??
-                            "NotAvailable",
-                        textAlign: TextAlign.start),
-                    getText(ItemId.ShootMode, ApiMethodId.SET),
-                    getText(ItemId.ShootMode, ApiMethodId.GET),
-                    getText(ItemId.ShootMode, ApiMethodId.GET_AVAILABLE),
-                    getText(ItemId.ShootMode, ApiMethodId.GET_SUPPORTED)
-                  ]),
-            ),
-          ]),
-        ),
-      ),
-    );
   }
 
   ///ShutterSpeed (set, get, getSupported, getAvailable)
@@ -2234,6 +2206,69 @@ class TestsPageState extends State<TestsPage> {
                                         .toList(),
                                     onChanged: (value) =>
                                         device.api.setShootMode(value),
+                                  ))),
+                        ]),
+                  ]),
+                )));
+  }
+
+
+  ///Image File Format (set, get, getSupported, getAvailable)
+  Widget getImageFileFormatRow() {
+    return ListenableProvider<SettingsItem>(
+        create: (context) => device.cameraSettings.imageFileFormat,
+        child: Consumer<SettingsItem>(
+            builder: (context, model, _) =>
+                Card(
+                  child: Column(children: [
+                    ListTile(
+                      title: Text(ItemId.ImageFileFormat.name),
+                      subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                device.cameraSettings.imageFileFormat.value
+                                    ?.name ??
+                                    "NotAvailable",
+                                textAlign: TextAlign.start),
+                            Text("setImageFileFormat", style: getTextStyle(device.api.setImageFileFormat)),
+                            Text("getImageFileFormat", style: getTextStyle(device.api.getImageFileFormat))
+                          ]),
+                      onTap: () =>
+                          device.api.getImageFileFormat(update: ForceUpdate.On),
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: DropdownButton<ImageFileFormatValue>(
+                                    hint: Text("available"),
+                                    items: device
+                                        .cameraSettings.imageFileFormat.available
+                                        .map<DropdownMenuItem<ImageFileFormatValue>>(
+                                            (e) =>
+                                            DropdownMenuItem<ImageFileFormatValue>(
+                                                child: Text(e.name), value: e))
+                                        .toList(),
+                                    onChanged: (value) =>
+                                        device.api.setImageFileFormat(value),
+                                  ))),
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: DropdownButton<ImageFileFormatValue>(
+                                    hint: Text("supported"),
+                                    items: device
+                                        .cameraSettings.imageFileFormat.supported
+                                        .map<DropdownMenuItem<ImageFileFormatValue>>(
+                                            (e) =>
+                                            DropdownMenuItem<ImageFileFormatValue>(
+                                                child: Text(e.name), value: e))
+                                        .toList(),
+                                    onChanged: (value) =>
+                                        device.api.setImageFileFormat(value),
                                   ))),
                         ]),
                   ]),

@@ -80,21 +80,25 @@ extension FunctionExtension on Function {
     if (this == device.api.stopContShooting)
       return device.api.checkFunctionAvailability(ItemId.ContShooting, ApiMethodId.STOP);
 
-    if (this == device.api.startMovieRec)
+    if (this == device.api.startMovieRecording)
       return device.api.checkFunctionAvailability(ItemId.MovieRecording, ApiMethodId.START);
 
-    if (this == device.api.stopMovieRec)
+    if (this == device.api.stopMovieRecording)
       return device.api.checkFunctionAvailability(ItemId.MovieRecording, ApiMethodId.STOP);
 
-    if (this == device.api.startAudioRec)
+    if (this == device.api.startAudioRecording)
       return device.api.checkFunctionAvailability(ItemId.AudioRecording, ApiMethodId.START);
 
-    if (this == device.api.stopAudioRec)
+    if (this == device.api.stopAudioRecording)
       return device.api.checkFunctionAvailability(ItemId.AudioRecording, ApiMethodId.STOP);
 
     if (this == device.api.getShootMode) return device.api.checkFunctionAvailability(ItemId.ShootMode, ApiMethodId.GET);
 
     if (this == device.api.setShootMode) return device.api.checkFunctionAvailability(ItemId.ShootMode, ApiMethodId.SET);
+
+    if (this == device.api.getImageFileFormat) return device.api.checkFunctionAvailability(ItemId.ImageFileFormat, ApiMethodId.GET);
+
+    if (this == device.api.setImageFileFormat) return device.api.checkFunctionAvailability(ItemId.ImageFileFormat, ApiMethodId.SET);
 
     return FunctionAvailability.Unsupported;
   }

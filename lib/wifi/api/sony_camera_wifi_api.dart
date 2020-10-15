@@ -877,7 +877,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   ///Movie Rec
 
   @override
-  Future<bool> startMovieRec() async =>
+  Future<bool> startMovieRecording() async =>
       WifiCommand.createCommand(ApiMethodId.START, ItemId.MovieRecording).send(device).then((result) {
         if (result.isValid) {
           device.cameraSettings.movieRecording.updateItem(BoolValue(true));
@@ -886,7 +886,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
       });
 
   @override
-  Future<bool> stopMovieRec() async =>
+  Future<bool> stopMovieRecording() async =>
       WifiCommand.createCommand(ApiMethodId.STOP, ItemId.MovieRecording).send(device).then((result) {
         if (result.isValid) {
           device.cameraSettings.movieRecording.updateItem(BoolValue(false));
@@ -897,7 +897,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   ///Audio Rec
 
   @override
-  Future<bool> startAudioRec() async =>
+  Future<bool> startAudioRecording() async =>
       WifiCommand.createCommand(ApiMethodId.START, ItemId.AudioRecording).send(device).then((result) {
         if (result.isValid) {
           device.cameraSettings.audioRecording.updateItem(BoolValue(true));
@@ -906,10 +906,31 @@ class SonyCameraWifiApi extends CameraApiInterface {
       });
 
   @override
-  Future<bool> stopAudioRec() async =>
+  Future<bool> stopAudioRecording() async =>
       WifiCommand.createCommand(ApiMethodId.STOP, ItemId.AudioRecording).send(device).then((result) {
         if (result.isValid) {
           device.cameraSettings.audioRecording.updateItem(BoolValue(false));
+        }
+        return result.isValid;
+      });
+
+
+  ///Audio Rec
+
+  @override
+  Future<bool> startIntervalStillRecording() async =>
+      WifiCommand.createCommand(ApiMethodId.START, ItemId.IntervalStillRecording).send(device).then((result) {
+        if (result.isValid) {
+          device.cameraSettings.intervallStillRecording.updateItem(BoolValue(true));
+        }
+        return result.isValid;
+      });
+
+  @override
+  Future<bool> stopIntervalStillRecording() async =>
+      WifiCommand.createCommand(ApiMethodId.STOP, ItemId.IntervalStillRecording).send(device).then((result) {
+        if (result.isValid) {
+          device.cameraSettings.intervallStillRecording.updateItem(BoolValue(false));
         }
         return result.isValid;
       });
