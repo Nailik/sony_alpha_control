@@ -993,7 +993,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> startLiveView() async =>
-      WifiCommand.createCommand(ApiMethodId.START, ItemId.LiveView).send(device).then((result) {
+      WifiCommand.createCommand(ApiMethodId.START, ItemId.LiveView).send(device).then((result) { //http://192.168.122.1:8080/liveview/liveviewstream
         if (result.isValid) {
           device.cameraSettings.liveView.updateItem(BoolValue(true)); //TODO url?
         }

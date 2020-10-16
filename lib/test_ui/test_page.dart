@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sonyalphacontrol/sonyalphacontrol.dart';
+import 'package:sonyalphacontrol/test_ui/live_view_page.dart';
 
 class TestsPage extends StatefulWidget {
   final SonyCameraDevice device;
@@ -1213,7 +1214,14 @@ class TestsPageState extends State<TestsPage> {
                 child: ListTile(
                     title: Text(ItemId.LiveView.name + " START"),
                     subtitle: Text("startLiveView", style: getTextStyle(device.api.startLiveView)),
-                    onTap: () => device.api.startLiveView()),
+                    onTap: () async{
+                      await device.api.startLiveView();
+
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => LiveViewPage()),
+                      );
+                    }),
               ),
               Expanded(
                 child: ListTile(
