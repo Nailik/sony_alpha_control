@@ -37,7 +37,7 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem<StringValue> intervalTime = SettingsItem<StringValue>(ItemId.IntervalTime);
   SettingsItem<StringValue> loopRecordingTime = SettingsItem<StringValue>(ItemId.LoopRecordingTime);
   SettingsItem<OnOffValue> windNoiseReduction = SettingsItem<OnOffValue>(ItemId.WindNoiseReduction);
-  SettingsItem<OnOffValue> audioRecordingSetting = SettingsItem<OnOffValue>(ItemId.AudioRecording);
+  SettingsItem<OnOffValue> audioRecordingSetting = SettingsItem<OnOffValue>(ItemId.AudioRecordingSetting);
   InfoItem<BoolValue> audioRecording = InfoItem<BoolValue>(ItemId.AudioRecording);
   SettingsItem<OnOffValue> flipSetting = SettingsItem<OnOffValue>(ItemId.FlipSetting);
   SettingsItem<TvColorSystemValue> tvColorSystem = SettingsItem<TvColorSystemValue>(ItemId.TvColorSystem);

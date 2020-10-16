@@ -1009,73 +1009,349 @@ class SonyCameraWifiApi extends CameraApiInterface {
         return result.isValid;
       });
 
+  ///Movie File Format
+
+  @override
+  Future<SettingsItem<MovieFileFormatValue>> getMovieFileFormat({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getMovieFileFormat(update: update));
+
+  @override
+  Future<bool> setMovieFileFormat(MovieFileFormatValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.MovieFileFormat, params: [value.wifiValue])
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          SettingsItem<MovieFileFormatValue> item = device.cameraSettings.movieFileFormat;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///Movie Quality
+
+  @override
+  Future<SettingsItem<MovieQualityValue>> getMovieQuality({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getMovieFileFormat(update: update));
+
+  @override
+  Future<bool> setMovieQuality(MovieQualityValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.MovieQuality, params: [value.wifiValue])
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          SettingsItem<MovieQualityValue> item = device.cameraSettings.movieQuality;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///Steady Mode
+
+  @override
+  Future<SettingsItem<OnOffValue>> getSteadyMode({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getSteadyMode(update: update));
+
+  @override
+  Future<bool> setSteadyMode(OnOffValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.SteadyMode, params: [value.wifiValue])
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          SettingsItem<OnOffValue> item = device.cameraSettings.steadyMode;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///View Angle
+
+  @override
+  Future<SettingsItem<IntValue>> getViewAngle({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getViewAngle(update: update));
+
+  @override
+  Future<bool> setViewAngle(IntValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.ViewAngle, params: [value.wifiValue])
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          SettingsItem<IntValue> item = device.cameraSettings.viewAngle;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///Scene Selection
+
+  @override
+  Future<SettingsItem<SceneSelectionValue>> getSceneSelection({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getSceneSelection(update: update));
+
+  @override
+  Future<bool> setSceneSelection(SceneSelectionValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.SceneSelection, params: [value.wifiValue])
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          SettingsItem<SceneSelectionValue> item = device.cameraSettings.sceneSelection;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///Color Setting
+
+  @override
+  Future<SettingsItem<ColorSettingValue>> getColorSetting({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getColorSetting(update: update));
+
+  @override
+  Future<bool> setColorSetting(ColorSettingValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.ColorSetting, params: [value.wifiValue])
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          SettingsItem<ColorSettingValue> item = device.cameraSettings.colorSetting;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///Interval Time
+
+  @override
+  Future<SettingsItem<StringValue>> getIntervalTime({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getIntervalTime(update: update));
+
+  @override
+  Future<bool> setIntervalTime(StringValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.IntervalTime, params: [value.wifiValue])
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          SettingsItem<StringValue> item = device.cameraSettings.intervalTime;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///Loop Recording Time
+
+  @override
+  Future<SettingsItem<StringValue>> getLoopRecordingTime({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getLoopRecordingTime(update: update));
+
+  @override
+  Future<bool> setLoopRecordingTime(StringValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.LoopRecordingTime, params: [value.wifiValue])
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          SettingsItem<StringValue> item = device.cameraSettings.intervalTime;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///Wind Noise Reduction
+
+  @override
+  Future<SettingsItem<OnOffValue>> getWindNoiseReduction({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getWindNoiseReduction(update: update));
+
+  @override
+  Future<bool> setWindNoiseReduction(OnOffValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.WindNoiseReduction, params: [value.wifiValue])
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          SettingsItem<OnOffValue> item = device.cameraSettings.windNoiseReduction;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///Audio Recording Setting
+
+  @override
+  Future<SettingsItem<OnOffValue>> getAudioRecordingSetting({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getAudioRecordingSetting(update: update));
+
+  @override
+  Future<bool> setAudioRecordingSetting(OnOffValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.AudioRecording, params: [value.wifiValue])
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          SettingsItem<OnOffValue> item = device.cameraSettings.audioRecordingSetting;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///Flip Setting
+
+  @override
+  Future<SettingsItem<OnOffValue>> getFlipSetting({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getFlipSetting(update: update));
+
+  @override
+  Future<bool> setFlipSetting(OnOffValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.FlipSetting, params: [value.wifiValue])
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          SettingsItem<OnOffValue> item = device.cameraSettings.flipSetting;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///TV Color System
+
+  @override
+  Future<SettingsItem<TvColorSystemValue>> getTvColorSystem({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getTvColorSystem(update: update));
+
+  @override
+  Future<bool> setTvColorSystem(TvColorSystemValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.TvColorSystem, params: [value.wifiValue])
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          SettingsItem<TvColorSystemValue> item = device.cameraSettings.tvColorSystem;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///Infrared Remote Control
+
+  @override
+  Future<SettingsItem<OnOffValue>> getInfraredRemoteControl({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getInfraredRemoteControl(update: update));
+
+  @override
+  Future<bool> setInfraredRemoteControl(OnOffValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.InfraredRemoteControl, params: [value.wifiValue])
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          SettingsItem<OnOffValue> item = device.cameraSettings.infraredRemoteControl;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///Infrared Remote Control
+
+  @override
+  Future<SettingsItem<IntValue>> getAutoPowerOff({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getAutoPowerOff(update: update));
+
+  @override
+  Future<bool> setAutoPowerOff(IntValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.AutoPowerOff, params: [value.wifiValue])
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          SettingsItem<IntValue> item = device.cameraSettings.autoPowerOff;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
+  ///Infrared Remote Control
+
+  @override
+  Future<SettingsItem<BeepModeValue>> getBeepMode({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getAutoPowerOff(update: update));
+
+  @override
+  Future<bool> setBeepMode(BeepModeValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.BeepMode, params: [value.wifiValue])
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          SettingsItem<BeepModeValue> item = device.cameraSettings.beepMode;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
 
   //TODO
 
   @override
-  Future<SettingsItem<BoolValue>> getAel({update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getAel(update: update));
-
-  @override
-  Future<SettingsItem<AutoFocusStateValue>> getAutoFocusState(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getAutoFocusState(update: update));
-
-  @override
-  Future<int> getBatteryPercentage({update = ForceUpdate.IfNull}) {
-    //TODO only get
+  Future<SettingsItem<BoolValue>> getAel({update = ForceUpdate.IfNull}) {
+    // TODO: implement pressShutter
+    throw UnimplementedError();
   }
 
   @override
-  Future<SettingsItem<DriveModeValue>> getDriveMode(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getDriveMode(update: update));
+  Future<SettingsItem<AutoFocusStateValue>> getAutoFocusState({update = ForceUpdate.IfNull}) {
+    // TODO: implement pressShutter
+    throw UnimplementedError();
+  }
 
   @override
-  Future<SettingsItem<DroHdrValue>> getDroHdr(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getDroHdr(update: update));
+  Future<SettingsItem<DriveModeValue>> getDriveMode({update = ForceUpdate.IfNull}) {
+    // TODO: implement pressShutter
+    throw UnimplementedError();
+  }
 
   @override
-  Future<SettingsItem<BoolValue>> getFel({update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getFel(update: update));
+  Future<SettingsItem<DroHdrValue>> getDroHdr({update = ForceUpdate.IfNull}) {
+    // TODO: implement pressShutter
+    throw UnimplementedError();
+  }
 
   @override
-  Future<SettingsItem<IntValue>> getFlashValue(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getFlashValue(update: update));
+  Future<SettingsItem<BoolValue>> getFel({update = ForceUpdate.IfNull}) {
+    // TODO: implement pressShutter
+    throw UnimplementedError();
+  }
 
   @override
-  Future<SettingsItem<FocusAreaValue>> getFocusArea(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getFocusArea(update: update));
+  Future<SettingsItem<IntValue>> getFlashValue({update = ForceUpdate.IfNull}) {
+    // TODO: implement pressShutter
+    throw UnimplementedError();
+  }
 
   @override
-  Future<SettingsItem<PointValue>> getFocusAreaSpot(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getFocusAreaSpot(update: update));
+  Future<SettingsItem<FocusAreaValue>> getFocusArea({update = ForceUpdate.IfNull}) {
+    // TODO: implement pressShutter
+    throw UnimplementedError();
+  }
 
   @override
-  Future<SettingsItem<DoubleValue>> getFocusMagnifier(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getFocusMagnifier(update: update));
+  Future<SettingsItem<PointValue>> getFocusAreaSpot({update = ForceUpdate.IfNull}) {
+    // TODO: implement pressShutter
+    throw UnimplementedError();
+  }
 
   @override
-  Future<SettingsItem<FocusMagnifierDirectionValue>> getFocusMagnifierDirection(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(
-          update, await super.getFocusMagnifierDirection(update: update));
+  Future<SettingsItem<DoubleValue>> getFocusMagnifier({update = ForceUpdate.IfNull}) {
+    // TODO: implement pressShutter
+    throw UnimplementedError();
+  }
 
   @override
-  Future<SettingsItem<FocusMagnifierPhaseValue>> getFocusMagnifierPhase(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(
-          update, await super.getFocusMagnifierPhase(update: update));
+  Future<SettingsItem<FocusMagnifierDirectionValue>> getFocusMagnifierDirection({update = ForceUpdate.IfNull}) {
+    // TODO: implement pressShutter
+    throw UnimplementedError();
+  }
 
   @override
-  Future<SettingsItem<FocusModeToggleValue>> getFocusModeToggle(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getFocusModeToggle(update: update));
+  Future<SettingsItem<FocusMagnifierPhaseValue>> getFocusMagnifierPhase({update = ForceUpdate.IfNull}) {
+    // TODO: implement pressShutter
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<SettingsItem<FocusModeToggleValue>> getFocusModeToggle({update = ForceUpdate.IfNull}) {
+    // TODO: implement pressShutter
+    throw UnimplementedError();
+  }
 
   @override
   Future<bool> getPhotoAvailable({update = ForceUpdate.IfNull}) {
@@ -1084,20 +1360,22 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<SettingsItem<PictureEffectValue>> getPictureEffect(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getPictureEffect(update: update));
-
-
-  @override
-  Future<SettingsItem<WhiteBalanceAbValue>> getWhiteBalanceAb(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getWhiteBalanceAb(update: update));
+  Future<SettingsItem<PictureEffectValue>> getPictureEffect({update = ForceUpdate.IfNull}) {
+    // TODO: implement pressShutter
+    throw UnimplementedError();
+  }
 
   @override
-  Future<SettingsItem<WhiteBalanceGmValue>> getWhiteBalanceGm(
-          {update = ForceUpdate.IfNull}) async =>
-      await _updateIf(update, await super.getWhiteBalanceGm(update: update));
+  Future<SettingsItem<WhiteBalanceAbValue>> getWhiteBalanceAb({update = ForceUpdate.IfNull}) {
+    // TODO: implement pressShutter
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<SettingsItem<WhiteBalanceGmValue>> getWhiteBalanceGm({update = ForceUpdate.IfNull}) {
+    // TODO: implement pressShutter
+    throw UnimplementedError();
+  }
 
   @override
   Future<bool> pressShutter(ShutterPressType shutterPressType) {
@@ -1190,7 +1468,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
-
   @override
   Future<bool> setPictureEffect(PictureEffectId value) {
     // TODO: implement setPictureEffect
@@ -1216,124 +1493,12 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> startRecordingVideo() =>
-      WifiCommand.createCommand(ApiMethodId.START, ItemId.RecordVideo)
-          .send(device)
-          .then((value) => value.response == "true");
-
-  @override
-  Future<bool> stopRecordingVideo() =>
-      WifiCommand.createCommand(ApiMethodId.STOP, ItemId.RecordVideo)
-          .send(device)
-          .then((value) => value.response == "true");
-
-  /// This API provides a function to start audio recording.
-  ///
-  ///
-  /// This API instructs the server side to start audio recording.
-  /// When this API is called and the server starts audio recording,
-  /// the camera status will change as follows.
-  /// The camera status can be obtained by [EventNotificationApi.getEvent].
-  ///
-  ///
-  /// [Client calls this]
-  ///
-  ///
-  /// Camera status: [CameraShootingStatusParam.IDLE] <br></br>
-  /// -> [CameraShootingStatusParam.AudioWaitRecStart] <br></br>
-  /// -> [CameraShootingStatusParam.AudioRecording].
-  ///
-  ///
-  /// After the recording has started, the client may stop the recording.
-  /// To stop the recording, [.stopAudioRec] must be called,
-  /// and the camera status will change as follows.
-  ///
-  ///
-  /// [Client calls [.stopAudioRec]]
-  ///
-  ///
-  /// Camera status: [CameraShootingStatusParam.AudioRecording]
-  /// -> [CameraShootingStatusParam.AudioWaitRecStop]
-  /// -> [CameraShootingStatusParam.AudioSaving]
-  /// -> [CameraShootingStatusParam.IDLE].
-  ///
-  ///
-  /// Note that this sequence is the example of typical case.
-  ///
-  ///
-  /// The client should check the [EventNotificationApi.getEvent]
-  /// parameter ([Event.cameraStatus]) and check if it is [CameraShootingStatusParam.IDLE]
-  /// before calling this.
-  ///
-  ///
-  /// This API is only available when the shoot mode is [ShootModeParam.Audio].
-  ///
-  ///
-  /// Note that the server may disable the liveview function when the
-  /// shoot mode is [ShootModeParam.Audio].
-  /// The client should check liveview availability by [Event.liveViewStatus] of
-  /// [EventNotificationApi.getEvent].
-  /// The APIs availability will also be changed.
-  /// The client should check the APIs availability by available API list.
-  /// When the client switches the shoot mode from [ShootModeParam.Audio] to others,
-  /// the client can restart the liveview by calling [LiveViewApi.startLiveView].
-  ///
-  ///
-  /// @return see [ApiCallSet]
-  @override
-  Future<bool> startRecordingAudio() =>
-      WifiCommand.createCommand(ApiMethodId.START, ItemId.AudioRecording)
-          .send(device)
-          .then((value) => value.response == "true");
-
-  /// This API provides a function to stop audio recording.
-  ///
-  ///
-  /// This API is only available when the shoot mode is [ShootModeParam.Audio].
-  /// Even if this API is successful, the server may not be ready to start the next recording.
-  /// The next recording is prohibited until the client could make sure,
-  /// that the server is ready to start the next recording, through the
-  /// [EventNotificationApi.getEvent] callback parameter [Event.cameraStatus].
-  ///
-  ///
-  /// @return see [ApiCallSet]
-  @override
-  Future<bool> stopRecordingAudio() =>
-      WifiCommand.createCommand(ApiMethodId.STOP, ItemId.AudioRecording)
-          .send(device)
-          .then((value) => value.response == "true");
-
-  /// This API provides a function to set a value of audio recording setting.
-  ///
-  ///
-  /// Even if the response is successful, the setting may not be finished on the server.
-  /// Therefore, the client can check [Event.audioRecordingSetting] result in
-  /// [EventNotificationApi.getEvent] callback to recognize the timing of a change
-  /// in the parameter of the server.
-  ///
-  ///
-  /// @param audioRecordingSetting Audio recording setting
-  /// (See Audio recording setting parameters of Parameter description)
-  /// @return see [ApiCallSet]
-  @override
-  Future<bool> setRecordingAudio(String audioRecordingSetting) =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.AudioRecording,
-              params: [audioRecordingSetting])
-          .send(device)
-          .then((value) => value.response == "true");
-
-  @override
-  Future<SettingsItem<StringValue>> getRecordingAudio(
-      {update = ForceUpdate.IfNull}) {
-    // TODO: implement setFocusMode
+  Future<int> getBatteryPercentage({ForceUpdate update}) {
+    // TODO: implement getBatteryPercentage
     throw UnimplementedError();
   }
 
-  @override
-  Future<RecordVideoStateValue> getRecordingVideoState({ForceUpdate update}) {
-    // TODO: implement getRecordingVideoState
-    throw UnimplementedError();
-  }
+
 
   //update for the getters
   //TODO update only current?? (if developer only wants to show things without change no need for supported)
@@ -1492,95 +1657,5 @@ class SonyCameraWifiApi extends CameraApiInterface {
     }
 
     return functionAvailability;
-  }
-
-  @override
-  Future<bool> setAudioRecordingSetting(OnOffValue value) {
-    // TODO: implement setAudioRecordingSetting
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setAutoPowerOff(IntValue value) {
-    // TODO: implement setAutoPowerOff
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setBeepMode(BeepModeValue value) {
-    // TODO: implement setBeepMode
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setColorSetting(ColorSettingValue value) {
-    // TODO: implement setColorSetting
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setFlipSetting(OnOffValue value) {
-    // TODO: implement setFlipSetting
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setInfraredRemoteControl(OnOffValue value) {
-    // TODO: implement setInfraredRemoteControl
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setIntervalTime(StringValue value) {
-    // TODO: implement setIntervalTime
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setLoopRecordingTime(StringValue value) {
-    // TODO: implement setLoopRecordingTime
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setMovieFileFormat(MovieFileFormatValue value) {
-    // TODO: implement setMovieFileFormat
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setMovieQuality(MovieQualityValue value) {
-    // TODO: implement setMovieQuality
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setSceneSelection(SceneSelectionValue value) {
-    // TODO: implement setSceneSelection
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setSteadyMode(OnOffValue value) {
-    // TODO: implement setSteadyMode
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setTvColorSystem(TvColorSystemValue value) {
-    // TODO: implement setTvColorSystem
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setViewAngle(IntValue value) {
-    // TODO: implement setViewAngle
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> setWindNoiseReduction(OnOffValue value) {
-    // TODO: implement setWindNoiseReduction
-    throw UnimplementedError();
   }
 }

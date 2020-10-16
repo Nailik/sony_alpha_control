@@ -38,20 +38,16 @@ getIntervalTime
 getSupportedIntervalTime
 getAvailableIntervalTime
 
-setLoopRecTime
-getLoopRecTime
-getSupportedLoopRecTime
-getAvailableLoopRecTime
+setLoopRecordingTime (setLoopRecTime)
+getLoopRecordingTime (getLoopRecTime, getSupportedLoopRecTime, getAvailableLoopRecTime)
 
 setWindNoiseReduction
 getWindNoiseReduction
 getSupportedWindNoiseReduction
 getAvailableWindNoiseReduction
 
-setAudioRecording
-getAudioRecording
-getSupportedAudioRecording
-getAvailableAudioRecording
+setAudioRecordingSetting (setAudioRecording)
+getAudioRecordingSetting (getAudioRecording, getSupportedAudioRecording, getAvailableAudioRecording)
 
 
 
