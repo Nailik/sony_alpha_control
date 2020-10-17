@@ -39,39 +39,15 @@ class _LiveViewPageState extends State<LiveViewPage> {
                 title: const Text('LiveView'),
             ),
             body: Container(
-                color: Colors.pink,
-                child: Stack(
-                  children: [
-                    ValueListenableBuilder(
-                        valueListenable: live.previousImage,
-                        builder: (context, value, child) {
-                          if (value == null) {
-                            return Text("empty");
-                          } else {
-                            return Container(
-                              decoration: BoxDecoration(
-                                image: new DecorationImage(
-                                    fit: BoxFit.cover, image: value),
-                              ),
-                            );
-                          }
-                        }), ValueListenableBuilder(
-                        valueListenable: live.memoryImage,
-                        builder: (context, value, child) {
-                          if (value == null) {
-                            return Text("empty");
-                          } else {
-                            return Container(
-                              decoration: BoxDecoration(
-                                image: new DecorationImage(
-                                    fit: BoxFit.cover, image: value),
-                              ),
-                            );
-                          }
-                        }),
-                  ],
-                )
-
+                child: ValueListenableBuilder<MemoryImage>(
+                    valueListenable: live.memoryImage,
+                    builder: (context, value, child) {
+                      if (value == null) {
+                        return Text("empty");
+                      } else {
+                        return Image(image: value, fit: BoxFit.cover, gaplessPlayback: true);
+                      }
+                    }),
             )));
   }
 }
