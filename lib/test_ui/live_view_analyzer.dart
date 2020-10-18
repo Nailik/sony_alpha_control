@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 enum WaitAnalyzerState { CommonHeader, PayloadHeader, Payload }
@@ -17,6 +18,33 @@ extension WaitAnalyzerStateExtension on WaitAnalyzerState {
     }
   }
 }
+
+bool liveAnalayzeLogger;
+
+MemoryImage _updateImage(List<int> data) {
+  return (MemoryImage(Uint8List.fromList(data)));
+}
+
+class Packet {
+  CommonHeader commonHeader;
+  PayloadHeader payloadHeader;
+  Payload payload;
+}
+
+class CommonHeader {
+
+  final bool isImage;
+  final bool isImageInformation;
+  final int frameNum;
+  final int timestamp;
+
+  CommonHeader(this.isImage, this.isImageInformation, this.frameNum, this.timestamp )
+
+}
+
+class PayloadHeader {}
+
+class Payload {}
 
 class LiveViewAnalyzer {
   ValueNotifier<MemoryImage> memoryImage = ValueNotifier(null);
@@ -51,8 +79,13 @@ class LiveViewAnalyzer {
 
   _analyze(HttpClientResponse response) async {
     response.listen((event) async {
+      int startTime = DateTime
+          .now()
+          .millisecondsSinceEpoch - lastImageUpdate;
       _buffer.addAll(event);
- //      print("_buffer ${_buffer.length}"); //1 packet = common header + payload header
+
+      // Use the compute function to run parsePhotos in a separate isolate.
+      //      print("_buffer ${_buffer.length}"); //1 packet = common header + payload header
 
       bool successful = false;
 
@@ -66,12 +99,12 @@ class LiveViewAnalyzer {
           if (_buffer.length >= WaitAnalyzerState.CommonHeader.size) {
             _buffer.removeRange(0, WaitAnalyzerState.CommonHeader.size);
           } else {
-        //    print("ERROR _too small buffer CommonHeader");
+            //    print("ERROR _too small buffer CommonHeader");
             _buffer.clear(); //??
             waitAnalyzerState = WaitAnalyzerState.CommonHeader; //start from beginning
           }
         } else {
-        //  print("ERROR _buffer.clear()");
+          //  print("ERROR _buffer.clear()");
           _buffer.clear(); //??
         }
       }
@@ -87,12 +120,12 @@ class LiveViewAnalyzer {
             if (_buffer.length >= WaitAnalyzerState.PayloadHeader.size) {
               _buffer.removeRange(0, WaitAnalyzerState.PayloadHeader.size);
             } else {
-        //      print("ERROR _too small buffer PayloadHeader");
+              //      print("ERROR _too small buffer PayloadHeader");
               _buffer.clear(); //??
               waitAnalyzerState = WaitAnalyzerState.CommonHeader; //start from beginning
             }
           } else {
-       //     print("ERROR _buffer.clear()");
+            //     print("ERROR _buffer.clear()");
             waitAnalyzerState = WaitAnalyzerState.CommonHeader; //start from beginning
             _buffer.clear(); //?? TODO just wait for next payload??
           }
@@ -108,53 +141,51 @@ class LiveViewAnalyzer {
             _buffer.removeRange(0, WaitAnalyzerState.Payload.size);
           } else {
             _buffer.clear(); //??
-       //     print("ERROR _too small buffer Payload");
+            //     print("ERROR _too small buffer Payload");
             waitAnalyzerState = WaitAnalyzerState.CommonHeader; //start from beginning (anyway)
           }
         } else {
-      //    print("ERROR _buffer.clear()");
+          //    print("ERROR _buffer.clear()");
           waitAnalyzerState = WaitAnalyzerState.CommonHeader; //start from beginning
           _buffer.clear(); //??
         }
       }
+
+      print("parse time ${DateTime
+          .now()
+          .millisecondsSinceEpoch - startTime}");
     });
   }
 
 
-  Future<bool> _analyzeCommonHeader(List<int> data) async {
-    ///Common header
+  CommonHeader _analyzeCommonHeader(List<int> data)  {
     ByteData byteData = Uint8List.fromList(data).buffer.asByteData();
-//    print("commonHeader length ${data.length}");
+
     //[0] = 0xFF
     if (data[0] != 0xFF) {
-      //    print("ERROR Unknown Start byte ${data[0]} ***********************");
-      return false;
+      liveAnalayzeLogger ? print("ERROR Unknown Start byte ${data[0]} ***********************") : {};
+      return null;
     }
     //[1]
     bool isImage = false;
     bool isImageInformation = false;
     if (data[1] == 0x01) {
       isImage = true;
-      payloadIsImage = true;
-      //    print("streamingImages");
     } else if (data[1] == 0x02) {
       isImageInformation = true;
-      payloadIsImage = false;
-      //   print("streamingPlayback");
     } else {
-      // print("ERROR Unknown if image or imageInformation ***********************");
-      return false;
+      liveAnalayzeLogger ? print("ERROR Unknown if image or imageInformation ***********************") : {};
+      return null;
     }
     //[2][3]
-    var frameNum = byteData.getUint16(2, Endian.big);
-    //    print("frameNum $frameNum");
+    int frameNum = byteData.getUint16(2, Endian.big);
     //[4][5][6][7]
-    var timestamp = byteData.getUint32(4, Endian.big);
-    lastImageTimestamp = currentImageTimestamp;
-     currentImageTimestamp = timestamp;
+    int timestamp = byteData.getUint32(4, Endian.big);
 
-    return true;
+    return CommonHeader(isImage,isImageInformation, frameNum, timestamp );
   }
+
+
 
   Future<bool> _analyzePayloadHeader(List<int> data) async {
     ///Payload header
@@ -216,11 +247,19 @@ class LiveViewAnalyzer {
         //      return false;
         //     }
 
-        _updateImage(data); //don't care if it is successful
-            int time =  DateTime.now().millisecondsSinceEpoch - lastImageUpdate;
-          //var fps = 1000 / time;
-          print("diff update image: $time diff update timestap ${currentImageTimestamp - lastImageTimestamp}  time diff: ${time - (currentImageTimestamp - lastImageTimestamp)}");
-           lastImageUpdate = DateTime.now().millisecondsSinceEpoch;
+        try {
+          memoryImage.value = _updateImage(data.take(nextPayloadSize).toList());
+        } on Exception catch (e) {
+          return true; //invalid image data //TODO should wait for next common header because cleaning up all is bad?
+        }
+        //   await compute(_updateImage, (data.take(nextPayloadSize).toList())); //don't care if it is successful
+
+
+        //   int time = DateTime.now().millisecondsSinceEpoch - lastImageUpdate;
+        //var fps = 1000 / time;
+        //     print(
+        //        "diff update image: $time diff update timestap ${currentImageTimestamp - lastImageTimestamp}  time diff: ${time - (currentImageTimestamp - lastImageTimestamp)}");
+        //    lastImageUpdate = DateTime.now().millisecondsSinceEpoch;
       } else {
         //print("isImageInformation");
       }
@@ -230,11 +269,5 @@ class LiveViewAnalyzer {
     }
   }
 
-  _updateImage(List<int> data) async {
-    try {
-      memoryImage.value = (MemoryImage(Uint8List.fromList(data.take(nextPayloadSize).toList())));
-    } on Exception catch (e) {
 
-    }
-  }
 }
