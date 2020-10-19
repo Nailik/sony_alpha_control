@@ -9,7 +9,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
-import 'package:sonyalphacontrol/wifi/xml/camera_web_api_service.dart';
+import 'package:sonyalphacontrol/wifi/xml/camera_web_api.dart';
 import 'package:sonyalphacontrol/wifi/xml/wifi_camera_xml.dart';
 
 import 'camera_wifi_settings.dart';
