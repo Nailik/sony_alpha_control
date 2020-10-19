@@ -38,8 +38,7 @@ class CommonHeader {
   final int frameNum;
   final int timestamp;
 
-  CommonHeader(this.isImage, this.isImageInformation, this.frameNum, this.timestamp )
-
+  CommonHeader(this.isImage, this.isImageInformation, this.frameNum, this.timestamp);
 }
 
 class PayloadHeader {}
@@ -158,13 +157,16 @@ class LiveViewAnalyzer {
   }
 
 
-  CommonHeader _analyzeCommonHeader(List<int> data)  {
-    ByteData byteData = Uint8List.fromList(data).buffer.asByteData();
+  Future<bool> _analyzeCommonHeader(List<int> data) async {
+    ByteData byteData = Uint8List
+        .fromList(data)
+        .buffer
+        .asByteData();
 
     //[0] = 0xFF
     if (data[0] != 0xFF) {
       liveAnalayzeLogger ? print("ERROR Unknown Start byte ${data[0]} ***********************") : {};
-      return null;
+      return false;
     }
     //[1]
     bool isImage = false;
@@ -175,14 +177,15 @@ class LiveViewAnalyzer {
       isImageInformation = true;
     } else {
       liveAnalayzeLogger ? print("ERROR Unknown if image or imageInformation ***********************") : {};
-      return null;
+      return false;
     }
+    payloadIsImage = isImage;
     //[2][3]
     int frameNum = byteData.getUint16(2, Endian.big);
     //[4][5][6][7]
     int timestamp = byteData.getUint32(4, Endian.big);
 
-    return CommonHeader(isImage,isImageInformation, frameNum, timestamp );
+    return true;
   }
 
 
