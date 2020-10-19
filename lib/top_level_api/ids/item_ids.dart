@@ -167,7 +167,8 @@ enum ItemId {
   StorageInformation,
   Versions,
   MethodTypes,
-  ApiList,
+  AvailableFunctions,
+  AvailableFunctions2,//for wifi
   EnableMethods,
   ApplicationInfo,
   BeepMode,
@@ -223,7 +224,7 @@ enum ItemId {
   Unknown,
 }
 
-extension SettingsIdExtension on ItemId {
+extension ItemIdExtension on ItemId {
   String get name => toString().split('.')[1];
 
   int get usbValue {
@@ -371,8 +372,10 @@ extension SettingsIdExtension on ItemId {
         return "methodTypes";
       case ItemId.ApplicationInfo:
         return "applicationInfo";
-      case ItemId.ApiList: //TODO supported api list?
+      case ItemId.AvailableFunctions: //TODO supported api list?
         return "apiList";
+      case ItemId.AvailableFunctions2: //TODO supported api list?
+        return "availableApiList";
       case ItemId.EnableMethods: //TODO supported api list?
         return "enableMethods";
       case ItemId.AvailableSettings:

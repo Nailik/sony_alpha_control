@@ -1,4 +1,3 @@
-import 'camera_service.dart';
 import 'camera_web_api.dart';
 
 class WifiCameraXML {

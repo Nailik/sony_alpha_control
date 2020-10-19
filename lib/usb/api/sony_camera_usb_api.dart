@@ -932,4 +932,10 @@ class SonyCameraUsbApi extends CameraApiInterface {
     // TODO: implement setWindNoiseReduction
     throw UnimplementedError();
   }
+
+  @override
+  pollSettings() {
+    // TODO: implement pollSettings
+    throw UnimplementedError();
+  }
 }

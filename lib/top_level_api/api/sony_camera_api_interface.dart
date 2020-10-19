@@ -125,6 +125,8 @@ abstract class CameraApiInterface {
   Future<ListInfoItem<StringValue>> getAvailableSettings(bool longPolling, {ForceUpdate update}) async =>
       device.cameraSettings.availableSettings;
 
+  pollSettings();
+
   ///Shutter
 
   Future<SettingsItem<ShutterSpeedValue>> getShutterSpeed({ForceUpdate update}) async =>

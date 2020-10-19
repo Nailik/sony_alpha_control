@@ -4,10 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:sonyalphacontrol/top_level_api/device/value.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
+import 'package:collection/collection.dart';
 
 //TODO functions within this to update items when function is available ************ (NEXT)
 
 //TODO settingsItem and info item
+
+//TODO speichern welche methoden möglich sind für dieses "settingsid" item
+//TODO für wifi available apilist nutzen, für usb nur ob diese funktion implementiert ist
+//TODO methoden beim erstellen hinzufügen?
+
+//TODO stillsize(usb) - size and aspect ratio (wifi)
+//TODO drivemode cont and timer (usb) - single on wifi (different methods) TODO test
+//TODO cont shooting on wifi - on off via "start cont shooting" (bracket not wupporte?)
+//TODO cont shooting speed and state together in usb, different in wifi
+
+//TODO zusammengefasstes "teilen" auch in usb -> man wählt das eine aus,
 
 class SettingsItem<T extends Value> extends ChangeNotifier {
   final ItemId itemId;
@@ -27,13 +39,11 @@ class SettingsItem<T extends Value> extends ChangeNotifier {
   //not different setter to not notify layout changes too often when multiple values are updated at the same time one after another
   updateItem(T newValue, List<T> newAvailable, List<T> newSupported) {
     if (_value != newValue ||
-        _available != newAvailable ||
-        _supported != newSupported) {
-      //TODO list check all items?
+        !const DeepCollectionEquality().equals(_available, newAvailable) ||
+        !const DeepCollectionEquality().equals(_supported, newSupported)) {
       _value = newValue;
       _available = new List.unmodifiable(newAvailable);
       _supported = new List.unmodifiable(newSupported);
-
       notifyListeners();
     }
   }
@@ -49,16 +59,6 @@ class SettingsItem<T extends Value> extends ChangeNotifier {
 
   createListFromWifiJson(List<dynamic> list) =>
       list.map<T>((e) => Value.fromWifi(itemId, e)).toList();
-//TODO speichern welche methoden möglich sind für dieses "settingsid" item
-//TODO für wifi available apilist nutzen, für usb nur ob diese funktion implementiert ist
-//TODO methoden beim erstellen hinzufügen?
-
-//TODO stillsize(usb) - size and aspect ratio (wifi)
-//TODO drivemode cont and timer (usb) - single on wifi (different methods) TODO test
-//TODO cont shooting on wifi - on off via "start cont shooting" (bracket not wupporte?)
-//TODO cont shooting speed and state together in usb, different in wifi
-
-//TODO zusammengefasstes "teilen" auch in usb -> man wählt das eine aus,
 }
 
 class InfoItem<T extends Value> extends ChangeNotifier {

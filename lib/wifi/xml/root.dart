@@ -1,4 +1,3 @@
-import 'package:sonyalphacontrol/wifi/xml/spec_version.dart';
 import 'package:sonyalphacontrol/wifi/xml/wifi_camera_xml.dart';
 
 class Root {

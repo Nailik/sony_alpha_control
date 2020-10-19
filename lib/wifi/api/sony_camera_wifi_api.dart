@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:math';
 
@@ -23,6 +24,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
 import 'package:sonyalphacontrol/wifi/commands/wifi_command.dart';
 import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
+import 'package:sonyalphacontrol/wifi/device/wifi_items.dart';
 
 class SonyCameraWifiApi extends CameraApiInterface {
   SonyCameraWifiDevice get device => cameraDevice;
@@ -97,8 +99,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   //TODO other Force Update options for info?
 
   @override
-  Future<ListInfoItem<WebApiMethodValue>> getMethodTypesCamera(
-      {WebApiVersionId webApiVersion, ForceUpdate update}) async {
+  Future<ListInfoItem<WebApiMethodValue>> getMethodTypesCamera({WebApiVersionId webApiVersion, ForceUpdate update}) async {
     ListInfoItem<WebApiMethodValue> listInfoItem = await super.getMethodTypesCamera();
     if (listInfoItem.values.isEmpty) {
       return await _getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.CAMERA, webApiVersion);
@@ -106,8 +107,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
     return await super.getMethodTypesCamera();
   }
 
-  Future<ListInfoItem<WebApiMethodValue>> getMethodTypesAvContent(
-      {WebApiVersionId webApiVersion, ForceUpdate update}) async {
+  Future<ListInfoItem<WebApiMethodValue>> getMethodTypesAvContent({WebApiVersionId webApiVersion, ForceUpdate update}) async {
     ListInfoItem<WebApiMethodValue> listInfoItem = await super.getMethodTypesAvContent();
     if (listInfoItem.values.isEmpty) {
       return await _getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.AV_CONTENT, webApiVersion);
@@ -115,8 +115,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
     return listInfoItem;
   }
 
-  Future<ListInfoItem<WebApiMethodValue>> getMethodTypesSystem(
-      {WebApiVersionId webApiVersion, ForceUpdate update}) async {
+  Future<ListInfoItem<WebApiMethodValue>> getMethodTypesSystem({WebApiVersionId webApiVersion, ForceUpdate update}) async {
     ListInfoItem<WebApiMethodValue> listInfoItem = await super.getMethodTypesSystem();
     if (listInfoItem.values.isEmpty) {
       return await _getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.SYSTEM, webApiVersion);
@@ -124,8 +123,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
     return listInfoItem;
   }
 
-  Future<ListInfoItem<WebApiMethodValue>> getMethodTypesGuide(
-      {WebApiVersionId webApiVersion, ForceUpdate update}) async {
+  Future<ListInfoItem<WebApiMethodValue>> getMethodTypesGuide({WebApiVersionId webApiVersion, ForceUpdate update}) async {
     ListInfoItem<WebApiMethodValue> listInfoItem = await super.getMethodTypesGuide();
     if (listInfoItem.values.isEmpty) {
       return await _getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.GUIDE, webApiVersion);
@@ -133,8 +131,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
     return listInfoItem;
   }
 
-  Future<ListInfoItem<WebApiMethodValue>> getMethodTypesAccessControl(
-      {WebApiVersionId webApiVersion, ForceUpdate update}) async {
+  Future<ListInfoItem<WebApiMethodValue>> getMethodTypesAccessControl({WebApiVersionId webApiVersion, ForceUpdate update}) async {
     ListInfoItem<WebApiMethodValue> listInfoItem = await super.getMethodTypesAccessControl();
     if (listInfoItem.values.isEmpty) {
       return await _getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.ACCESS_CONTROL, webApiVersion);
@@ -142,29 +139,27 @@ class SonyCameraWifiApi extends CameraApiInterface {
     return listInfoItem;
   }
 
-  Future<ListInfoItem> _getMethodTypes(
-      ListInfoItem listInfoItem, SonyWebApiServiceTypeId serviceTypeId, WebApiVersionId webApiVersion) async {
+  Future<ListInfoItem> _getMethodTypes(ListInfoItem listInfoItem, SonyWebApiServiceTypeId serviceTypeId, WebApiVersionId webApiVersion) async {
     return await WifiCommand.createCommand(ApiMethodId.GET, ItemId.MethodTypes,
-            params: [webApiVersion.wifiValue], service: serviceTypeId)
+        params: [webApiVersion.wifiValue], service: serviceTypeId)
         .send(device)
         .then((wifiResponse) => wifiResponse.response)
         .then((response) =>
-            device.cameraSettings.updateListInfoItem(listInfoItem, response, webApiVersion: webApiVersion));
+        device.cameraSettings.updateListInfoItem(listInfoItem, response, webApiVersion: webApiVersion));
   }
 
   ///AvailableApiList (get)
 
   @override
-  Future<ListInfoItem<ApiFunctionValue>> getAvailableFunctions(
-      {update = ForceUpdate.IfNull}) async {
+  Future<ListInfoItem<ApiFunctionValue>> getAvailableFunctions({update = ForceUpdate.IfNull}) async {
     //TODO other Force Update options for info?
     ListInfoItem<ApiFunctionValue> listInfoItem =
-        await super.getAvailableFunctions();
+    await super.getAvailableFunctions();
 
     if ((update == ForceUpdate.IfNull && listInfoItem.values.isEmpty) ||
         update == ForceUpdate.On) {
       await WifiCommand.createCommand(
-              ApiMethodId.GET_AVAILABLE, listInfoItem.itemId)
+          ApiMethodId.GET_AVAILABLE, listInfoItem.itemId)
           .send(device)
           .then((wifiResponse) {
         var jsonD = jsonDecode(wifiResponse.response);
@@ -176,7 +171,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
           ApiFunctionValue newItem = ApiFunctionValue.fromWifiValue(wifiValue);
 
           ApiFunctionValue existingItem = values.firstWhere(
-              (element) => element.id == newItem.id,
+                  (element) => element.id == newItem.id,
               orElse: () => null);
 
           if (existingItem != null) {
@@ -197,8 +192,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   ///ApplicationInfo (get)
 
   @override
-  Future<ListInfoItem<StringValue>> getApplicationInfo(
-      {update = ForceUpdate.IfNull}) async {
+  Future<ListInfoItem<StringValue>> getApplicationInfo({update = ForceUpdate.IfNull}) async {
     //TODO other Force Update options for info?
     ListInfoItem<StringValue> listInfoItem = await super.getApplicationInfo();
 
@@ -210,36 +204,60 @@ class SonyCameraWifiApi extends CameraApiInterface {
   ///AvailableSettings (get)
 
   @override
-  Future<ListInfoItem<StringValue>> getAvailableSettings(bool longPolling,
-      {update = ForceUpdate.IfNull}) async {
+  Future<ListInfoItem<StringValue>> getAvailableSettings(bool longPolling, {update = ForceUpdate.IfNull}) async {
     //TODO other Force Update options for info?
-    ListInfoItem<StringValue> listInfoItem =
-        await super.getAvailableSettings(longPolling);
+    ListInfoItem<StringValue> listInfoItem = await super.getAvailableSettings(longPolling);
 
-    await WifiCommand.createCommand(ApiMethodId.GET, listInfoItem.itemId,
-            params: [longPolling])
+    await WifiCommand.createCommand(ApiMethodId.GET, listInfoItem.itemId, params: [longPolling])
         .send(device)
         .then((wifiResponse) => wifiResponse.response)
-        .then((response) =>
-            device.cameraSettings.updateListInfoItem(listInfoItem, response));
+        .then((response) => device.cameraSettings.updateListInfoItem(listInfoItem, response));
 
     return await super.getAvailableSettings(longPolling);
   }
 
+  @override
+  pollSettings() {
+    WifiCommand.createCommand(ApiMethodId.GET, ItemId.AvailableSettings, params: [true]).send(device).then((result) {
+      if (result.response != "TimeoutException") {
+        (jsonDecode(result.response)["result"]).forEach((element) {
+          if (element != null) {
+            if (element is List) {
+              if (element.isEmpty) return;
+            } else if (element is LinkedHashMap) {
+              if (element.isEmpty) return;
+            }
+            ItemId itemId = ItemIdExtension.getIdFromWifi(element["type"]);
+            dynamic item = device.cameraSettings.getItem(itemId);
+
+            if(item is SettingsItem){
+              item.update(element, device);
+            }else if(item is InfoItem){
+
+            }else if(item is ListInfoItem){
+
+            }
+          }
+        });
+      }
+    }).then((value) => pollSettings());
+  }
+
+
+
   ///CameraFunction (set, get, getSupported, getAvailable)
 
   @override
-  Future<SettingsItem<CameraFunctionValue>> getCameraFunction(
-          {update = ForceUpdate.IfNull}) async =>
+  Future<SettingsItem<CameraFunctionValue>> getCameraFunction({update = ForceUpdate.IfNull}) async =>
       _updateIf(update, await super.getCameraFunction());
 
   @override
   Future<bool> setCameraFunction(CameraFunctionValue value) async =>
-      await WifiCommand.createCommand(ApiMethodId.SET, ItemId.CameraFunction,
-          params: [value.wifiValue]).send(device).then((result) {
+      await WifiCommand.createCommand(ApiMethodId.SET, ItemId.CameraFunction, params: [value.wifiValue])
+          .send(device)
+          .then((result) {
         if (result.isValid) {
-          SettingsItem<CameraFunctionValue> item =
-              device.cameraSettings.cameraFunction;
+          SettingsItem<CameraFunctionValue> item = device.cameraSettings.cameraFunction;
           item.updateItem(value, item.available, item.supported);
         }
         return result.isValid;
@@ -256,7 +274,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
         var list = jsonD["result"][0];
         //TODo event -> same as postview urls
         List<StringValue> values =
-            device.cameraSettings.capturePhoto.createListFromWifiJson(list);
+        device.cameraSettings.capturePhoto.createListFromWifiJson(list);
         device.cameraSettings.capturePhoto.updateItem(values);
         return device.cameraSettings.capturePhoto;
       });
@@ -270,7 +288,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
         var list = jsonD["result"][0];
         //TODo event -> same as postview urls
         List<StringValue> values =
-            device.cameraSettings.capturePhoto.createListFromWifiJson(list);
+        device.cameraSettings.capturePhoto.createListFromWifiJson(list);
         device.cameraSettings.capturePhoto.updateItem(values);
         return device.cameraSettings.capturePhoto;
       });
@@ -292,8 +310,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   /// FNumber
 
   @override
-  Future<SettingsItem<DoubleValue>> getFNumber(
-          {update = ForceUpdate.IfNull}) async =>
+  Future<SettingsItem<DoubleValue>> getFNumber({update = ForceUpdate.IfNull}) async =>
       await _updateIf<DoubleValue>(
           update, await super.getFNumber(update: update));
 
@@ -355,15 +372,14 @@ class SonyCameraWifiApi extends CameraApiInterface {
   /// Shutter Speed
   ///
   @override
-  Future<SettingsItem<ShutterSpeedValue>> getShutterSpeed(
-          {update = ForceUpdate.IfNull}) async =>
+  Future<SettingsItem<ShutterSpeedValue>> getShutterSpeed({update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getShutterSpeed(update: update));
 
   @override
   Future<bool> modifyShutterSpeed(int direction) async {
     var shutterSpeed = await getShutterSpeed();
     var currentIndex = shutterSpeed.available.indexWhere(
-        (element) => element.wifiValue == shutterSpeed.value.wifiValue);
+            (element) => element.wifiValue == shutterSpeed.value.wifiValue);
     if ((currentIndex == 0 && direction == -1) ||
         (currentIndex == shutterSpeed.available.length - 1 && direction == 1)) {
       return false; //would be out of range
@@ -453,8 +469,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   ///FlashMode
 
   @override
-  Future<SettingsItem<FlashModeValue>> getFlashMode(
-          {update = ForceUpdate.IfNull}) async =>
+  Future<SettingsItem<FlashModeValue>> getFlashMode({update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getFlashMode(update: update));
 
   @override
@@ -472,8 +487,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   ///FocusMode
 
   @override
-  Future<SettingsItem<FocusModeValue>> getFocusMode(
-          {update = ForceUpdate.IfNull}) async =>
+  Future<SettingsItem<FocusModeValue>> getFocusMode({update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getFocusMode(update: update));
 
   @override
@@ -490,8 +504,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   ///Zoom Setting
 
   @override
-  Future<SettingsItem<ZoomSettingValue>> getZoomSetting(
-          {update = ForceUpdate.IfNull}) async =>
+  Future<SettingsItem<ZoomSettingValue>> getZoomSetting({update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getZoomSetting(update: update));
 
   @override
@@ -527,34 +540,33 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> actHalfPressShutter() async => //TODO error if not cancelled?
-      await WifiCommand.createCommand(ApiMethodId.ACT, ItemId.HalfPressShutter)
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          InfoItem<BoolValue> item = device.cameraSettings.halfPressShutter;
-          item.updateItem(BoolValue(true));
-        }
-        return result.isValid;
-      });
+  await WifiCommand.createCommand(ApiMethodId.ACT, ItemId.HalfPressShutter)
+      .send(device)
+      .then((result) {
+    if (result.isValid) {
+      InfoItem<BoolValue> item = device.cameraSettings.halfPressShutter;
+      item.updateItem(BoolValue(true));
+    }
+    return result.isValid;
+  });
 
   @override
   Future<bool> cancelHalfPressShutter() async => //TODO error if not act?
-      await WifiCommand.createCommand(
-              ApiMethodId.CANCEL, ItemId.HalfPressShutter)
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          InfoItem<BoolValue> item = device.cameraSettings.halfPressShutter;
-          item.updateItem(BoolValue(false));
-        }
-        return result.isValid;
-      });
+  await WifiCommand.createCommand(
+      ApiMethodId.CANCEL, ItemId.HalfPressShutter)
+      .send(device)
+      .then((result) {
+    if (result.isValid) {
+      InfoItem<BoolValue> item = device.cameraSettings.halfPressShutter;
+      item.updateItem(BoolValue(false));
+    }
+    return result.isValid;
+  });
 
   ///Self Timer
 
   @override
-  Future<SettingsItem<IntValue>> getSelfTimer(
-          {update = ForceUpdate.IfNull}) async =>
+  Future<SettingsItem<IntValue>> getSelfTimer({update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getSelfTimer(update: update));
 
   @override
@@ -571,8 +583,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   ///Live View Size
 
   @override
-  Future<SettingsItem<LiveViewSizeValue>> getLiveViewSize(
-          {update = ForceUpdate.IfNull}) async =>
+  Future<SettingsItem<LiveViewSizeValue>> getLiveViewSize({update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getLiveViewSize(update: update));
 
   @override
@@ -591,8 +602,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   ///Post View Image Size
 
   @override
-  Future<SettingsItem<PostViewImageSizeValue>> getPostViewImageSize(
-          {update = ForceUpdate.IfNull}) async =>
+  Future<SettingsItem<PostViewImageSizeValue>> getPostViewImageSize({update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getPostViewImageSize(update: update));
 
   @override
@@ -610,8 +620,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   ///Program Shift
 
   @override
-  Future<SettingsItem<IntValue>> getProgramShift(
-          {update = ForceUpdate.IfNull}) async =>
+  Future<SettingsItem<IntValue>> getProgramShift({update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getProgramShift(update: update));
 
   @override
@@ -628,14 +637,13 @@ class SonyCameraWifiApi extends CameraApiInterface {
   ///White Balance Mode
 
   @override
-  Future<SettingsItem<WhiteBalanceModeValue>> getWhiteBalanceMode(
-          {update = ForceUpdate.IfNull}) async =>
+  Future<SettingsItem<WhiteBalanceModeValue>> getWhiteBalanceMode({update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getWhiteBalanceMode(update: update));
 
   @override
   Future<bool> setWhiteBalanceMode(WhiteBalanceModeValue value) async =>
       WifiCommand.createCommand(ApiMethodId.SET, ItemId.WhiteBalanceMode,
-              params: [value.wifiValue, false, 0])
+          params: [value.wifiValue, false, 0])
           .send(device)
           .then((result) async {
         if (result.isValid) {
@@ -651,46 +659,39 @@ class SonyCameraWifiApi extends CameraApiInterface {
   /// WhiteBalance Color Temp
 
   @override
-  Future<SettingsItem<WhiteBalanceColorTempValue>> getWhiteBalanceColorTemp(
-      {update = ForceUpdate.IfNull}) async {
+  Future<SettingsItem<WhiteBalanceColorTempValue>> getWhiteBalanceColorTemp({update = ForceUpdate.IfNull}) async {
     SettingsItem<WhiteBalanceColorTempValue> settingsItemWhiteColorTemp =
-        await super.getWhiteBalanceColorTemp(update: update);
+    await super.getWhiteBalanceColorTemp(update: update);
 
     SettingsItem<WhiteBalanceModeValue> settingsItemWhiteBalanceMode =
-        await super.getWhiteBalanceMode(update: update);
+    await super.getWhiteBalanceMode(update: update);
 
     switch (update) {
       case ForceUpdate.Available:
-        await _getAvailable(ItemId.WhiteBalanceMode).then((response) => device
-            .cameraSettings
-            .updateAvailable(settingsItemWhiteBalanceMode, response));
+        await _getAvailable(ItemId.WhiteBalanceMode).then((response) =>
+            settingsItemWhiteBalanceMode.updateAvailable(response, device));
         break;
       case ForceUpdate.Supported:
-        await _getSupported(ItemId.WhiteBalanceMode).then((response) => device
-            .cameraSettings
-            .updateSupported(settingsItemWhiteBalanceMode, response));
+        await _getSupported(ItemId.WhiteBalanceMode).then((response) =>
+            settingsItemWhiteBalanceMode.updateSupported(response, device));
         break;
       case ForceUpdate.On:
-        await _getSupported(ItemId.WhiteBalanceMode).then((response) => device
-            .cameraSettings
-            .updateSupported(settingsItemWhiteBalanceMode, response));
-        await _getAvailable(ItemId.WhiteBalanceMode).then((response) => device
-            .cameraSettings
-            .updateAvailable(settingsItemWhiteBalanceMode, response));
+        await _getSupported(ItemId.WhiteBalanceMode).then((response) =>
+            settingsItemWhiteBalanceMode.updateSupported(response, device));
+        await _getAvailable(ItemId.WhiteBalanceMode).then((response) =>
+            settingsItemWhiteBalanceMode.updateAvailable(response, device));
         break;
-      //TODO ForceUpdate.Current
+    //TODO ForceUpdate.Current
       case ForceUpdate.IfNull:
         if (settingsItemWhiteColorTemp.available == null ||
             settingsItemWhiteColorTemp.available.isEmpty) {
-          await _getAvailable(ItemId.WhiteBalanceMode).then((response) => device
-              .cameraSettings
-              .updateAvailable(settingsItemWhiteBalanceMode, response));
+          await _getAvailable(ItemId.WhiteBalanceMode).then((response) =>
+              settingsItemWhiteBalanceMode.updateAvailable(response, device));
         }
         if (settingsItemWhiteColorTemp.supported == null ||
             settingsItemWhiteColorTemp.supported.isEmpty) {
-          await _getSupported(ItemId.WhiteBalanceMode).then((response) => device
-              .cameraSettings
-              .updateSupported(settingsItemWhiteBalanceMode, response));
+          await _getSupported(ItemId.WhiteBalanceMode).then((response) =>
+              settingsItemWhiteBalanceMode.updateSupported(response, device));
         }
         break;
     }
@@ -701,10 +702,10 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> modifyWhiteBalanceColorTemp(int direction) async {
     SettingsItem<WhiteBalanceColorTempValue> temp =
-        await getWhiteBalanceColorTemp();
+    await getWhiteBalanceColorTemp();
     var newIndex = temp.available.indexWhere((element) =>
-            element.id == temp.value.id &&
-            element.whiteBalanceModeId == temp.value.whiteBalanceModeId) +
+    element.id == temp.value.id &&
+        element.whiteBalanceModeId == temp.value.whiteBalanceModeId) +
         direction;
     if (newIndex == temp.available.length || newIndex < 0) {
       return false;
@@ -713,10 +714,9 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> setWhiteBalanceColorTemp(
-      WhiteBalanceColorTempValue value) async {
+  Future<bool> setWhiteBalanceColorTemp(WhiteBalanceColorTempValue value) async {
     SettingsItem<WhiteBalanceModeValue> settingsItemWhiteBalanceMode =
-        await super.getWhiteBalanceMode();
+    await super.getWhiteBalanceMode();
 
     return WifiCommand.createCommand(ApiMethodId.SET, ItemId.WhiteBalanceMode,
         params: [
@@ -737,14 +737,13 @@ class SonyCameraWifiApi extends CameraApiInterface {
   ///Image File Format
 
   @override
-  Future<SettingsItem<ImageFileFormatValue>> getImageFileFormat(
-          {update = ForceUpdate.IfNull}) async =>
+  Future<SettingsItem<ImageFileFormatValue>> getImageFileFormat({update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getImageFileFormat(update: update));
 
   @override
   Future<bool> setImageFileFormat(ImageFileFormatValue value) async {
     return await WifiCommand.createCommand(
-            ApiMethodId.SET, ItemId.ImageFileFormat, params: [value.wifiValue])
+        ApiMethodId.SET, ItemId.ImageFileFormat, params: [value.wifiValue])
         .send(device)
         .then((result) {
       if (result.isValid) {
@@ -759,8 +758,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   ///Silent Shooting
 
   @override
-  Future<SettingsItem<OnOffValue>> getSilentShooting(
-          {update = ForceUpdate.IfNull}) async =>
+  Future<SettingsItem<OnOffValue>> getSilentShooting({update = ForceUpdate.IfNull}) async =>
       await _updateIf(update, await super.getSilentShooting(update: update));
 
   @override
@@ -1450,8 +1448,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> setFocusMagnifierDirection(
-      FocusMagnifierDirectionId value, int steps) {
+  Future<bool> setFocusMagnifierDirection(FocusMagnifierDirectionId value, int steps) {
     // TODO: implement setFocusMagnifierDirection
     throw UnimplementedError();
   }
@@ -1499,11 +1496,9 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
 
-
   //update for the getters
   //TODO update only current?? (if developer only wants to show things without change no need for supported)
-  Future<SettingsItem<T>> _updateIf<T extends Value>(
-      ForceUpdate update, SettingsItem settingsItem) async {
+  Future<SettingsItem<T>> _updateIf<T extends Value>(ForceUpdate update, SettingsItem settingsItem) async {
     switch (update) {
       case ForceUpdate.Available:
         await _updateAvailable(settingsItem);
@@ -1542,38 +1537,38 @@ class SonyCameraWifiApi extends CameraApiInterface {
           .send(device)
           .then((wifiResponse) => wifiResponse.response)
           .then((response) =>
-              device.cameraSettings.updateListInfoItem(listInfoItem, response));
+          device.cameraSettings.updateListInfoItem(listInfoItem, response));
 
   Future _updateAvailable(SettingsItem settingsItem) async {
     if (checkFunctionAvailability(
-            settingsItem.itemId, ApiMethodId.GET_AVAILABLE) ==
+        settingsItem.itemId, ApiMethodId.GET_AVAILABLE) ==
         FunctionAvailability.Available) {
       return await _getAvailable(settingsItem.itemId).then((response) =>
-          device.cameraSettings.updateAvailable(settingsItem, response));
+          settingsItem.updateAvailable(response, device));
     }
     return;
   }
 
   Future _updateSupported(SettingsItem settingsItem) async {
     if (checkFunctionAvailability(
-            settingsItem.itemId, ApiMethodId.GET_AVAILABLE) ==
+        settingsItem.itemId, ApiMethodId.GET_AVAILABLE) ==
         FunctionAvailability.Available) {
       return await _getSupported(settingsItem.itemId).then((response) =>
-          device.cameraSettings.updateSupported(settingsItem, response));
+          settingsItem.updateSupported(response, device));
     }
     return;
   }
 
   Future<String> _getSupported(ItemId settingsId) async {
     return await WifiCommand.createCommand(
-            ApiMethodId.GET_SUPPORTED, settingsId)
+        ApiMethodId.GET_SUPPORTED, settingsId)
         .send(device)
         .then((wifiResponse) => wifiResponse.response);
   }
 
   Future<String> _getAvailable(ItemId settingsId) async {
     return await WifiCommand.createCommand(
-            ApiMethodId.GET_AVAILABLE, settingsId)
+        ApiMethodId.GET_AVAILABLE, settingsId)
         .send(device)
         .then((wifiResponse) => wifiResponse.response);
   }
@@ -1585,8 +1580,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  FunctionAvailability checkFunctionAvailability(
-      ItemId itemId, ApiMethodId apiMethodId,
+  FunctionAvailability checkFunctionAvailability(ItemId itemId, ApiMethodId apiMethodId,
       {SonyWebApiServiceTypeId service = SonyWebApiServiceTypeId.CAMERA}) {
     FunctionAvailability functionAvailability = FunctionAvailability.Unsupported;
 
@@ -1625,8 +1619,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
       }
 
       WebApiMethodValue webApiMethod = listInfoItem.values.firstWhere(
-          (element) =>
-              element.id.settingsId == itemId &&
+              (element) =>
+          element.id.settingsId == itemId &&
               element.id.apiName == apiMethodId,
           orElse: () => null);
       if (webApiMethod != null) {
@@ -1635,7 +1629,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
     }
 
     if (functionAvailability == FunctionAvailability.Supported) {
-      if (itemId == ItemId.ApiList) {
+      if (itemId == ItemId.AvailableFunctions) {
         return FunctionAvailability.Available;
       }
       if (service == SonyWebApiServiceTypeId.CAMERA) {
@@ -1643,8 +1637,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
         ListInfoItem<ApiFunctionValue> functions =
             device.cameraSettings.availableFunctions;
         ApiFunctionValue apiFunctionValue = functions.values.firstWhere(
-            (element) =>
-                element.id == itemId && element.methods.contains(apiMethodId),
+                (element) =>
+            element.id == itemId && element.methods.contains(apiMethodId),
             orElse: () => null);
 
         if (apiFunctionValue != null) {

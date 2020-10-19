@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -42,7 +43,7 @@ class WifiCommand {
           service: service);
 
   Future<WifiResponse> send(SonyCameraWifiDevice device,
-      {timeout: 80000}) async {
+      {timeout: 10000}) async {
     //url
     //request json
     var url = "${device.getWebApiService(service).url}/${service.wifiValue}";
@@ -61,9 +62,13 @@ class WifiCommand {
       }
 
       return wifiResponse;
+    }on TimeoutException catch (e) {
+      print("TimeoutException");
+      return WifiResponse(json, "TimeoutException");
+      // handle timeout
     } on ClientException catch (error) {
       print("ClientException request");
-      return WifiResponse("", "");
+      return WifiResponse(json, "ClientException");
     }
   }
 

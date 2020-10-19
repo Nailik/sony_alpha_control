@@ -73,7 +73,7 @@ abstract class Value<T> {
         return WebApiMethodValue.fromWifiValue(wifiValue);
       case ItemId.ImageFileFormat: //StillQuality
         return ImageFileFormatValue.fromWifiValue(wifiValue);
-      case ItemId.ApiList:
+      case ItemId.AvailableFunctions:
         return ApiFunctionValue.fromWifiValue(wifiValue);
       case ItemId.CameraStatus:
         return CameraStatusValue.fromWifiValue(wifiValue);
@@ -1117,11 +1117,11 @@ class SettingsIdValue extends Value<ItemId> {
 
   @override
   factory SettingsIdValue.fromUSBValue(int usbValue) =>
-      SettingsIdValue(SettingsIdExtension.getIdFromUsb(usbValue));
+      SettingsIdValue(ItemIdExtension.getIdFromUsb(usbValue));
 
   @override
   factory SettingsIdValue.fromWifiValue(String wifiValue) =>
-      SettingsIdValue(SettingsIdExtension.getIdFromWifi(wifiValue));
+      SettingsIdValue(ItemIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;
@@ -1146,7 +1146,7 @@ class WebApiMethodValue extends Value<WebApiMethod> {
         .firstWhere((element) => wifiValue[0].startsWith(element.wifiValue));
     return WebApiMethodValue(WebApiMethod(
         methodId,
-        SettingsIdExtension.getIdFromWifi(
+        ItemIdExtension.getIdFromWifi(
             (wifiValue[0].replaceFirst(methodId.wifiValue, "") as String)
                 .startLow),
         (wifiValue[1] as List)?.map((e) => e as String)?.toList(),
@@ -1269,7 +1269,7 @@ class ApiFunctionValue extends Value<ItemId> {
     var methodId = ApiMethodId.values
         .firstWhere((element) => wifiValue.startsWith(element.wifiValue));
     return ApiFunctionValue(
-        SettingsIdExtension.getIdFromWifi(
+        ItemIdExtension.getIdFromWifi(
             wifiValue.replaceFirst(methodId.wifiValue, "").startLow),
         [methodId]);
   }

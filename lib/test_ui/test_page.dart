@@ -23,7 +23,17 @@ class TestsPageState extends State<TestsPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-            appBar: AppBar(),
+            appBar: AppBar(
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.update),
+                  tooltip: 'Poll updates',
+                  onPressed: () {
+                    device.api.pollSettings();
+                  },
+                ),
+              ],
+            ),
             backgroundColor: Colors.blueGrey,
             body: ListenableProvider<CameraSettings>(
                 create: (context) => SonyApi.connectedCamera.cameraSettings,
@@ -614,11 +624,11 @@ class TestsPageState extends State<TestsPage> {
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
-                title: Text(ItemId.ApiList.name),
+                title: Text(ItemId.AvailableFunctions.name),
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      getText(ItemId.ApiList, ApiMethodId.GET_AVAILABLE)
+                      getText(ItemId.AvailableFunctions, ApiMethodId.GET_AVAILABLE)
                     ]),
                 onTap: () =>
                     device.api.getAvailableFunctions(update: ForceUpdate.On)),

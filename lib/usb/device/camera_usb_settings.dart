@@ -102,7 +102,7 @@ class CameraUsbSettings extends CameraSettings {
       var settingsId = bytes.getUint16(offset, Endian.little);
       offset += 2;
 
-      ItemId settingsIdEnum = SettingsIdExtension.getIdFromUsb(settingsId);
+      ItemId settingsIdEnum = ItemIdExtension.getIdFromUsb(settingsId);
 
       SettingsItem setting;//TODO = getItem(settingsIdEnum);
       if (setting == null) {
