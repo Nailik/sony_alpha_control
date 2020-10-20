@@ -144,7 +144,7 @@ abstract class Value<T> {
             double.parse(wifiValue.replaceAll(",", "."))); //durch 100
       case ItemId.FocusMode:
         return FocusModeValue.fromWifiValue(wifiValue);
-      case ItemId.ISO:
+      case ItemId.IsoSpeedRate:
         return IsoValue.fromWifiValue(
             wifiValue); //TODO test noise reduction, auto ...
       case ItemId.ProgramShift:
@@ -155,7 +155,7 @@ abstract class Value<T> {
         throw UnsupportedError; //should never be called return WhiteBalanceModeValue.fromWifiValue(wifiValue);
       case ItemId.FocusAreaSpot: //touchAFPosition
       //TODO  return IntValue(wifiValue);
-      case ItemId.AutoFocusState:
+      case ItemId.FocusState:
       //TODO  return AutoFocusStateValue.fromWifiValue(wifiValue);
       case ItemId.TrackingFocusStatus:
       //TODO
@@ -231,8 +231,8 @@ abstract class Value<T> {
       case ItemId.UnkD212:
         print("UnkD212 $usbValue");
         return IntValue(usbValue);
-      case ItemId.AutoFocusState:
-        return AutoFocusStateValue.fromUSBValue(usbValue);
+      case ItemId.FocusState:
+        return FocusStateValue.fromUSBValue(usbValue);
       case ItemId.Zoom:
         return IntValue(usbValue);
       case ItemId.PhotoTransferQueue:
@@ -249,7 +249,7 @@ abstract class Value<T> {
         return WhiteBalanceAbValue.fromUSBValue(usbValue);
       case ItemId.RecordVideoState:
         return RecordVideoStateValue.fromUSBValue(usbValue);
-      case ItemId.ISO:
+      case ItemId.IsoSpeedRate:
         return IsoValue(usbValue);
       case ItemId.FEL_State:
         return BoolValue(usbValue == 2);
@@ -548,16 +548,16 @@ class AspectRatioValue extends Value<AspectRatioId> {
   String get name => id.name;
 }
 
-class AutoFocusStateValue extends Value<AutoFocusStateId> {
-  AutoFocusStateValue(AutoFocusStateId id) : super(id);
+class FocusStateValue extends Value<AutoFocusStateId> {
+  FocusStateValue(AutoFocusStateId id) : super(id);
 
   @override
-  factory AutoFocusStateValue.fromUSBValue(int usbValue) =>
-      AutoFocusStateValue(AutoFocusStateIdExtension.getIdFromUsb(usbValue));
+  factory FocusStateValue.fromUSBValue(int usbValue) =>
+      FocusStateValue(AutoFocusStateIdExtension.getIdFromUsb(usbValue));
 
   @override
-  factory AutoFocusStateValue.fromWifiValue(String wifiValue) =>
-      AutoFocusStateValue(AutoFocusStateIdExtension.getIdFromWifi(wifiValue));
+  factory FocusStateValue.fromWifiValue(String wifiValue) =>
+      FocusStateValue(AutoFocusStateIdExtension.getIdFromWifi(wifiValue));
 
   @override
   int get usbValue => id.usbValue;

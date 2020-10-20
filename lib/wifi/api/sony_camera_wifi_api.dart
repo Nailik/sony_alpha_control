@@ -233,9 +233,9 @@ class SonyCameraWifiApi extends CameraApiInterface {
             if(item is SettingsItem){
               item.update(element, device);
             }else if(item is InfoItem){
-
+              item.update(element, device);
             }else if(item is ListInfoItem){
-
+              item.update(element, device);
             }
           }
         });
@@ -359,7 +359,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setIso(IsoValue value) async {
-    return await WifiCommand.createCommand(ApiMethodId.SET, ItemId.ISO,
+    return await WifiCommand.createCommand(ApiMethodId.SET, ItemId.IsoSpeedRate,
         params: [value.wifiValue]).send(device).then((result) {
       if (result.isValid) {
         SettingsItem<IsoValue> item = device.cameraSettings.iso;
@@ -1281,12 +1281,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<SettingsItem<BoolValue>> getAel({update = ForceUpdate.IfNull}) {
-    // TODO: implement pressShutter
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<SettingsItem<AutoFocusStateValue>> getAutoFocusState({update = ForceUpdate.IfNull}) {
     // TODO: implement pressShutter
     throw UnimplementedError();
   }

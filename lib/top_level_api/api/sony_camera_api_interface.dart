@@ -471,8 +471,8 @@ abstract class CameraApiInterface {
 
   Future<bool> setFocusAreaSpot(Point value);
 
-  Future<SettingsItem<AutoFocusStateValue>> getAutoFocusState({ForceUpdate update}) async =>
-      device.cameraSettings.autoFocusState;
+  Future<InfoItem<FocusStateValue>> getFocusState() async =>
+      device.cameraSettings.focusState;
 
   Future<SettingsItem<IntValue>> getFlashValue({ForceUpdate update}) async => device.cameraSettings.flashValue;
 

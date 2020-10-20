@@ -6,26 +6,25 @@ import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 abstract class CameraSettings extends ChangeNotifier {
   Future<bool> update();
 
-  SettingsItem fNumber = SettingsItem<DoubleValue>(ItemId.FNumber);
-  SettingsItem iso = SettingsItem<IsoValue>(ItemId.ISO);
-  SettingsItem shutterSpeed = SettingsItem<ShutterSpeedValue>(ItemId.ShutterSpeed);
-  SettingsItem exposureCompensation = SettingsItem<EvValue>(ItemId.ExposureCompensation);
-  SettingsItem flashMode = SettingsItem<FlashModeValue>(ItemId.FlashMode);
-  SettingsItem focusMode = SettingsItem<FocusModeValue>(ItemId.FocusMode);
-  SettingsItem whiteBalanceMode = SettingsItem<WhiteBalanceModeValue>(ItemId.WhiteBalanceMode);
-  SettingsItem whiteBalanceColorTemp = SettingsItem<WhiteBalanceColorTempValue>(ItemId.WhiteBalanceColorTemp);
-  SettingsItem aelState = SettingsItem<BoolValue>(ItemId.AEL_State);
-  SettingsItem fel = SettingsItem<BoolValue>(ItemId.FEL);
-  SettingsItem focusArea = SettingsItem<FocusAreaValue>(ItemId.FocusArea);
-  SettingsItem focusAreaSpot = SettingsItem<PointValue>(ItemId.FocusAreaSpot);
-  SettingsItem autoFocusState = SettingsItem<AutoFocusStateValue>(ItemId.AutoFocusState);
-  SettingsItem flashValue = SettingsItem<IntValue>(ItemId.FlashValue);
-  SettingsItem imageFileFormat = SettingsItem<ImageFileFormatValue>(ItemId.ImageFileFormat);
-  SettingsItem pictureEffect = SettingsItem<PictureEffectValue>(ItemId.PictureEffect);
-  SettingsItem droHdr = SettingsItem<DroHdrValue>(ItemId.DroHdr);
+  SettingsItem<DoubleValue> fNumber = SettingsItem<DoubleValue>(ItemId.FNumber);
+  SettingsItem<IsoValue> iso = SettingsItem<IsoValue>(ItemId.IsoSpeedRate);
+  SettingsItem<ShutterSpeedValue> shutterSpeed = SettingsItem<ShutterSpeedValue>(ItemId.ShutterSpeed);
+  SettingsItem<EvValue> exposureCompensation = SettingsItem<EvValue>(ItemId.ExposureCompensation);
+  SettingsItem<FlashModeValue> flashMode = SettingsItem<FlashModeValue>(ItemId.FlashMode);
+  SettingsItem<FocusModeValue> focusMode = SettingsItem<FocusModeValue>(ItemId.FocusMode);
+  SettingsItem<WhiteBalanceModeValue> whiteBalanceMode = SettingsItem<WhiteBalanceModeValue>(ItemId.WhiteBalanceMode);
+  SettingsItem<WhiteBalanceColorTempValue> whiteBalanceColorTemp =
+      SettingsItem<WhiteBalanceColorTempValue>(ItemId.WhiteBalanceColorTemp);
+  SettingsItem<BoolValue> aelState = SettingsItem<BoolValue>(ItemId.AEL_State);
+  SettingsItem<BoolValue> fel = SettingsItem<BoolValue>(ItemId.FEL);
+  SettingsItem<FocusAreaValue> focusArea = SettingsItem<FocusAreaValue>(ItemId.FocusArea);
+  SettingsItem<PointValue> focusAreaSpot = SettingsItem<PointValue>(ItemId.FocusAreaSpot);
+  SettingsItem<IntValue> flashValue = SettingsItem<IntValue>(ItemId.FlashValue);
+  SettingsItem<ImageFileFormatValue> imageFileFormat = SettingsItem<ImageFileFormatValue>(ItemId.ImageFileFormat);
+  SettingsItem<PictureEffectValue> pictureEffect = SettingsItem<PictureEffectValue>(ItemId.PictureEffect);
+  SettingsItem<DroHdrValue> droHdr = SettingsItem<DroHdrValue>(ItemId.DroHdr);
   SettingsItem<RecordVideoStateValue> recordVideoState = SettingsItem<RecordVideoStateValue>(ItemId.RecordVideoState);
   SettingsItem<BoolValue> photoTransferQueue = SettingsItem<BoolValue>(ItemId.PhotoTransferQueue);
-  InfoItem<StringValue> batteryInfo = InfoItem<StringValue>(ItemId.BatteryInfo);
   SettingsItem<ImageSizeValue> imageSize = SettingsItem<ImageSizeValue>(ItemId.ImageSize);
   SettingsItem<AspectRatioValue> aspectRatio = SettingsItem<AspectRatioValue>(ItemId.AspectRatio);
   SettingsItem<MovieFileFormatValue> movieFileFormat = SettingsItem<MovieFileFormatValue>(ItemId.MovieFileFormat);
@@ -38,87 +37,77 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem<StringValue> loopRecordingTime = SettingsItem<StringValue>(ItemId.LoopRecordingTime);
   SettingsItem<OnOffValue> windNoiseReduction = SettingsItem<OnOffValue>(ItemId.WindNoiseReduction);
   SettingsItem<OnOffValue> audioRecordingSetting = SettingsItem<OnOffValue>(ItemId.AudioRecordingSetting);
-  InfoItem<BoolValue> audioRecording = InfoItem<BoolValue>(ItemId.AudioRecording);
   SettingsItem<OnOffValue> flipSetting = SettingsItem<OnOffValue>(ItemId.FlipSetting);
   SettingsItem<TvColorSystemValue> tvColorSystem = SettingsItem<TvColorSystemValue>(ItemId.TvColorSystem);
   SettingsItem<OnOffValue> infraredRemoteControl = SettingsItem<OnOffValue>(ItemId.InfraredRemoteControl);
   SettingsItem<IntValue> autoPowerOff = SettingsItem<IntValue>(ItemId.AutoPowerOff);
   SettingsItem<BeepModeValue> beepMode = SettingsItem<BeepModeValue>(ItemId.BeepMode);
-
   SettingsItem focusModeToggleResponse = SettingsItem<FocusModeToggleValue>(ItemId.FocusModeToggleResponse);
   SettingsItem<ShootModeValue> shootMode = SettingsItem<ShootModeValue>(ItemId.ShootMode);
-  SettingsItem whiteBalanceAB = SettingsItem<WhiteBalanceAbValue>(ItemId.WhiteBalanceAB);
-  SettingsItem whiteBalanceGM = SettingsItem<WhiteBalanceGmValue>(ItemId.WhiteBalanceGM);
-  SettingsItem driveMode = SettingsItem<DriveModeValue>(ItemId.DriveMode);
-  SettingsItem focusMagnifierDirection = SettingsItem<FocusMagnifierDirectionValue>(ItemId.FocusMagnifierDirection);
-  SettingsItem focusMagnifierPhase = SettingsItem<FocusMagnifierPhaseValue>(ItemId.FocusMagnifierPhase);
-  SettingsItem focusMagnifier = SettingsItem<DoubleValue>(ItemId.FocusMagnifier);
-
-  //versions for all the different SonyWebApiServiceTypeIds
-  ListInfoItem<WebApiVersionsValue> versionsCamera = ListInfoItem<WebApiVersionsValue>(ItemId.Versions);
-  ListInfoItem<WebApiVersionsValue> versionsAvContent =
-      ListInfoItem<WebApiVersionsValue>(ItemId.Versions);
-  ListInfoItem<WebApiVersionsValue> versionsSystem =
-      ListInfoItem<WebApiVersionsValue>(ItemId.Versions);
-  ListInfoItem<WebApiVersionsValue> versionsGuide =
-      ListInfoItem<WebApiVersionsValue>(ItemId.Versions);
-  ListInfoItem<WebApiVersionsValue> versionsAccessControl =
-      ListInfoItem<WebApiVersionsValue>(ItemId.Versions);
+  SettingsItem<WhiteBalanceAbValue> whiteBalanceAB = SettingsItem<WhiteBalanceAbValue>(ItemId.WhiteBalanceAB);
+  SettingsItem<WhiteBalanceGmValue> whiteBalanceGM = SettingsItem<WhiteBalanceGmValue>(ItemId.WhiteBalanceGM);
+  SettingsItem<DriveModeValue> driveMode = SettingsItem<DriveModeValue>(ItemId.DriveMode);
+  SettingsItem<FocusMagnifierDirectionValue> focusMagnifierDirection = SettingsItem<FocusMagnifierDirectionValue>(
+      ItemId.FocusMagnifierDirection);
+  SettingsItem<FocusMagnifierPhaseValue> focusMagnifierPhase = SettingsItem<FocusMagnifierPhaseValue>(
+      ItemId.FocusMagnifierPhase);
+  SettingsItem<DoubleValue> focusMagnifier = SettingsItem<DoubleValue>(ItemId.FocusMagnifier);
+  SettingsItem<CameraFunctionValue> cameraFunction = SettingsItem<CameraFunctionValue>(ItemId.CameraFunction);
+  SettingsItem<StringValue> zoom = SettingsItem<StringValue>(ItemId.Zoom);
+  SettingsItem<IntValue> selfTimer = SettingsItem<IntValue>(ItemId.SelfTimer);
+  SettingsItem<ContShootingModeValue> contShootingMode = SettingsItem<ContShootingModeValue>(ItemId.ContShootingMode);
+  SettingsItem<ContShootingSpeedValue> contShootingSpeed =
+  SettingsItem<ContShootingSpeedValue>(ItemId.ContShootingSpeed);
+  SettingsItem<MeteringModeValue> meteringMode = SettingsItem<MeteringModeValue>(ItemId.MeteringMode);
+  SettingsItem<LiveViewSizeValue> liveViewSize = SettingsItem<LiveViewSizeValue>(ItemId.LiveViewSize);
+  SettingsItem<PostViewImageSizeValue> postViewImageSize = SettingsItem<PostViewImageSizeValue>(
+      ItemId.PostViewImageSize);
+  SettingsItem<IntValue> programShift = SettingsItem<IntValue>(ItemId.ProgramShift);
+  SettingsItem<ZoomSettingValue> zoomSetting = SettingsItem<ZoomSettingValue>(ItemId.ZoomSetting);
+  SettingsItem<StringValue> liveViewInfo = SettingsItem<StringValue>(ItemId.LiveViewInfo);
+  SettingsItem<OnOffValue> silentShooting = SettingsItem<OnOffValue>(ItemId.SilentShooting);
 
   //TODO method types for all different SonyWebApiServiceTypeIds with versions?
-  ListInfoItem methodTypesCamera =
-      ListInfoItem<WebApiMethodValue>(ItemId.MethodTypes);
-  ListInfoItem methodTypesAvContent =
-      ListInfoItem<WebApiMethodValue>(ItemId.MethodTypes);
-  ListInfoItem methodTypesSystem =
-      ListInfoItem<WebApiMethodValue>(ItemId.MethodTypes);
-  ListInfoItem methodTypesGuide =
-      ListInfoItem<WebApiMethodValue>(ItemId.MethodTypes);
-  ListInfoItem methodTypesAccessControl =
-      ListInfoItem<WebApiMethodValue>(ItemId.MethodTypes);
+  ListInfoItem<WebApiMethodValue> methodTypesCamera = ListInfoItem<WebApiMethodValue>(ItemId.MethodTypes);
+  ListInfoItem<WebApiMethodValue> methodTypesAvContent = ListInfoItem<WebApiMethodValue>(ItemId.MethodTypes);
+  ListInfoItem<WebApiMethodValue> methodTypesSystem = ListInfoItem<WebApiMethodValue>(ItemId.MethodTypes);
+  ListInfoItem<WebApiMethodValue> methodTypesGuide = ListInfoItem<WebApiMethodValue>(ItemId.MethodTypes);
+  ListInfoItem<WebApiMethodValue> methodTypesAccessControl = ListInfoItem<WebApiMethodValue>(ItemId.MethodTypes);
 
-  ListInfoItem availableFunctions =
-      ListInfoItem<ApiFunctionValue>(ItemId.AvailableFunctions);
+  ListInfoItem<ApiFunctionValue> availableFunctions = ListInfoItem<ApiFunctionValue>(ItemId.AvailableFunctions);
 
-  ListInfoItem<StringValue> applicationInfo = ListInfoItem<StringValue>(ItemId.ApplicationInfo);
-  ListInfoItem<StringValue> availableSettings = ListInfoItem<StringValue>(ItemId.AvailableSettings);
-
-  SettingsItem<CameraFunctionValue> cameraFunction = SettingsItem<CameraFunctionValue>(ItemId.CameraFunction);
-
+  ListInfoItem<StringValue> storageInformation = ListInfoItem<StringValue>(ItemId.StorageInformation);
   ListInfoItem<StringValue> capturePhoto = ListInfoItem<StringValue>(ItemId.CapturePhoto);
 
   ListInfoItem<StringValue> cameraSetup = ListInfoItem<StringValue>(ItemId.CameraSetup);
+  ListInfoItem<StringValue> applicationInfo = ListInfoItem<StringValue>(ItemId.ApplicationInfo);
+  ListInfoItem<StringValue> availableSettings = ListInfoItem<StringValue>(ItemId.AvailableSettings);
 
-  InfoItem<BoolValue> liveView = InfoItem<BoolValue>(ItemId.LiveView);
+  //versions for all the different SonyWebApiServiceTypeIds
+  ListInfoItem<WebApiVersionsValue> versionsCamera = ListInfoItem<WebApiVersionsValue>(ItemId.Versions);
+  ListInfoItem<WebApiVersionsValue> versionsAvContent = ListInfoItem<WebApiVersionsValue>(ItemId.Versions);
+  ListInfoItem<WebApiVersionsValue> versionsSystem = ListInfoItem<WebApiVersionsValue>(ItemId.Versions);
+  ListInfoItem<WebApiVersionsValue> versionsGuide = ListInfoItem<WebApiVersionsValue>(ItemId.Versions);
+  ListInfoItem<WebApiVersionsValue> versionsAccessControl = ListInfoItem<WebApiVersionsValue>(ItemId.Versions);
 
-  SettingsItem zoom = SettingsItem<StringValue>(ItemId.Zoom);
-  InfoItem<BoolValue> halfPressShutter =
-      InfoItem<BoolValue>(ItemId.HalfPressShutter); //saves if is act (true) or cancel (false)
-  SettingsItem<IntValue> selfTimer = SettingsItem<IntValue>(ItemId.SelfTimer);
-
+  InfoItem<StringValue> batteryInfo = InfoItem<StringValue>(ItemId.BatteryInfo);
+  InfoItem<BoolValue> audioRecording = InfoItem<BoolValue>(ItemId.AudioRecording);
   InfoItem<BoolValue> intervalStillRecording = InfoItem<BoolValue>(ItemId.IntervalStillRecording);
   InfoItem<BoolValue> loopRecording = InfoItem<BoolValue>(ItemId.LoopRecording);
   InfoItem<BoolValue> movieRecording = InfoItem<BoolValue>(ItemId.MovieRecording);
   InfoItem<BoolValue> contShooting = InfoItem<BoolValue>(ItemId.ContShooting);
-  SettingsItem<ContShootingModeValue> contShootingMode = SettingsItem<ContShootingModeValue>(ItemId.ContShootingMode);
-  SettingsItem<ContShootingSpeedValue> contShootingSpeed =
-      SettingsItem<ContShootingSpeedValue>(ItemId.ContShootingSpeed);
-
-  SettingsItem<MeteringModeValue> meteringMode = SettingsItem<MeteringModeValue>(ItemId.MeteringMode);
-  SettingsItem liveViewSize = SettingsItem<LiveViewSizeValue>(ItemId.LiveViewSize);
-  SettingsItem postViewImageSize = SettingsItem<PostViewImageSizeValue>(ItemId.PostViewImageSize);
-  SettingsItem programShift = SettingsItem<IntValue>(ItemId.ProgramShift);
-  SettingsItem<ZoomSettingValue> zoomSetting = SettingsItem<ZoomSettingValue>(ItemId.ZoomSetting);
-  ListInfoItem<StringValue> storageInformation = ListInfoItem<StringValue>(ItemId.StorageInformation);
-  SettingsItem liveViewInfo = SettingsItem<StringValue>(ItemId.LiveViewInfo);
-  SettingsItem<OnOffValue> silentShooting = SettingsItem<OnOffValue>(ItemId.SilentShooting);
+  InfoItem<BoolValue> halfPressShutter =
+  InfoItem<BoolValue>(ItemId.HalfPressShutter); //saves if is act (true) or cancel (false)
+  InfoItem<BoolValue> liveView = InfoItem<BoolValue>(ItemId.LiveView);
+  InfoItem<BoolValue> cameraFunctionResult = InfoItem<BoolValue>(ItemId.CameraFunctionResult);
+  InfoItem<FocusStateValue> focusState = InfoItem<FocusStateValue>(ItemId.FocusState);
 
   //SettingsItem, ListInfoItem or InfoItem
   dynamic getItem(ItemId itemId) {
-    switch(itemId){
+    switch (itemId) {
       case ItemId.FNumber:
         return fNumber;
-      case ItemId.ISO:
+      case ItemId.IsoSpeedRate:
         return iso;
       case ItemId.ShutterSpeed:
         return shutterSpeed;
@@ -142,8 +131,8 @@ abstract class CameraSettings extends ChangeNotifier {
         return focusArea;
       case ItemId.FocusAreaSpot:
         return focusAreaSpot;
-      case ItemId.AutoFocusState:
-        return autoFocusState;
+      case ItemId.FocusState:
+        return focusState;
       case ItemId.FlashValue:
         return flashValue;
       case ItemId.ImageFileFormat:

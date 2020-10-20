@@ -1,10 +1,10 @@
 //a set function is like "fmode" you have available settings and choose one
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:sonyalphacontrol/top_level_api/device/value.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
-import 'package:collection/collection.dart';
 
 //TODO functions within this to update items when function is available ************ (NEXT)
 
@@ -55,7 +55,6 @@ class SettingsItem<T extends Value> extends ChangeNotifier {
         itemId == ItemId.FocusMagnifierPosition ||
         itemId == ItemId.ShutterSpeed);
   }
-
 
   createListFromWifiJson(List<dynamic> list) =>
       list.map<T>((e) => Value.fromWifi(itemId, e)).toList();

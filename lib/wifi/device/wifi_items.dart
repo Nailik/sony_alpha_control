@@ -146,14 +146,78 @@ extension SettingsItemExtension on SettingsItem {
     Value current;
 
     switch (itemId) {
-      case ItemId.ExposureCompensation:
-        //     availableList = getEvList(
-        //       json["minExposureCompensation"], json["maxExposureCompensation"], json["stepIndexOfExposureCompensation"]);
-        //     current = Value.fromWifi(settingsItem.itemId, json["currentExposureCompensation"]);
+      case ItemId.ImageSize:
+        //"type", "checkAvailability", "currentAspect","currentSize"
+        //"checkAvailability" If true, the client should check the change of
+        // available parameters by calling
+        // "getAvailableStillSize".
+
+        //TODO call if check availabilty?
         break;
+      case ItemId.WhiteBalanceMode:
+        //"type", "checkAvailability", "currentWhiteBalanceMode","currentColorTemperature"
+        //"checkAvailability" If true, the client should check the change of
+        // available parameters by calling
+        // "getAvailableWhiteBalance"".
+        //also sets color
+        //TODO
+        break;
+      case ItemId.ExposureCompensation:
+        List<EvValue> listOfValues = getEvList(
+            data["minExposureCompensation"], data["maxExposureCompensation"], data["stepIndexOfExposureCompensation"]);
+        updateItem((data["currentExposureCompensation"]), listOfValues, supported);
+        //TODO test
+        break;
+      case ItemId.MeteringMode:
+        //TODO metering exposure mode
+        break;
+      case ItemId.ProgramShift:
+        updateItem(BoolValue(data["isShifted"]), this.available, this.supported);
+        //TODO test
+        break;
+      case ItemId.ZoomSetting:
+      case ItemId.FlipSetting:
+        //"type", "zoom" (itemId.wifiValue without "Setting"), "candidate"
+        break;
+      case ItemId.SceneSelection:
+        //"type", "scene", "candidate"
+        break;
+      case ItemId.ContShootingUrlSet:
+        //"type", "contShootingUrl" [{"postviewUrl" , "thumbnailUrl"}]
+        break;
+      case ItemId.ImageSize:
+      case ItemId.ContShootingMode:
+      case ItemId.ContShootingSpeed:
+      case ItemId.ColorSetting:
+      case ItemId.MovieFileFormat:
+      case ItemId.InfraredRemoteControl:
+      case ItemId.TvColorSystem:
+      case ItemId.TrackingFocus:
+      case ItemId.AutoPowerOff:
+      case ItemId.LoopRecordingTime:
+      case ItemId.AudioRecording:
+      case ItemId.WindNoiseReduction:
+        //"type", "stillQuality" (itemId.wifiValue), "candidate"
+        //  availableList = createListFromWifiJson(data["candidate"]);
+        //   current = Value.fromWifi(itemId, data[itemId.wifiValue]);
+        break;
+      case ItemId.BeepMode:
+      case ItemId.CameraFunction:
+      case ItemId.MovieQuality:
+      case ItemId.SteadyMode:
+      case ItemId.ViewAngle:
+      case ItemId.PostViewImageSize:
+      case ItemId.SelfTimer:
+      case ItemId.ShootMode:
+      case ItemId.FlashMode:
+      case ItemId.FNumber:
+      case ItemId.FocusMode:
+      case ItemId.IsoSpeedRate:
+      case ItemId.ShutterSpeed:
       default:
-        availableList = createListFromWifiJson(data["${itemId.wifiValue}Candidates"]);
-        current = Value.fromWifi(itemId, data["current${itemId.wifiValue.startCap}"]);
+        //"type", "current"(itemId.wifiValue), (itemId.wifiValue)"Candidates"
+        //    availableList = createListFromWifiJson(data["${itemId.wifiValue}Candidates"]);
+        //    current = Value.fromWifi(itemId, data["current${itemId.wifiValue.startCap}"]);
         break;
     }
 
@@ -181,5 +245,79 @@ extension SettingsItemExtension on SettingsItem {
     }
 
     return listOfValues;
+  }
+}
+
+extension InfoItemExtension on InfoItem {
+  update(dynamic data, SonyCameraWifiDevice sonyCameraWifiDevice) {
+    switch (itemId) {
+      case ItemId.BatteryInfo:
+      //"type", "batteryInfo" [{"batteryID" , "status", "additionalStatus", "levelNumer", "levelDenom", "description" st}]
+        break;
+      case ItemId.CameraFunctionResult:
+      //"cameraFunctionResult"
+      //Result of setting camera function.
+      // "Success" - Success.
+      // "Failure" - Failed to changing function.
+      //TODO
+        break;
+      case ItemId.FocusState:
+      //"focusStatus"
+        break;
+      case ItemId.FocusAreaSpot: //touchAFPosition
+      //"currentSet" Set or not.
+      // true: Touch AF is set and focused successfully.
+      // false: Touch AF is not set or failed to focus
+
+      //"currentTouchCoordinates"
+      //double-array
+      // Touch coordinates.
+      // This parameter is reserved and the camera will
+      // return empty array.
+      //TODO
+        break;
+      case ItemId.TrackingFocusStatus:
+      //"trackingFocusStatus"
+        break;
+      case ItemId.IntervalTime:
+      //"type", "intervalTimeSec", "candidate"
+        break;
+      case ItemId.RecordingTime:
+      //"type", "recordingTime"
+        break;
+      case ItemId.NumberOfShots:
+      //"type", "numberOfShots"
+        break;
+    }
+  }
+}
+
+extension ListInfoItemExtension on ListInfoItem {
+  update(dynamic data, SonyCameraWifiDevice sonyCameraWifiDevice) {
+    switch (itemId) {
+      case ItemId.AvailableFunctions2:
+      //"type", names"
+      //TODO
+        break;
+      case ItemId.CameraStatus: //"cameraStatus"
+      case ItemId.LiveViewStatus: //"liveviewStatus"
+      //TODO
+      //"type", "...status"
+        break;
+      case ItemId.LiveViewOrientation: //"liveviewOrientation"
+      //TODO
+        break;
+      case ItemId.CapturePhoto: //"takePictureUrl"
+      //"type", "...status"
+      //TODO
+        break;
+      case ItemId.StorageInformation:
+      //"type", "storageID", "recordTarget", "numberOfRecordableImages" , "recordableTime","storageDescription"
+      //TODO
+        break;
+      case ItemId.ZoomInformation:
+      //TODO
+        break;
+    }
   }
 }

@@ -1441,7 +1441,7 @@ class TestsPageState extends State<TestsPage> {
             builder: (context, model, _) => Card(
                   child: Column(children: [
                     ListTile(
-                      title: Text(ItemId.ISO.name),
+                      title: Text(ItemId.IsoSpeedRate.name),
                       subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -1449,10 +1449,10 @@ class TestsPageState extends State<TestsPage> {
                                 device.cameraSettings.iso.value?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            getText(ItemId.ISO, ApiMethodId.SET),
-                            getText(ItemId.ISO, ApiMethodId.GET),
-                            getText(ItemId.ISO, ApiMethodId.GET_AVAILABLE),
-                            getText(ItemId.ISO, ApiMethodId.GET_SUPPORTED)
+                            getText(ItemId.IsoSpeedRate, ApiMethodId.SET),
+                            getText(ItemId.IsoSpeedRate, ApiMethodId.GET),
+                            getText(ItemId.IsoSpeedRate, ApiMethodId.GET_AVAILABLE),
+                            getText(ItemId.IsoSpeedRate, ApiMethodId.GET_SUPPORTED)
                           ]),
                       onTap: () => device.api.getIso(update: ForceUpdate.On),
                     ),

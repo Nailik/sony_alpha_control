@@ -80,7 +80,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
       case ItemId.Zoom:
         // TODO: Handle this case.
         break;
-      case ItemId.AutoFocusState:
+      case ItemId.FocusState:
       case ItemId.AEL_State:
       case ItemId.BatteryInfo:
       case ItemId.RecordVideoState:
@@ -96,7 +96,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
         return setPictureEffect(PictureEffectIdExtension.getIdFromUsb(value));
       case ItemId.WhiteBalanceAB:
         return setWhiteBalanceAb(WhiteBalanceAbIdExtension.getIdFromUsb(value));
-      case ItemId.ISO:
+      case ItemId.IsoSpeedRate:
         return setIso(IsoValue(value)); //TODO test
       case ItemId.FocusArea:
         // TODO: Handle this case.
@@ -445,7 +445,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
 
   @override
   Future<bool> setIso(IsoValue value) async =>
-      (await UsbCommands.getCommandSetting(ItemId.ISO,
+      (await UsbCommands.getCommandSetting(ItemId.IsoSpeedRate,
                   opCodeId: OpCodeId.MainSetting,
                   value1: value.usbValue,
                   value1DataSize: 4)

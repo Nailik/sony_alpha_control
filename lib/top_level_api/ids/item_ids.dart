@@ -38,7 +38,7 @@ enum ItemId {
   /// <summary>
   /// Green focus state icon (circle / rings icon)
   /// </summary>
-  AutoFocusState,
+  FocusState,
   Zoom,
 // Taken from gphoto; untested ("might be focal length * 1.000.000")
   PhotoTransferQueue,
@@ -56,7 +56,7 @@ enum ItemId {
   PictureEffect,
   WhiteBalanceAB,
   RecordVideoState,
-  ISO,
+  IsoSpeedRate,
 
   /// <summary>
   /// This is the actual state (on/off) as opposed to the FEL button in the Remote UI.
@@ -208,6 +208,7 @@ enum ItemId {
   RemotePlayback,
   ZoomSetting,
   LiveViewOrientation,
+  LiveViewStatus,
   PostViewUrlSet,
   ContShootingUrlSet,
   CameraFunctionResult,
@@ -265,7 +266,7 @@ extension ItemIdExtension on ItemId {
         return 0xD211;
       case ItemId.UnkD212:
         return 0xD212;
-      case ItemId.AutoFocusState:
+      case ItemId.FocusState:
         return 0xD213;
       case ItemId.Zoom:
         return 0xD214;
@@ -283,7 +284,7 @@ extension ItemIdExtension on ItemId {
         return 0xD21C;
       case ItemId.RecordVideoState:
         return 0xD21D;
-      case ItemId.ISO:
+      case ItemId.IsoSpeedRate:
         return 0xD21E;
       case ItemId.FEL_State:
         return 0xD21F;
@@ -388,6 +389,8 @@ extension ItemIdExtension on ItemId {
         return "liveviewStatus";
       case ItemId.LiveViewOrientation:
         return "liveviewOrientation";
+      case ItemId.LiveViewStatus:
+        return "liveviewStatus";
       case ItemId.LiveView:
         return "liveview";
       case ItemId.LiveViewWithSize:
@@ -414,7 +417,7 @@ extension ItemIdExtension on ItemId {
         return "exposureCompensation";
       case ItemId.FNumber:
         return "fNumber";
-      case ItemId.ISO:
+      case ItemId.IsoSpeedRate:
         return "isoSpeedRate";
       case ItemId.PostViewImageSize:
         return "postviewImageSize";
@@ -528,7 +531,7 @@ extension ItemIdExtension on ItemId {
         return "";
       case ItemId.UnkD212:
         return "";
-      case ItemId.AutoFocusState:
+      case ItemId.FocusState:
         return "focusStatus";
       case ItemId.AEL_State:
         return "";
