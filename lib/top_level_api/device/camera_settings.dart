@@ -97,10 +97,11 @@ abstract class CameraSettings extends ChangeNotifier {
   InfoItem<BoolValue> movieRecording = InfoItem<BoolValue>(ItemId.MovieRecording);
   InfoItem<BoolValue> contShooting = InfoItem<BoolValue>(ItemId.ContShooting);
   InfoItem<BoolValue> halfPressShutter =
-  InfoItem<BoolValue>(ItemId.HalfPressShutter); //saves if is act (true) or cancel (false)
+      InfoItem<BoolValue>(ItemId.HalfPressShutter); //saves if is act (true) or cancel (false)
   InfoItem<BoolValue> liveView = InfoItem<BoolValue>(ItemId.LiveView);
   InfoItem<BoolValue> cameraFunctionResult = InfoItem<BoolValue>(ItemId.CameraFunctionResult);
   InfoItem<FocusStateValue> focusState = InfoItem<FocusStateValue>(ItemId.FocusState);
+  InfoItem<TrackingFocusStateValue> trackingFocusState = InfoItem<TrackingFocusStateValue>(ItemId.FocusState);
 
   //SettingsItem, ListInfoItem or InfoItem
   dynamic getItem(ItemId itemId) {
@@ -133,6 +134,8 @@ abstract class CameraSettings extends ChangeNotifier {
         return focusAreaSpot;
       case ItemId.FocusState:
         return focusState;
+      case ItemId.TrackingFocusState:
+        return trackingFocusState;
       case ItemId.FlashValue:
         return flashValue;
       case ItemId.ImageFileFormat:
@@ -251,14 +254,16 @@ abstract class CameraSettings extends ChangeNotifier {
         return liveViewInfo;
       case ItemId.SilentShooting:
         return silentShooting;
+      case ItemId.CameraFunctionResult:
+        return cameraFunctionResult;
       case ItemId.UnkD20E:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
         break;
       case ItemId.UnkD212:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
         break;
       case ItemId.SensorCrop:
-        // TODO: Handle this case.
+      // TODO: Handle this case.
         break;
       case ItemId.FEL_State:
         // TODO: Handle this case.
@@ -371,13 +376,7 @@ abstract class CameraSettings extends ChangeNotifier {
       case ItemId.ContShootingUrlSet:
         // TODO: Handle this case.
         break;
-      case ItemId.CameraFunctionResult:
-        // TODO: Handle this case.
-        break;
       case ItemId.IRRemoteControl:
-        // TODO: Handle this case.
-        break;
-      case ItemId.TrackingFocusStatus:
         // TODO: Handle this case.
         break;
       case ItemId.RecordingTime:

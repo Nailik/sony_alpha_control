@@ -214,7 +214,7 @@ enum ItemId {
   CameraFunctionResult,
   SceneSelection,
   IRRemoteControl,
-  TrackingFocusStatus,
+  TrackingFocusState,
   RecordingTime,
   NumberOfShots,
   BulbCapturingTime,

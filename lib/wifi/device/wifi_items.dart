@@ -1,11 +1,16 @@
 import 'dart:convert';
 
+import 'package:sonyalphacontrol/sonyalphacontrol.dart';
 import 'package:sonyalphacontrol/top_level_api/device/items.dart';
 import 'package:sonyalphacontrol/top_level_api/device/value.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
 
+//when checkAvailability flag is true make call automatically
+bool autoUpdate = true;
+
 extension SettingsItemExtension on SettingsItem {
+
   updateSupported(String json, SonyCameraWifiDevice sonyCameraWifiDevice) {
     var jsonD = jsonDecode(json);
     var list = jsonD["result"];
@@ -141,7 +146,7 @@ extension SettingsItemExtension on SettingsItem {
     }
   }
 
-  update(dynamic data, SonyCameraWifiDevice sonyCameraWifiDevice) {
+  update(dynamic data, SonyCameraWifiDevice device) {
     List<Value> availableList;
     Value current;
 
@@ -160,30 +165,44 @@ extension SettingsItemExtension on SettingsItem {
         // available parameters by calling
         // "getAvailableWhiteBalance"".
         //also sets color
-        //TODO
+        SettingsItem<WhiteBalanceModeValue> settingsItemWhiteBalance =
+            device.cameraSettings.whiteBalanceMode;
+        settingsItemWhiteBalance.updateCurrentItem(Value.fromWifi(itemId, data["currentWhiteBalanceMode"]));
+
+        //colorTemperature
+        SettingsItem<WhiteBalanceColorTempValue> settingsItemColorTemp =
+            device.cameraSettings.whiteBalanceColorTemp;
+        settingsItemColorTemp.updateCurrentItem(Value.fromWifi(itemId, data["currentColorTemperature"]));
+
+        if(autoUpdate && data["checkAvailability"] == true){
+          device.api.getWhiteBalanceMode(update: ForceUpdate.Available);
+        }
         break;
       case ItemId.ExposureCompensation:
         List<EvValue> listOfValues = getEvList(
             data["minExposureCompensation"], data["maxExposureCompensation"], data["stepIndexOfExposureCompensation"]);
         updateItem((data["currentExposureCompensation"]), listOfValues, supported);
-        //TODO test
         break;
       case ItemId.MeteringMode:
         //TODO metering exposure mode
         break;
       case ItemId.ProgramShift:
         updateItem(BoolValue(data["isShifted"]), this.available, this.supported);
-        //TODO test
         break;
       case ItemId.ZoomSetting:
+        availableList = createListFromWifiJson(data["candidate"]);
+        current = Value.fromWifi(itemId, data["zoom"]);
+        break;
       case ItemId.FlipSetting:
-        //"type", "zoom" (itemId.wifiValue without "Setting"), "candidate"
+        availableList = createListFromWifiJson(data["candidate"]);
+        current = Value.fromWifi(itemId, data["flip"]);
         break;
       case ItemId.SceneSelection:
-        //"type", "scene", "candidate"
+        availableList = createListFromWifiJson(data["candidate"]);
+        current = Value.fromWifi(itemId, data["scene"]);
         break;
       case ItemId.ContShootingUrlSet:
-        //"type", "contShootingUrl" [{"postviewUrl" , "thumbnailUrl"}]
+      //"type", "contShootingUrl" [{"postviewUrl" , "thumbnailUrl"}]
         break;
       case ItemId.ImageSize:
       case ItemId.ContShootingMode:
@@ -197,9 +216,9 @@ extension SettingsItemExtension on SettingsItem {
       case ItemId.LoopRecordingTime:
       case ItemId.AudioRecording:
       case ItemId.WindNoiseReduction:
-        //"type", "stillQuality" (itemId.wifiValue), "candidate"
-        //  availableList = createListFromWifiJson(data["candidate"]);
-        //   current = Value.fromWifi(itemId, data[itemId.wifiValue]);
+      //"type", "stillQuality" (itemId.wifiValue), "candidate"
+        availableList = createListFromWifiJson(data["candidate"]);
+        current = Value.fromWifi(itemId, data[itemId.wifiValue]);
         break;
       case ItemId.BeepMode:
       case ItemId.CameraFunction:
@@ -215,9 +234,9 @@ extension SettingsItemExtension on SettingsItem {
       case ItemId.IsoSpeedRate:
       case ItemId.ShutterSpeed:
       default:
-        //"type", "current"(itemId.wifiValue), (itemId.wifiValue)"Candidates"
-        //    availableList = createListFromWifiJson(data["${itemId.wifiValue}Candidates"]);
-        //    current = Value.fromWifi(itemId, data["current${itemId.wifiValue.startCap}"]);
+      //"type", "current"(itemId.wifiValue), (itemId.wifiValue)"Candidates"
+        availableList = createListFromWifiJson(data["${itemId.wifiValue}Candidates"]);
+        current = Value.fromWifi(itemId, data["current${itemId.wifiValue.startCap}"]);
         break;
     }
 
@@ -252,6 +271,7 @@ extension InfoItemExtension on InfoItem {
   update(dynamic data, SonyCameraWifiDevice sonyCameraWifiDevice) {
     switch (itemId) {
       case ItemId.BatteryInfo:
+      //TODO
       //"type", "batteryInfo" [{"batteryID" , "status", "additionalStatus", "levelNumer", "levelDenom", "description" st}]
         break;
       case ItemId.CameraFunctionResult:
@@ -259,10 +279,11 @@ extension InfoItemExtension on InfoItem {
       //Result of setting camera function.
       // "Success" - Success.
       // "Failure" - Failed to changing function.
-      //TODO
+        updateItem(Value.fromWifi(itemId, data["cameraFunctionResult"] == "Success"));
         break;
       case ItemId.FocusState:
       //"focusStatus"
+        updateItem(Value.fromWifi(itemId, data["focusStatus"]));
         break;
       case ItemId.FocusAreaSpot: //touchAFPosition
       //"currentSet" Set or not.
@@ -276,8 +297,9 @@ extension InfoItemExtension on InfoItem {
       // return empty array.
       //TODO
         break;
-      case ItemId.TrackingFocusStatus:
+      case ItemId.TrackingFocusState:
       //"trackingFocusStatus"
+        updateItem(Value.fromWifi(itemId, data["trackingFocusStatus"]));
         break;
       case ItemId.IntervalTime:
       //"type", "intervalTimeSec", "candidate"

@@ -48,6 +48,13 @@ class SettingsItem<T extends Value> extends ChangeNotifier {
     }
   }
 
+  updateCurrentItem(T newValue) {
+    if (_value != newValue) {
+      _value = newValue;
+      notifyListeners();
+    }
+  }
+
   SettingsItem(this.itemId);
 
   bool hasSubValue() {

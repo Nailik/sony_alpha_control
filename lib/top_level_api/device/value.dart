@@ -3,7 +3,6 @@
 import 'dart:math';
 
 import 'package:sonyalphacontrol/top_level_api/ids/aspect_ratio_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/auto_focus_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/beep_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/camera_function_id.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/camera_status_ids.dart';
@@ -18,6 +17,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_direction_ids
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_phase_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/focus_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_file_format_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
@@ -34,6 +34,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/shoot_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/shooting_mode_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
+import 'package:sonyalphacontrol/top_level_api/ids/tracking_focus_state_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/tv_color_system_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/web_api_version_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
@@ -108,7 +109,7 @@ abstract class Value<T> {
       case ItemId.MovieQuality:
         return MovieQualityValue.fromWifiValue(wifiValue);
       case ItemId.CameraFunctionResult:
-      //TODO
+        return BoolValue(wifiValue);
       case ItemId.SteadyMode:
         return OnOffValue(wifiValue);
       case ItemId.ViewAngle:
@@ -157,7 +158,7 @@ abstract class Value<T> {
       //TODO  return IntValue(wifiValue);
       case ItemId.FocusState:
       //TODO  return AutoFocusStateValue.fromWifiValue(wifiValue);
-      case ItemId.TrackingFocusStatus:
+      case ItemId.TrackingFocusState:
       //TODO
       case ItemId.TrackingFocus:
         return OnOffValue(wifiValue);
@@ -548,8 +549,8 @@ class AspectRatioValue extends Value<AspectRatioId> {
   String get name => id.name;
 }
 
-class FocusStateValue extends Value<AutoFocusStateId> {
-  FocusStateValue(AutoFocusStateId id) : super(id);
+class FocusStateValue extends Value<FocusStateId> {
+  FocusStateValue(FocusStateId id) : super(id);
 
   @override
   factory FocusStateValue.fromUSBValue(int usbValue) =>
@@ -569,12 +570,32 @@ class FocusStateValue extends Value<AutoFocusStateId> {
   String get name => id.name;
 }
 
+class TrackingFocusStateValue extends Value<TrackingFocusStateId> {
+  TrackingFocusStateValue(TrackingFocusStateId id) : super(id);
+
+  @override
+  factory TrackingFocusStateValue.fromUSBValue(int usbValue) =>
+      TrackingFocusStateValue(TrackingFocusStateIdExtension.getIdFromUsb(usbValue));
+
+  @override
+  factory TrackingFocusStateValue.fromWifiValue(String wifiValue) =>
+      TrackingFocusStateValue(TrackingFocusStateIdExtension.getIdFromWifi(wifiValue));
+
+  @override
+  int get usbValue => id.usbValue;
+
+  @override
+  String get wifiValue => id.wifiValue;
+
+  @override
+  String get name => id.name;
+}
+
 class CameraFunctionValue extends Value<CameraFunctionId> {
   CameraFunctionValue(CameraFunctionId id) : super(id);
 
   @override
-  factory CameraFunctionValue.fromUSBValue(int usbValue) =>
-      throw UnsupportedError;
+  factory CameraFunctionValue.fromUSBValue(int usbValue) => throw UnsupportedError;
 
   @override
   factory CameraFunctionValue.fromWifiValue(String wifiValue) =>

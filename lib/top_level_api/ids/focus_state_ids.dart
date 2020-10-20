@@ -2,7 +2,7 @@ import 'package:sonyalphacontrol/top_level_api/api/logger.dart';
 
 import 'aspect_ratio_ids.dart';
 
-enum AutoFocusStateId {
+enum FocusStateId {
   /// <summary>
   /// Focus state is inactive (no green circle / rings on the screen)
   /// </summary>
@@ -30,22 +30,22 @@ enum AutoFocusStateId {
   Unknown
 }
 
-extension AutoFocusStateIdExtension on AutoFocusStateId {
+extension AutoFocusStateIdExtension on FocusStateId {
   String get name => toString().split('.')[1];
 
   int get usbValue {
     switch (this) {
-      case AutoFocusStateId.Inactive:
+      case FocusStateId.Inactive:
         return 1;
-      case AutoFocusStateId.Focused:
+      case FocusStateId.Focused:
         return 2;
-      case AutoFocusStateId.FocusFailed:
+      case FocusStateId.FocusFailed:
         return 3;
-      case AutoFocusStateId.Searching:
+      case FocusStateId.Searching:
         return 5;
-      case AutoFocusStateId.FocusedAndSearching:
+      case FocusStateId.FocusedAndSearching:
         return 6;
-      case AutoFocusStateId.Unknown:
+      case FocusStateId.Unknown:
         return -1;
       default:
         return -2;
@@ -54,33 +54,33 @@ extension AutoFocusStateIdExtension on AutoFocusStateId {
 
   String get wifiValue {
     switch (this) {
-      case AutoFocusStateId.Inactive:
+      case FocusStateId.Inactive:
         return "Not Focusing";
-      case AutoFocusStateId.Focused:
+      case FocusStateId.Focused:
         return "Focused";
-      case AutoFocusStateId.FocusFailed:
+      case FocusStateId.FocusFailed:
         return "Failed";
-      case AutoFocusStateId.Searching:
+      case FocusStateId.Searching:
         return "Focusing";
-      case AutoFocusStateId.FocusedAndSearching:
+      case FocusStateId.FocusedAndSearching:
         return "Focused And Focusing"; //not supported by wifi api?
-      case AutoFocusStateId.Unknown:
+      case FocusStateId.Unknown:
         return "Unknown";
       default:
         return "Unsupported";
     }
   }
 
-  static AutoFocusStateId getIdFromUsb(int usbValue) => AutoFocusStateId.values
+  static FocusStateId getIdFromUsb(int usbValue) => FocusStateId.values
           .firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(AspectRatioId, usbValue);
-        return AutoFocusStateId.Unknown;
+        return FocusStateId.Unknown;
       });
 
-  static AutoFocusStateId getIdFromWifi(String wifiValue) =>
-      AutoFocusStateId.values
+  static FocusStateId getIdFromWifi(String wifiValue) =>
+      FocusStateId.values
           .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
         Logger.n(AspectRatioId, wifiValue);
-        return AutoFocusStateId.Unknown;
+        return FocusStateId.Unknown;
       });
 }
