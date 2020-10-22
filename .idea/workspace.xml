@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="fa30b1c6-ea39-4fc8-b491-e57e4f730671" name="Default Changelist" comment="more concurrent updates">
+      <change afterPath="$PROJECT_DIR$/linux/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/linux/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/linux/flutter/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/linux/main.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/linux/my_application.cc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/linux/my_application.h" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1g9RZeUetLP9BVsmTn0tLl14XeO" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="dart.analysis.tool.window.force.activate" value="false" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="io.flutter.reload.alreadyRun" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../sony_usb" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.41243654" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Dart" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\kilia\CloudStation\Dokumente\Projects\sony_alpha_control\lib" />
+      <recent name="C:\Users\kilia\CloudStation\Dokumente\Projects\sony_alpha_control\lib\top_level_api\api" />
+      <recent name="C:\Users\kilia\CloudStation\Dokumente\Projects\sony_alpha_control\lib\top_level_api\ids" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\kilia\CloudStation\Dokumente\Projects\sony_alpha_control\lib\top_level_api\ids" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fa30b1c6-ea39-4fc8-b491-e57e4f730671" name="Default Changelist" comment="" />
+      <created>1597524878353</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1597524878353</updated>
+    </task>
+    <task id="LOCAL-00033" summary="wip versions for all web api service types">
+      <created>1601997999026</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1601997999026</updated>
+    </task>
+    <task id="LOCAL-00034" summary="fixed reading wifi values for versions&#10;wip methods">
+      <created>1602004104236</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1602004104236</updated>
+    </task>
+    <task id="LOCAL-00035" summary="wip">
+      <created>1602009663587</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1602009663587</updated>
+    </task>
+    <task id="LOCAL-00036" summary="lots of cleaning code and imports&#10;renaming settingsvalue to value and introducing info_item">
+      <created>1602016615732</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1602016615732</updated>
+    </task>
+    <task id="LOCAL-00037" summary="create basic info item&#10;&#10;rename settingsid to item id">
+      <created>1602016789365</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1602016789365</updated>
+    </task>
+    <task id="LOCAL-00038" summary="item ids">
+      <created>1602016809030</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1602016809030</updated>
+    </task>
+    <task id="LOCAL-00039" summary="wip check function availability">
+      <created>1602077864232</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1602077864232</updated>
+    </task>
+    <task id="LOCAL-00040" summary="wip">
+      <created>1602079404720</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1602079404720</updated>
+    </task>
+    <task id="LOCAL-00041" summary="updates for windows version">
+      <created>1602081006374</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1602081006374</updated>
+    </task>
+    <task id="LOCAL-00042" summary="changed connector">
+      <created>1602088886891</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1602088886891</updated>
+    </task>
+    <task id="LOCAL-00043" summary="wip rebuilding connector class">
+      <created>1602119683496</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1602119683496</updated>
+    </task>
+    <task id="LOCAL-00044" summary="wip discovery updated fixed possible issues">
+      <created>1602158367809</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1602158367809</updated>
+    </task>
+    <task id="LOCAL-00045" summary="fixed showing if supported">
+      <created>1602167331585</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1602167331585</updated>
+    </task>
+    <task id="LOCAL-00046" summary="wip">
+      <created>1602176941209</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1602176941209</updated>
+    </task>
+    <task id="LOCAL-00047" summary="more camera setup stuff">
+      <created>1602178672985</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1602178672985</updated>
+    </task>
+    <task id="LOCAL-00048" summary="zoom setting">
+      <created>1602283816454</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1602283816454</updated>
+    </task>
+    <task id="LOCAL-00049" summary="wip zoom">
+      <created>1602284833750</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1602284833750</updated>
+    </task>
+    <task id="LOCAL-00050" summary="half press shutter">
+      <created>1602332895429</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1602332895429</updated>
+    </task>
+    <task id="LOCAL-00051" summary="self timer">
+      <created>1602333522174</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1602333522174</updated>
+    </task>
+    <task id="LOCAL-00052" summary="removed todos">
+      <created>1602453322276</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1602453322277</updated>
+    </task>
+    <task id="LOCAL-00053" summary="metering mode and more availability of functions">
+      <created>1602454308219</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1602454308219</updated>
+    </task>
+    <task id="LOCAL-00054" summary="removed the get item method">
+      <created>1602454779607</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1602454779607</updated>
+    </task>
+    <task id="LOCAL-00055" summary="live view with size&#10;post view image size">
+      <created>1602609985193</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1602609985194</updated>
+    </task>
+    <task id="LOCAL-00056" summary="better api usability">
+      <created>1602618218329</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1602618218329</updated>
+    </task>
+    <task id="LOCAL-00057" summary="added availability things">
+      <created>1602621528763</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1602621528763</updated>
+    </task>
+    <task id="LOCAL-00058" summary="wip">
+      <created>1602658467375</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1602658467375</updated>
+    </task>
+    <task id="LOCAL-00059" summary="wip better function availability test">
+      <created>1602695206134</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1602695206134</updated>
+    </task>
+    <task id="LOCAL-00060" summary="availability">
+      <created>1602703130067</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1602703130068</updated>
+    </task>
+    <task id="LOCAL-00061" summary="storage information">
+      <created>1602704174830</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1602704174831</updated>
+    </task>
+    <task id="LOCAL-00062" summary="shoot mode">
+      <created>1602711408080</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1602711408081</updated>
+    </task>
+    <task id="LOCAL-00063" summary="cont shooting">
+      <created>1602713297138</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1602713297138</updated>
+    </task>
+    <task id="LOCAL-00064" summary="updated functions txt files">
+      <created>1602713599825</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1602713599825</updated>
+    </task>
+    <task id="LOCAL-00065" summary="movie and audio recording">
+      <created>1602761881127</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1602761881129</updated>
+    </task>
+    <task id="LOCAL-00066" summary="IMAGE FILE FORMAT">
+      <created>1602763239951</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1602763239951</updated>
+    </task>
+    <task id="LOCAL-00067" summary="start stop liveview">
+      <created>1602764028282</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1602764028282</updated>
+    </task>
+    <task id="LOCAL-00068" summary="wip still size and aspect ratio">
+      <created>1602764885910</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1602764885910</updated>
+    </task>
+    <task id="LOCAL-00069" summary="remvoed some flutter imports">
+      <created>1602766553787</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1602766553788</updated>
+    </task>
+    <task id="LOCAL-00070" summary="wip size aspect">
+      <created>1602769794738</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1602769794738</updated>
+    </task>
+    <task id="LOCAL-00071" summary="added 15 missing functions to api interface to implement for wifi">
+      <created>1602772160926</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1602772160926</updated>
+    </task>
+    <task id="LOCAL-00072" summary="added a bunch of functions for wifi">
+      <created>1602832667536</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1602832667537</updated>
+    </task>
+    <task id="LOCAL-00073" summary="bad solution for live view">
+      <created>1602863637474</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1602863637475</updated>
+    </task>
+    <task id="LOCAL-00074" summary="wip live view">
+      <created>1602939870294</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1602939870295</updated>
+    </task>
+    <task id="LOCAL-00075" summary="wip better live view">
+      <created>1603056871408</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1603056871408</updated>
+    </task>
+    <task id="LOCAL-00076" summary="fixed sth">
+      <created>1603099703950</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1603099703951</updated>
+    </task>
+    <task id="LOCAL-00077" summary="moved sth to one file">
+      <created>1603100219901</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1603100219901</updated>
+    </task>
+    <task id="LOCAL-00078" summary="wip continous camera status updates">
+      <created>1603128587004</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1603128587005</updated>
+    </task>
+    <task id="LOCAL-00079" summary="wip continous camera status updates">
+      <created>1603186190241</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1603186190242</updated>
+    </task>
+    <task id="LOCAL-00080" summary="more concurrent updates">
+      <created>1603226259733</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1603226259734</updated>
+    </task>
+    <task id="LOCAL-00081" summary="added linux support">
+      <created>1603394287239</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1603394287240</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="better api usability" />
+    <MESSAGE value="added availability things" />
+    <MESSAGE value="wip" />
+    <MESSAGE value="wip better function availability test" />
+    <MESSAGE value="availability" />
+    <MESSAGE value="storage information" />
+    <MESSAGE value="shoot mode" />
+    <MESSAGE value="cont shooting" />
+    <MESSAGE value="updated functions txt files" />
+    <MESSAGE value="movie and audio recording" />
+    <MESSAGE value="IMAGE FILE FORMAT" />
+    <MESSAGE value="start stop liveview" />
+    <MESSAGE value="wip still size and aspect ratio" />
+    <MESSAGE value="remvoed some flutter imports" />
+    <MESSAGE value="wip size aspect" />
+    <MESSAGE value="added 15 missing functions to api interface to implement for wifi" />
+    <MESSAGE value="added a bunch of functions for wifi" />
+    <MESSAGE value="bad solution for live view" />
+    <MESSAGE value="wip live view" />
+    <MESSAGE value="wip better live view" />
+    <MESSAGE value="fixed sth" />
+    <MESSAGE value="moved sth to one file" />
+    <MESSAGE value="wip continous camera status updates" />
+    <MESSAGE value="more concurrent updates" />
+    <MESSAGE value="added linux support" />
+    <option name="LAST_COMMIT_MESSAGE" value="added linux support" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="797" y="446" key="#PSD" timestamp="1603213077161">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="797" y="446" key="#PSD/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603213077161" />
+    <state x="94" y="358" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600549167139">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="94" y="358" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1600549167139" />
+    <state x="379" y="506" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1602710420684">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="379" y="506" key="#com.intellij.fileTypes.FileTypeChooser/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1602710420684" />
+    <state x="1010" y="447" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1603100199402">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1010" y="447" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603100199402" />
+    <state x="624" y="806" width="1658" height="594" key="#xdebugger.evaluate" timestamp="1603127998433">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="624" y="806" width="1658" height="594" key="#xdebugger.evaluate/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603127998433" />
+    <state x="1027" y="567" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1601999212703">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1027" y="567" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1601999212703" />
+    <state x="1408" y="434" key="AndroidProcessChooserDialog" timestamp="1603114232368">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1408" y="434" key="AndroidProcessChooserDialog/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603114232368" />
+    <state x="791" y="294" key="CommitChangelistDialog2" timestamp="1602704170369">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="791" y="294" key="CommitChangelistDialog2/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1602704170369" />
+    <state x="3153" y="421" key="CommitChangelistDialog2/0.0.2560.1400/2560.203.1920.1040@2560.203.1920.1040" timestamp="1599867990436" />
+    <state width="1131" height="337" key="DebuggerActiveHint" timestamp="1603127979396">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1131" height="337" key="DebuggerActiveHint/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603127979396" />
+    <state width="849" height="347" key="DebuggerActiveHint/0.0.2560.1400/2560.203.1920.1040@2560.203.1920.1040" timestamp="1602116895913" />
+    <state x="248" y="125" width="2056" height="1153" key="DiffContextDialog" timestamp="1600444735370">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="248" y="125" width="2056" height="1153" key="DiffContextDialog/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1600444735370" />
+    <state x="720" y="455" width="780" height="802" key="FileChooserDialogImpl" timestamp="1602849997058">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="720" y="455" width="780" height="802" key="FileChooserDialogImpl/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1602849997058" />
+    <state width="1233" height="163" key="GridCell.Tab.0.bottom" timestamp="1603393798136">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1233" height="163" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603393798136" />
+    <state width="1876" height="239" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.203.1920.1040@2560.203.1920.1040" timestamp="1602753789519" />
+    <state width="1233" height="163" key="GridCell.Tab.0.center" timestamp="1603393798135">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1233" height="163" key="GridCell.Tab.0.center/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603393798135" />
+    <state width="1876" height="239" key="GridCell.Tab.0.center/0.0.2560.1400/2560.203.1920.1040@2560.203.1920.1040" timestamp="1602753789519" />
+    <state width="1233" height="163" key="GridCell.Tab.0.left" timestamp="1603393798135">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1233" height="163" key="GridCell.Tab.0.left/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603393798135" />
+    <state width="1876" height="239" key="GridCell.Tab.0.left/0.0.2560.1400/2560.203.1920.1040@2560.203.1920.1040" timestamp="1602753789518" />
+    <state width="1233" height="163" key="GridCell.Tab.0.right" timestamp="1603393798136">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1233" height="163" key="GridCell.Tab.0.right/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603393798136" />
+    <state width="1876" height="239" key="GridCell.Tab.0.right/0.0.2560.1400/2560.203.1920.1040@2560.203.1920.1040" timestamp="1602753789519" />
+    <state width="2517" height="392" key="GridCell.Tab.1.bottom" timestamp="1600904333717">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="392" key="GridCell.Tab.1.bottom/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1600904333717" />
+    <state width="2517" height="392" key="GridCell.Tab.1.center" timestamp="1600904333717">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="392" key="GridCell.Tab.1.center/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1600904333717" />
+    <state width="2517" height="392" key="GridCell.Tab.1.left" timestamp="1600904333717">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="392" key="GridCell.Tab.1.left/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1600904333717" />
+    <state width="2517" height="392" key="GridCell.Tab.1.right" timestamp="1600904333717">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="392" key="GridCell.Tab.1.right/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1600904333717" />
+    <state x="955" y="422" key="RollbackChangesDialog" timestamp="1602088861994">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="955" y="422" key="RollbackChangesDialog/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1602088861994" />
+    <state x="615" y="218" key="SettingsEditor" timestamp="1602702258328">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="615" y="218" key="SettingsEditor/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1602702258328" />
+    <state x="3021" y="365" key="SettingsEditor/0.0.2560.1400/2560.203.1920.1040@2560.203.1920.1040" timestamp="1599868017898" />
+    <state x="92" y="92" width="2376" height="1216" key="VCS.FileHistoryDialog" timestamp="1603056278003">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="92" y="92" width="2376" height="1216" key="VCS.FileHistoryDialog/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603056278003" />
+    <state x="872" y="421" key="Vcs.Push.Dialog.v2" timestamp="1603394289631">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="872" y="421" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603394289631" />
+    <state width="1288" height="708" key="XDebugger.FullValuePopup" timestamp="1603116114672">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1288" height="708" key="XDebugger.FullValuePopup/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603116114672" />
+    <state x="92" y="92" width="2376" height="1216" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1603056278003">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="92" y="92" width="2376" height="1216" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603056278003" />
+    <state x="976" y="524" key="com.intellij.ide.util.TipDialog" timestamp="1600627651945">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="976" y="524" key="com.intellij.ide.util.TipDialog/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1600627651945" />
+    <state x="990" y="471" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1602617912944">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="990" y="471" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1602617912944" />
+    <state x="1089" y="617" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1602855982044">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1089" y="617" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1602855982044" />
+    <state x="856" y="436" width="847" height="602" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1603056167306">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="856" y="436" width="847" height="602" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603056167306" />
+    <state x="2560" y="203" width="1936" height="878" maximized="true" key="dock-window-1" timestamp="1602117564363">
+      <screen x="2560" y="203" width="1920" height="1040" />
+    </state>
+    <state x="2560" y="203" width="1936" height="878" maximized="true" key="dock-window-1/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1602117564363" />
+    <state x="976" y="432" width="739" height="848" key="find.popup" timestamp="1603225260041">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="976" y="432" width="739" height="848" key="find.popup/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603225260041" />
+    <state x="3292" y="524" width="737" height="630" key="find.popup/0.0.2560.1400/2560.203.1920.1040@2560.203.1920.1040" timestamp="1599864748153" />
+    <state x="936" y="330" key="run.anything.popup" timestamp="1601916897661">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="936" y="330" key="run.anything.popup/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1601916897661" />
+    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup" timestamp="1603225552283">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="943" y="315" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603225552283" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint enabled="true" suspend="THREAD" type="java-exception" />
+        <breakpoint enabled="true" suspend="THREAD" type="CidrExceptionBreakpoint" />
+        <breakpoint suspend="THREAD" type="dart-exception" />
+      </default-breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="FlutterRunConfigurationType">
+        <watch expression="socket" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>
