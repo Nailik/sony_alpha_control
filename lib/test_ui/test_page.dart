@@ -1173,7 +1173,7 @@ class TestsPageState extends State<TestsPage> {
 
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => LiveViewPage()),
+                        MaterialPageRoute(builder: (context) => LiveViewPage(device)),
                       );
                     }),
               ),

@@ -1,34 +1,22 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:sonyalphacontrol/test_ui/live_view_analyzer.dart';
+import 'package:sonyalphacontrol/sonyalphacontrol.dart';
+import 'package:sonyalphacontrol/wifi/api/live_view.dart';
 
 class LiveViewPage extends StatefulWidget {
+  final SonyCameraDevice device;
+
+  const LiveViewPage(this.device) : super();
+
   @override
-  _LiveViewPageState createState() => _LiveViewPageState();
+  _LiveViewPageState createState() => _LiveViewPageState(device);
 }
 
 class _LiveViewPageState extends State<LiveViewPage> {
+  final SonyCameraDevice device;
+  LiveView live;
 
-  LiveViewAnalyzer live = LiveViewAnalyzer();
-
-  //this image will store the memory image
-  //TODO better draw on canvas?
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    live.start();
-  }
-
-  StreamSubscription videoStream;
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    videoStream?.cancel();
+  _LiveViewPageState(this.device) {
+    live = LiveView(device);
   }
 
   @override
@@ -36,18 +24,19 @@ class _LiveViewPageState extends State<LiveViewPage> {
     return MaterialApp(
         home: Scaffold(
             appBar: AppBar(
-                title: const Text('LiveView'),
+              title: const Text('LiveView'),
             ),
             body: Container(
-                child: ValueListenableBuilder<MemoryImage>(
-                    valueListenable: live.memoryImage,
-                    builder: (context, value, child) {
-                      if (value == null) {
-                        return Text("empty");
-                      } else {
-                        return Image(image: value, fit: BoxFit.cover, gaplessPlayback: true);
-                      }
-                    }),
+              child: StreamBuilder<Payload>(
+                  stream: live.streamLiveView(),
+                  builder: (BuildContext context, AsyncSnapshot<Payload> snapshot) {
+                    if (snapshot.hasData == true) {
+                      return Image(
+                          image: (snapshot.data as LiveViewPayload).image, fit: BoxFit.cover, gaplessPlayback: true);
+                    } else {
+                      return Text("loading");
+                    }
+                  }),
             )));
   }
 }
