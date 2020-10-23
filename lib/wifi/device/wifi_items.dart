@@ -74,7 +74,7 @@ extension SettingsItemExtension on SettingsItem {
     }
   }
 
-  //TODO no current = null = unsupported at the moment? (eg when flash is inside)
+
   updateAvailable(String json, SonyCameraWifiDevice sonyCameraWifiDevice) {
     var jsonD = jsonDecode(json);
     var list = jsonD["result"];
@@ -121,6 +121,7 @@ extension SettingsItemExtension on SettingsItem {
         break;
       case ItemId.ImageSize:
       case ItemId.AspectRatio:
+      print("Uninmplemented AspectRatio ImageSize");
         //TODO
         updateItem(Value.fromWifi(itemId, list[0]), createListFromWifiJson(list[1] as List), supported);
         break;
@@ -156,7 +157,7 @@ extension SettingsItemExtension on SettingsItem {
         //"checkAvailability" If true, the client should check the change of
         // available parameters by calling
         // "getAvailableStillSize".
-
+        print("Uninmplemented ImageSize");
         //TODO call if check availabilty?
         break;
       case ItemId.WhiteBalanceMode:
@@ -271,6 +272,7 @@ extension InfoItemExtension on InfoItem {
   update(dynamic data, SonyCameraWifiDevice sonyCameraWifiDevice) {
     switch (itemId) {
       case ItemId.BatteryInfo:
+        print("Uninmplemented BatteryInfo");
       //TODO
       //"type", "batteryInfo" [{"batteryID" , "status", "additionalStatus", "levelNumer", "levelDenom", "description" st}]
         break;
@@ -286,6 +288,7 @@ extension InfoItemExtension on InfoItem {
         updateItem(Value.fromWifi(itemId, data["focusStatus"]));
         break;
       case ItemId.FocusAreaSpot: //touchAFPosition
+      print("Uninmplemented FocusAreaSpot");
       //"currentSet" Set or not.
       // true: Touch AF is set and focused successfully.
       // false: Touch AF is not set or failed to focus
@@ -306,9 +309,11 @@ extension InfoItemExtension on InfoItem {
         break;
       case ItemId.RecordingTime:
       //"type", "recordingTime"
+        updateItem(Value.fromWifi(itemId, data["recordingTime"]));
         break;
       case ItemId.NumberOfShots:
       //"type", "numberOfShots"
+        updateItem(Value.fromWifi(itemId, data["numberOfShots"]));
         break;
     }
   }
@@ -318,26 +323,34 @@ extension ListInfoItemExtension on ListInfoItem {
   update(dynamic data, SonyCameraWifiDevice sonyCameraWifiDevice) {
     switch (itemId) {
       case ItemId.AvailableFunctions2:
+        print("Uninmplemented AvailableFunctions2");
       //"type", names"
       //TODO
         break;
       case ItemId.CameraStatus: //"cameraStatus"
+        print("Uninmplemented CameraStatus");
+        break;
       case ItemId.LiveViewStatus: //"liveviewStatus"
+      print("Uninmplemented LiveViewStatus");
       //TODO
       //"type", "...status"
         break;
       case ItemId.LiveViewOrientation: //"liveviewOrientation"
+        print("Uninmplemented LiveViewOrientation");
       //TODO
         break;
       case ItemId.CapturePhoto: //"takePictureUrl"
+        print("Uninmplemented CapturePhoto");
       //"type", "...status"
       //TODO
         break;
       case ItemId.StorageInformation:
+        print("Uninmplemented StorageInformation");
       //"type", "storageID", "recordTarget", "numberOfRecordableImages" , "recordableTime","storageDescription"
       //TODO
         break;
       case ItemId.ZoomInformation:
+        print("Uninmplemented ZoomInformation");
       //TODO
         break;
     }

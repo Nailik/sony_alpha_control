@@ -26,17 +26,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa30b1c6-ea39-4fc8-b491-e57e4f730671" name="Default Changelist" comment="more concurrent updates">
-      <change afterPath="$PROJECT_DIR$/linux/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linux/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linux/flutter/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linux/main.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linux/my_application.cc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/linux/my_application.h" afterDir="false" />
-    </list>
+    <list default="true" id="fa30b1c6-ea39-4fc8-b491-e57e4f730671" name="Default Changelist" comment="added missing ignored files" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -101,20 +91,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1597524878353</updated>
-    </task>
-    <task id="LOCAL-00033" summary="wip versions for all web api service types">
-      <created>1601997999026</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1601997999026</updated>
-    </task>
-    <task id="LOCAL-00034" summary="fixed reading wifi values for versions&#10;wip methods">
-      <created>1602004104236</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1602004104236</updated>
     </task>
     <task id="LOCAL-00035" summary="wip">
       <created>1602009663587</created>
@@ -445,7 +421,21 @@
       <option name="project" value="LOCAL" />
       <updated>1603394287240</updated>
     </task>
-    <option name="localTasksCounter" value="82" />
+    <task id="LOCAL-00082" summary="added some files to version control">
+      <created>1603404563119</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1603404563119</updated>
+    </task>
+    <task id="LOCAL-00083" summary="added missing ignored files">
+      <created>1603404747509</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1603404747509</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -464,8 +454,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="better api usability" />
-    <MESSAGE value="added availability things" />
     <MESSAGE value="wip" />
     <MESSAGE value="wip better function availability test" />
     <MESSAGE value="availability" />
@@ -489,7 +477,9 @@
     <MESSAGE value="wip continous camera status updates" />
     <MESSAGE value="more concurrent updates" />
     <MESSAGE value="added linux support" />
-    <option name="LAST_COMMIT_MESSAGE" value="added linux support" />
+    <MESSAGE value="added some files to version control" />
+    <MESSAGE value="added missing ignored files" />
+    <option name="LAST_COMMIT_MESSAGE" value="added missing ignored files" />
   </component>
   <component name="WindowStateProjectService">
     <state x="797" y="446" key="#PSD" timestamp="1603213077161">
@@ -587,10 +577,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="92" y="92" width="2376" height="1216" key="VCS.FileHistoryDialog/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603056278003" />
-    <state x="872" y="421" key="Vcs.Push.Dialog.v2" timestamp="1603394289631">
+    <state x="872" y="421" key="Vcs.Push.Dialog.v2" timestamp="1603404748654">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="872" y="421" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603394289631" />
+    <state x="872" y="421" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603404748654" />
     <state width="1288" height="708" key="XDebugger.FullValuePopup" timestamp="1603116114672">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
