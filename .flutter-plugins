@@ -1,13 +1,13 @@
 # This is a generated file; do not edit or check into version control.
-wifi_iot=C:\\Users\\kilia\\AppData\\Roaming\\Pub\\Cache\\git\\WiFiFlutter-2e0646419cad65e8316a9aab61b98806916b1897\\
-file_chooser=C:\\Users\\kilia\\AppData\\Roaming\\Pub\\Cache\\git\\flutter-desktop-embedding-5b3b930da18244ecf2a7140a0e33a9892273797c\\plugins\\file_chooser\\
-connectivity=C:\\Users\\kilia\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\connectivity-0.4.9+5\\
-connectivity_for_web=C:\\Users\\kilia\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\connectivity_for_web-0.3.1+2\\
-connectivity_macos=C:\\Users\\kilia\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\connectivity_macos-0.1.0+5\\
-flutter_isolate=C:\\Users\\kilia\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\flutter_isolate-1.0.0+14\\
-path_provider=C:\\Users\\kilia\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\path_provider-1.6.21\\
-path_provider_linux=C:\\Users\\kilia\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\path_provider_linux-0.0.1+2\\
-path_provider_macos=C:\\Users\\kilia\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\path_provider_macos-0.0.4+4\\
-path_provider_windows=C:\\Users\\kilia\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\path_provider_windows-0.0.4+1\\
-video_player=C:\\Users\\kilia\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\video_player-0.11.1+2\\
-video_player_web=C:\\Users\\kilia\\AppData\\Roaming\\Pub\\Cache\\hosted\\pub.dartlang.org\\video_player_web-0.1.4\\
+wifi_iot=/home/li/snap/flutter/common/flutter/.pub-cache/git/WiFiFlutter-2e0646419cad65e8316a9aab61b98806916b1897/
+file_chooser=/home/li/snap/flutter/common/flutter/.pub-cache/git/flutter-desktop-embedding-5b3b930da18244ecf2a7140a0e33a9892273797c/plugins/file_chooser/
+connectivity=/home/li/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity-0.4.9+5/
+connectivity_for_web=/home/li/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_for_web-0.3.1+2/
+connectivity_macos=/home/li/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/connectivity_macos-0.1.0+5/
+flutter_isolate=/home/li/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_isolate-1.0.0+14/
+path_provider=/home/li/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-1.6.21/
+path_provider_linux=/home/li/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-0.0.1+2/
+path_provider_macos=/home/li/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4+4/
+path_provider_windows=/home/li/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-0.0.4+1/
+video_player=/home/li/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/video_player-0.11.1+2/
+video_player_web=/home/li/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/video_player_web-0.1.4/
