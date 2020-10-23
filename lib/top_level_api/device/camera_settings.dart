@@ -64,7 +64,7 @@ abstract class CameraSettings extends ChangeNotifier {
       ItemId.PostViewImageSize);
   SettingsItem<IntValue> programShift = SettingsItem<IntValue>(ItemId.ProgramShift);
   SettingsItem<ZoomSettingValue> zoomSetting = SettingsItem<ZoomSettingValue>(ItemId.ZoomSetting);
-  SettingsItem<StringValue> liveViewInfo = SettingsItem<StringValue>(ItemId.LiveViewInfo);
+  SettingsItem<BoolValue> liveViewFrameInfo = SettingsItem<BoolValue>(ItemId.LiveViewFrameInfo);
   SettingsItem<OnOffValue> silentShooting = SettingsItem<OnOffValue>(ItemId.SilentShooting);
 
   //TODO method types for all different SonyWebApiServiceTypeIds with versions?
@@ -250,8 +250,8 @@ abstract class CameraSettings extends ChangeNotifier {
         return zoomSetting;
       case ItemId.StorageInformation:
         return storageInformation;
-      case ItemId.LiveViewInfo:
-        return liveViewInfo;
+      case ItemId.LiveViewFrameInfo:
+        return liveViewFrameInfo;
       case ItemId.SilentShooting:
         return silentShooting;
       case ItemId.CameraFunctionResult:

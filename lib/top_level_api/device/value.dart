@@ -319,7 +319,7 @@ abstract class Value<T> {
       case ItemId.UnkD2D4:
         print("UnkD2D4 $usbValue");
         return IntValue(usbValue);
-      case ItemId.LiveViewInfo:
+      case ItemId.LiveViewFrameInfo:
         return IntValue(usbValue);
       case ItemId.PhotoInfo:
         return IntValue(usbValue);

@@ -1,6 +1,5 @@
 import 'dart:math';
 
-//import 'package:flutter_usb/flutter_usb.dart';
 import 'package:sonyalphacontrol/top_level_api/api/force_update.dart';
 import 'package:sonyalphacontrol/top_level_api/api/function_availability.dart';
 import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dart';
@@ -14,7 +13,6 @@ import 'package:sonyalphacontrol/top_level_api/ids/focus_area_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_direction_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_magnifier_phase_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/focus_mode_toggle_ids.dart';
-import 'package:sonyalphacontrol/top_level_api/ids/image_size_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/opcodes_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/picture_effect_ids.dart';
@@ -23,9 +21,8 @@ import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
 import 'package:sonyalphacontrol/usb/commands/downloader.dart';
+import 'package:sonyalphacontrol/usb/commands/usb_commands.dart';
 import 'package:sonyalphacontrol/usb/device/sony_camera_usb_device.dart';
-
-import '../commands/usb_commands.dart';
 
 //TODO 0000   10 00 00 00 04 00 03 c2 ff ff ff ff 1d d2 00 00 -> URB_INTERRUPT in when sth changed
 //TODO register for event notifications
@@ -184,7 +181,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
       case ItemId.FocusModeToggleRequest:
         // TODO: Handle this case.
         break;
-      case ItemId.LiveViewInfo:
+      case ItemId.LiveViewFrameInfo:
         // TODO: Handle this case.
         break;
       case ItemId.PhotoInfo:
@@ -668,13 +665,13 @@ class SonyCameraUsbApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> startRecMode() {
+  Future<bool> startCameraSetup() {
     // TODO: implement startRecMode
     throw UnimplementedError();
   }
 
   @override
-  Future<bool> stopRecMode() {
+  Future<bool> stopCameraSetup() {
     // TODO: implement stopRecMode
     throw UnimplementedError();
   }
@@ -936,6 +933,12 @@ class SonyCameraUsbApi extends CameraApiInterface {
   @override
   pollSettings() {
     // TODO: implement pollSettings
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> setLiveViewFrameInfo(BoolValue value) {
+    // TODO: implement setLiveViewFrameInfo
     throw UnimplementedError();
   }
 }

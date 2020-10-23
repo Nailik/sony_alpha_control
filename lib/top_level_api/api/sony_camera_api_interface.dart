@@ -112,9 +112,9 @@ abstract class CameraApiInterface {
 
   ///Camera Setup
 
-  Future<bool> startRecMode();
+  Future<bool> startCameraSetup();
 
-  Future<bool> stopRecMode();
+  Future<bool> stopCameraSetup();
 
   ///long polling:
   ///Long polling flag
@@ -430,8 +430,7 @@ abstract class CameraApiInterface {
 
   ///Beep Mode
 
-  Future<SettingsItem<BeepModeValue>> getBeepMode({ForceUpdate update}) async =>
-      device.cameraSettings.beepMode;
+  Future<SettingsItem<BeepModeValue>> getBeepMode({ForceUpdate update}) async => device.cameraSettings.beepMode;
 
   Future<bool> setBeepMode(BeepModeValue value);
 
@@ -439,6 +438,13 @@ abstract class CameraApiInterface {
 
   Future<ListInfoItem<StringValue>> getStorageInformation({ForceUpdate update}) async =>
       device.cameraSettings.storageInformation;
+
+  ///Live View Info
+
+  Future<SettingsItem<BoolValue>> getLiveViewFrameInfo({ForceUpdate update}) async =>
+      device.cameraSettings.liveViewFrameInfo;
+
+  Future<bool> setLiveViewFrameInfo(BoolValue value);
 
   ///unchecked (wifi) *******************************************
 

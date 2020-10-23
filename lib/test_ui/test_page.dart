@@ -162,7 +162,7 @@ class TestsPageState extends State<TestsPage> {
                       getStorageInformationRow(),
 
                       ///LiveViewInfo (set, get)
-                      getLiveViewInfoRow(),
+                      getLiveViewFrameInfoRow(),
 
                       ///SilentShootingSettings (set, get, getSupported, getAvailable)
                       getSilentShootingSettingsRow(),
@@ -195,29 +195,6 @@ class TestsPageState extends State<TestsPage> {
                 )
               ],
             )));
-  }
-
-  //service, function, method
-  //green = supported and available
-  //orange = supported and not available
-  //red = unsupported
-  Widget getText(ItemId itemId, ApiMethodId apiMethodId,
-      {SonyWebApiServiceTypeId serviceId = SonyWebApiServiceTypeId.CAMERA}) {
-    Color color = Colors.black12;
-
-    //switch (device.api.getAvailability(function)) {
-    //  case FunctionAvailability.Available:
-    color = Colors.blueGrey;
-    //    break;
-    //  case FunctionAvailability.Supported:
-    //    color = Colors.orange;
-    //    break;
-    // case FunctionAvailability.Unsupported:
-    //   color = Colors.red;
-    //   break;
-    //}
-
-    return Text(apiMethodId.name, style: TextStyle(color: color));
   }
 
   TextStyle getTextStyle(Function function) {
@@ -627,11 +604,8 @@ class TestsPageState extends State<TestsPage> {
                 title: Text(ItemId.AvailableFunctions.name),
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      getText(ItemId.AvailableFunctions, ApiMethodId.GET_AVAILABLE)
-                    ]),
-                onTap: () =>
-                    device.api.getAvailableFunctions(update: ForceUpdate.On)),
+                    children: [Text("getAvailableFunctions", style: getTextStyle(device.api.getAvailableFunctions))]),
+                onTap: () => device.api.getAvailableFunctions(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -640,9 +614,8 @@ class TestsPageState extends State<TestsPage> {
                         isExpanded: true,
                         hint: Text("available"),
                         items: device.cameraSettings.availableFunctions.values
-                            .map<DropdownMenuItem<ApiFunctionValue>>((e) =>
-                                DropdownMenuItem<ApiFunctionValue>(
-                                    child: Text(e.name), value: e))
+                            .map<DropdownMenuItem<ApiFunctionValue>>(
+                                (e) => DropdownMenuItem<ApiFunctionValue>(child: Text(e.name), value: e))
                             .toList(),
                         onChanged: (value) {},
                       )))
@@ -664,11 +637,8 @@ class TestsPageState extends State<TestsPage> {
                 title: Text(ItemId.ApplicationInfo.name),
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      getText(ItemId.ApplicationInfo, ApiMethodId.GET)
-                    ]),
-                onTap: () =>
-                    device.api.getApplicationInfo(update: ForceUpdate.On)),
+                    children: [Text("getApplicationInfo", style: getTextStyle(device.api.getApplicationInfo))]),
+                onTap: () => device.api.getApplicationInfo(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -677,9 +647,8 @@ class TestsPageState extends State<TestsPage> {
                         isExpanded: true,
                         hint: Text("available"),
                         items: device.cameraSettings.applicationInfo.values
-                            .map<DropdownMenuItem<StringValue>>((e) =>
-                                DropdownMenuItem<StringValue>(
-                                    child: Text(e.name), value: e))
+                            .map<DropdownMenuItem<StringValue>>(
+                                (e) => DropdownMenuItem<StringValue>(child: Text(e.name), value: e))
                             .toList(),
                         onChanged: (value) {},
                       )))
@@ -701,11 +670,8 @@ class TestsPageState extends State<TestsPage> {
                 title: Text(ItemId.AvailableSettings.name),
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      getText(ItemId.AvailableSettings, ApiMethodId.GET)
-                    ]),
-                onTap: () => device.api
-                    .getAvailableSettings(false, update: ForceUpdate.On)),
+                    children: [Text("getAvailableSettings", style: getTextStyle(device.api.getAvailableSettings))]),
+                onTap: () => device.api.getAvailableSettings(false, update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -714,9 +680,8 @@ class TestsPageState extends State<TestsPage> {
                         isExpanded: true,
                         hint: Text("available"),
                         items: device.cameraSettings.availableSettings.values
-                            .map<DropdownMenuItem<StringValue>>((e) =>
-                                DropdownMenuItem<StringValue>(
-                                    child: Text(e.name), value: e))
+                            .map<DropdownMenuItem<StringValue>>(
+                                (e) => DropdownMenuItem<StringValue>(child: Text(e.name), value: e))
                             .toList(),
                         onChanged: (value) {},
                       )))
@@ -736,18 +701,11 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
               title: Text(ItemId.CameraFunction.name),
-              subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                        device.cameraSettings.cameraFunction.value?.name ??
-                            "NotAvailable",
-                        textAlign: TextAlign.start),
-                    getText(ItemId.CameraFunction, ApiMethodId.SET),
-                    getText(ItemId.CameraFunction, ApiMethodId.GET),
-                    getText(ItemId.CameraFunction, ApiMethodId.GET_AVAILABLE),
-                    getText(ItemId.CameraFunction, ApiMethodId.GET_SUPPORTED)
-                  ]),
+              subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text("setCameraFunction", style: getTextStyle(device.api.setCameraFunction)),
+                Text("getCameraFunction", style: getTextStyle(device.api.getCameraFunction)),
+                Text(device.cameraSettings.cameraFunction.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+              ]),
               onTap: () => device.api.getCameraFunction(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -797,13 +755,13 @@ class TestsPageState extends State<TestsPage> {
                 title: Text(ItemId.CapturePhoto.name + " ACT"),
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [getText(ItemId.CapturePhoto, ApiMethodId.ACT)]),
+                    children: [Text("actCapturePhoto", style: getTextStyle(device.api.actCapturePhoto))]),
                 onTap: () => device.api.actCapturePhoto()),
             ListTile(
               title: Text(ItemId.CapturePhoto.name + " AWAIT"),
               subtitle: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [getText(ItemId.CapturePhoto, ApiMethodId.AWAIT)]),
+                  children: [Text("awaitCapturePhoto", style: getTextStyle(device.api.actCapturePhoto))]),
               onTap: () => device.api.awaitCapturePhoto(),
             ),
             Text(device.cameraSettings.capturePhoto.values.toString()),
@@ -824,14 +782,14 @@ class TestsPageState extends State<TestsPage> {
                 title: Text(ItemId.CameraSetup.name + " START"),
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [getText(ItemId.CameraSetup, ApiMethodId.START)]),
-                onTap: () => device.api.startRecMode()),
+                    children: [Text("startCameraSetup", style: getTextStyle(device.api.startCameraSetup))]),
+                onTap: () => device.api.startCameraSetup()),
             ListTile(
               title: Text(ItemId.CameraSetup.name + " STOP"),
               subtitle: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [getText(ItemId.CameraSetup, ApiMethodId.STOP)]),
-              onTap: () => device.api.stopRecMode(),
+                  children: [Text("stopCameraSetup", style: getTextStyle(device.api.stopCameraSetup))]),
+              onTap: () => device.api.stopCameraSetup(),
             )
           ]),
         ),
@@ -848,15 +806,10 @@ class TestsPageState extends State<TestsPage> {
           child: Column(children: [
             ListTile(
                 title: Text(ItemId.Zoom.name),
-                subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                          device.cameraSettings.zoom.value?.name ??
-                              "NotAvailable",
-                          textAlign: TextAlign.start),
-                      getText(ItemId.Zoom, ApiMethodId.ACT)
-                    ]),
+                subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(device.cameraSettings.zoom.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+                  Text("actZoom", style: getTextStyle(device.api.actZoom))
+                ]),
                 onTap: () {}),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -908,19 +861,15 @@ class TestsPageState extends State<TestsPage> {
                       title: Text(ItemId.HalfPressShutter.name + " ACT"),
                       subtitle: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            getText(ItemId.HalfPressShutter, ApiMethodId.ACT)
-                          ]),
+                          children: [Text("actHalfPressShutter", style: getTextStyle(device.api.actHalfPressShutter))]),
                       onTap: () => device.api.actHalfPressShutter()),
                 ),
                 Expanded(
                   child: ListTile(
                       title: Text(ItemId.HalfPressShutter.name + " CANCEL"),
-                      subtitle: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            getText(ItemId.HalfPressShutter, ApiMethodId.CANCEL)
-                          ]),
+                      subtitle: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                        Text("cancelHalfPressShutter", style: getTextStyle(device.api.cancelHalfPressShutter))
+                      ]),
                       onTap: () => device.api.cancelHalfPressShutter()),
                 )
               ]),
@@ -941,15 +890,10 @@ class TestsPageState extends State<TestsPage> {
               subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                        device.cameraSettings.selfTimer.value?.name ??
-                            "NotAvailable",
-                        textAlign: TextAlign.start),
-                    getText(ItemId.SelfTimer, ApiMethodId.SET),
-                    getText(ItemId.SelfTimer, ApiMethodId.GET),
-                    getText(ItemId.SelfTimer, ApiMethodId.GET_AVAILABLE),
-                    getText(ItemId.SelfTimer, ApiMethodId.GET_SUPPORTED)
-                  ]),
+                Text(device.cameraSettings.selfTimer.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+                Text("getSelfTimer", style: getTextStyle(device.api.getSelfTimer)),
+                Text("setSelfTimer", style: getTextStyle(device.api.setSelfTimer))
+              ]),
               onTap: () => device.api.getSelfTimer(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -1257,8 +1201,8 @@ class TestsPageState extends State<TestsPage> {
               title: Text(ItemId.MeteringMode.name),
               subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(device.cameraSettings.meteringMode.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
-                Text("setContShootingSpeed TODO", style: getTextStyle(device.api.setContShootingSpeed)),
-                Text("getContShootingSpeedTODO ", style: getTextStyle(device.api.getContShootingSpeed))
+                Text("setContShootingSpeed", style: getTextStyle(device.api.setContShootingSpeed)),
+                Text("getContShootingSpeed ", style: getTextStyle(device.api.getContShootingSpeed))
               ]),
               onTap: () => device.api.getMeteringMode(update: ForceUpdate.On),
             ),
@@ -1308,10 +1252,8 @@ class TestsPageState extends State<TestsPage> {
               subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(device.cameraSettings.exposureCompensation.value?.name ?? "NotAvailable",
                     textAlign: TextAlign.start),
-                getText(ItemId.ExposureCompensation, ApiMethodId.SET),
-                getText(ItemId.ExposureCompensation, ApiMethodId.GET),
-                getText(ItemId.ExposureCompensation, ApiMethodId.GET_AVAILABLE),
-                getText(ItemId.ExposureCompensation, ApiMethodId.GET_SUPPORTED)
+                Text("getExposureCompensation", style: getTextStyle(device.api.getExposureCompensation)),
+                Text("setExposureCompensation", style: getTextStyle(device.api.setExposureCompensation))
               ]),
               onTap: () => device.api.getExposureCompensation(update: ForceUpdate.On),
             ),
@@ -1371,10 +1313,9 @@ class TestsPageState extends State<TestsPage> {
                                 device.cameraSettings.fNumber.value?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            getText(ItemId.FNumber, ApiMethodId.SET),
-                            getText(ItemId.FNumber, ApiMethodId.GET),
-                            getText(ItemId.FNumber, ApiMethodId.GET_AVAILABLE),
-                            getText(ItemId.FNumber, ApiMethodId.GET_SUPPORTED)
+                            Text("setFNumber", style: getTextStyle(device.api.setFNumber)),
+                            Text("getFNumber", style: getTextStyle(device.api.getFNumber)),
+                            Text("modifyFNumber", style: getTextStyle(device.api.modifyFNumber))
                           ]),
                       onTap: () =>
                           device.api.getFNumber(update: ForceUpdate.On),
@@ -1449,10 +1390,9 @@ class TestsPageState extends State<TestsPage> {
                                 device.cameraSettings.iso.value?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            getText(ItemId.IsoSpeedRate, ApiMethodId.SET),
-                            getText(ItemId.IsoSpeedRate, ApiMethodId.GET),
-                            getText(ItemId.IsoSpeedRate, ApiMethodId.GET_AVAILABLE),
-                            getText(ItemId.IsoSpeedRate, ApiMethodId.GET_SUPPORTED)
+                            Text("setIso", style: getTextStyle(device.api.setIso)),
+                            Text("getIso", style: getTextStyle(device.api.getIso)),
+                            Text("modifyIso", style: getTextStyle(device.api.modifyIso))
                           ]),
                       onTap: () => device.api.getIso(update: ForceUpdate.On),
                     ),
@@ -1518,16 +1458,11 @@ class TestsPageState extends State<TestsPage> {
                           children: [
                             Text(
                                 device.cameraSettings.liveViewSize.value
-                                        ?.name ??
+                                    ?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            getText(ItemId.LiveViewWithSize, ApiMethodId.START),
-                            //Start live view with size //TODO result is url where stored
-                            getText(ItemId.LiveViewSize, ApiMethodId.GET),
-                            getText(
-                                ItemId.LiveViewSize, ApiMethodId.GET_AVAILABLE),
-                            getText(
-                                ItemId.LiveViewSize, ApiMethodId.GET_SUPPORTED)
+                            Text("getLiveViewSize", style: getTextStyle(device.api.getLiveViewSize)),
+                            Text("startLiveViewWithSize", style: getTextStyle(device.api.startLiveViewWithSize)),
                           ]),
                       onTap: () =>
                           device.api.getLiveViewSize(update: ForceUpdate.On),
@@ -1586,15 +1521,11 @@ class TestsPageState extends State<TestsPage> {
                           children: [
                             Text(
                                 device.cameraSettings.postViewImageSize.value
-                                        ?.name ??
+                                    ?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            getText(ItemId.PostViewImageSize, ApiMethodId.SET),
-                            getText(ItemId.PostViewImageSize, ApiMethodId.GET),
-                            getText(ItemId.PostViewImageSize,
-                                ApiMethodId.GET_AVAILABLE),
-                            getText(ItemId.PostViewImageSize,
-                                ApiMethodId.GET_SUPPORTED)
+                            Text("setPostViewImageSize", style: getTextStyle(device.api.setPostViewImageSize)),
+                            Text("getPostViewImageSize", style: getTextStyle(device.api.getPostViewImageSize))
                           ]),
                       onTap: () => device.api
                           .getPostViewImageSize(update: ForceUpdate.On),
@@ -1655,15 +1586,11 @@ class TestsPageState extends State<TestsPage> {
                           children: [
                             Text(
                                 device.cameraSettings.programShift.value
-                                        ?.name ??
+                                    ?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            getText(ItemId.ProgramShift, ApiMethodId.SET),
-                            getText(ItemId.ProgramShift, ApiMethodId.GET),
-                            getText(
-                                ItemId.ProgramShift, ApiMethodId.GET_AVAILABLE),
-                            getText(
-                                ItemId.ProgramShift, ApiMethodId.GET_SUPPORTED)
+                            Text("getProgramShift", style: getTextStyle(device.api.getProgramShift)),
+                            Text("setProgramShift", style: getTextStyle(device.api.setProgramShift)),
                           ]),
                       onTap: () =>
                           device.api.getProgramShift(update: ForceUpdate.On),
@@ -1720,10 +1647,9 @@ class TestsPageState extends State<TestsPage> {
                         device.cameraSettings.shutterSpeed.value?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    getText(ItemId.ShutterSpeed, ApiMethodId.SET),
-                    getText(ItemId.ShutterSpeed, ApiMethodId.GET),
-                    getText(ItemId.ShutterSpeed, ApiMethodId.GET_AVAILABLE),
-                    getText(ItemId.ShutterSpeed, ApiMethodId.GET_SUPPORTED)
+                    Text("getShutterSpeed", style: getTextStyle(device.api.getShutterSpeed)),
+                    Text("modifyShutterSpeed", style: getTextStyle(device.api.modifyShutterSpeed)),
+                    Text("setProgramShift", style: getTextStyle(device.api.setProgramShift)),
                   ]),
               onTap: () => device.api.getShutterSpeed(update: ForceUpdate.On),
             ),
@@ -1787,10 +1713,8 @@ class TestsPageState extends State<TestsPage> {
                         device.cameraSettings.focusAreaSpot.value?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    getText(ItemId.FocusAreaSpot, ApiMethodId.SET),
-                    getText(ItemId.FocusAreaSpot, ApiMethodId.GET),
-                    getText(ItemId.FocusAreaSpot, ApiMethodId.GET_AVAILABLE),
-                    getText(ItemId.FocusAreaSpot, ApiMethodId.GET_SUPPORTED)
+                    Text("setFocusAreaSpot", style: getTextStyle(device.api.setFocusAreaSpot)),
+                    Text("getFocusAreaSpot", style: getTextStyle(device.api.getFocusAreaSpot)),
                   ]),
             ),
           ]),
@@ -1815,10 +1739,8 @@ class TestsPageState extends State<TestsPage> {
                         device.cameraSettings.whiteBalanceMode.value?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    getText(ItemId.WhiteBalanceMode, ApiMethodId.SET),
-                    getText(ItemId.WhiteBalanceMode, ApiMethodId.GET),
-                    getText(ItemId.WhiteBalanceMode, ApiMethodId.GET_AVAILABLE),
-                    getText(ItemId.WhiteBalanceMode, ApiMethodId.GET_SUPPORTED)
+                    Text("setWhiteBalanceMode", style: getTextStyle(device.api.setWhiteBalanceMode)),
+                    Text("getWhiteBalanceMode", style: getTextStyle(device.api.getWhiteBalanceMode)),
                   ]),
               onTap: () =>
                   device.api.getWhiteBalanceMode(update: ForceUpdate.On),
@@ -1872,13 +1794,12 @@ class TestsPageState extends State<TestsPage> {
                   children: [
                     Text(
                         device.cameraSettings.whiteBalanceColorTemp.value
-                                ?.name ??
+                            ?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    getText(ItemId.WhiteBalanceMode, ApiMethodId.SET),
-                    getText(ItemId.WhiteBalanceMode, ApiMethodId.GET),
-                    getText(ItemId.WhiteBalanceMode, ApiMethodId.GET_AVAILABLE),
-                    getText(ItemId.WhiteBalanceMode, ApiMethodId.GET_SUPPORTED)
+                    Text("setWhiteBalanceColorTemp", style: getTextStyle(device.api.setWhiteBalanceColorTemp)),
+                    Text("modifyWhiteBalanceColorTemp", style: getTextStyle(device.api.modifyWhiteBalanceColorTemp)),
+                    Text("getWhiteBalanceColorTemp", style: getTextStyle(device.api.getWhiteBalanceColorTemp)),
                   ]),
               onTap: () =>
                   device.api.getWhiteBalanceColorTemp(update: ForceUpdate.On),
@@ -1949,10 +1870,8 @@ class TestsPageState extends State<TestsPage> {
                         device.cameraSettings.flashMode.value?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    getText(ItemId.FlashMode, ApiMethodId.SET),
-                    getText(ItemId.FlashMode, ApiMethodId.GET),
-                    getText(ItemId.FlashMode, ApiMethodId.GET_AVAILABLE),
-                    getText(ItemId.FlashMode, ApiMethodId.GET_SUPPORTED)
+                    Text("setFlashMode", style: getTextStyle(device.api.setFlashMode)),
+                    Text("getFlashMode", style: getTextStyle(device.api.getFlashMode)),
                   ]),
               onTap: () => device.api.getFlashMode(update: ForceUpdate.On),
             ),
@@ -2004,10 +1923,8 @@ class TestsPageState extends State<TestsPage> {
                         device.cameraSettings.focusMode.value?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    getText(ItemId.FocusMode, ApiMethodId.SET),
-                    getText(ItemId.FocusMode, ApiMethodId.GET),
-                    getText(ItemId.FocusMode, ApiMethodId.GET_AVAILABLE),
-                    getText(ItemId.FocusMode, ApiMethodId.GET_SUPPORTED)
+                    Text("setFocusMode", style: getTextStyle(device.api.setFocusMode)),
+                    Text("getFocusMode", style: getTextStyle(device.api.getFocusMode)),
                   ]),
               onTap: () => device.api.getFocusMode(update: ForceUpdate.On),
             ),
@@ -2059,10 +1976,8 @@ class TestsPageState extends State<TestsPage> {
                         device.cameraSettings.zoomSetting.value?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    getText(ItemId.ZoomSetting, ApiMethodId.SET),
-                    getText(ItemId.ZoomSetting, ApiMethodId.GET),
-                    getText(ItemId.ZoomSetting, ApiMethodId.GET_AVAILABLE),
-                    getText(ItemId.ZoomSetting, ApiMethodId.GET_SUPPORTED)
+                    Text("setZoomSetting", style: getTextStyle(device.api.setZoomSetting)),
+                    Text("getZoomSetting", style: getTextStyle(device.api.getZoomSetting)),
                   ]),
               onTap: () => device.api.getZoomSetting(update: ForceUpdate.On),
             ),
@@ -2130,24 +2045,25 @@ class TestsPageState extends State<TestsPage> {
   }
 
   ///LiveViewInfo (set, get)
-  Widget getLiveViewInfoRow() {
+  Widget getLiveViewFrameInfoRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.liveViewInfo,
+      create: (context) => device.cameraSettings.liveViewFrameInfo,
       child: Consumer<SettingsItem>(
-        builder: (context, model, _) => Card(
-          child: Column(children: [
-            ListTile(
-              title: Text(ItemId.LiveViewInfo.name),
-              subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                        device.cameraSettings.silentShooting.value?.name ??
-                            "NotAvailable",
-                        textAlign: TextAlign.start),
-                    getText(ItemId.LiveViewInfo, ApiMethodId.SET),
-                    getText(ItemId.LiveViewInfo, ApiMethodId.GET),
-                  ]),
+        builder: (context, model, _) =>
+            Card(
+              child: Column(children: [
+                ListTile(
+                  title: Text(ItemId.LiveViewFrameInfo.name),
+                  subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                            device.cameraSettings.silentShooting.value?.name ??
+                                "NotAvailable",
+                            textAlign: TextAlign.start),
+                        Text("setLiveViewInfo", style: getTextStyle(device.api.setLiveViewFrameInfo)),
+                        Text("getLiveViewInfo", style: getTextStyle(device.api.getLiveViewFrameInfo)),
+                      ]),
             ),
           ]),
         ),
@@ -2173,12 +2089,8 @@ class TestsPageState extends State<TestsPage> {
                                     ?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            getText(ItemId.SilentShooting, ApiMethodId.SET),
-                            getText(ItemId.SilentShooting, ApiMethodId.GET),
-                            getText(ItemId.SilentShooting,
-                                ApiMethodId.GET_AVAILABLE),
-                            getText(ItemId.SilentShooting,
-                                ApiMethodId.GET_SUPPORTED)
+                            Text("setSilentShooting", style: getTextStyle(device.api.setSilentShooting)),
+                            Text("getSilentShooting", style: getTextStyle(device.api.getSilentShooting)),
                           ]),
                       onTap: () =>
                           device.api.getSilentShooting(update: ForceUpdate.On),

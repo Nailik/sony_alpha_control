@@ -151,7 +151,7 @@ enum ItemId {
   FocusModeToggleRequest,
   UnkD2D3,
   UnkD2D4,
-  LiveViewInfo,
+  LiveViewFrameInfo,
   PhotoInfo,
 
   ///for the available camera settings
@@ -346,7 +346,7 @@ extension ItemIdExtension on ItemId {
         return 0xD2D3; //manual focus?
       case ItemId.UnkD2D4:
         return 0xD2D4; //??
-      case ItemId.LiveViewInfo:
+      case ItemId.LiveViewFrameInfo:
         return 0xC002;
       case ItemId.PhotoInfo: //0c00
         return 0xC001;
@@ -445,7 +445,7 @@ extension ItemIdExtension on ItemId {
         return "zoomSetting";
       case ItemId.StorageInformation:
         return "storageInformation";
-      case ItemId.LiveViewInfo:
+      case ItemId.LiveViewFrameInfo:
         return "liveviewFrameInfo";
       case ItemId.SilentShooting: //"silentShootingSetting"; //TODO??
         return "silentShootingSetting";

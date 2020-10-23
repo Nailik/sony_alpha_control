@@ -296,13 +296,12 @@ class SonyCameraWifiApi extends CameraApiInterface {
   ///Camera Setup
 
   @override
-  Future<bool> startRecMode() async =>
-      await WifiCommand.createCommand(ApiMethodId.ACT, ItemId.CapturePhoto)
-          .send(device)
-          .then((result) => result.isValid);
+  Future<bool> startCameraSetup() async => await WifiCommand.createCommand(ApiMethodId.ACT, ItemId.CapturePhoto)
+      .send(device)
+      .then((result) => result.isValid);
 
   @override
-  Future<bool> stopRecMode() async =>
+  Future<bool> stopCameraSetup() async =>
       await WifiCommand.createCommand(ApiMethodId.AWAIT, ItemId.CapturePhoto)
           .send(device)
           .then((result) => result.isValid);
@@ -1241,7 +1240,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
         return result.isValid;
       });
 
-  ///Infrared Remote Control
+  ///Auto Power Off
 
   @override
   Future<SettingsItem<IntValue>> getAutoPowerOff({ForceUpdate update}) async =>
@@ -1259,7 +1258,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
         return result.isValid;
       });
 
-  ///Infrared Remote Control
+  ///Beep Mode
 
   @override
   Future<SettingsItem<BeepModeValue>> getBeepMode({ForceUpdate update}) async =>
@@ -1276,6 +1275,25 @@ class SonyCameraWifiApi extends CameraApiInterface {
         }
         return result.isValid;
       });
+
+  ///Live View Frame Info
+
+  @override
+  Future<SettingsItem<BoolValue>> getLiveViewFrameInfo({ForceUpdate update}) async =>
+      await _updateIf(update, await super.getLiveViewFrameInfo(update: update));
+
+  @override
+  Future<bool> setLiveViewFrameInfo(BoolValue value) async =>
+      WifiCommand.createCommand(ApiMethodId.SET, ItemId.LiveViewFrameInfo, params: [value.wifiValue])
+          .send(device)
+          .then((result) {
+        if (result.isValid) {
+          SettingsItem<BoolValue> item = device.cameraSettings.liveViewFrameInfo;
+          item.updateItem(value, item.available, item.supported);
+        }
+        return result.isValid;
+      });
+
 
   //TODO
 
@@ -1646,4 +1664,5 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
     return functionAvailability;
   }
+
 }

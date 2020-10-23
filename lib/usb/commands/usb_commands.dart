@@ -160,7 +160,7 @@ class UsbCommands {
     OpCodeId opcode =
         info ? OpCodeId.GetImageInfo : OpCodeId.GetImageData; //0x1008
     ItemId settingsId =
-        liveView ? ItemId.LiveViewInfo : ItemId.PhotoInfo; //0xC002
+        liveView ? ItemId.LiveViewFrameInfo : ItemId.PhotoInfo; //0xC002
 
     Uint8List list;
     if (Platform.isWindows) {
