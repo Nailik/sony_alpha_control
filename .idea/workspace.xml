@@ -26,15 +26,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa30b1c6-ea39-4fc8-b491-e57e4f730671" name="Default Changelist" comment="added missing ignored files">
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/test_ui/test_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/test_ui/test_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/top_level_api/api/function_availability.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/top_level_api/api/function_availability.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/top_level_api/api/sony_camera_api_interface.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/top_level_api/api/sony_camera_api_interface.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/usb/api/sony_camera_usb_api.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/usb/api/sony_camera_usb_api.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/wifi/api/sony_camera_wifi_api.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/wifi/api/sony_camera_wifi_api.dart" afterDir="false" />
-    </list>
+    <list default="true" id="fa30b1c6-ea39-4fc8-b491-e57e4f730671" name="Default Changelist" comment="function availability" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -99,13 +91,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1597524878353</updated>
-    </task>
-    <task id="LOCAL-00036" summary="lots of cleaning code and imports&#10;renaming settingsvalue to value and introducing info_item">
-      <created>1602016615732</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1602016615732</updated>
     </task>
     <task id="LOCAL-00037" summary="create basic info item&#10;&#10;rename settingsid to item id">
       <created>1602016789365</created>
@@ -443,7 +428,14 @@
       <option name="project" value="LOCAL" />
       <updated>1603435869250</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="function availability">
+      <created>1603437924017</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1603437924017</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -462,7 +454,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="wip better function availability test" />
     <MESSAGE value="availability" />
     <MESSAGE value="storage information" />
     <MESSAGE value="shoot mode" />
@@ -487,7 +478,8 @@
     <MESSAGE value="added some files to version control" />
     <MESSAGE value="added missing ignored files" />
     <MESSAGE value="wip" />
-    <option name="LAST_COMMIT_MESSAGE" value="wip" />
+    <MESSAGE value="function availability" />
+    <option name="LAST_COMMIT_MESSAGE" value="function availability" />
   </component>
   <component name="WindowStateProjectService">
     <state x="797" y="446" key="#PSD" timestamp="1603213077161">
@@ -536,25 +528,25 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="720" y="455" width="780" height="802" key="FileChooserDialogImpl/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1602849997058" />
-    <state width="2516" height="187" key="GridCell.Tab.0.bottom" timestamp="1603436177521">
+    <state width="2516" height="187" key="GridCell.Tab.0.bottom" timestamp="1603437943184">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2516" height="187" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603436177521" />
+    <state width="2516" height="187" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603437943184" />
     <state width="1876" height="239" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.203.1920.1040@2560.203.1920.1040" timestamp="1602753789519" />
-    <state width="2516" height="187" key="GridCell.Tab.0.center" timestamp="1603436177521">
+    <state width="2516" height="187" key="GridCell.Tab.0.center" timestamp="1603437943184">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2516" height="187" key="GridCell.Tab.0.center/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603436177521" />
+    <state width="2516" height="187" key="GridCell.Tab.0.center/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603437943184" />
     <state width="1876" height="239" key="GridCell.Tab.0.center/0.0.2560.1400/2560.203.1920.1040@2560.203.1920.1040" timestamp="1602753789519" />
-    <state width="2516" height="187" key="GridCell.Tab.0.left" timestamp="1603436177520">
+    <state width="2516" height="187" key="GridCell.Tab.0.left" timestamp="1603437943184">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2516" height="187" key="GridCell.Tab.0.left/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603436177520" />
+    <state width="2516" height="187" key="GridCell.Tab.0.left/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603437943184" />
     <state width="1876" height="239" key="GridCell.Tab.0.left/0.0.2560.1400/2560.203.1920.1040@2560.203.1920.1040" timestamp="1602753789518" />
-    <state width="2516" height="187" key="GridCell.Tab.0.right" timestamp="1603436177521">
+    <state width="2516" height="187" key="GridCell.Tab.0.right" timestamp="1603437943184">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="2516" height="187" key="GridCell.Tab.0.right/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603436177521" />
+    <state width="2516" height="187" key="GridCell.Tab.0.right/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603437943184" />
     <state width="1876" height="239" key="GridCell.Tab.0.right/0.0.2560.1400/2560.203.1920.1040@2560.203.1920.1040" timestamp="1602753789519" />
     <state width="2517" height="392" key="GridCell.Tab.1.bottom" timestamp="1600904333717">
       <screen x="0" y="0" width="2560" height="1400" />
@@ -585,10 +577,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="92" y="92" width="2376" height="1216" key="VCS.FileHistoryDialog/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603056278003" />
-    <state x="872" y="421" key="Vcs.Push.Dialog.v2" timestamp="1603435870660">
+    <state x="872" y="421" key="Vcs.Push.Dialog.v2" timestamp="1603437931579">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="872" y="421" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603435870660" />
+    <state x="872" y="421" key="Vcs.Push.Dialog.v2/0.0.2560.1400/2560.203.1920.1040@0.0.2560.1400" timestamp="1603437931579" />
     <state width="1288" height="708" key="XDebugger.FullValuePopup" timestamp="1603116114672">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>

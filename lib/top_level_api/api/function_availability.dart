@@ -239,9 +239,9 @@ extension FunctionExtension on Function {
 
     if (this == device.api.getSilentShooting) return device.api.checkFunctionAvailability(ItemId.SilentShooting, ApiMethodId.GET);
 
-    if (this == device.api.setLiveViewInfo) return device.api.checkFunctionAvailability(ItemId.LiveViewFrameInfo, ApiMethodId.SET);
+    if (this == device.api.setLiveViewFrameInfo) return device.api.checkFunctionAvailability(ItemId.LiveViewFrameInfo, ApiMethodId.SET);
 
-    if (this == device.api.getLiveViewInfo) return device.api.checkFunctionAvailability(ItemId.LiveViewFrameInfo, ApiMethodId.GET);
+    if (this == device.api.getLiveViewFrameInfo) return device.api.checkFunctionAvailability(ItemId.LiveViewFrameInfo, ApiMethodId.GET);
 
     return FunctionAvailability.Unsupported;
   }
