@@ -26,6 +26,10 @@ import 'package:sonyalphacontrol/wifi/commands/wifi_command.dart';
 import 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';
 import 'package:sonyalphacontrol/wifi/device/wifi_items.dart';
 
+//TODO fehler?
+//TODO other Force Update options for info?
+//TODO simple getter (nur current updaten, überall in "get" integrieren)?
+//TODO so viel code wie möglich noch zusammenführen (vieles, vieles doppelt)
 class SonyCameraWifiApi extends CameraApiInterface {
   SonyCameraWifiDevice get device => cameraDevice;
 
@@ -39,7 +43,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   ///Version
-  //TODO other Force Update options for info?
 
   @override
   Future<ListInfoItem<WebApiVersionsValue>> getWebApiVersionsCamera({update = ForceUpdate.IfNull}) async {
