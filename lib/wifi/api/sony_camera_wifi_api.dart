@@ -330,16 +330,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> setFNumber(DoubleValue value) async {
-    return await WifiCommand.createCommand(ApiMethodId.SET, ItemId.FNumber,
-        params: [value.wifiValue]).send(device).then((result) {
-      if (result.isValid) {
-        SettingsItem<DoubleValue> item = device.cameraSettings.fNumber;
-        item.updateItem(value, item.available, item.supported);
-      }
-      return result.isValid;
-    });
-  }
+  Future<bool> setFNumber(DoubleValue value) async => _defaultSetOperation(value, ItemId.FNumber, [value.wifiValue]);
 
   /// ISO
   @override
@@ -349,10 +340,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> modifyIso(int direction) async {
     var iso = await getIso();
-    var currentIndex = iso.available
-        .indexWhere((element) => element.wifiValue == iso.value.wifiValue);
-    if ((currentIndex == 0 && direction == -1) ||
-        (currentIndex == iso.available.length - 1 && direction == 1)) {
+    var currentIndex = iso.available.indexWhere((element) => element.wifiValue == iso.value.wifiValue);
+    if ((currentIndex == 0 && direction == -1) || (currentIndex == iso.available.length - 1 && direction == 1)) {
       return false; //would be out of range
     }
     var newIndex = currentIndex + direction;
@@ -360,18 +349,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> setIso(IsoValue value) async {
-    return await WifiCommand.createCommand(ApiMethodId.SET, ItemId.IsoSpeedRate,
-        params: [value.wifiValue]).send(device).then((result) {
-      if (result.isValid) {
-        SettingsItem<IsoValue> item = device.cameraSettings.iso;
-        item.updateItem(value, item.available, item.supported);
-      }
-      return result.isValid;
-    });
-  }
+  Future<bool> setIso(IsoValue value) async => _defaultSetOperation(value, ItemId.IsoSpeedRate, [value.wifiValue]);
 
-  /// Shutter Speed
   ///
   @override
   Future<SettingsItem<ShutterSpeedValue>> getShutterSpeed({update = ForceUpdate.IfNull}) async =>
@@ -380,8 +359,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> modifyShutterSpeed(int direction) async {
     var shutterSpeed = await getShutterSpeed();
-    var currentIndex = shutterSpeed.available.indexWhere(
-            (element) => element.wifiValue == shutterSpeed.value.wifiValue);
+    var currentIndex =
+    shutterSpeed.available.indexWhere((element) => element.wifiValue == shutterSpeed.value.wifiValue);
     if ((currentIndex == 0 && direction == -1) ||
         (currentIndex == shutterSpeed.available.length - 1 && direction == 1)) {
       return false; //would be out of range
@@ -391,17 +370,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
   }
 
   @override
-  Future<bool> setShutterSpeed(ShutterSpeedValue value) async {
-    return await WifiCommand.createCommand(ApiMethodId.SET, ItemId.ShutterSpeed,
-        params: [value.wifiValue]).send(device).then((result) {
-      if (result.isValid) {
-        SettingsItem<ShutterSpeedValue> item =
-            device.cameraSettings.shutterSpeed;
-        item.updateItem(value, item.available, item.supported);
-      }
-      return result.isValid;
-    });
-  }
+  Future<bool> setShutterSpeed(ShutterSpeedValue value) async =>
+      _defaultSetOperation(value, ItemId.ShutterSpeed, [value.wifiValue]);
 
   ///EV
 
@@ -456,17 +426,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
   @override
   Future<bool> setExposureCompensation(EvValue value) async => _setExposureCompensationIndex(value);
 
-  Future<bool> _setExposureCompensationIndex(EvValue value) async {
-    return await WifiCommand.createCommand(ApiMethodId.SET, ItemId.ExposureCompensation, params: [value.index])
-        .send(device)
-        .then((result) {
-      if (result.isValid) {
-        SettingsItem<EvValue> item = device.cameraSettings.exposureCompensation;
-        item.updateItem(value, item.available, item.supported);
-      }
-      return result.isValid;
-    });
-  }
+  Future<bool> _setExposureCompensationIndex(EvValue value) async =>
+      _defaultSetOperation(value, ItemId.ExposureCompensation, [value.index]);
 
   ///FlashMode
 
@@ -475,16 +436,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
       await _updateIf(update, await super.getFlashMode(update: update));
 
   @override
-  Future<bool> setFlashMode(FlashModeValue value) async {
-    return await WifiCommand.createCommand(ApiMethodId.SET, ItemId.FlashMode,
-        params: [value.wifiValue]).send(device).then((result) {
-      if (result.isValid) {
-        SettingsItem<FlashModeValue> item = device.cameraSettings.flashMode;
-        item.updateItem(value, item.available, item.supported);
-      }
-      return result.isValid;
-    });
-  }
+  Future<bool> setFlashMode(FlashModeValue value) async =>
+      _defaultSetOperation(value, ItemId.FlashMode, [value.wifiValue]);
 
   ///FocusMode
 
@@ -493,15 +446,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
       await _updateIf(update, await super.getFocusMode(update: update));
 
   @override
-  Future<bool> setFocusMode(FocusModeValue value) =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.FocusMode,
-          params: [value.wifiValue]).send(device).then((result) {
-        if (result.isValid) {
-          SettingsItem<FocusModeValue> item = device.cameraSettings.focusMode;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+  Future<bool> setFocusMode(FocusModeValue value) async =>
+      _defaultSetOperation(value, ItemId.FocusMode, [value.wifiValue]);
 
   ///Zoom Setting
 
@@ -511,15 +457,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setZoomSetting(ZoomSettingValue value) async =>
-      await WifiCommand.createCommand(ApiMethodId.SET, ItemId.ZoomSetting, params: [
-        <String, dynamic>{'zoom': value.wifiValue}
-      ]).send(device).then((result) {
-        if (result.isValid) {
-          SettingsItem<ZoomSettingValue> item = device.cameraSettings.zoomSetting;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.ZoomSetting, [<String, dynamic>{'zoom': value.wifiValue}]);
 
   ///Storage Information
 
@@ -573,14 +511,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setSelfTimer(IntValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.SelfTimer,
-          params: [value.id]).send(device).then((result) {
-        if (result.isValid) {
-          SettingsItem<IntValue> item = device.cameraSettings.selfTimer;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.SelfTimer, [value.id]);
 
   ///Live View Size
 
@@ -609,15 +540,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setPostViewImageSize(PostViewImageSizeValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.PostViewImageSize,
-          params: [value.wifiValue]).send(device).then((result) {
-        if (result.isValid) {
-          SettingsItem<PostViewImageSizeValue> item =
-              device.cameraSettings.postViewImageSize;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.PostViewImageSize, [value.wifiValue]);
 
   ///Program Shift
 
@@ -627,14 +550,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setProgramShift(IntValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.ProgramShift,
-          params: [value.wifiValue]).send(device).then((result) {
-        if (result.isValid) {
-          SettingsItem<IntValue> item = device.cameraSettings.programShift;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.ProgramShift, [value.wifiValue]);
 
   ///White Balance Mode
 
@@ -743,19 +659,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
       await _updateIf(update, await super.getImageFileFormat(update: update));
 
   @override
-  Future<bool> setImageFileFormat(ImageFileFormatValue value) async {
-    return await WifiCommand.createCommand(
-        ApiMethodId.SET, ItemId.ImageFileFormat, params: [value.wifiValue])
-        .send(device)
-        .then((result) {
-      if (result.isValid) {
-        SettingsItem<ImageFileFormatValue> item =
-            device.cameraSettings.imageFileFormat;
-        item.updateItem(value, item.available, item.supported);
-      }
-      return result.isValid;
-    });
-  }
+  Future<bool> setImageFileFormat(ImageFileFormatValue value) async =>
+      _defaultSetOperation(value, ItemId.ImageFileFormat, [value.wifiValue]);
 
   ///Silent Shooting
 
@@ -764,17 +669,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
       await _updateIf(update, await super.getSilentShooting(update: update));
 
   @override
-  Future<bool> setSilentShooting(OnOffValue value) async {
-    return await WifiCommand.createCommand(ApiMethodId.SET, ItemId.SilentShooting, params: [value.wifiValue])
-        .send(device)
-        .then((result) {
-      if (result.isValid) {
-        SettingsItem<OnOffValue> item = device.cameraSettings.silentShooting;
-        item.updateItem(value, item.available, item.supported);
-      }
-      return result.isValid;
-    });
-  }
+  Future<bool> setSilentShooting(OnOffValue value) async =>
+      _defaultSetOperation(value, ItemId.SilentShooting, [value.wifiValue]);
 
   ///Shoot Mode
 
@@ -783,17 +679,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
       await _updateIf(update, await super.getShootMode(update: update));
 
   @override
-  Future<bool> setShootMode(ShootModeValue value) async {
-    return await WifiCommand.createCommand(ApiMethodId.SET, ItemId.ShootMode, params: [value.wifiValue])
-        .send(device)
-        .then((result) {
-      if (result.isValid) {
-        SettingsItem<ShootModeValue> item = device.cameraSettings.shootMode;
-        item.updateItem(value, item.available, item.supported);
-      }
-      return result.isValid;
-    });
-  }
+  Future<bool> setShootMode(ShootModeValue value) async =>
+      _defaultSetOperation(value, ItemId.ShootMode, [value.wifiValue]);
 
   ///Metering Mode TODO unsupported?
 
@@ -803,15 +690,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setMeteringMode(MeteringModeValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.MeteringMode, params: [value.wifiValue])
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          SettingsItem<MeteringModeValue> item = device.cameraSettings.meteringMode;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.MeteringMode, [value.wifiValue]);
 
   ///Continuous Shooting Mode
 
@@ -821,15 +700,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setContShootingMode(ContShootingModeValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.ContShootingMode, params: [<String, dynamic>{'contShootingMode': value.wifiValue}])
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          SettingsItem<ContShootingModeValue> item = device.cameraSettings.contShootingMode;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.ContShootingMode, [<String, dynamic>{'contShootingMode': value.wifiValue}]);
 
   ///Continuous Shooting Speed
 
@@ -839,15 +710,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setContShootingSpeed(ContShootingSpeedValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.ContShootingSpeed, params: [
-        <String, dynamic>{'contShootingSpeed': value.wifiValue}
-      ]).send(device).then((result) {
-        if (result.isValid) {
-          SettingsItem<ContShootingSpeedValue> item = device.cameraSettings.contShootingSpeed;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.ContShootingSpeed, [<String, dynamic>{'contShootingSpeed': value.wifiValue}]);
 
   ///Image Size
 
@@ -856,17 +719,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
       await _updateIf(update, await super.getImageSize(update: update));
 
   @override
-  Future<bool> setImageSize(ImageSizeValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.ImageSize, params: [
-        //TODO current aspect ratio
-        <String, dynamic>{'contShootingSpeed': value.wifiValue}
-      ]).send(device).then((result) {
-        if (result.isValid) {
-          SettingsItem<ImageSizeValue> item = device.cameraSettings.imageSize;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+  Future<bool> setImageSize(ImageSizeValue value) async => //TODO current aspect ratio
+  _defaultSetOperation(value, ItemId.ImageSize, [<String, dynamic>{'imageSize': value.wifiValue}]);
 
   ///Aspect Ratio
 
@@ -875,17 +729,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
       await _updateIf(update, await super.getAspectRatio(update: update)); //TODO update item id image size?
 
   @override
-  Future<bool> setAspectRatio(AspectRatioValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.AspectRatio, params: [
-        //TODO current image Size
-        <String, dynamic>{'contShootingSpeed': value.wifiValue}
-      ]).send(device).then((result) {
-        if (result.isValid) {
-          SettingsItem<AspectRatioValue> item = device.cameraSettings.aspectRatio;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+  Future<bool> setAspectRatio(AspectRatioValue value) async => //TODO current aspect ratio
+  _defaultSetOperation(value, ItemId.AspectRatio, [<String, dynamic>{'aspectRatio': value.wifiValue}]);
 
   ///Continuous Shooting
 
@@ -1017,15 +862,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setMovieFileFormat(MovieFileFormatValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.MovieFileFormat, params: [value.wifiValue])
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          SettingsItem<MovieFileFormatValue> item = device.cameraSettings.movieFileFormat;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.MovieFileFormat, [value.wifiValue]);
 
   ///Movie Quality
 
@@ -1035,15 +872,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setMovieQuality(MovieQualityValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.MovieQuality, params: [value.wifiValue])
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          SettingsItem<MovieQualityValue> item = device.cameraSettings.movieQuality;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.MovieQuality, [value.wifiValue]);
 
   ///Steady Mode
 
@@ -1053,15 +882,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setSteadyMode(OnOffValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.SteadyMode, params: [value.wifiValue])
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          SettingsItem<OnOffValue> item = device.cameraSettings.steadyMode;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.SteadyMode, [value.wifiValue]);
 
   ///View Angle
 
@@ -1071,15 +892,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setViewAngle(IntValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.ViewAngle, params: [value.wifiValue])
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          SettingsItem<IntValue> item = device.cameraSettings.viewAngle;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.ViewAngle, [value.wifiValue]);
 
   ///Scene Selection
 
@@ -1089,15 +902,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setSceneSelection(SceneSelectionValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.SceneSelection, params: [value.wifiValue])
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          SettingsItem<SceneSelectionValue> item = device.cameraSettings.sceneSelection;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.SceneSelection, [value.wifiValue]);
 
   ///Color Setting
 
@@ -1107,15 +912,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setColorSetting(ColorSettingValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.ColorSetting, params: [value.wifiValue])
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          SettingsItem<ColorSettingValue> item = device.cameraSettings.colorSetting;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.ColorSetting, [value.wifiValue]);
 
   ///Interval Time
 
@@ -1125,15 +922,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setIntervalTime(StringValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.IntervalTime, params: [value.wifiValue])
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          SettingsItem<StringValue> item = device.cameraSettings.intervalTime;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.IntervalTime, [value.wifiValue]);
 
   ///Loop Recording Time
 
@@ -1143,15 +932,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setLoopRecordingTime(StringValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.LoopRecordingTime, params: [value.wifiValue])
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          SettingsItem<StringValue> item = device.cameraSettings.intervalTime;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.LoopRecordingTime, [value.wifiValue]);
 
   ///Wind Noise Reduction
 
@@ -1161,15 +942,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setWindNoiseReduction(OnOffValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.WindNoiseReduction, params: [value.wifiValue])
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          SettingsItem<OnOffValue> item = device.cameraSettings.windNoiseReduction;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.WindNoiseReduction, [value.wifiValue]);
 
   ///Audio Recording Setting
 
@@ -1179,15 +952,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setAudioRecordingSetting(OnOffValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.AudioRecording, params: [value.wifiValue])
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          SettingsItem<OnOffValue> item = device.cameraSettings.audioRecordingSetting;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.AudioRecording, [value.wifiValue]);
 
   ///Flip Setting
 
@@ -1197,15 +962,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setFlipSetting(OnOffValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.FlipSetting, params: [value.wifiValue])
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          SettingsItem<OnOffValue> item = device.cameraSettings.flipSetting;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.FlipSetting, [value.wifiValue]);
 
   ///TV Color System
 
@@ -1215,15 +972,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setTvColorSystem(TvColorSystemValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.TvColorSystem, params: [value.wifiValue])
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          SettingsItem<TvColorSystemValue> item = device.cameraSettings.tvColorSystem;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.TvColorSystem, [value.wifiValue]);
 
   ///Infrared Remote Control
 
@@ -1233,15 +982,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setInfraredRemoteControl(OnOffValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.InfraredRemoteControl, params: [value.wifiValue])
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          SettingsItem<OnOffValue> item = device.cameraSettings.infraredRemoteControl;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.InfraredRemoteControl, [value.wifiValue]);
 
   ///Auto Power Off
 
@@ -1251,15 +992,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setAutoPowerOff(IntValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.AutoPowerOff, params: [value.wifiValue])
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          SettingsItem<IntValue> item = device.cameraSettings.autoPowerOff;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.AutoPowerOff, [value.wifiValue]);
 
   ///Beep Mode
 
@@ -1269,15 +1002,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setBeepMode(BeepModeValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.BeepMode, params: [value.wifiValue])
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          SettingsItem<BeepModeValue> item = device.cameraSettings.beepMode;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
+      _defaultSetOperation(value, ItemId.BeepMode, [value.wifiValue]);
 
   ///Live View Frame Info
 
@@ -1287,16 +1012,6 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setLiveViewFrameInfo(BoolValue value) async =>
-      WifiCommand.createCommand(ApiMethodId.SET, ItemId.LiveViewFrameInfo, params: [value.wifiValue])
-          .send(device)
-          .then((result) {
-        if (result.isValid) {
-          SettingsItem<BoolValue> item = device.cameraSettings.liveViewFrameInfo;
-          item.updateItem(value, item.available, item.supported);
-        }
-        return result.isValid;
-      });
-
 
   //TODO
 
@@ -1510,6 +1225,16 @@ class SonyCameraWifiApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
+
+  Future<bool> _defaultSetOperation(Value value, ItemId itemId, List<dynamic> params) async {
+    return WifiCommand.createCommand(ApiMethodId.SET, itemId, params: params).send(device).then((result) {
+      if (result.isValid) {
+        SettingsItem item = device.cameraSettings.getItem(itemId);
+        item.updateItem(value, item.available, item.supported);
+      }
+      return result.isValid;
+    });
+  }
 
   //update for the getters
   //TODO update only current?? (if developer only wants to show things without change no need for supported)
