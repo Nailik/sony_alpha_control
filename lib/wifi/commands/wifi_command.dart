@@ -103,13 +103,59 @@ class WifiCommand {
 
 class WifiResponse {
   String request;
-  String response;
+  String response; //null, error or string
+  bool isValid;
 
-  WifiResponse(this.request, this.response);
+  //maybe null
+  int errCode;
+  int errString;
 
-  get isValid {
-    var jsonD = jsonDecode(response)["result"] as List;
-    return jsonD.length == 0 ||
-        jsonD[0] == 0; //TODO what error code? illegal argument/ unsupported etc
+  WifiResponse(this.request, this.response) {
+    var jsonD = jsonDecode(response);
+    var result = jsonD["result"];
+    if (result != null && result is List && result.isNotEmpty) {
+      isValid = result[0] == 0;
+      return;
+    }
+    var error = jsonD["error"];
+    if (error != null) {
+      isValid = false;
+      errCode = error[0];
+      errString = error[1];
+      return;
+    }
+
+    isValid = true;
   }
 }
+/*
+0, "OK"
+1, "Any"
+2, "Timeout"
+3, "Illegal Argument"
+4, "Illegal Data Format"
+5, "Illegal Request"
+6, "Illegal Response"
+7, "Illegal State"
+8, "Illegal Type"
+9, "Index Out Of Bounds"
+10, "No Such Element"
+11, "No Such Field"
+12, "No Such Method"
+13, "Null Pointer"
+14, "Unsupported Version"
+15, "Unsupported Operation"
+40400, "Shooting fail"
+40401, "Camera Not Ready"
+40402, "Already Running Polling Api"
+40403, "Still Capturing Not Finished"
+41003, "Some content could not be deleted"
+401, "Unauthorized"
+403, "Forbidden"
+404, "Not Found"
+406, "Not Acceptable"
+413, "Request Entity Too Large"
+414, "Request-URI Too Long"
+501, "Not Implemented"
+503, "Service Unavailable"
+ */
