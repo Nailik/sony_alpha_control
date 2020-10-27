@@ -1012,6 +1012,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<bool> setLiveViewFrameInfo(BoolValue value) async =>
+      _defaultSetOperation(value, ItemId.LiveViewFrameInfo, [value.wifiValue]);
 
   //TODO
 

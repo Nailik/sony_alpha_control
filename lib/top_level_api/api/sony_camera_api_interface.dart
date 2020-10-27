@@ -21,6 +21,15 @@ import 'package:sonyalphacontrol/top_level_api/ids/white_balance_gm_ids.dart';
 import 'force_update.dart';
 import 'function_availability.dart';
 
+//TODO:
+//api
+//remote control - transfer
+
+//usb
+//remote control - mtp
+
+//wifi
+//remote control - (content transfer - soap[Fake cameraFUnction content transfer])
 abstract class CameraApiInterface {
   SonyCameraDevice cameraDevice;
 
