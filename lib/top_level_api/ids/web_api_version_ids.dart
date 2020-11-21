@@ -42,7 +42,7 @@ extension WebApiVersionIdExtension on WebApiVersionId {
     }
   }
 
-  static WebApiVersionId fromWifiValue(String value) {
+  static WebApiVersionId fromWifiValue(String? value) {
     switch (value) {
       case "1.0":
         return WebApiVersionId.V_1_0;

@@ -24,12 +24,12 @@ class WifiCommands {
 }
 
 class WifiCommand {
-  SonyWebApiServiceTypeId service; //for url only
+  SonyWebApiServiceTypeId? service; //for url only
 
-  int id = 0;
-  String method;
+  int? id = 0;
+  String? method;
   WebApiVersionId version;
-  List<dynamic> params;
+  List<dynamic>? params;
 
   WifiCommand(this.id, this.method, this.version, this.params, {this.service});
 
@@ -46,7 +46,7 @@ class WifiCommand {
       {timeout: 10000}) async {
     //url
     //request json
-    var url = "${device.getWebApiService(service).url}/${service.wifiValue}";
+    var url = "${device.getWebApiService(service)!.url}/${service!.wifiValue}";
     id = WifiCommands.id; //update id right before creating json and sending
     var json = jsonEncode(this);
     try {
@@ -87,10 +87,10 @@ class WifiCommand {
   }
 
   factory WifiCommand.fromJson(Map<String, dynamic> json) => WifiCommand(
-        json['id'] as int,
-        json['method'] as String,
-        WebApiVersionIdExtension.fromWifiValue(json['version'] as String),
-        json['params'] as List,
+        json['id'] as int?,
+        json['method'] as String?,
+        WebApiVersionIdExtension.fromWifiValue(json['version'] as String?),
+        json['params'] as List?,
       );
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -104,11 +104,11 @@ class WifiCommand {
 class WifiResponse {
   String request;
   String response; //null, error or string
-  bool isValid;
+  bool? isValid;
 
   //maybe null
-  int errCode;
-  int errString;
+  int? errCode;
+  int? errString;
 
   WifiResponse(this.request, this.response) {
     var jsonD = jsonDecode(response);

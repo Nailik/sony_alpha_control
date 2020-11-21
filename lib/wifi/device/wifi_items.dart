@@ -34,7 +34,7 @@ extension SettingsItemExtension on SettingsItem {
 
         //colorTemperature
         SettingsItem<WhiteBalanceColorTempValue> settingsItemColorTemp =
-            sonyCameraWifiDevice.cameraSettings.whiteBalanceColorTemp;
+            sonyCameraWifiDevice.cameraSettings.whiteBalanceColorTemp as SettingsItem<WhiteBalanceColorTempValue>;
 
         updateItem(
             value,
@@ -46,9 +46,9 @@ extension SettingsItemExtension on SettingsItem {
                 for (int i = e["colorTemperatureRange"][1];
                     i <= e["colorTemperatureRange"][0];
                     i += e["colorTemperatureRange"][2]) {
-                  supportedColorTempList.add(WhiteBalanceColorTempValue(i, value.id));
+                  supportedColorTempList.add(WhiteBalanceColorTempValue(i, value.id!));
                   if (value.id == value?.id) {
-                    availableColorTempList.add(WhiteBalanceColorTempValue(i, value.id));
+                    availableColorTempList.add(WhiteBalanceColorTempValue(i, value.id!));
                   }
                 }
               }
@@ -56,7 +56,7 @@ extension SettingsItemExtension on SettingsItem {
             }).toList());
 
         settingsItemColorTemp.updateItem(
-            settingsItemColorTemp.value, settingsItemColorTemp.available, availableColorTempList);
+            settingsItemColorTemp.value!, settingsItemColorTemp.available, availableColorTempList);
         break;
       case ItemId.ZoomSetting:
       case ItemId.SilentShooting:
@@ -93,7 +93,7 @@ extension SettingsItemExtension on SettingsItem {
 
         //colorTemperature
         SettingsItem<WhiteBalanceColorTempValue> settingsItemColorTemp =
-            sonyCameraWifiDevice.cameraSettings.whiteBalanceColorTemp;
+            sonyCameraWifiDevice.cameraSettings.whiteBalanceColorTemp as SettingsItem<WhiteBalanceColorTempValue>;
 
         updateItem(
             currentWhiteBalance,
@@ -104,9 +104,9 @@ extension SettingsItemExtension on SettingsItem {
                 for (int i = e["colorTemperatureRange"][1];
                     i <= e["colorTemperatureRange"][0];
                     i += e["colorTemperatureRange"][2]) {
-                  supportedColorTempList.add(WhiteBalanceColorTempValue(i, value.id));
+                  supportedColorTempList.add(WhiteBalanceColorTempValue(i, value.id!));
                   if (value.id == currentWhiteBalance.id) {
-                    availableColorTempList.add(WhiteBalanceColorTempValue(i, value.id));
+                    availableColorTempList.add(WhiteBalanceColorTempValue(i, value.id!));
                   }
                 }
               }
@@ -167,16 +167,16 @@ extension SettingsItemExtension on SettingsItem {
         // "getAvailableWhiteBalance"".
         //also sets color
         SettingsItem<WhiteBalanceModeValue> settingsItemWhiteBalance =
-            device.cameraSettings.whiteBalanceMode;
-        settingsItemWhiteBalance.updateCurrentItem(Value.fromWifi(itemId, data["currentWhiteBalanceMode"]));
+            device.cameraSettings.whiteBalanceMode as SettingsItem<WhiteBalanceModeValue>;
+        settingsItemWhiteBalance.updateCurrentItem(Value.fromWifi(itemId, data["currentWhiteBalanceMode"]) as WhiteBalanceModeValue);
 
         //colorTemperature
         SettingsItem<WhiteBalanceColorTempValue> settingsItemColorTemp =
-            device.cameraSettings.whiteBalanceColorTemp;
-        settingsItemColorTemp.updateCurrentItem(Value.fromWifi(itemId, data["currentColorTemperature"]));
+            device.cameraSettings.whiteBalanceColorTemp as SettingsItem<WhiteBalanceColorTempValue>;
+        settingsItemColorTemp.updateCurrentItem(Value.fromWifi(itemId, data["currentColorTemperature"]) as WhiteBalanceColorTempValue);
 
         if(autoUpdate && data["checkAvailability"] == true){
-          device.api.getWhiteBalanceMode(update: ForceUpdate.Available);
+          device.api!.getWhiteBalanceMode(update: ForceUpdate.Available);
         }
         break;
       case ItemId.ExposureCompensation:
@@ -192,15 +192,15 @@ extension SettingsItemExtension on SettingsItem {
         break;
       case ItemId.ZoomSetting:
         availableList = createListFromWifiJson(data["candidate"]);
-        current = Value.fromWifi(itemId, data["zoom"]);
+        current = Value.fromWifi(itemId, data["zoom"])!;
         break;
       case ItemId.FlipSetting:
         availableList = createListFromWifiJson(data["candidate"]);
-        current = Value.fromWifi(itemId, data["flip"]);
+        current = Value.fromWifi(itemId, data["flip"])!;
         break;
       case ItemId.SceneSelection:
         availableList = createListFromWifiJson(data["candidate"]);
-        current = Value.fromWifi(itemId, data["scene"]);
+        current = Value.fromWifi(itemId, data["scene"])!;
         break;
       case ItemId.ContShootingUrlSet:
       //"type", "contShootingUrl" [{"postviewUrl" , "thumbnailUrl"}]
@@ -219,7 +219,7 @@ extension SettingsItemExtension on SettingsItem {
       case ItemId.WindNoiseReduction:
       //"type", "stillQuality" (itemId.wifiValue), "candidate"
         availableList = createListFromWifiJson(data["candidate"]);
-        current = Value.fromWifi(itemId, data[itemId.wifiValue]);
+        current = Value.fromWifi(itemId, data[itemId.wifiValue])!;
         break;
       case ItemId.BeepMode:
       case ItemId.CameraFunction:
@@ -237,14 +237,14 @@ extension SettingsItemExtension on SettingsItem {
       default:
       //"type", "current"(itemId.wifiValue), (itemId.wifiValue)"Candidates"
         availableList = createListFromWifiJson(data["${itemId.wifiValue}Candidates"]);
-        current = Value.fromWifi(itemId, data["current${itemId.wifiValue.startCap}"]);
+        current = Value.fromWifi(itemId, data["current${itemId.wifiValue.startCap}"])!;
         break;
     }
 
     updateItem(current, availableList != null ? availableList : available, supported);
   }
 
-  List<EvValue> getEvList(int min, int max, int stepIndex) {
+  List<EvValue> getEvList(int? min, int? max, int? stepIndex) {
     //special case
     //0 int current index
     //1: int upper limit
@@ -254,7 +254,7 @@ extension SettingsItemExtension on SettingsItem {
     List<EvValue> listOfValues = new List();
 
     //list for 1/3 ev (x = 0), list for 1/2 ev (x = 1)
-    for (int i = min; i <= max; i++) {
+    for (int i = min!; i <= max!; i++) {
       //lower limit to upper limit
       var num = ((i / z) * 10).toInt();
       if (num % 10 == 6) {
@@ -281,11 +281,11 @@ extension InfoItemExtension on InfoItem {
       //Result of setting camera function.
       // "Success" - Success.
       // "Failure" - Failed to changing function.
-        updateItem(Value.fromWifi(itemId, data["cameraFunctionResult"] == "Success"));
+        updateItem(Value.fromWifi(itemId, data["cameraFunctionResult"] == "Success")!);
         break;
       case ItemId.FocusState:
       //"focusStatus"
-        updateItem(Value.fromWifi(itemId, data["focusStatus"]));
+        updateItem(Value.fromWifi(itemId, data["focusStatus"])!);
         break;
       case ItemId.FocusAreaSpot: //touchAFPosition
       print("Uninmplemented FocusAreaSpot");
@@ -302,18 +302,18 @@ extension InfoItemExtension on InfoItem {
         break;
       case ItemId.TrackingFocusState:
       //"trackingFocusStatus"
-        updateItem(Value.fromWifi(itemId, data["trackingFocusStatus"]));
+        updateItem(Value.fromWifi(itemId, data["trackingFocusStatus"])!);
         break;
       case ItemId.IntervalTime:
       //"type", "intervalTimeSec", "candidate"
         break;
       case ItemId.RecordingTime:
       //"type", "recordingTime"
-        updateItem(Value.fromWifi(itemId, data["recordingTime"]));
+        updateItem(Value.fromWifi(itemId, data["recordingTime"])!);
         break;
       case ItemId.NumberOfShots:
       //"type", "numberOfShots"
-        updateItem(Value.fromWifi(itemId, data["numberOfShots"]));
+        updateItem(Value.fromWifi(itemId, data["numberOfShots"])!);
         break;
     }
   }

@@ -192,7 +192,7 @@ extension WhiteBalanceGmIdExtension on WhiteBalanceGmId {
 
   String get wifiValue => throw UnimplementedError;
 
-  static WhiteBalanceGmId getIdFromUsb(int usbValue) => WhiteBalanceGmId.values
+  static WhiteBalanceGmId getIdFromUsb(int? usbValue) => WhiteBalanceGmId.values
           .firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(WhiteBalanceGmId, usbValue);
         return WhiteBalanceGmId.Unknown;

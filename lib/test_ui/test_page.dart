@@ -4,9 +4,9 @@ import 'package:sonyalphacontrol/sonyalphacontrol.dart';
 import 'package:sonyalphacontrol/test_ui/live_view_page.dart';
 
 class TestsPage extends StatefulWidget {
-  final SonyCameraDevice device;
+  final SonyCameraDevice? device;
 
-  const TestsPage({Key key, this.device}) : super(key: key);
+  const TestsPage({Key? key, this.device}) : super(key: key);
 
   @override
   TestsPageState createState() => TestsPageState(device);
@@ -15,7 +15,7 @@ class TestsPage extends StatefulWidget {
 class TestsPageState extends State<TestsPage> {
   static ValueNotifier<String> path = ValueNotifier("Empty");
 
-  final SonyCameraDevice device;
+  final SonyCameraDevice? device;
 
   TestsPageState(this.device);
 
@@ -29,14 +29,14 @@ class TestsPageState extends State<TestsPage> {
                   icon: const Icon(Icons.update),
                   tooltip: 'Poll updates',
                   onPressed: () {
-                    device.api.pollSettings();
+                    device!.api!.pollSettings();
                   },
                 ),
               ],
             ),
             backgroundColor: Colors.blueGrey,
             body: ListenableProvider<CameraSettings>(
-                create: (context) => SonyApi.connectedCamera.cameraSettings,
+                create: (context) => SonyApi.connectedCamera!.cameraSettings,
                 child: Consumer<CameraSettings>(
                   builder: (context, model, _) => ListView(
                     children: <Widget>[
@@ -190,7 +190,7 @@ class TestsPageState extends State<TestsPage> {
                   child: Text("reload"),
                   color: Colors.blue,
                   onPressed: () {
-                    device.updateSettings();
+                    device!.updateSettings();
                   },
                 )
               ],
@@ -218,7 +218,7 @@ class TestsPageState extends State<TestsPage> {
   ///Versions (get) Camera
   Widget getVersionsRowCamera() {
     return ListenableProvider<ListInfoItem>(
-      create: (context) => device.cameraSettings.versionsCamera,
+      create: (context) => device!.cameraSettings.versionsCamera,
       child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(
@@ -229,8 +229,8 @@ class TestsPageState extends State<TestsPage> {
                     title: Text(ItemId.Versions.name + " Camera"),
                     subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: [Text("getWebApiVersions", style: getTextStyle(device.api.getWebApiVersionsCamera))]),
-                    onTap: () => device.api.getWebApiVersionsCamera(update: ForceUpdate.On)),
+                        children: [Text("getWebApiVersions", style: getTextStyle(device!.api!.getWebApiVersionsCamera))]),
+                    onTap: () => device!.api!.getWebApiVersionsCamera(update: ForceUpdate.On)),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                   Expanded(
                       child: Padding(
@@ -238,7 +238,7 @@ class TestsPageState extends State<TestsPage> {
                           child: DropdownButton<WebApiVersionsValue>(
                             isExpanded: true,
                             hint: Text("available"),
-                            items: device.cameraSettings.versionsCamera.values
+                            items: device!.cameraSettings.versionsCamera.values
                                 .map<DropdownMenuItem<WebApiVersionsValue>>(
                                     (e) => DropdownMenuItem<WebApiVersionsValue>(child: Text(e.name), value: e))
                                 .toList(),
@@ -254,7 +254,7 @@ class TestsPageState extends State<TestsPage> {
   ///Versions (get) avContent
   Widget getVersionsRowAvContent() {
     return ListenableProvider<ListInfoItem>(
-      create: (context) => device.cameraSettings.versionsAvContent,
+      create: (context) => device!.cameraSettings.versionsAvContent,
       child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(
@@ -264,9 +264,9 @@ class TestsPageState extends State<TestsPage> {
                 ListTile(
                     title: Text(ItemId.Versions.name + " AvContent"),
                     subtitle: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                      Text("getWebApiVersionsAvContent", style: getTextStyle(device.api.getWebApiVersionsAvContent))
+                      Text("getWebApiVersionsAvContent", style: getTextStyle(device!.api!.getWebApiVersionsAvContent))
                     ]),
-                    onTap: () => device.api.getWebApiVersionsAvContent(update: ForceUpdate.On)),
+                    onTap: () => device!.api!.getWebApiVersionsAvContent(update: ForceUpdate.On)),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                   Expanded(
                       child: Padding(
@@ -274,7 +274,7 @@ class TestsPageState extends State<TestsPage> {
                           child: DropdownButton<WebApiVersionsValue>(
                             isExpanded: true,
                             hint: Text("available"),
-                            items: device.cameraSettings.versionsAvContent.values
+                            items: device!.cameraSettings.versionsAvContent.values
                                 .map<DropdownMenuItem<WebApiVersionsValue>>(
                                     (e) => DropdownMenuItem<WebApiVersionsValue>(child: Text(e.name), value: e))
                                 .toList(),
@@ -290,7 +290,7 @@ class TestsPageState extends State<TestsPage> {
   ///Versions (get) system
   Widget getVersionsRowSystem() {
     return ListenableProvider<ListInfoItem>(
-      create: (context) => device.cameraSettings.versionsSystem,
+      create: (context) => device!.cameraSettings.versionsSystem,
       child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(
@@ -300,9 +300,9 @@ class TestsPageState extends State<TestsPage> {
                 ListTile(
                     title: Text(ItemId.Versions.name + " System"),
                     subtitle: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                      Text("getWebApiVersionsSystem", style: getTextStyle(device.api.getWebApiVersionsSystem))
+                      Text("getWebApiVersionsSystem", style: getTextStyle(device!.api!.getWebApiVersionsSystem))
                     ]),
-                    onTap: () => device.api.getWebApiVersionsSystem(update: ForceUpdate.On)),
+                    onTap: () => device!.api!.getWebApiVersionsSystem(update: ForceUpdate.On)),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                   Expanded(
                       child: Padding(
@@ -310,7 +310,7 @@ class TestsPageState extends State<TestsPage> {
                           child: DropdownButton<WebApiVersionsValue>(
                             isExpanded: true,
                             hint: Text("available"),
-                            items: device.cameraSettings.versionsSystem.values
+                            items: device!.cameraSettings.versionsSystem.values
                                     .map<DropdownMenuItem<WebApiVersionsValue>>(
                                         (e) => DropdownMenuItem<
                                                 WebApiVersionsValue>(
@@ -328,7 +328,7 @@ class TestsPageState extends State<TestsPage> {
   ///Versions (get) guide
   Widget getVersionsRowGuide() {
     return ListenableProvider<ListInfoItem>(
-      create: (context) => device.cameraSettings.versionsGuide,
+      create: (context) => device!.cameraSettings.versionsGuide,
       child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(
@@ -340,9 +340,9 @@ class TestsPageState extends State<TestsPage> {
                     subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text("getWebApiVersionsGuide", style: getTextStyle(device.api.getWebApiVersionsGuide))
+                          Text("getWebApiVersionsGuide", style: getTextStyle(device!.api!.getWebApiVersionsGuide))
                         ]),
-                    onTap: () => device.api.getWebApiVersionsGuide(update: ForceUpdate.On)),
+                    onTap: () => device!.api!.getWebApiVersionsGuide(update: ForceUpdate.On)),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -352,7 +352,7 @@ class TestsPageState extends State<TestsPage> {
                               child: DropdownButton<WebApiVersionsValue>(
                                 isExpanded: true,
                                 hint: Text("available"),
-                                items: device
+                                items: device!
                                     .cameraSettings.versionsGuide.values
                                     .map<DropdownMenuItem<WebApiVersionsValue>>(
                                         (e) => DropdownMenuItem<
@@ -371,7 +371,7 @@ class TestsPageState extends State<TestsPage> {
   ///Versions (get) accessControl
   Widget getVersionsRowAccessControl() {
     return ListenableProvider<ListInfoItem>(
-      create: (context) => device.cameraSettings.versionsAccessControl,
+      create: (context) => device!.cameraSettings.versionsAccessControl,
       child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(
@@ -384,9 +384,9 @@ class TestsPageState extends State<TestsPage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text("getWebApiVersionsAccessControl",
-                              style: getTextStyle(device.api.getWebApiVersionsAccessControl))
+                              style: getTextStyle(device!.api!.getWebApiVersionsAccessControl))
                         ]),
-                    onTap: () => device.api.getWebApiVersionsAccessControl(update: ForceUpdate.On)),
+                    onTap: () => device!.api!.getWebApiVersionsAccessControl(update: ForceUpdate.On)),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -396,7 +396,7 @@ class TestsPageState extends State<TestsPage> {
                               child: DropdownButton<WebApiVersionsValue>(
                                 isExpanded: true,
                                 hint: Text("available"),
-                                items: device
+                                items: device!
                                     .cameraSettings.versionsAccessControl.values
                                     .map<DropdownMenuItem<WebApiVersionsValue>>(
                                         (e) => DropdownMenuItem<
@@ -415,7 +415,7 @@ class TestsPageState extends State<TestsPage> {
   ///MethodTypes (get) camera
   Widget getMethodTypesRowCamera() {
     return ListenableProvider<ListInfoItem>(
-      create: (context) => device.cameraSettings.methodTypesCamera,
+      create: (context) => device!.cameraSettings.methodTypesCamera,
       child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
@@ -424,9 +424,9 @@ class TestsPageState extends State<TestsPage> {
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("getMethodTypesCamera", style: getTextStyle(device.api.getMethodTypesCamera))
+                      Text("getMethodTypesCamera", style: getTextStyle(device!.api!.getMethodTypesCamera))
                     ]),
-                onTap: () => device.api.getMethodTypesCamera(update: ForceUpdate.On)),
+                onTap: () => device!.api!.getMethodTypesCamera(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -434,7 +434,7 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<WebApiMethodValue>(
                         isExpanded: true,
                         hint: Text("available"),
-                        items: device.cameraSettings.methodTypesCamera.values
+                        items: device!.cameraSettings.methodTypesCamera.values
                             .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
                             DropdownMenuItem<WebApiMethodValue>(
                                 child: Text(e.name), value: e))
@@ -451,7 +451,7 @@ class TestsPageState extends State<TestsPage> {
   ///MethodTypes (get) avContent
   Widget getMethodTypesRowAvContent() {
     return ListenableProvider<ListInfoItem>(
-      create: (context) => device.cameraSettings.methodTypesAvContent,
+      create: (context) => device!.cameraSettings.methodTypesAvContent,
       child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
@@ -460,9 +460,9 @@ class TestsPageState extends State<TestsPage> {
                 subtitle:
                 Row(mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("getMethodTypesAvContent", style: getTextStyle(device.api.getMethodTypesAvContent))
+                      Text("getMethodTypesAvContent", style: getTextStyle(device!.api!.getMethodTypesAvContent))
                     ]),
-                onTap: () => device.api.getMethodTypesAvContent(update: ForceUpdate.On)),
+                onTap: () => device!.api!.getMethodTypesAvContent(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -470,7 +470,7 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<WebApiMethodValue>(
                         isExpanded: true,
                         hint: Text("available"),
-                        items: device.cameraSettings.methodTypesAvContent.values
+                        items: device!.cameraSettings.methodTypesAvContent.values
                             .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
                             DropdownMenuItem<WebApiMethodValue>(
                                 child: Text(e.name), value: e))
@@ -487,7 +487,7 @@ class TestsPageState extends State<TestsPage> {
   ///MethodTypes (get) system
   Widget getMethodTypesRowSystem() {
     return ListenableProvider<ListInfoItem>(
-      create: (context) => device.cameraSettings.methodTypesSystem,
+      create: (context) => device!.cameraSettings.methodTypesSystem,
       child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
@@ -496,9 +496,9 @@ class TestsPageState extends State<TestsPage> {
                 subtitle:
                 Row(mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("getMethodTypesSystem", style: getTextStyle(device.api.getMethodTypesSystem))
+                      Text("getMethodTypesSystem", style: getTextStyle(device!.api!.getMethodTypesSystem))
                     ]),
-                onTap: () => device.api.getMethodTypesSystem(update: ForceUpdate.On)),
+                onTap: () => device!.api!.getMethodTypesSystem(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -506,7 +506,7 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<WebApiMethodValue>(
                         isExpanded: true,
                         hint: Text("available"),
-                        items: device.cameraSettings.methodTypesSystem.values
+                        items: device!.cameraSettings.methodTypesSystem.values
                             .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
                             DropdownMenuItem<WebApiMethodValue>(
                                 child: Text(e.name), value: e))
@@ -523,7 +523,7 @@ class TestsPageState extends State<TestsPage> {
   ///MethodTypes (get) guide
   Widget getMethodTypesRowGuide() {
     return ListenableProvider<ListInfoItem>(
-      create: (context) => device.cameraSettings.methodTypesGuide,
+      create: (context) => device!.cameraSettings.methodTypesGuide,
       child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
@@ -532,9 +532,9 @@ class TestsPageState extends State<TestsPage> {
                 subtitle:
                 Row(mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("getWebApiVersionsAvContent", style: getTextStyle(device.api.getMethodTypesGuide))
+                      Text("getWebApiVersionsAvContent", style: getTextStyle(device!.api!.getMethodTypesGuide))
                     ]),
-                onTap: () => device.api.getMethodTypesGuide(update: ForceUpdate.On)),
+                onTap: () => device!.api!.getMethodTypesGuide(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -542,7 +542,7 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<WebApiMethodValue>(
                         isExpanded: true,
                         hint: Text("available"),
-                        items: device.cameraSettings.methodTypesGuide.values
+                        items: device!.cameraSettings.methodTypesGuide.values
                             .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
                             DropdownMenuItem<WebApiMethodValue>(
                                 child: Text(e.name), value: e))
@@ -559,7 +559,7 @@ class TestsPageState extends State<TestsPage> {
   ///MethodTypes (get) accessControl
   Widget getMethodTypesRowAccessControl() {
     return ListenableProvider<ListInfoItem>(
-      create: (context) => device.cameraSettings.methodTypesAccessControl,
+      create: (context) => device!.cameraSettings.methodTypesAccessControl,
       child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
@@ -568,9 +568,9 @@ class TestsPageState extends State<TestsPage> {
                 subtitle:
                 Row(mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("getWebApiVersionsAvContent", style: getTextStyle(device.api.getMethodTypesAccessControl))
+                      Text("getWebApiVersionsAvContent", style: getTextStyle(device!.api!.getMethodTypesAccessControl))
                     ]),
-                onTap: () => device.api.getMethodTypesAccessControl(update: ForceUpdate.On)),
+                onTap: () => device!.api!.getMethodTypesAccessControl(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -578,7 +578,7 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<WebApiMethodValue>(
                         isExpanded: true,
                         hint: Text("available"),
-                        items: device
+                        items: device!
                             .cameraSettings.methodTypesAccessControl.values
                             .map<DropdownMenuItem<WebApiMethodValue>>((e) =>
                                 DropdownMenuItem<WebApiMethodValue>(
@@ -596,7 +596,7 @@ class TestsPageState extends State<TestsPage> {
   ///AvailableApiList (get)
   Widget getAvailableFunctionsRow() {
     return ListenableProvider<ListInfoItem>(
-      create: (context) => device.cameraSettings.availableFunctions,
+      create: (context) => device!.cameraSettings.availableFunctions,
       child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
@@ -604,8 +604,8 @@ class TestsPageState extends State<TestsPage> {
                 title: Text(ItemId.AvailableFunctions.name),
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [Text("getAvailableFunctions", style: getTextStyle(device.api.getAvailableFunctions))]),
-                onTap: () => device.api.getAvailableFunctions(update: ForceUpdate.On)),
+                    children: [Text("getAvailableFunctions", style: getTextStyle(device!.api!.getAvailableFunctions))]),
+                onTap: () => device!.api!.getAvailableFunctions(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -613,7 +613,7 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<ApiFunctionValue>(
                         isExpanded: true,
                         hint: Text("available"),
-                        items: device.cameraSettings.availableFunctions.values
+                        items: device!.cameraSettings.availableFunctions.values
                             .map<DropdownMenuItem<ApiFunctionValue>>(
                                 (e) => DropdownMenuItem<ApiFunctionValue>(child: Text(e.name), value: e))
                             .toList(),
@@ -629,7 +629,7 @@ class TestsPageState extends State<TestsPage> {
   ///ApplicationInfo (get)
   Widget getApplicationInfoRow() {
     return ListenableProvider<ListInfoItem>(
-      create: (context) => device.cameraSettings.applicationInfo,
+      create: (context) => device!.cameraSettings.applicationInfo,
       child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
@@ -637,8 +637,8 @@ class TestsPageState extends State<TestsPage> {
                 title: Text(ItemId.ApplicationInfo.name),
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [Text("getApplicationInfo", style: getTextStyle(device.api.getApplicationInfo))]),
-                onTap: () => device.api.getApplicationInfo(update: ForceUpdate.On)),
+                    children: [Text("getApplicationInfo", style: getTextStyle(device!.api!.getApplicationInfo))]),
+                onTap: () => device!.api!.getApplicationInfo(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -646,7 +646,7 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<StringValue>(
                         isExpanded: true,
                         hint: Text("available"),
-                        items: device.cameraSettings.applicationInfo.values
+                        items: device!.cameraSettings.applicationInfo.values
                             .map<DropdownMenuItem<StringValue>>(
                                 (e) => DropdownMenuItem<StringValue>(child: Text(e.name), value: e))
                             .toList(),
@@ -662,7 +662,7 @@ class TestsPageState extends State<TestsPage> {
   ///AvailableSettings (get)
   Widget getAvailableSettingsRow() {
     return ListenableProvider<ListInfoItem>(
-      create: (context) => device.cameraSettings.availableSettings,
+      create: (context) => device!.cameraSettings.availableSettings,
       child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
@@ -670,8 +670,8 @@ class TestsPageState extends State<TestsPage> {
                 title: Text(ItemId.AvailableSettings.name),
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [Text("getAvailableSettings", style: getTextStyle(device.api.getAvailableSettings))]),
-                onTap: () => device.api.getAvailableSettings(false, update: ForceUpdate.On)),
+                    children: [Text("getAvailableSettings", style: getTextStyle(device!.api!.getAvailableSettings))]),
+                onTap: () => device!.api!.getAvailableSettings(false, update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -679,7 +679,7 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<StringValue>(
                         isExpanded: true,
                         hint: Text("available"),
-                        items: device.cameraSettings.availableSettings.values
+                        items: device!.cameraSettings.availableSettings.values
                             .map<DropdownMenuItem<StringValue>>(
                                 (e) => DropdownMenuItem<StringValue>(child: Text(e.name), value: e))
                             .toList(),
@@ -695,18 +695,18 @@ class TestsPageState extends State<TestsPage> {
   ///CameraFunction (set, get, getSupported, getAvailable)
   Widget getCameraFunctionsRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.cameraFunction,
+      create: (context) => device!.cameraSettings.cameraFunction,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
               title: Text(ItemId.CameraFunction.name),
               subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text("setCameraFunction", style: getTextStyle(device.api.setCameraFunction)),
-                Text("getCameraFunction", style: getTextStyle(device.api.getCameraFunction)),
-                Text(device.cameraSettings.cameraFunction.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+                Text("setCameraFunction", style: getTextStyle(device!.api!.setCameraFunction)),
+                Text("getCameraFunction", style: getTextStyle(device!.api!.getCameraFunction)),
+                Text(device!.cameraSettings.cameraFunction.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
               ]),
-              onTap: () => device.api.getCameraFunction(update: ForceUpdate.On),
+              onTap: () => device!.api!.getCameraFunction(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -715,13 +715,13 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<CameraFunctionValue>(
                         isExpanded: true,
                         hint: Text("available"),
-                        items: device.cameraSettings.cameraFunction.available
+                        items: device!.cameraSettings.cameraFunction.available
                             .map<DropdownMenuItem<CameraFunctionValue>>((e) =>
                                 DropdownMenuItem<CameraFunctionValue>(
-                                    child: Text(e.name), value: e))
+                                    child: Text(e!.name), value: e))
                             .toList(),
                         onChanged: (value) =>
-                            device.api.setCameraFunction(value),
+                            device!.api!.setCameraFunction(value),
                       ))),
               Expanded(
                   child: Padding(
@@ -729,13 +729,13 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<CameraFunctionValue>(
                         isExpanded: true,
                         hint: Text("supported"),
-                        items: device.cameraSettings.cameraFunction.supported
+                        items: device!.cameraSettings.cameraFunction.supported
                             .map<DropdownMenuItem<CameraFunctionValue>>((e) =>
                                 DropdownMenuItem<CameraFunctionValue>(
-                                    child: Text(e.name), value: e))
+                                    child: Text(e!.name), value: e))
                             .toList(),
                         onChanged: (value) =>
-                            device.api.setCameraFunction(value),
+                            device!.api!.setCameraFunction(value),
                       ))),
             ]),
           ]),
@@ -747,7 +747,7 @@ class TestsPageState extends State<TestsPage> {
   ///CapturePhoto (act, await)
   Widget getCapturePhotoRow() {
     return ListenableProvider<ListInfoItem>(
-      create: (context) => device.cameraSettings.capturePhoto,
+      create: (context) => device!.cameraSettings.capturePhoto,
       child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
@@ -755,16 +755,16 @@ class TestsPageState extends State<TestsPage> {
                 title: Text(ItemId.CapturePhoto.name + " ACT"),
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [Text("actCapturePhoto", style: getTextStyle(device.api.actCapturePhoto))]),
-                onTap: () => device.api.actCapturePhoto()),
+                    children: [Text("actCapturePhoto", style: getTextStyle(device!.api!.actCapturePhoto))]),
+                onTap: () => device!.api!.actCapturePhoto()),
             ListTile(
               title: Text(ItemId.CapturePhoto.name + " AWAIT"),
               subtitle: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [Text("awaitCapturePhoto", style: getTextStyle(device.api.actCapturePhoto))]),
-              onTap: () => device.api.awaitCapturePhoto(),
+                  children: [Text("awaitCapturePhoto", style: getTextStyle(device!.api!.actCapturePhoto))]),
+              onTap: () => device!.api!.awaitCapturePhoto(),
             ),
-            Text(device.cameraSettings.capturePhoto.values.toString()),
+            Text(device!.cameraSettings.capturePhoto.values.toString()),
           ]),
         ),
       ),
@@ -774,7 +774,7 @@ class TestsPageState extends State<TestsPage> {
   ///CameraSetup (start, stop)
   Widget getCameraSetupRow() {
     return ListenableProvider<ListInfoItem>(
-      create: (context) => device.cameraSettings.cameraSetup,
+      create: (context) => device!.cameraSettings.cameraSetup,
       child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
@@ -782,14 +782,14 @@ class TestsPageState extends State<TestsPage> {
                 title: Text(ItemId.CameraSetup.name + " START"),
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [Text("startCameraSetup", style: getTextStyle(device.api.startCameraSetup))]),
-                onTap: () => device.api.startCameraSetup()),
+                    children: [Text("startCameraSetup", style: getTextStyle(device!.api!.startCameraSetup))]),
+                onTap: () => device!.api!.startCameraSetup()),
             ListTile(
               title: Text(ItemId.CameraSetup.name + " STOP"),
               subtitle: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [Text("stopCameraSetup", style: getTextStyle(device.api.stopCameraSetup))]),
-              onTap: () => device.api.stopCameraSetup(),
+                  children: [Text("stopCameraSetup", style: getTextStyle(device!.api!.stopCameraSetup))]),
+              onTap: () => device!.api!.stopCameraSetup(),
             )
           ]),
         ),
@@ -800,39 +800,39 @@ class TestsPageState extends State<TestsPage> {
   ///Zoom (act)
   Widget getZoomRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.zoom,
+      create: (context) => device!.cameraSettings.zoom,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
                 title: Text(ItemId.Zoom.name),
                 subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(device.cameraSettings.zoom.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
-                  Text("actZoom", style: getTextStyle(device.api.actZoom))
+                  Text(device!.cameraSettings.zoom.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+                  Text("actZoom", style: getTextStyle(device!.api!.actZoom))
                 ]),
                 onTap: () {}),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                 child: ListTile(
                     title: Text("In"),
-                    onTap: () => device.api.actZoom("in", "1shot")),
+                    onTap: () => device!.api!.actZoom("in", "1shot")),
               ),
               Expanded(
                 child: ListTile(
                     title: Text("Out"),
-                    onTap: () => device.api.actZoom("out", "1shot")),
+                    onTap: () => device!.api!.actZoom("out", "1shot")),
               )
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                 child: ListTile(
                     title: Text("In"),
-                    onTap: () => device.api.actZoom("in", "1shot")),
+                    onTap: () => device!.api!.actZoom("in", "1shot")),
               ),
               Expanded(
                 child: ListTile(
                     title: Text("Out"),
-                    onTap: () => device.api.actZoom("out", "1shot")),
+                    onTap: () => device!.api!.actZoom("out", "1shot")),
               )
             ]),
           ]),
@@ -844,14 +844,14 @@ class TestsPageState extends State<TestsPage> {
   ///HalfPressShutter (act, cancel)
   Widget getHalfPressShutterRow() {
     return ListenableProvider<InfoItem>(
-        create: (context) => device.cameraSettings.halfPressShutter,
+        create: (context) => device!.cameraSettings.halfPressShutter,
         child: Consumer<InfoItem>(
           builder: (context, model, _) => Card(
             child: Column(children: [
               ListTile(
                   title: Text(ItemId.HalfPressShutter.name),
                   subtitle: Text(
-                      device.cameraSettings.halfPressShutter.value?.name ??
+                      device!.cameraSettings.halfPressShutter.value?.name ??
                           "NotAvailable",
                       textAlign: TextAlign.start),
                   onTap: () {}),
@@ -861,16 +861,16 @@ class TestsPageState extends State<TestsPage> {
                       title: Text(ItemId.HalfPressShutter.name + " ACT"),
                       subtitle: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: [Text("actHalfPressShutter", style: getTextStyle(device.api.actHalfPressShutter))]),
-                      onTap: () => device.api.actHalfPressShutter()),
+                          children: [Text("actHalfPressShutter", style: getTextStyle(device!.api!.actHalfPressShutter))]),
+                      onTap: () => device!.api!.actHalfPressShutter()),
                 ),
                 Expanded(
                   child: ListTile(
                       title: Text(ItemId.HalfPressShutter.name + " CANCEL"),
                       subtitle: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                        Text("cancelHalfPressShutter", style: getTextStyle(device.api.cancelHalfPressShutter))
+                        Text("cancelHalfPressShutter", style: getTextStyle(device!.api!.cancelHalfPressShutter))
                       ]),
-                      onTap: () => device.api.cancelHalfPressShutter()),
+                      onTap: () => device!.api!.cancelHalfPressShutter()),
                 )
               ]),
             ]),
@@ -881,7 +881,7 @@ class TestsPageState extends State<TestsPage> {
   ///SelfTimer (set, get, getSupported, getAvailable)
   Widget getSelfTimerRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.selfTimer,
+      create: (context) => device!.cameraSettings.selfTimer,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
@@ -890,11 +890,11 @@ class TestsPageState extends State<TestsPage> {
               subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                Text(device.cameraSettings.selfTimer.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
-                Text("getSelfTimer", style: getTextStyle(device.api.getSelfTimer)),
-                Text("setSelfTimer", style: getTextStyle(device.api.setSelfTimer))
+                Text(device!.cameraSettings.selfTimer.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+                Text("getSelfTimer", style: getTextStyle(device!.api!.getSelfTimer)),
+                Text("setSelfTimer", style: getTextStyle(device!.api!.setSelfTimer))
               ]),
-              onTap: () => device.api.getSelfTimer(update: ForceUpdate.On),
+              onTap: () => device!.api!.getSelfTimer(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -903,12 +903,12 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<IntValue>(
                         isExpanded: true,
                         hint: Text("available"),
-                        items: device.cameraSettings.selfTimer.available
+                        items: device!.cameraSettings.selfTimer.available
                             .map<DropdownMenuItem<IntValue>>((e) =>
                                 DropdownMenuItem<IntValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setSelfTimer(value),
+                        onChanged: (value) => device!.api!.setSelfTimer(value),
                       ))),
               Expanded(
                   child: Padding(
@@ -916,12 +916,12 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<IntValue>(
                         isExpanded: true,
                         hint: Text("supported"),
-                        items: device.cameraSettings.selfTimer.supported
+                        items: device!.cameraSettings.selfTimer.supported
                             .map<DropdownMenuItem<IntValue>>((e) =>
                                 DropdownMenuItem<IntValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setSelfTimer(value),
+                        onChanged: (value) => device!.api!.setSelfTimer(value),
                       ))),
             ]),
           ]),
@@ -933,18 +933,18 @@ class TestsPageState extends State<TestsPage> {
   ///ContShootingMode (set, get, getSupported, getAvailable)
   Widget getContShootingModeRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.contShootingMode,
+      create: (context) => device!.cameraSettings.contShootingMode,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
               title: Text(ItemId.ContShootingMode.name),
               subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(device.cameraSettings.contShootingMode.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
-                Text("setContShootingMode", style: getTextStyle(device.api.setContShootingMode)),
-                Text("getContShootingMode", style: getTextStyle(device.api.getContShootingMode))
+                Text(device!.cameraSettings.contShootingMode.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+                Text("setContShootingMode", style: getTextStyle(device!.api!.setContShootingMode)),
+                Text("getContShootingMode", style: getTextStyle(device!.api!.getContShootingMode))
               ]),
-              onTap: () => device.api.getContShootingMode(update: ForceUpdate.On),
+              onTap: () => device!.api!.getContShootingMode(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -953,11 +953,11 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<ContShootingModeValue>(
                         isExpanded: true,
                         hint: Text("available"),
-                        items: device.cameraSettings.contShootingMode.available
+                        items: device!.cameraSettings.contShootingMode.available
                             .map<DropdownMenuItem<ContShootingModeValue>>(
                                 (e) => DropdownMenuItem<ContShootingModeValue>(child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setContShootingMode(value),
+                        onChanged: (value) => device!.api!.setContShootingMode(value),
                       ))),
               Expanded(
                   child: Padding(
@@ -965,11 +965,11 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<ContShootingModeValue>(
                         isExpanded: true,
                         hint: Text("supported"),
-                        items: device.cameraSettings.contShootingMode.supported
+                        items: device!.cameraSettings.contShootingMode.supported
                             .map<DropdownMenuItem<ContShootingModeValue>>(
                                 (e) => DropdownMenuItem<ContShootingModeValue>(child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setContShootingMode(value),
+                        onChanged: (value) => device!.api!.setContShootingMode(value),
                       ))),
             ]),
           ]),
@@ -982,18 +982,18 @@ class TestsPageState extends State<TestsPage> {
   ///ContShootingSpeed (set, get, getSupported, getAvailable)
   Widget getContShootingSpeedRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.contShootingSpeed,
+      create: (context) => device!.cameraSettings.contShootingSpeed,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
               title: Text(ItemId.ContShootingSpeed.name),
               subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(device.cameraSettings.contShootingSpeed.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
-                Text("setContShootingSpeed", style: getTextStyle(device.api.setContShootingSpeed)),
-                Text("getContShootingSpeed", style: getTextStyle(device.api.getContShootingSpeed))
+                Text(device!.cameraSettings.contShootingSpeed.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+                Text("setContShootingSpeed", style: getTextStyle(device!.api!.setContShootingSpeed)),
+                Text("getContShootingSpeed", style: getTextStyle(device!.api!.getContShootingSpeed))
               ]),
-              onTap: () => device.api.getContShootingSpeed(update: ForceUpdate.On),
+              onTap: () => device!.api!.getContShootingSpeed(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -1002,11 +1002,11 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<ContShootingSpeedValue>(
                         isExpanded: true,
                         hint: Text("available"),
-                        items: device.cameraSettings.contShootingSpeed.available
+                        items: device!.cameraSettings.contShootingSpeed.available
                             .map<DropdownMenuItem<ContShootingSpeedValue>>(
                                 (e) => DropdownMenuItem<ContShootingSpeedValue>(child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setContShootingSpeed(value),
+                        onChanged: (value) => device!.api!.setContShootingSpeed(value),
                       ))),
               Expanded(
                   child: Padding(
@@ -1014,11 +1014,11 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<ContShootingSpeedValue>(
                         isExpanded: true,
                         hint: Text("supported"),
-                        items: device.cameraSettings.contShootingSpeed.supported
+                        items: device!.cameraSettings.contShootingSpeed.supported
                             .map<DropdownMenuItem<ContShootingSpeedValue>>(
                                 (e) => DropdownMenuItem<ContShootingSpeedValue>(child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setContShootingSpeed(value),
+                        onChanged: (value) => device!.api!.setContShootingSpeed(value),
                       ))),
             ]),
           ]),
@@ -1030,27 +1030,27 @@ class TestsPageState extends State<TestsPage> {
   ///ContShooting (start, stop)
   Widget getContShootingRow() {
     return ListenableProvider<InfoItem>(
-      create: (context) => device.cameraSettings.contShooting,
+      create: (context) => device!.cameraSettings.contShooting,
       child: Consumer<InfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
               title: Text(ItemId.ContShooting.name),
               subtitle:
-                  Text(device.cameraSettings.contShooting.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+                  Text(device!.cameraSettings.contShooting.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.ContShooting.name + " START"),
-                    subtitle: Text("startContShooting", style: getTextStyle(device.api.startContShooting)),
-                    onTap: () => device.api.startContShooting()),
+                    subtitle: Text("startContShooting", style: getTextStyle(device!.api!.startContShooting)),
+                    onTap: () => device!.api!.startContShooting()),
               ),
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.ContShooting.name + " STOP"),
-                    subtitle: Text("stopContShooting", style: getTextStyle(device.api.stopContShooting)),
-                    onTap: () => device.api.stopContShooting()),
+                    subtitle: Text("stopContShooting", style: getTextStyle(device!.api!.stopContShooting)),
+                    onTap: () => device!.api!.stopContShooting()),
               )
             ]),
           ]),
@@ -1062,26 +1062,26 @@ class TestsPageState extends State<TestsPage> {
   ///Movie Rec (start, stop)
   Widget getMovieRecordingRow() {
     return ListenableProvider<InfoItem>(
-      create: (context) => device.cameraSettings.movieRecording,
+      create: (context) => device!.cameraSettings.movieRecording,
       child: Consumer<InfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
               title: Text(ItemId.MovieRecording.name),
-              subtitle: Text(device.cameraSettings.movieRecording.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+              subtitle: Text(device!.cameraSettings.movieRecording.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.MovieRecording.name + " START"),
-                    subtitle: Text("startMovieRec", style: getTextStyle(device.api.startMovieRecording)),
-                    onTap: () => device.api.startMovieRecording()),
+                    subtitle: Text("startMovieRec", style: getTextStyle(device!.api!.startMovieRecording)),
+                    onTap: () => device!.api!.startMovieRecording()),
               ),
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.MovieRecording.name + " STOP"),
-                    subtitle: Text("stopMovieRec", style: getTextStyle(device.api.stopMovieRecording)),
-                    onTap: () => device.api.stopMovieRecording()),
+                    subtitle: Text("stopMovieRec", style: getTextStyle(device!.api!.stopMovieRecording)),
+                    onTap: () => device!.api!.stopMovieRecording()),
               )
             ]),
           ]),
@@ -1093,26 +1093,26 @@ class TestsPageState extends State<TestsPage> {
   ///Movie Rec (start, stop)
   Widget getAudioRecordingRow() {
     return ListenableProvider<InfoItem>(
-      create: (context) => device.cameraSettings.audioRecording,
+      create: (context) => device!.cameraSettings.audioRecording,
       child: Consumer<InfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
               title: Text(ItemId.AudioRecording.name),
-              subtitle: Text(device.cameraSettings.audioRecording.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+              subtitle: Text(device!.cameraSettings.audioRecording.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.AudioRecording.name + " START"),
-                    subtitle: Text("startAudioRec", style: getTextStyle(device.api.startAudioRecording)),
-                    onTap: () => device.api.startAudioRecording()),
+                    subtitle: Text("startAudioRec", style: getTextStyle(device!.api!.startAudioRecording)),
+                    onTap: () => device!.api!.startAudioRecording()),
               ),
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.AudioRecording.name + " STOP"),
-                    subtitle: Text("stopAudioRec", style: getTextStyle(device.api.stopAudioRecording)),
-                    onTap: () => device.api.stopAudioRecording()),
+                    subtitle: Text("stopAudioRec", style: getTextStyle(device!.api!.stopAudioRecording)),
+                    onTap: () => device!.api!.stopAudioRecording()),
               )
             ]),
           ]),
@@ -1124,26 +1124,26 @@ class TestsPageState extends State<TestsPage> {
   ///Loop Rec (start, stop)
   Widget getLoopRecordingRow() {
     return ListenableProvider<InfoItem>(
-      create: (context) => device.cameraSettings.loopRecording,
+      create: (context) => device!.cameraSettings.loopRecording,
       child: Consumer<InfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
               title: Text(ItemId.LoopRecording.name),
-              subtitle: Text(device.cameraSettings.loopRecording.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+              subtitle: Text(device!.cameraSettings.loopRecording.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.LoopRecording.name + " START"),
-                    subtitle: Text("startLoopRecording", style: getTextStyle(device.api.startLoopRecording)),
-                    onTap: () => device.api.startLoopRecording()),
+                    subtitle: Text("startLoopRecording", style: getTextStyle(device!.api!.startLoopRecording)),
+                    onTap: () => device!.api!.startLoopRecording()),
               ),
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.LoopRecording.name + " STOP"),
-                    subtitle: Text("stopLoopRecording", style: getTextStyle(device.api.stopLoopRecording)),
-                    onTap: () => device.api.stopLoopRecording()),
+                    subtitle: Text("stopLoopRecording", style: getTextStyle(device!.api!.stopLoopRecording)),
+                    onTap: () => device!.api!.stopLoopRecording()),
               )
             ]),
           ]),
@@ -1155,21 +1155,21 @@ class TestsPageState extends State<TestsPage> {
   ///Live View (start, stop)
   Widget getLiveViewRow() {
     return ListenableProvider<InfoItem>(
-      create: (context) => device.cameraSettings.liveView,
+      create: (context) => device!.cameraSettings.liveView,
       child: Consumer<InfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
               title: Text(ItemId.LiveView.name),
-              subtitle: Text(device.cameraSettings.liveView.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+              subtitle: Text(device!.cameraSettings.liveView.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.LiveView.name + " START"),
-                    subtitle: Text("startLiveView", style: getTextStyle(device.api.startLiveView)),
+                    subtitle: Text("startLiveView", style: getTextStyle(device!.api!.startLiveView)),
                     onTap: () async{
-                      await device.api.startLiveView();
+                      await device!.api!.startLiveView();
 
                       Navigator.pushReplacement(
                         context,
@@ -1180,8 +1180,8 @@ class TestsPageState extends State<TestsPage> {
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.LiveView.name + " STOP"),
-                    subtitle: Text("stopLiveView", style: getTextStyle(device.api.stopLiveView)),
-                    onTap: () => device.api.stopLiveView()),
+                    subtitle: Text("stopLiveView", style: getTextStyle(device!.api!.stopLiveView)),
+                    onTap: () => device!.api!.stopLiveView()),
               )
             ]),
           ]),
@@ -1193,18 +1193,18 @@ class TestsPageState extends State<TestsPage> {
   ///MeteringMode (get, getSupported)
   Widget getMeteringModeRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.meteringMode,
+      create: (context) => device!.cameraSettings.meteringMode,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
               title: Text(ItemId.MeteringMode.name),
               subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(device.cameraSettings.meteringMode.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
-                Text("setContShootingSpeed", style: getTextStyle(device.api.setContShootingSpeed)),
-                Text("getContShootingSpeed ", style: getTextStyle(device.api.getContShootingSpeed))
+                Text(device!.cameraSettings.meteringMode.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+                Text("setContShootingSpeed", style: getTextStyle(device!.api!.setContShootingSpeed)),
+                Text("getContShootingSpeed ", style: getTextStyle(device!.api!.getContShootingSpeed))
               ]),
-              onTap: () => device.api.getMeteringMode(update: ForceUpdate.On),
+              onTap: () => device!.api!.getMeteringMode(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -1213,12 +1213,12 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<MeteringModeValue>(
                         isExpanded: true,
                         hint: Text("available"),
-                        items: device.cameraSettings.meteringMode.available
+                        items: device!.cameraSettings.meteringMode.available
                             .map<DropdownMenuItem<MeteringModeValue>>((e) =>
                                 DropdownMenuItem<MeteringModeValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setMeteringMode(value),
+                        onChanged: (value) => device!.api!.setMeteringMode(value),
                       ))),
               Expanded(
                   child: Padding(
@@ -1226,12 +1226,12 @@ class TestsPageState extends State<TestsPage> {
                       child: DropdownButton<MeteringModeValue>(
                         isExpanded: true,
                         hint: Text("supported"),
-                        items: device.cameraSettings.meteringMode.supported
+                        items: device!.cameraSettings.meteringMode.supported
                             .map<DropdownMenuItem<MeteringModeValue>>((e) =>
                                 DropdownMenuItem<MeteringModeValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setMeteringMode(value),
+                        onChanged: (value) => device!.api!.setMeteringMode(value),
                       ))),
             ]),
           ]),
@@ -1243,26 +1243,26 @@ class TestsPageState extends State<TestsPage> {
   ///Ev (set, get, getSupported, getAvailable)
   Widget getEVRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.exposureCompensation,
+      create: (context) => device!.cameraSettings.exposureCompensation,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
             ListTile(
               title: Text(ItemId.ExposureCompensation.name),
               subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(device.cameraSettings.exposureCompensation.value?.name ?? "NotAvailable",
+                Text(device!.cameraSettings.exposureCompensation.value?.name ?? "NotAvailable",
                     textAlign: TextAlign.start),
-                Text("getExposureCompensation", style: getTextStyle(device.api.getExposureCompensation)),
-                Text("setExposureCompensation", style: getTextStyle(device.api.setExposureCompensation))
+                Text("getExposureCompensation", style: getTextStyle(device!.api!.getExposureCompensation)),
+                Text("setExposureCompensation", style: getTextStyle(device!.api!.setExposureCompensation))
               ]),
-              onTap: () => device.api.getExposureCompensation(update: ForceUpdate.On),
+              onTap: () => device!.api!.getExposureCompensation(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
-                child: ListTile(title: Text("Up"), onTap: () => device.api.modifyExposureCompensation(1)),
+                child: ListTile(title: Text("Up"), onTap: () => device!.api!.modifyExposureCompensation(1)),
               ),
               Expanded(
-                child: ListTile(title: Text("Down"), onTap: () => device.api.modifyExposureCompensation(-1)),
+                child: ListTile(title: Text("Down"), onTap: () => device!.api!.modifyExposureCompensation(-1)),
               )
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -1271,24 +1271,24 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<EvValue>(
                         hint: Text("available"),
-                        items: device.cameraSettings.exposureCompensation.available
+                        items: device!.cameraSettings.exposureCompensation.available
                             .map<DropdownMenuItem<EvValue>>((e) =>
                             DropdownMenuItem<EvValue>(
-                                child: Text(e.name), value: e))
+                                child: Text(e.name!), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setExposureCompensation(value),
+                        onChanged: (value) => device!.api!.setExposureCompensation(value),
                       ))),
               Expanded(
                   child: Padding(
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<EvValue>(
                         hint: Text("supported"),
-                        items: device.cameraSettings.exposureCompensation.supported
+                        items: device!.cameraSettings.exposureCompensation.supported
                             .map<DropdownMenuItem<EvValue>>((e) =>
                             DropdownMenuItem<EvValue>(
-                                child: Text(e.name), value: e))
+                                child: Text(e.name!), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setExposureCompensation(value),
+                        onChanged: (value) => device!.api!.setExposureCompensation(value),
                       ))),
             ]),
           ]),
@@ -1300,7 +1300,7 @@ class TestsPageState extends State<TestsPage> {
   ///FNumber (set, get, getSupported, getAvailable)
   Widget getFNumberRow() {
     return ListenableProvider<SettingsItem>(
-        create: (context) => device.cameraSettings.fNumber,
+        create: (context) => device!.cameraSettings.fNumber,
         child: Consumer<SettingsItem>(
             builder: (context, model, _) => Card(
                   child: Column(children: [
@@ -1310,15 +1310,15 @@ class TestsPageState extends State<TestsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                device.cameraSettings.fNumber.value?.name ??
+                                device!.cameraSettings.fNumber.value?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            Text("setFNumber", style: getTextStyle(device.api.setFNumber)),
-                            Text("getFNumber", style: getTextStyle(device.api.getFNumber)),
-                            Text("modifyFNumber", style: getTextStyle(device.api.modifyFNumber))
+                            Text("setFNumber", style: getTextStyle(device!.api!.setFNumber)),
+                            Text("getFNumber", style: getTextStyle(device!.api!.getFNumber)),
+                            Text("modifyFNumber", style: getTextStyle(device!.api!.modifyFNumber))
                           ]),
                       onTap: () =>
-                          device.api.getFNumber(update: ForceUpdate.On),
+                          device!.api!.getFNumber(update: ForceUpdate.On),
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1326,12 +1326,12 @@ class TestsPageState extends State<TestsPage> {
                           Expanded(
                             child: ListTile(
                                 title: Text("Up"),
-                                onTap: () => device.api.modifyFNumber(1)),
+                                onTap: () => device!.api!.modifyFNumber(1)),
                           ),
                           Expanded(
                             child: ListTile(
                                 title: Text("Down"),
-                                onTap: () => device.api.modifyFNumber(-1)),
+                                onTap: () => device!.api!.modifyFNumber(-1)),
                           )
                         ]),
                     Row(
@@ -1342,32 +1342,32 @@ class TestsPageState extends State<TestsPage> {
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<DoubleValue>(
                                     hint: Text("available"),
-                                    items: device
+                                    items: device!
                                         .cameraSettings.fNumber.available
                                         .map<DropdownMenuItem<DoubleValue>>(
                                             (e) =>
                                                 DropdownMenuItem<DoubleValue>(
-                                                    child: Text(e.name),
+                                                    child: Text(e.name!),
                                                     value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device.api.setFNumber(value),
+                                        device!.api!.setFNumber(value),
                                   ))),
                           Expanded(
                               child: Padding(
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<DoubleValue>(
                                     hint: Text("supported"),
-                                    items: device
+                                    items: device!
                                         .cameraSettings.fNumber.supported
                                         .map<DropdownMenuItem<DoubleValue>>(
                                             (e) =>
                                                 DropdownMenuItem<DoubleValue>(
-                                                    child: Text(e.name),
+                                                    child: Text(e.name!),
                                                     value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device.api.setFNumber(value),
+                                        device!.api!.setFNumber(value),
                                   ))),
                         ]),
                   ]),
@@ -1377,7 +1377,7 @@ class TestsPageState extends State<TestsPage> {
   ///Iso (set, get, getSupported, getAvailable)
   Widget getIsoRow() {
     return ListenableProvider<SettingsItem>(
-        create: (context) => device.cameraSettings.iso,
+        create: (context) => device!.cameraSettings.iso,
         child: Consumer<SettingsItem>(
             builder: (context, model, _) => Card(
                   child: Column(children: [
@@ -1387,14 +1387,14 @@ class TestsPageState extends State<TestsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                device.cameraSettings.iso.value?.name ??
+                                device!.cameraSettings.iso.value?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            Text("setIso", style: getTextStyle(device.api.setIso)),
-                            Text("getIso", style: getTextStyle(device.api.getIso)),
-                            Text("modifyIso", style: getTextStyle(device.api.modifyIso))
+                            Text("setIso", style: getTextStyle(device!.api!.setIso)),
+                            Text("getIso", style: getTextStyle(device!.api!.getIso)),
+                            Text("modifyIso", style: getTextStyle(device!.api!.modifyIso))
                           ]),
-                      onTap: () => device.api.getIso(update: ForceUpdate.On),
+                      onTap: () => device!.api!.getIso(update: ForceUpdate.On),
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1402,12 +1402,12 @@ class TestsPageState extends State<TestsPage> {
                           Expanded(
                             child: ListTile(
                                 title: Text("Up"),
-                                onTap: () => device.api.modifyIso(1)),
+                                onTap: () => device!.api!.modifyIso(1)),
                           ),
                           Expanded(
                             child: ListTile(
                                 title: Text("Down"),
-                                onTap: () => device.api.modifyIso(-1)),
+                                onTap: () => device!.api!.modifyIso(-1)),
                           )
                         ]),
                     Row(
@@ -1418,26 +1418,26 @@ class TestsPageState extends State<TestsPage> {
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<IsoValue>(
                                     hint: Text("available"),
-                                    items: device.cameraSettings.iso.available
+                                    items: device!.cameraSettings.iso.available
                                         .map<DropdownMenuItem<IsoValue>>((e) =>
                                             DropdownMenuItem<IsoValue>(
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device.api.setIso(value),
+                                        device!.api!.setIso(value),
                                   ))),
                           Expanded(
                               child: Padding(
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<IsoValue>(
                                     hint: Text("supported"),
-                                    items: device.cameraSettings.iso.supported
+                                    items: device!.cameraSettings.iso.supported
                                         .map<DropdownMenuItem<IsoValue>>((e) =>
                                             DropdownMenuItem<IsoValue>(
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device.api.setIso(value),
+                                        device!.api!.setIso(value),
                                   ))),
                         ]),
                   ]),
@@ -1447,7 +1447,7 @@ class TestsPageState extends State<TestsPage> {
   ///LiveViewSize (set, get, getSupported, getAvailable)
   Widget getLiveViewSizeRow() {
     return ListenableProvider<SettingsItem>(
-        create: (context) => device.cameraSettings.liveViewSize,
+        create: (context) => device!.cameraSettings.liveViewSize,
         child: Consumer<SettingsItem>(
             builder: (context, model, _) => Card(
                   child: Column(children: [
@@ -1457,15 +1457,15 @@ class TestsPageState extends State<TestsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                device.cameraSettings.liveViewSize.value
+                                device!.cameraSettings.liveViewSize.value
                                     ?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            Text("getLiveViewSize", style: getTextStyle(device.api.getLiveViewSize)),
-                            Text("startLiveViewWithSize", style: getTextStyle(device.api.startLiveViewWithSize)),
+                            Text("getLiveViewSize", style: getTextStyle(device!.api!.getLiveViewSize)),
+                            Text("startLiveViewWithSize", style: getTextStyle(device!.api!.startLiveViewWithSize)),
                           ]),
                       onTap: () =>
-                          device.api.getLiveViewSize(update: ForceUpdate.On),
+                          device!.api!.getLiveViewSize(update: ForceUpdate.On),
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1475,32 +1475,32 @@ class TestsPageState extends State<TestsPage> {
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<LiveViewSizeValue>(
                                     hint: Text("available"),
-                                    items: device
+                                    items: device!
                                         .cameraSettings.liveViewSize.available
                                         .map<
                                             DropdownMenuItem<
                                                 LiveViewSizeValue>>((e) =>
                                             DropdownMenuItem<LiveViewSizeValue>(
-                                                child: Text(e.name), value: e))
+                                                child: Text(e!.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device.api.startLiveViewWithSize(value),
+                                        device!.api!.startLiveViewWithSize(value),
                                   ))),
                           Expanded(
                               child: Padding(
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<LiveViewSizeValue>(
                                     hint: Text("supported"),
-                                    items: device
+                                    items: device!
                                         .cameraSettings.liveViewSize.supported
                                         .map<
                                             DropdownMenuItem<
                                                 LiveViewSizeValue>>((e) =>
                                             DropdownMenuItem<LiveViewSizeValue>(
-                                                child: Text(e.name), value: e))
+                                                child: Text(e!.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device.api.startLiveViewWithSize(value),
+                                        device!.api!.startLiveViewWithSize(value),
                                   ))),
                         ]),
                   ]),
@@ -1510,7 +1510,7 @@ class TestsPageState extends State<TestsPage> {
   ///PostViewImageSize (set, get, getSupported, getAvailable)
   Widget getPostViewImageSizeRow() {
     return ListenableProvider<SettingsItem>(
-        create: (context) => device.cameraSettings.postViewImageSize,
+        create: (context) => device!.cameraSettings.postViewImageSize,
         child: Consumer<SettingsItem>(
             builder: (context, model, _) => Card(
                   child: Column(children: [
@@ -1520,14 +1520,14 @@ class TestsPageState extends State<TestsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                device.cameraSettings.postViewImageSize.value
+                                device!.cameraSettings.postViewImageSize.value
                                     ?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            Text("setPostViewImageSize", style: getTextStyle(device.api.setPostViewImageSize)),
-                            Text("getPostViewImageSize", style: getTextStyle(device.api.getPostViewImageSize))
+                            Text("setPostViewImageSize", style: getTextStyle(device!.api!.setPostViewImageSize)),
+                            Text("getPostViewImageSize", style: getTextStyle(device!.api!.getPostViewImageSize))
                           ]),
-                      onTap: () => device.api
+                      onTap: () => device!.api!
                           .getPostViewImageSize(update: ForceUpdate.On),
                     ),
                     Row(
@@ -1538,7 +1538,7 @@ class TestsPageState extends State<TestsPage> {
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<PostViewImageSizeValue>(
                                     hint: Text("available"),
-                                    items: device.cameraSettings
+                                    items: device!.cameraSettings
                                         .postViewImageSize.available
                                         .map<
                                             DropdownMenuItem<
@@ -1548,14 +1548,14 @@ class TestsPageState extends State<TestsPage> {
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device.api.setPostViewImageSize(value),
+                                        device!.api!.setPostViewImageSize(value),
                                   ))),
                           Expanded(
                               child: Padding(
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<PostViewImageSizeValue>(
                                     hint: Text("supported"),
-                                    items: device.cameraSettings
+                                    items: device!.cameraSettings
                                         .postViewImageSize.supported
                                         .map<
                                             DropdownMenuItem<
@@ -1565,7 +1565,7 @@ class TestsPageState extends State<TestsPage> {
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device.api.setPostViewImageSize(value),
+                                        device!.api!.setPostViewImageSize(value),
                                   ))),
                         ]),
                   ]),
@@ -1575,7 +1575,7 @@ class TestsPageState extends State<TestsPage> {
   ///ProgramShift (set, get, getSupported, getAvailable)
   Widget getProgramShiftRow() {
     return ListenableProvider<SettingsItem>(
-        create: (context) => device.cameraSettings.programShift,
+        create: (context) => device!.cameraSettings.programShift,
         child: Consumer<SettingsItem>(
             builder: (context, model, _) => Card(
                   child: Column(children: [
@@ -1585,15 +1585,15 @@ class TestsPageState extends State<TestsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                device.cameraSettings.programShift.value
+                                device!.cameraSettings.programShift.value
                                     ?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            Text("getProgramShift", style: getTextStyle(device.api.getProgramShift)),
-                            Text("setProgramShift", style: getTextStyle(device.api.setProgramShift)),
+                            Text("getProgramShift", style: getTextStyle(device!.api!.getProgramShift)),
+                            Text("setProgramShift", style: getTextStyle(device!.api!.setProgramShift)),
                           ]),
                       onTap: () =>
-                          device.api.getProgramShift(update: ForceUpdate.On),
+                          device!.api!.getProgramShift(update: ForceUpdate.On),
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1603,28 +1603,28 @@ class TestsPageState extends State<TestsPage> {
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<IntValue>(
                                     hint: Text("available"),
-                                    items: device
+                                    items: device!
                                         .cameraSettings.programShift.available
                                         .map<DropdownMenuItem<IntValue>>((e) =>
                                             DropdownMenuItem<IntValue>(
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device.api.setProgramShift(value),
+                                        device!.api!.setProgramShift(value),
                                   ))),
                           Expanded(
                               child: Padding(
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<IntValue>(
                                     hint: Text("supported"),
-                                    items: device
+                                    items: device!
                                         .cameraSettings.programShift.supported
                                         .map<DropdownMenuItem<IntValue>>((e) =>
                                             DropdownMenuItem<IntValue>(
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device.api.setProgramShift(value),
+                                        device!.api!.setProgramShift(value),
                                   ))),
                         ]),
                   ]),
@@ -1634,7 +1634,7 @@ class TestsPageState extends State<TestsPage> {
   ///ShutterSpeed (set, get, getSupported, getAvailable)
   Widget getShutterSpeedRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.shutterSpeed,
+      create: (context) => device!.cameraSettings.shutterSpeed,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
@@ -1644,25 +1644,25 @@ class TestsPageState extends State<TestsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        device.cameraSettings.shutterSpeed.value?.name ??
+                        device!.cameraSettings.shutterSpeed.value?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    Text("getShutterSpeed", style: getTextStyle(device.api.getShutterSpeed)),
-                    Text("modifyShutterSpeed", style: getTextStyle(device.api.modifyShutterSpeed)),
-                    Text("setProgramShift", style: getTextStyle(device.api.setProgramShift)),
+                    Text("getShutterSpeed", style: getTextStyle(device!.api!.getShutterSpeed)),
+                    Text("modifyShutterSpeed", style: getTextStyle(device!.api!.modifyShutterSpeed)),
+                    Text("setProgramShift", style: getTextStyle(device!.api!.setProgramShift)),
                   ]),
-              onTap: () => device.api.getShutterSpeed(update: ForceUpdate.On),
+              onTap: () => device!.api!.getShutterSpeed(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                 child: ListTile(
                     title: Text("Up"),
-                    onTap: () => device.api.modifyShutterSpeed(1)),
+                    onTap: () => device!.api!.modifyShutterSpeed(1)),
               ),
               Expanded(
                 child: ListTile(
                     title: Text("Down"),
-                    onTap: () => device.api.modifyShutterSpeed(-1)),
+                    onTap: () => device!.api!.modifyShutterSpeed(-1)),
               )
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -1671,24 +1671,24 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<ShutterSpeedValue>(
                         hint: Text("available"),
-                        items: device.cameraSettings.shutterSpeed.available
+                        items: device!.cameraSettings.shutterSpeed.available
                             .map<DropdownMenuItem<ShutterSpeedValue>>((e) =>
                                 DropdownMenuItem<ShutterSpeedValue>(
-                                    child: Text(e.name), value: e))
+                                    child: Text(e.name!), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setShutterSpeed(value),
+                        onChanged: (value) => device!.api!.setShutterSpeed(value),
                       ))),
               Expanded(
                   child: Padding(
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<ShutterSpeedValue>(
                         hint: Text("supported"),
-                        items: device.cameraSettings.shutterSpeed.supported
+                        items: device!.cameraSettings.shutterSpeed.supported
                             .map<DropdownMenuItem<ShutterSpeedValue>>((e) =>
                                 DropdownMenuItem<ShutterSpeedValue>(
-                                    child: Text(e.name), value: e))
+                                    child: Text(e.name!), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setShutterSpeed(value),
+                        onChanged: (value) => device!.api!.setShutterSpeed(value),
                       ))),
             ]),
           ]),
@@ -1700,7 +1700,7 @@ class TestsPageState extends State<TestsPage> {
   ///FocusAreaSpot (set, get, getSupported, getAvailable)
   Widget getFocusAreaSpotRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => (device.cameraSettings.focusAreaSpot),
+      create: (context) => (device!.cameraSettings.focusAreaSpot),
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
@@ -1710,11 +1710,11 @@ class TestsPageState extends State<TestsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        device.cameraSettings.focusAreaSpot.value?.name ??
+                        device!.cameraSettings.focusAreaSpot.value?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    Text("setFocusAreaSpot", style: getTextStyle(device.api.setFocusAreaSpot)),
-                    Text("getFocusAreaSpot", style: getTextStyle(device.api.getFocusAreaSpot)),
+                    Text("setFocusAreaSpot", style: getTextStyle(device!.api!.setFocusAreaSpot)),
+                    Text("getFocusAreaSpot", style: getTextStyle(device!.api!.getFocusAreaSpot)),
                   ]),
             ),
           ]),
@@ -1726,7 +1726,7 @@ class TestsPageState extends State<TestsPage> {
   ///WhiteBalance (set, get, getSupported, getAvailable)
   Widget getWhiteBalanceModeRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.whiteBalanceMode,
+      create: (context) => device!.cameraSettings.whiteBalanceMode,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
@@ -1736,14 +1736,14 @@ class TestsPageState extends State<TestsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        device.cameraSettings.whiteBalanceMode.value?.name ??
+                        device!.cameraSettings.whiteBalanceMode.value?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    Text("setWhiteBalanceMode", style: getTextStyle(device.api.setWhiteBalanceMode)),
-                    Text("getWhiteBalanceMode", style: getTextStyle(device.api.getWhiteBalanceMode)),
+                    Text("setWhiteBalanceMode", style: getTextStyle(device!.api!.setWhiteBalanceMode)),
+                    Text("getWhiteBalanceMode", style: getTextStyle(device!.api!.getWhiteBalanceMode)),
                   ]),
               onTap: () =>
-                  device.api.getWhiteBalanceMode(update: ForceUpdate.On),
+                  device!.api!.getWhiteBalanceMode(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -1751,26 +1751,26 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<WhiteBalanceModeValue>(
                         hint: Text("available"),
-                        items: device.cameraSettings.whiteBalanceMode.available
+                        items: device!.cameraSettings.whiteBalanceMode.available
                             .map<DropdownMenuItem<WhiteBalanceModeValue>>((e) =>
                                 DropdownMenuItem<WhiteBalanceModeValue>(
-                                    child: Text(e.name), value: e))
+                                    child: Text(e!.name), value: e))
                             .toList(),
                         onChanged: (value) =>
-                            device.api.setWhiteBalanceMode(value),
+                            device!.api!.setWhiteBalanceMode(value),
                       ))),
               Expanded(
                   child: Padding(
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<WhiteBalanceModeValue>(
                         hint: Text("supported"),
-                        items: device.cameraSettings.whiteBalanceMode.supported
+                        items: device!.cameraSettings.whiteBalanceMode.supported
                             .map<DropdownMenuItem<WhiteBalanceModeValue>>((e) =>
                                 DropdownMenuItem<WhiteBalanceModeValue>(
-                                    child: Text(e.name), value: e))
+                                    child: Text(e!.name), value: e))
                             .toList(),
                         onChanged: (value) =>
-                            device.api.setWhiteBalanceMode(value),
+                            device!.api!.setWhiteBalanceMode(value),
                       ))),
             ]),
           ]),
@@ -1783,7 +1783,7 @@ class TestsPageState extends State<TestsPage> {
 
   Widget getWhiteBalanceColorTempRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.whiteBalanceColorTemp,
+      create: (context) => device!.cameraSettings.whiteBalanceColorTemp,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
@@ -1793,27 +1793,27 @@ class TestsPageState extends State<TestsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        device.cameraSettings.whiteBalanceColorTemp.value
+                        device!.cameraSettings.whiteBalanceColorTemp.value
                             ?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    Text("setWhiteBalanceColorTemp", style: getTextStyle(device.api.setWhiteBalanceColorTemp)),
-                    Text("modifyWhiteBalanceColorTemp", style: getTextStyle(device.api.modifyWhiteBalanceColorTemp)),
-                    Text("getWhiteBalanceColorTemp", style: getTextStyle(device.api.getWhiteBalanceColorTemp)),
+                    Text("setWhiteBalanceColorTemp", style: getTextStyle(device!.api!.setWhiteBalanceColorTemp)),
+                    Text("modifyWhiteBalanceColorTemp", style: getTextStyle(device!.api!.modifyWhiteBalanceColorTemp)),
+                    Text("getWhiteBalanceColorTemp", style: getTextStyle(device!.api!.getWhiteBalanceColorTemp)),
                   ]),
               onTap: () =>
-                  device.api.getWhiteBalanceColorTemp(update: ForceUpdate.On),
+                  device!.api!.getWhiteBalanceColorTemp(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                 child: ListTile(
                     title: Text("Up"),
-                    onTap: () => device.api.modifyWhiteBalanceColorTemp(1)),
+                    onTap: () => device!.api!.modifyWhiteBalanceColorTemp(1)),
               ),
               Expanded(
                 child: ListTile(
                     title: Text("Down"),
-                    onTap: () => device.api.modifyWhiteBalanceColorTemp(-1)),
+                    onTap: () => device!.api!.modifyWhiteBalanceColorTemp(-1)),
               )
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -1822,30 +1822,30 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<WhiteBalanceColorTempValue>(
                         hint: Text("available"),
-                        items: device
+                        items: device!
                             .cameraSettings.whiteBalanceColorTemp.available
                             .map<DropdownMenuItem<WhiteBalanceColorTempValue>>(
                                 (e) => DropdownMenuItem<
                                         WhiteBalanceColorTempValue>(
-                                    child: Text(e.name), value: e))
+                                    child: Text(e!.name), value: e))
                             .toList(),
                         onChanged: (value) =>
-                            device.api.setWhiteBalanceColorTemp(value),
+                            device!.api!.setWhiteBalanceColorTemp(value),
                       ))),
               Expanded(
                   child: Padding(
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<WhiteBalanceColorTempValue>(
                         hint: Text("supported"),
-                        items: device
+                        items: device!
                             .cameraSettings.whiteBalanceColorTemp.supported
                             .map<DropdownMenuItem<WhiteBalanceColorTempValue>>(
                                 (e) => DropdownMenuItem<
                                         WhiteBalanceColorTempValue>(
-                                    child: Text(e.name), value: e))
+                                    child: Text(e!.name), value: e))
                             .toList(),
                         onChanged: (value) =>
-                            device.api.setWhiteBalanceColorTemp(value),
+                            device!.api!.setWhiteBalanceColorTemp(value),
                       ))),
             ]),
           ]),
@@ -1857,7 +1857,7 @@ class TestsPageState extends State<TestsPage> {
   ///FlashMode (set, get, getSupported, getAvailable)
   Widget getFlashRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.flashMode,
+      create: (context) => device!.cameraSettings.flashMode,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
@@ -1867,13 +1867,13 @@ class TestsPageState extends State<TestsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        device.cameraSettings.flashMode.value?.name ??
+                        device!.cameraSettings.flashMode.value?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    Text("setFlashMode", style: getTextStyle(device.api.setFlashMode)),
-                    Text("getFlashMode", style: getTextStyle(device.api.getFlashMode)),
+                    Text("setFlashMode", style: getTextStyle(device!.api!.setFlashMode)),
+                    Text("getFlashMode", style: getTextStyle(device!.api!.getFlashMode)),
                   ]),
-              onTap: () => device.api.getFlashMode(update: ForceUpdate.On),
+              onTap: () => device!.api!.getFlashMode(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -1881,24 +1881,24 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<FlashModeValue>(
                         hint: Text("available"),
-                        items: device.cameraSettings.flashMode.available
+                        items: device!.cameraSettings.flashMode.available
                             .map<DropdownMenuItem<FlashModeValue>>((e) =>
                                 DropdownMenuItem<FlashModeValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setFlashMode(value),
+                        onChanged: (value) => device!.api!.setFlashMode(value),
                       ))),
               Expanded(
                   child: Padding(
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<FlashModeValue>(
                         hint: Text("supported"),
-                        items: device.cameraSettings.flashMode.supported
+                        items: device!.cameraSettings.flashMode.supported
                             .map<DropdownMenuItem<FlashModeValue>>((e) =>
                                 DropdownMenuItem<FlashModeValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setFlashMode(value),
+                        onChanged: (value) => device!.api!.setFlashMode(value),
                       ))),
             ]),
           ]),
@@ -1910,7 +1910,7 @@ class TestsPageState extends State<TestsPage> {
   ///FocusMode (set, get, getSupported, getAvailable)
   Widget getFocusModeRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.focusMode,
+      create: (context) => device!.cameraSettings.focusMode,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
@@ -1920,13 +1920,13 @@ class TestsPageState extends State<TestsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        device.cameraSettings.focusMode.value?.name ??
+                        device!.cameraSettings.focusMode.value?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    Text("setFocusMode", style: getTextStyle(device.api.setFocusMode)),
-                    Text("getFocusMode", style: getTextStyle(device.api.getFocusMode)),
+                    Text("setFocusMode", style: getTextStyle(device!.api!.setFocusMode)),
+                    Text("getFocusMode", style: getTextStyle(device!.api!.getFocusMode)),
                   ]),
-              onTap: () => device.api.getFocusMode(update: ForceUpdate.On),
+              onTap: () => device!.api!.getFocusMode(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -1934,24 +1934,24 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<FocusModeValue>(
                         hint: Text("available"),
-                        items: device.cameraSettings.focusMode.available
+                        items: device!.cameraSettings.focusMode.available
                             .map<DropdownMenuItem<FocusModeValue>>((e) =>
                                 DropdownMenuItem<FocusModeValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setFocusMode(value),
+                        onChanged: (value) => device!.api!.setFocusMode(value),
                       ))),
               Expanded(
                   child: Padding(
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<FocusModeValue>(
                         hint: Text("supported"),
-                        items: device.cameraSettings.focusMode.supported
+                        items: device!.cameraSettings.focusMode.supported
                             .map<DropdownMenuItem<FocusModeValue>>((e) =>
                                 DropdownMenuItem<FocusModeValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setFocusMode(value),
+                        onChanged: (value) => device!.api!.setFocusMode(value),
                       ))),
             ]),
           ]),
@@ -1963,7 +1963,7 @@ class TestsPageState extends State<TestsPage> {
   ///ZoomSetting (set, get, getSupported, getAvailable)
   Widget getZoomSettingRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.zoomSetting,
+      create: (context) => device!.cameraSettings.zoomSetting,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
@@ -1973,13 +1973,13 @@ class TestsPageState extends State<TestsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        device.cameraSettings.zoomSetting.value?.name ??
+                        device!.cameraSettings.zoomSetting.value?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    Text("setZoomSetting", style: getTextStyle(device.api.setZoomSetting)),
-                    Text("getZoomSetting", style: getTextStyle(device.api.getZoomSetting)),
+                    Text("setZoomSetting", style: getTextStyle(device!.api!.setZoomSetting)),
+                    Text("getZoomSetting", style: getTextStyle(device!.api!.getZoomSetting)),
                   ]),
-              onTap: () => device.api.getZoomSetting(update: ForceUpdate.On),
+              onTap: () => device!.api!.getZoomSetting(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -1987,24 +1987,24 @@ class TestsPageState extends State<TestsPage> {
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<ZoomSettingValue>(
                         hint: Text("available"),
-                        items: device.cameraSettings.zoomSetting.available
+                        items: device!.cameraSettings.zoomSetting.available
                             .map<DropdownMenuItem<ZoomSettingValue>>((e) =>
                                 DropdownMenuItem<ZoomSettingValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setZoomSetting(value),
+                        onChanged: (value) => device!.api!.setZoomSetting(value),
                       ))),
               Expanded(
                   child: Padding(
                       padding: EdgeInsets.all(16),
                       child: DropdownButton<ZoomSettingValue>(
                         hint: Text("supported"),
-                        items: device.cameraSettings.zoomSetting.supported
+                        items: device!.cameraSettings.zoomSetting.supported
                             .map<DropdownMenuItem<ZoomSettingValue>>((e) =>
                                 DropdownMenuItem<ZoomSettingValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device.api.setZoomSetting(value),
+                        onChanged: (value) => device!.api!.setZoomSetting(value),
                       ))),
             ]),
           ]),
@@ -2016,7 +2016,7 @@ class TestsPageState extends State<TestsPage> {
   ///StorageInformation (get)
   Widget getStorageInformationRow() {
     return ListenableProvider<ListInfoItem>(
-      create: (context) => device.cameraSettings.storageInformation,
+      create: (context) => device!.cameraSettings.storageInformation,
       child: Consumer<ListInfoItem>(
         builder: (context, model, _) => Card(
           child: Column(children: [
@@ -2024,15 +2024,15 @@ class TestsPageState extends State<TestsPage> {
               title: Text(ItemId.StorageInformation.name),
               subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [Text("getStorageInformation", style: getTextStyle(device.api.getStorageInformation))]),
-              onTap: () => device.api.getStorageInformation(update: ForceUpdate.On),
+                  children: [Text("getStorageInformation", style: getTextStyle(device!.api!.getStorageInformation))]),
+              onTap: () => device!.api!.getStorageInformation(update: ForceUpdate.On),
             ),
             Padding(
                     padding: EdgeInsets.all(16),
                     child: DropdownButton<StringValue>(
                       isExpanded: true,
                       hint: Text("available"),
-                      items: device.cameraSettings.storageInformation.values
+                      items: device!.cameraSettings.storageInformation.values
                           .map<DropdownMenuItem<StringValue>>(
                               (e) => DropdownMenuItem<StringValue>(child: Text(e.name), value: e))
                           .toList(),
@@ -2047,7 +2047,7 @@ class TestsPageState extends State<TestsPage> {
   ///LiveViewInfo (set, get)
   Widget getLiveViewFrameInfoRow() {
     return ListenableProvider<SettingsItem>(
-      create: (context) => device.cameraSettings.liveViewFrameInfo,
+      create: (context) => device!.cameraSettings.liveViewFrameInfo,
       child: Consumer<SettingsItem>(
         builder: (context, model, _) =>
             Card(
@@ -2058,11 +2058,11 @@ class TestsPageState extends State<TestsPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                            device.cameraSettings.silentShooting.value?.name ??
+                            device!.cameraSettings.silentShooting.value?.name ??
                                 "NotAvailable",
                             textAlign: TextAlign.start),
-                        Text("setLiveViewInfo", style: getTextStyle(device.api.setLiveViewFrameInfo)),
-                        Text("getLiveViewInfo", style: getTextStyle(device.api.getLiveViewFrameInfo)),
+                        Text("setLiveViewInfo", style: getTextStyle(device!.api!.setLiveViewFrameInfo)),
+                        Text("getLiveViewInfo", style: getTextStyle(device!.api!.getLiveViewFrameInfo)),
                       ]),
             ),
           ]),
@@ -2074,7 +2074,7 @@ class TestsPageState extends State<TestsPage> {
   ///SilentShootingSettings (set, get, getSupported, getAvailable)
   Widget getSilentShootingSettingsRow() {
     return ListenableProvider<SettingsItem>(
-        create: (context) => device.cameraSettings.silentShooting,
+        create: (context) => device!.cameraSettings.silentShooting,
         child: Consumer<SettingsItem>(
             builder: (context, model, _) =>
                 Card(
@@ -2085,15 +2085,15 @@ class TestsPageState extends State<TestsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                device.cameraSettings.silentShooting.value
+                                device!.cameraSettings.silentShooting.value
                                     ?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            Text("setSilentShooting", style: getTextStyle(device.api.setSilentShooting)),
-                            Text("getSilentShooting", style: getTextStyle(device.api.getSilentShooting)),
+                            Text("setSilentShooting", style: getTextStyle(device!.api!.setSilentShooting)),
+                            Text("getSilentShooting", style: getTextStyle(device!.api!.getSilentShooting)),
                           ]),
                       onTap: () =>
-                          device.api.getSilentShooting(update: ForceUpdate.On),
+                          device!.api!.getSilentShooting(update: ForceUpdate.On),
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -2103,21 +2103,21 @@ class TestsPageState extends State<TestsPage> {
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<OnOffValue>(
                                     hint: Text("available"),
-                                    items: device
+                                    items: device!
                                         .cameraSettings.silentShooting.available
                                         .map<DropdownMenuItem<OnOffValue>>(
                                             (e) => DropdownMenuItem<OnOffValue>(
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device.api.setSilentShooting(value),
+                                        device!.api!.setSilentShooting(value),
                                   ))),
                           Expanded(
                               child: Padding(
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<OnOffValue>(
                                     hint: Text("supported"),
-                                    items: device
+                                    items: device!
                                         .cameraSettings.silentShooting.supported
                                         .map<DropdownMenuItem<OnOffValue>>(
                                             (e) =>
@@ -2125,7 +2125,7 @@ class TestsPageState extends State<TestsPage> {
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device.api.setSilentShooting(value),
+                                        device!.api!.setSilentShooting(value),
                                   ))),
                         ]),
                   ]),
@@ -2135,7 +2135,7 @@ class TestsPageState extends State<TestsPage> {
   ///Shoot Mode (set, get, getSupported, getAvailable)
   Widget getShootModeRow() {
     return ListenableProvider<SettingsItem>(
-        create: (context) => device.cameraSettings.shootMode,
+        create: (context) => device!.cameraSettings.shootMode,
         child: Consumer<SettingsItem>(
             builder: (context, model, _) =>
                 Card(
@@ -2146,15 +2146,15 @@ class TestsPageState extends State<TestsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                device.cameraSettings.shootMode.value
+                                device!.cameraSettings.shootMode.value
                                     ?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            Text("setShootMode", style: getTextStyle(device.api.setShootMode)),
-                            Text("getShootMode", style: getTextStyle(device.api.getShootMode))
+                            Text("setShootMode", style: getTextStyle(device!.api!.setShootMode)),
+                            Text("getShootMode", style: getTextStyle(device!.api!.getShootMode))
                           ]),
                       onTap: () =>
-                          device.api.getShootMode(update: ForceUpdate.On),
+                          device!.api!.getShootMode(update: ForceUpdate.On),
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -2164,7 +2164,7 @@ class TestsPageState extends State<TestsPage> {
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<ShootModeValue>(
                                     hint: Text("available"),
-                                    items: device
+                                    items: device!
                                         .cameraSettings.shootMode.available
                                         .map<DropdownMenuItem<ShootModeValue>>(
                                             (e) =>
@@ -2172,14 +2172,14 @@ class TestsPageState extends State<TestsPage> {
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device.api.setShootMode(value),
+                                        device!.api!.setShootMode(value),
                                   ))),
                           Expanded(
                               child: Padding(
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<ShootModeValue>(
                                     hint: Text("supported"),
-                                    items: device
+                                    items: device!
                                         .cameraSettings.shootMode.supported
                                         .map<DropdownMenuItem<ShootModeValue>>(
                                             (e) =>
@@ -2187,7 +2187,7 @@ class TestsPageState extends State<TestsPage> {
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device.api.setShootMode(value),
+                                        device!.api!.setShootMode(value),
                                   ))),
                         ]),
                   ]),
@@ -2198,7 +2198,7 @@ class TestsPageState extends State<TestsPage> {
   ///Image File Format (set, get, getSupported, getAvailable)
   Widget getImageFileFormatRow() {
     return ListenableProvider<SettingsItem>(
-        create: (context) => device.cameraSettings.imageFileFormat,
+        create: (context) => device!.cameraSettings.imageFileFormat,
         child: Consumer<SettingsItem>(
             builder: (context, model, _) =>
                 Card(
@@ -2209,15 +2209,15 @@ class TestsPageState extends State<TestsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                device.cameraSettings.imageFileFormat.value
+                                device!.cameraSettings.imageFileFormat.value
                                     ?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            Text("setImageFileFormat", style: getTextStyle(device.api.setImageFileFormat)),
-                            Text("getImageFileFormat", style: getTextStyle(device.api.getImageFileFormat))
+                            Text("setImageFileFormat", style: getTextStyle(device!.api!.setImageFileFormat)),
+                            Text("getImageFileFormat", style: getTextStyle(device!.api!.getImageFileFormat))
                           ]),
                       onTap: () =>
-                          device.api.getImageFileFormat(update: ForceUpdate.On),
+                          device!.api!.getImageFileFormat(update: ForceUpdate.On),
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -2227,25 +2227,25 @@ class TestsPageState extends State<TestsPage> {
                                   padding: EdgeInsets.all(16),
                                   child: DropdownButton<ImageFileFormatValue>(
                                     hint: Text("available"),
-                                    items: device
+                                    items: device!
                                         .cameraSettings.imageFileFormat.available
                                         .map<DropdownMenuItem<ImageFileFormatValue>>(
                                             (e) =>
                                             DropdownMenuItem<ImageFileFormatValue>(
                                                 child: Text(e.name), value: e))
                                         .toList(),
-                                    onChanged: (value) => device.api.setImageFileFormat(value),
+                                    onChanged: (value) => device!.api!.setImageFileFormat(value),
                               ))),
                       Expanded(
                           child: Padding(
                               padding: EdgeInsets.all(16),
                               child: DropdownButton<ImageFileFormatValue>(
                                 hint: Text("supported"),
-                                items: device.cameraSettings.imageFileFormat.supported
+                                items: device!.cameraSettings.imageFileFormat.supported
                                     .map<DropdownMenuItem<ImageFileFormatValue>>(
                                         (e) => DropdownMenuItem<ImageFileFormatValue>(child: Text(e.name), value: e))
                                     .toList(),
-                                onChanged: (value) => device.api.setImageFileFormat(value),
+                                onChanged: (value) => device!.api!.setImageFileFormat(value),
                               ))),
                     ]),
                   ]),
@@ -2255,18 +2255,18 @@ class TestsPageState extends State<TestsPage> {
   ///Image Size
   Widget getImageSizeRow() {
     return ListenableProvider<SettingsItem>(
-        create: (context) => device.cameraSettings.imageSize,
+        create: (context) => device!.cameraSettings.imageSize,
         child: Consumer<SettingsItem>(
             builder: (context, model, _) => Card(
                   child: Column(children: [
                     ListTile(
                       title: Text(ItemId.ImageSize.name),
                       subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                        Text(device.cameraSettings.imageSize.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
-                        Text("setImageSize", style: getTextStyle(device.api.setImageSize)),
-                        Text("getImageSize", style: getTextStyle(device.api.getImageSize))
+                        Text(device!.cameraSettings.imageSize.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
+                        Text("setImageSize", style: getTextStyle(device!.api!.setImageSize)),
+                        Text("getImageSize", style: getTextStyle(device!.api!.getImageSize))
                       ]),
-                      onTap: () => device.api.getImageSize(update: ForceUpdate.On),
+                      onTap: () => device!.api!.getImageSize(update: ForceUpdate.On),
                     ),
                     Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                       Expanded(
@@ -2274,22 +2274,22 @@ class TestsPageState extends State<TestsPage> {
                               padding: EdgeInsets.all(16),
                               child: DropdownButton<ImageSizeValue>(
                                 hint: Text("available"),
-                                items: device.cameraSettings.imageSize.available
+                                items: device!.cameraSettings.imageSize.available
                                     .map<DropdownMenuItem<ImageSizeValue>>(
                                         (e) => DropdownMenuItem<ImageSizeValue>(child: Text(e.name), value: e))
                                     .toList(),
-                                onChanged: (value) => device.api.setImageSize(value),
+                                onChanged: (value) => device!.api!.setImageSize(value),
                               ))),
                       Expanded(
                           child: Padding(
                               padding: EdgeInsets.all(16),
                               child: DropdownButton<ImageSizeValue>(
                                 hint: Text("supported"),
-                                items: device.cameraSettings.imageSize.supported
+                                items: device!.cameraSettings.imageSize.supported
                                     .map<DropdownMenuItem<ImageSizeValue>>(
                                         (e) => DropdownMenuItem<ImageSizeValue>(child: Text(e.name), value: e))
                                     .toList(),
-                                onChanged: (value) => device.api.setImageSize(value),
+                                onChanged: (value) => device!.api!.setImageSize(value),
                               ))),
                     ]),
                   ]),
@@ -2299,19 +2299,19 @@ class TestsPageState extends State<TestsPage> {
   ///Aspect Ratio
   Widget getAspectRatioRow() {
     return ListenableProvider<SettingsItem>(
-        create: (context) => device.cameraSettings.aspectRatio,
+        create: (context) => device!.cameraSettings.aspectRatio,
         child: Consumer<SettingsItem>(
             builder: (context, model, _) => Card(
                   child: Column(children: [
                     ListTile(
                       title: Text(ItemId.ImageFileFormat.name),
                       subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                        Text(device.cameraSettings.aspectRatio.value?.name ?? "NotAvailable",
+                        Text(device!.cameraSettings.aspectRatio.value?.name ?? "NotAvailable",
                             textAlign: TextAlign.start),
-                        Text("setAspectRatio", style: getTextStyle(device.api.setAspectRatio)),
-                        Text("getAspectRatio", style: getTextStyle(device.api.getAspectRatio))
+                        Text("setAspectRatio", style: getTextStyle(device!.api!.setAspectRatio)),
+                        Text("getAspectRatio", style: getTextStyle(device!.api!.getAspectRatio))
                       ]),
-                      onTap: () => device.api.getAspectRatio(update: ForceUpdate.On),
+                      onTap: () => device!.api!.getAspectRatio(update: ForceUpdate.On),
                     ),
                     Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                       Expanded(
@@ -2319,22 +2319,22 @@ class TestsPageState extends State<TestsPage> {
                               padding: EdgeInsets.all(16),
                               child: DropdownButton<AspectRatioValue>(
                                 hint: Text("available"),
-                                items: device.cameraSettings.aspectRatio.available
+                                items: device!.cameraSettings.aspectRatio.available
                                     .map<DropdownMenuItem<AspectRatioValue>>(
                                         (e) => DropdownMenuItem<AspectRatioValue>(child: Text(e.name), value: e))
                                     .toList(),
-                                onChanged: (value) => device.api.setAspectRatio(value),
+                                onChanged: (value) => device!.api!.setAspectRatio(value),
                               ))),
                       Expanded(
                           child: Padding(
                               padding: EdgeInsets.all(16),
                               child: DropdownButton<AspectRatioValue>(
                                 hint: Text("supported"),
-                                items: device.cameraSettings.aspectRatio.supported
+                                items: device!.cameraSettings.aspectRatio.supported
                                     .map<DropdownMenuItem<AspectRatioValue>>(
                                         (e) => DropdownMenuItem<AspectRatioValue>(child: Text(e.name), value: e))
                                     .toList(),
-                                onChanged: (value) => device.api.setAspectRatio(value),
+                                onChanged: (value) => device!.api!.setAspectRatio(value),
                               ))),
                     ]),
                   ]),

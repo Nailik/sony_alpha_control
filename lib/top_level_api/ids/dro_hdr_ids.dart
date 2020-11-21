@@ -63,7 +63,7 @@ extension DroHdrIdExtension on DroHdrId {
 
   String get wifiValue => throw UnimplementedError;
 
-  static DroHdrId getIdFromUsb(int usbValue) => DroHdrId.values
+  static DroHdrId getIdFromUsb(int? usbValue) => DroHdrId.values
           .firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(DroHdrId, usbValue);
         return DroHdrId.Unknown;

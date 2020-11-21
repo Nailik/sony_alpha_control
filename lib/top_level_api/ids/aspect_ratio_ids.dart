@@ -35,13 +35,13 @@ extension AspectRatioIdExtension on AspectRatioId {
     }
   }
 
-  static AspectRatioId getIdFromUsb(int usbValue) =>
+  static AspectRatioId getIdFromUsb(int? usbValue) =>
       AspectRatioId.values.firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(AspectRatioId, usbValue);
         return AspectRatioId.Unknown;
       });
 
-  static AspectRatioId getIdFromWifi(String wifiValue) => AspectRatioId.values
+  static AspectRatioId getIdFromWifi(String? wifiValue) => AspectRatioId.values
           .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
         Logger.n(AspectRatioId, wifiValue);
         return AspectRatioId.Unknown;

@@ -108,7 +108,7 @@ extension WhiteBalanceAbIdExtension on WhiteBalanceAbId {
 
   String get wifiValue => throw UnimplementedError;
 
-  static WhiteBalanceAbId getIdFromUsb(int usbValue) => WhiteBalanceAbId.values
+  static WhiteBalanceAbId getIdFromUsb(int? usbValue) => WhiteBalanceAbId.values
           .firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(WhiteBalanceAbId, usbValue);
         return WhiteBalanceAbId.Unknown;

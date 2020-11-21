@@ -65,13 +65,13 @@ extension ImageSizeIdExtension on ImageSizeId {
     }
   }
 
-  static ImageSizeId getIdFromUsb(int usbValue) => ImageSizeId.values
+  static ImageSizeId getIdFromUsb(int? usbValue) => ImageSizeId.values
           .firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(ImageSizeId, usbValue);
         return ImageSizeId.Unknown;
       });
 
-  static ImageSizeId getIdFromWifi(String wifiValue) => ImageSizeId.values
+  static ImageSizeId getIdFromWifi(String? wifiValue) => ImageSizeId.values
           .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
         Logger.n(ImageSizeId, wifiValue);
         return ImageSizeId.Unknown;

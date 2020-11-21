@@ -1,8 +1,8 @@
 import 'package:sonyalphacontrol/wifi/xml/wifi_camera_xml.dart';
 
 class Root {
-  SpecVersion specVersion;
-  WifiCameraXML device;
+  SpecVersion? specVersion;
+  WifiCameraXML? device;
 
   Root(this.specVersion, this.device);
 
@@ -22,14 +22,14 @@ class Root {
 }
 
 class SpecVersion {
-  String major;
-  String minor;
+  String? major;
+  String? minor;
 
   SpecVersion(this.major, this.minor);
 
   factory SpecVersion.fromJson(Map<String, dynamic> json) => SpecVersion(
-    json['major'] as String,
-    json['minor'] as String,
+    json['major'] as String?,
+    json['minor'] as String?,
   );
 
   Map<String, dynamic> toJson() => <String, dynamic>{

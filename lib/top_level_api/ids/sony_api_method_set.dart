@@ -7,8 +7,8 @@ class WebApiMethod {
   final ApiMethodId apiName;
 
   final ItemId settingsId;
-  final List<String> parameterTypes;
-  final List<String> responseTypes;
+  final List<String>? parameterTypes;
+  final List<String>? responseTypes;
   final WebApiVersionId
       version; //all the versions that are available for this method
 

@@ -3,7 +3,7 @@ import 'package:sonyalphacontrol/sonyalphacontrol.dart';
 import 'package:sonyalphacontrol/wifi/api/live_view.dart';
 
 class LiveViewPage extends StatefulWidget {
-  final SonyCameraDevice device;
+  final SonyCameraDevice? device;
 
   const LiveViewPage(this.device) : super();
 
@@ -12,11 +12,11 @@ class LiveViewPage extends StatefulWidget {
 }
 
 class _LiveViewPageState extends State<LiveViewPage> {
-  final SonyCameraDevice device;
-  LiveView live;
+  final SonyCameraDevice? device;
+  late LiveView live;
 
   _LiveViewPageState(this.device) {
-    live = LiveView(device);
+    live = LiveView(device as SonyCameraWifiDevice?);
   }
 
   @override

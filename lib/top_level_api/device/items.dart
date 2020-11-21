@@ -21,11 +21,11 @@ import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart'
 
 //TODO zusammengefasstes "teilen" auch in usb -> man wählt das eine aus,
 
-class SettingsItem<T extends Value> extends ChangeNotifier {
+class SettingsItem<T extends Value?> extends ChangeNotifier {
   final ItemId itemId;
 
-  T get value => _value;
-  T _value;
+  T? get value => _value;
+  T? _value;
 
   List<T> get available => _available;
   List<T> _available = new List.unmodifiable({});
@@ -64,14 +64,14 @@ class SettingsItem<T extends Value> extends ChangeNotifier {
   }
 
   createListFromWifiJson(List<dynamic> list) =>
-      list.map<T>((e) => Value.fromWifi(itemId, e)).toList();
+      list.map<T?>((e) => Value.fromWifi(itemId, e) as T?).toList();
 }
 
-class InfoItem<T extends Value> extends ChangeNotifier {
+class InfoItem<T extends Value?> extends ChangeNotifier {
   final ItemId itemId;
 
-  T get value => _value;
-  T _value;
+  T? get value => _value;
+  T? _value;
 
   updateItem(T newValue) {
     if (_value != newValue) {
@@ -83,10 +83,10 @@ class InfoItem<T extends Value> extends ChangeNotifier {
   InfoItem(this.itemId);
 
   createListFromWifiJson(List<dynamic> list) =>
-      list.map<T>((e) => Value.fromWifi(itemId, e)).toList();
+      list.map<T?>((e) => Value.fromWifi(itemId, e) as T?).toList();
 }
 
-class ListInfoItem<T extends Value> extends ChangeNotifier {
+class ListInfoItem<T extends Value?> extends ChangeNotifier {
   final ItemId itemId;
 
   List<T> get values => _value;
@@ -102,5 +102,5 @@ class ListInfoItem<T extends Value> extends ChangeNotifier {
   ListInfoItem(this.itemId);
 
   createListFromWifiJson(List<dynamic> list) =>
-      list.map<T>((e) => Value.fromWifi(itemId, e)).toList();
+      list.map<T?>((e) => Value.fromWifi(itemId, e) as T?).toList();
 }

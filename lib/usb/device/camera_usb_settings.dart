@@ -13,8 +13,8 @@ import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import '../commands/usb_commands.dart';
 
 class CameraUsbSettings extends CameraSettings {
-  List<int> mainSettings = new List();
-  List<int> subSettings = new List();
+  List<int?> mainSettings = new List();
+  List<int?> subSettings = new List();
 
   @override
   Future<bool> update() async {
@@ -57,7 +57,7 @@ class CameraUsbSettings extends CameraSettings {
 
   analyzeSettingsAvailable(/*Response response*/) {
     /*if (!isValidResponse(response)) return;*/
-    var bytes = null;//Uint8List.fromList(response.inData).buffer.asByteData();
+    dynamic bytes = null;//Uint8List.fromList(response.inData).buffer.asByteData();
 
     int offset = 30; //TODO maybe only wia offset?
     if (Platform.isAndroid) {
@@ -86,7 +86,7 @@ class CameraUsbSettings extends CameraSettings {
   analyzeSettings(/*Response response*/) {
     // if (!isValidResponse(response)) return;
 
-    var byteList = null;//response.inData.toByteList();
+    dynamic byteList = null;//response.inData.toByteList();
     var bytes = byteList.buffer.asByteData();
 
     int offset = 30; //TODO maybe only wia offset?
@@ -104,7 +104,7 @@ class CameraUsbSettings extends CameraSettings {
 
       ItemId settingsIdEnum = ItemIdExtension.getIdFromUsb(settingsId);
 
-      SettingsItem setting;//TODO = getItem(settingsIdEnum);
+      SettingsItem? setting;//TODO = getItem(settingsIdEnum);
       if (setting == null) {
         print("ERROR ******");
       }
@@ -117,7 +117,7 @@ class CameraUsbSettings extends CameraSettings {
         case 1:
           offset += 3;
 
-          setting.updateItem(
+          setting!.updateItem(
               Value.fromUsb(setting.itemId, bytes.getUint8(offset)),
               setting.available,
               setting.supported);
@@ -136,7 +136,7 @@ class CameraUsbSettings extends CameraSettings {
           break;
         case 2:
           offset += 3;
-          setting.updateItem(
+          setting!.updateItem(
               Value.fromUsb(setting.itemId, bytes.getUint8(offset)),
               setting.available,
               setting.supported);
@@ -200,7 +200,7 @@ class CameraUsbSettings extends CameraSettings {
           break;
         case 3:
           offset += 4;
-          setting.updateItem(
+          setting!.updateItem(
               Value.fromUsb(
                   setting.itemId, bytes.getInt16(offset, Endian.little)),
               setting.available,
@@ -223,7 +223,7 @@ class CameraUsbSettings extends CameraSettings {
                 offset += 2;
               }
               setting.available
-                  .sort((a, b) => a.usbValue.compareTo(b.usbValue));
+                  .sort((a, b) => a.usbValue!.compareTo(b.usbValue!));
               break;
             default:
               //unkown
@@ -233,7 +233,7 @@ class CameraUsbSettings extends CameraSettings {
           break;
         case 4: //White blanace color temp
           offset += 4;
-          setting.updateItem(
+          setting!.updateItem(
               Value.fromUsb(
                   setting.itemId, bytes.getUint16(offset, Endian.little)),
               setting.available,
@@ -282,7 +282,7 @@ class CameraUsbSettings extends CameraSettings {
           break;
         case 6:
           offset += 6;
-          if (setting.hasSubValue()) {
+          if (setting!.hasSubValue()) {
             var value = bytes.getUint16(offset, Endian.little);
             offset += 2;
             var subValue = bytes.getUint16(offset, Endian.little);

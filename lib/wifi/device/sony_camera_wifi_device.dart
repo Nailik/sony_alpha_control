@@ -1,5 +1,6 @@
 import 'dart:core';
 
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dart';
 import 'package:sonyalphacontrol/top_level_api/device/items.dart';
 import 'package:sonyalphacontrol/top_level_api/device/sony_camera_device.dart';
@@ -15,16 +16,16 @@ import 'package:sonyalphacontrol/wifi/xml/wifi_camera_xml.dart';
 import 'camera_wifi_settings.dart';
 
 class SonyCameraWifiDevice extends SonyCameraDevice<CameraWifiSettings> {
-  WifiCameraXML info;
+  WifiCameraXML? info;
 
-  SonyCameraWifiDevice(String name, this.info) : super(name);
+  SonyCameraWifiDevice(String? name, this.info) : super(name);
 
   @override
   InterfaceType get interfaceType => InterfaceType.Wifi_Interface;
 
-  CameraWebApiService getWebApiService(SonyWebApiServiceTypeId service) =>
-      info.scalarWebApiDeviceInfo.serviceList.services
-          .firstWhere((element) => element.type == service.wifiValue, orElse: () => null);
+  CameraWebApiService? getWebApiService(SonyWebApiServiceTypeId? service) =>
+      info!.scalarWebApiDeviceInfo!.serviceList!.services!
+          .firstWhereOrNull((element) => element.type == service!.wifiValue);
 
   @override
   CameraWifiSettings createSettings() => CameraWifiSettings(this);
@@ -38,11 +39,11 @@ class SonyCameraWifiDevice extends SonyCameraDevice<CameraWifiSettings> {
 }
 
 class WifiCameraInfo {
-  String usn;
+  String? usn;
   String uuid;
-  String location;
-  String server;
-  String st;
+  String? location;
+  String? server;
+  String? st;
 
   WifiCameraInfo(this.usn, this.uuid, this.location, this.server, this.st);
 

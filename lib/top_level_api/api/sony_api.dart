@@ -10,9 +10,9 @@ class SonyApi {
   //this will log the responses of every request
   static var analyze = false; //TODO errors in writing files on android for some names and always windows
 
-  static SonyCameraDevice _connectedCamera;
+  static SonyCameraDevice? _connectedCamera;
 
-  static SonyCameraDevice get connectedCamera => _connectedCamera;
+  static SonyCameraDevice? get connectedCamera => _connectedCamera;
 
   static SonyWifiApi _wifiApi = SonyWifiApi();
   static SonyUsbApi _usbApi = SonyUsbApi();
@@ -38,7 +38,7 @@ class SonyApi {
 
   static var streamGroup;
 
-  static Stream<List<SonyCameraDevice>> getDevices(Duration updateDuration) {
+  static Stream<List<SonyCameraDevice>>? getDevices(Duration updateDuration) {
     print("getDevices");
     //TODO usb
     //TODO stop

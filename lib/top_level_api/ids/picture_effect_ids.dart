@@ -120,7 +120,7 @@ extension PictureEffectIdExtension on PictureEffectId {
 
   String get wifiValue => throw UnimplementedError;
 
-  static PictureEffectId getIdFromUsb(int usbValue) => PictureEffectId.values
+  static PictureEffectId getIdFromUsb(int? usbValue) => PictureEffectId.values
           .firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(PictureEffectId, usbValue);
         return PictureEffectId.Unknown;

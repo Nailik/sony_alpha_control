@@ -60,7 +60,7 @@ extension FocusAreaIdExtension on FocusAreaId {
 
   String get wifiValue => throw UnimplementedError;
 
-  static FocusAreaId getIdFromUsb(int usbValue) => FocusAreaId.values
+  static FocusAreaId getIdFromUsb(int? usbValue) => FocusAreaId.values
           .firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(FocusAreaId, usbValue);
         return FocusAreaId.Unknown;

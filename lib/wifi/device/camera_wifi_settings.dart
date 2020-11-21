@@ -16,7 +16,7 @@ class CameraWifiSettings extends CameraSettings {
   CameraWifiSettings(this.sonyCameraWifiDevice);
 
   ListInfoItem updateListInfoItem(ListInfoItem listInfoItem, String json,
-      {WebApiVersionId webApiVersion}) {
+      {WebApiVersionId? webApiVersion}) {
     var jsonD = jsonDecode(json);
     var list = jsonD["result"];
     switch (listInfoItem.itemId) {

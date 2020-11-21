@@ -3,8 +3,8 @@ import 'dart:typed_data';
 
 class CameraImage {
   String name;
-  Uint8List data;
-  File file; //file may be null
+  Uint8List? data;
+  File? file; //file may be null
 
   CameraImage(this.name, this.data, {this.file});
 }

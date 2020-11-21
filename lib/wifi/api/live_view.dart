@@ -39,7 +39,7 @@ class FrameInformationData extends Payload {
 }
 
 class LiveView {
-  final SonyCameraWifiDevice cameraDevice;
+  final SonyCameraWifiDevice? cameraDevice;
 
   LiveView(this.cameraDevice);
 

@@ -71,7 +71,7 @@ extension AutoFocusStateIdExtension on FocusStateId {
     }
   }
 
-  static FocusStateId getIdFromUsb(int usbValue) => FocusStateId.values
+  static FocusStateId getIdFromUsb(int? usbValue) => FocusStateId.values
           .firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(AspectRatioId, usbValue);
         return FocusStateId.Unknown;

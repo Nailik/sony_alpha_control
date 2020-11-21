@@ -120,7 +120,7 @@ extension ShootingModeIdExtension on ShootingModeId {
 
   String get wifiValue => throw UnimplementedError;
 
-  static ShootingModeId getIdFromUsb(int usbValue) => ShootingModeId.values
+  static ShootingModeId getIdFromUsb(int? usbValue) => ShootingModeId.values
           .firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(ShootingModeId, usbValue);
         return ShootingModeId.Unknown;

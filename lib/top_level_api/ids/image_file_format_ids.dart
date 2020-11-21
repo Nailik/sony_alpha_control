@@ -51,7 +51,7 @@ extension ImageFileFormatIdExtension on ImageFileFormatId {
     }
   }
 
-  static ImageFileFormatId getIdFromUsb(int usbValue) =>
+  static ImageFileFormatId getIdFromUsb(int? usbValue) =>
       ImageFileFormatId.values
           .firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(ImageFileFormatId, usbValue);

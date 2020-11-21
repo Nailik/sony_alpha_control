@@ -202,7 +202,7 @@ extension DriveModeIdExtension on DriveModeId {
 
   String get wifiValue => throw UnimplementedError; //TODO
 
-  static DriveModeId getIdFromUsb(int usbValue) => DriveModeId.values
+  static DriveModeId getIdFromUsb(int? usbValue) => DriveModeId.values
           .firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(DriveModeId, usbValue);
         return DriveModeId.Unknown;

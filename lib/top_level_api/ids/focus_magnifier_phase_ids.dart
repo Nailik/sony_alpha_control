@@ -38,7 +38,7 @@ extension FocusMagnifierPhaseIdExtension on FocusMagnifierPhaseId {
 
   String get wifiValue => throw UnimplementedError;
 
-  static FocusMagnifierPhaseId getIdFromUsb(int usbValue) =>
+  static FocusMagnifierPhaseId getIdFromUsb(int? usbValue) =>
       FocusMagnifierPhaseId.values
           .firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(FocusMagnifierPhaseId, usbValue);

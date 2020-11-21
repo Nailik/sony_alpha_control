@@ -12,9 +12,9 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem<EvValue> exposureCompensation = SettingsItem<EvValue>(ItemId.ExposureCompensation);
   SettingsItem<FlashModeValue> flashMode = SettingsItem<FlashModeValue>(ItemId.FlashMode);
   SettingsItem<FocusModeValue> focusMode = SettingsItem<FocusModeValue>(ItemId.FocusMode);
-  SettingsItem<WhiteBalanceModeValue> whiteBalanceMode = SettingsItem<WhiteBalanceModeValue>(ItemId.WhiteBalanceMode);
-  SettingsItem<WhiteBalanceColorTempValue> whiteBalanceColorTemp =
-      SettingsItem<WhiteBalanceColorTempValue>(ItemId.WhiteBalanceColorTemp);
+  SettingsItem<WhiteBalanceModeValue?> whiteBalanceMode = SettingsItem<WhiteBalanceModeValue?>(ItemId.WhiteBalanceMode);
+  SettingsItem<WhiteBalanceColorTempValue?> whiteBalanceColorTemp =
+      SettingsItem<WhiteBalanceColorTempValue?>(ItemId.WhiteBalanceColorTemp);
   SettingsItem<BoolValue> aelState = SettingsItem<BoolValue>(ItemId.AEL_State);
   SettingsItem<BoolValue> fel = SettingsItem<BoolValue>(ItemId.FEL);
   SettingsItem<FocusAreaValue> focusArea = SettingsItem<FocusAreaValue>(ItemId.FocusArea);
@@ -52,14 +52,14 @@ abstract class CameraSettings extends ChangeNotifier {
   SettingsItem<FocusMagnifierPhaseValue> focusMagnifierPhase = SettingsItem<FocusMagnifierPhaseValue>(
       ItemId.FocusMagnifierPhase);
   SettingsItem<DoubleValue> focusMagnifier = SettingsItem<DoubleValue>(ItemId.FocusMagnifier);
-  SettingsItem<CameraFunctionValue> cameraFunction = SettingsItem<CameraFunctionValue>(ItemId.CameraFunction);
+  SettingsItem<CameraFunctionValue?> cameraFunction = SettingsItem<CameraFunctionValue?>(ItemId.CameraFunction);
   SettingsItem<StringValue> zoom = SettingsItem<StringValue>(ItemId.Zoom);
   SettingsItem<IntValue> selfTimer = SettingsItem<IntValue>(ItemId.SelfTimer);
   SettingsItem<ContShootingModeValue> contShootingMode = SettingsItem<ContShootingModeValue>(ItemId.ContShootingMode);
   SettingsItem<ContShootingSpeedValue> contShootingSpeed =
   SettingsItem<ContShootingSpeedValue>(ItemId.ContShootingSpeed);
   SettingsItem<MeteringModeValue> meteringMode = SettingsItem<MeteringModeValue>(ItemId.MeteringMode);
-  SettingsItem<LiveViewSizeValue> liveViewSize = SettingsItem<LiveViewSizeValue>(ItemId.LiveViewSize);
+  SettingsItem<LiveViewSizeValue?> liveViewSize = SettingsItem<LiveViewSizeValue?>(ItemId.LiveViewSize);
   SettingsItem<PostViewImageSizeValue> postViewImageSize = SettingsItem<PostViewImageSizeValue>(
       ItemId.PostViewImageSize);
   SettingsItem<IntValue> programShift = SettingsItem<IntValue>(ItemId.ProgramShift);

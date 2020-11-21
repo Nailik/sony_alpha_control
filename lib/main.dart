@@ -74,9 +74,9 @@ class _MyAppState extends State<MyApp> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
-              itemCount: snapshot.data.length,
+              itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                return getListTile(snapshot.data[index], context);
+                return getListTile(snapshot.data![index], context);
               },
             );
           } else {
@@ -90,7 +90,7 @@ class _MyAppState extends State<MyApp> {
 
   Widget getListTile(SonyCameraDevice device, BuildContext context) {
     return ListTile(
-      title: Text(device.name),
+      title: Text(device.name!),
       subtitle: Text("huhu"),
       onTap: () async {
         await SonyApi.connectCamera(device);

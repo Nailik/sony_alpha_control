@@ -22,7 +22,7 @@ extension RecordVideoStateIdExtension on RecordVideoStateId {
 
   String get wifiValue => throw UnimplementedError;
 
-  static RecordVideoStateId getIdFromUsb(int usbValue) =>
+  static RecordVideoStateId getIdFromUsb(int? usbValue) =>
       RecordVideoStateId.values
           .firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(RecordVideoStateId, usbValue);

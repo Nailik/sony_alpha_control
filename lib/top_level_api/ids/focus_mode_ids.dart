@@ -48,7 +48,7 @@ extension FocusModeIdExtension on FocusModeId {
     }
   }
 
-  static FocusModeId getIdFromUsb(int usbValue) => FocusModeId.values
+  static FocusModeId getIdFromUsb(int? usbValue) => FocusModeId.values
           .firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(FocusModeId, usbValue);
         return FocusModeId.Unknown;

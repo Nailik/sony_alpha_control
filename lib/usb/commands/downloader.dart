@@ -12,9 +12,9 @@ import 'package:sonyalphacontrol/usb/device/sony_camera_usb_device.dart';
 import 'usb_commands.dart';
 
 class Downloader {
-  static SonyCameraDevice device;
+  static SonyCameraDevice? device;
 
-  static Future<List<CameraImage>> download() async {
+  static Future<List<CameraImage>?> download() async {
    /* fetchPhotos((device as SonyCameraUsbDevice).device.toJson());*/
     /*
     var result = await FlutterIsolate.spawn(fetchPhotos, (device as SonyCameraUsbDevice).device.toJson());
@@ -74,8 +74,8 @@ Future<List<CameraImage>> fetchPhotos(Map<String, dynamic> deviceJson) async {
   return imageList;*/
 }
 
-Future<CameraImage> getImage(SonyCameraDevice device,
-    {bool liveView = false, String filePath}) async {
+Future<CameraImage?> getImage(SonyCameraDevice device,
+    {bool liveView = false, String? filePath}) async {
 /*
   print("requestPhotoAvailable");
   var request = await device.api.requestPhotoAvailable(liveView: liveView);
@@ -98,7 +98,7 @@ Future<CameraImage> getImage(SonyCameraDevice device,
   //   return null;
   //  }
 
-  var bytelist = null;// response.inData.toByteList();
+  dynamic bytelist = null;// response.inData.toByteList();
   var buffer = bytelist.buffer;
   var bytes = buffer.asByteData();
 
@@ -122,7 +122,7 @@ Future<CameraImage> getImage(SonyCameraDevice device,
         print("Frame empty");
         return null;
       }
-      int unkBufferSize = bytes.getUint32(offset, Endian.little);
+      int? unkBufferSize = bytes.getUint32(offset, Endian.little);
       offset += 4;
       if (unkBufferSize == 0) {
         print("Frame empty");
@@ -130,12 +130,12 @@ Future<CameraImage> getImage(SonyCameraDevice device,
       }
       print(
           "Frame unkBufferSize ${DateTime.now().millisecondsSinceEpoch - mills}  size: ${bytes.lengthInBytes} offset: $offset unkBufferSize. $unkBufferSize ");
-      int liveViewBufferSize = bytes.getUint32(offset, Endian.little);
+      int? liveViewBufferSize = bytes.getUint32(offset, Endian.little);
       offset += 4;
       print(
           "Frame liveViewBufferSize ${DateTime.now().millisecondsSinceEpoch - mills}  size: ${bytes.lengthInBytes} offset: $offset unkBufferSize. $unkBufferSize ");
 
-      var unkBuff = ByteData.view(buffer, offset, unkBufferSize - 8);
+      var unkBuff = ByteData.view(buffer, offset, unkBufferSize! - 8);
       print("Frame unkBuff ${DateTime.now().millisecondsSinceEpoch - mills}");
       var start = offset + unkBufferSize - 8;
       print(
@@ -146,7 +146,7 @@ Future<CameraImage> getImage(SonyCameraDevice device,
       return null;
     }
   } else {
-    Uint8List data = bytelist.sublist(offset);
+    Uint8List? data = bytelist.sublist(offset);
     var file;
     if (filePath != null) {
       file = new File(

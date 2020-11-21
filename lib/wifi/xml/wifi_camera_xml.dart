@@ -1,20 +1,20 @@
 import 'camera_web_api.dart';
 
 class WifiCameraXML {
-  String deviceType;
-  String friendlyName;
-  String manufacturer;
-  String manufacturerURL;
-  String modelDescription;
-  String modelName;
-  String modelUrl;
-  String UDN;
-  String standardCDS;
-  String photoRoot;
-  String liveViewUrl;
+  String? deviceType;
+  String? friendlyName;
+  String? manufacturer;
+  String? manufacturerURL;
+  String? modelDescription;
+  String? modelName;
+  String? modelUrl;
+  String? UDN;
+  String? standardCDS;
+  String? photoRoot;
+  String? liveViewUrl;
 
-  List<CameraService> serviceListNode;
-  CameraWebApi scalarWebApiDeviceInfo;
+  List<CameraService>? serviceListNode;
+  CameraWebApi? scalarWebApiDeviceInfo;
 
   @override
   bool operator ==(o) => o is WifiCameraXML && this.UDN.toString() == o.UDN.toString();
@@ -37,18 +37,18 @@ class WifiCameraXML {
       this.serviceListNode);
 
   factory WifiCameraXML.fromJson(Map<String, dynamic> json) => WifiCameraXML(
-        json['deviceType'] as String,
-        json['friendlyName'] as String,
-        json['manufacturer'] as String,
-        json['manufacturerURL'] as String,
-        json['modelDescription'] as String,
-        json['modelName'] as String,
-        json['modelUrl'] as String,
-        json['UDN'] as String,
-        json['standardCDS'] as String,
-        json['photoRoot'] as String,
-        json['liveViewUrl'] as String,
-        (json['serviceListNode'] as List)
+        json['deviceType'] as String?,
+        json['friendlyName'] as String?,
+        json['manufacturer'] as String?,
+        json['manufacturerURL'] as String?,
+        json['modelDescription'] as String?,
+        json['modelName'] as String?,
+        json['modelUrl'] as String?,
+        json['UDN'] as String?,
+        json['standardCDS'] as String?,
+        json['photoRoot'] as String?,
+        json['liveViewUrl'] as String?,
+        (json['serviceListNode'] as List?)
             ?.map((e) => e == null
                 ? null
                 : CameraService.fromJson(e as Map<String, dynamic>))
@@ -76,21 +76,21 @@ class WifiCameraXML {
 }
 
 class CameraService {
-  String serviceType;
-  String serviceId;
-  String SCPDURL;
-  String controlURL;
-  String eventSubURL;
+  String? serviceType;
+  String? serviceId;
+  String? SCPDURL;
+  String? controlURL;
+  String? eventSubURL;
 
   CameraService(this.serviceType, this.serviceId, this.SCPDURL, this.controlURL,
       this.eventSubURL);
 
   factory CameraService.fromJson(Map<String, dynamic> json) => CameraService(
-    json['serviceType'] as String,
-    json['serviceId'] as String,
-    json['SCPDURL'] as String,
-    json['controlURL'] as String,
-    json['eventSubURL'] as String,
+    json['serviceType'] as String?,
+    json['serviceId'] as String?,
+    json['SCPDURL'] as String?,
+    json['controlURL'] as String?,
+    json['eventSubURL'] as String?,
   );
 
   Map<String, dynamic> toJson() => <String, dynamic>{

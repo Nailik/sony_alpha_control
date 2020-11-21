@@ -101,7 +101,7 @@ extension WhiteBalanceIdExtension on WhiteBalanceModeId {
     }
   }
 
-  static WhiteBalanceModeId getIdFromUsb(int usbValue) =>
+  static WhiteBalanceModeId getIdFromUsb(int? usbValue) =>
       WhiteBalanceModeId.values
           .firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(WhiteBalanceModeId, usbValue);

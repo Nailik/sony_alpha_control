@@ -12,9 +12,9 @@ class UsbCommands {
   static var index = 1;
 
 //omost often used values as default
-  static SonyUsbCommand getCommandSetting(ItemId settingsId,
+  static SonyUsbCommand? getCommandSetting(ItemId settingsId,
       {OpCodeId opCodeId = OpCodeId.SubSetting,
-      int value1 = 0,
+      int? value1 = 0,
       int value2 = 0,
       int value1DataSize = 2,
       int value2DataSize = 0,
@@ -128,7 +128,7 @@ class UsbCommands {
     return null;
   }
 
-  static addValueToCommand(Uint8List list, int value, int valueDataSize) {
+  static addValueToCommand(Uint8List list, int? value, int valueDataSize) {
     switch (valueDataSize) {
       case 1:
         list.writeUInt8(value);

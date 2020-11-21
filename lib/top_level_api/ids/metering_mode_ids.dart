@@ -55,7 +55,7 @@ extension MeteringModeIdExtension on MeteringModeId {
 
   String get wifiValue => throw UnimplementedError;
 
-  static MeteringModeId getIdFromUsb(int usbValue) => MeteringModeId.values
+  static MeteringModeId getIdFromUsb(int? usbValue) => MeteringModeId.values
           .firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(MeteringModeId, usbValue);
         return MeteringModeId.Unknown;

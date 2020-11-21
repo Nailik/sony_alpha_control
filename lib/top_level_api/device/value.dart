@@ -43,7 +43,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/zoom_settings_ids.dart';
 
 abstract class Value<T> {
-  T id;
+  T? id;
 
   Value(this.id);
 
@@ -51,14 +51,14 @@ abstract class Value<T> {
 
   Value.fromWifiValue(String wifiValue);
 
-  int get usbValue;
+  int? get usbValue;
 
-  String get wifiValue;
+  String? get wifiValue;
 
-  String get name;
+  String? get name;
 
   @override
-  String toString() => name;
+  String toString() => name!;
 
   @override
   bool operator ==(o) => o is Value<T> && id == o.id;
@@ -66,7 +66,7 @@ abstract class Value<T> {
   @override
   int get hashCode => id.hashCode;
 
-  static Value fromWifi(ItemId itemId, dynamic wifiValue) {
+  static Value? fromWifi(ItemId itemId, dynamic wifiValue) {
     switch (itemId) {
       case ItemId.Versions:
         return WebApiVersionsValue.fromWifiValue(wifiValue);
@@ -192,14 +192,14 @@ abstract class Value<T> {
     }
   }
 
-  static fromUsb(ItemId itemId, int usbValue, {int subValue = 1}) {
+  static fromUsb(ItemId itemId, int? usbValue, {int? subValue = 1}) {
     switch (itemId) {
       case ItemId.ImageFileFormat:
         return ImageFileFormatValue.fromUSBValue(usbValue);
       case ItemId.WhiteBalanceMode:
         return WhiteBalanceModeValue.fromUSBValue(usbValue);
       case ItemId.FNumber:
-        return DoubleValue(usbValue as double); //TODO test
+        return DoubleValue(usbValue as double?); //TODO test
       case ItemId.FocusMode:
         return FocusModeValue.fromUSBValue(usbValue);
       case ItemId.MeteringMode:
@@ -219,7 +219,7 @@ abstract class Value<T> {
       case ItemId.ImageSize:
         return ImageSizeValue.fromUSBValue(usbValue);
       case ItemId.ShutterSpeed:
-        return ShutterSpeedValue(usbValue.toDouble(), subValue);
+        return ShutterSpeedValue(usbValue!.toDouble(), subValue);
       case ItemId.UnkD20E:
         print("UnkD20E $usbValue");
         return IntValue(usbValue);
@@ -356,7 +356,7 @@ class StringValue extends Value<String> {
   int get usbValue => throw UnimplementedError();
 
   @override
-  String get wifiValue => id;
+  String? get wifiValue => id;
 }
 
 class BoolValue extends Value<bool> {
@@ -366,7 +366,7 @@ class BoolValue extends Value<bool> {
   String get name => id.toString();
 
   @override
-  int get usbValue => id ? 1 : 0;
+  int get usbValue => id! ? 1 : 0;
 
   @override
   String get wifiValue => id.toString();
@@ -392,23 +392,23 @@ class PointValue extends Value<Point> {
   String get name => id.toString();
 
   @override
-  int get usbValue => null;
+  int? get usbValue => null;
 
   @override
   String get wifiValue => id.toString();
 }
 
 class DoubleValue extends Value<double> {
-  DoubleValue(double id) : super(id);
+  DoubleValue(double? id) : super(id);
 
   @override
-  String get name => id.toString();
+  String? get name => id.toString();
 
   @override
-  int get usbValue => id.toInt();
+  int get usbValue => id!.toInt();
 
   @override
-  String get wifiValue => id.toString();
+  String? get wifiValue => id.toString();
 }
 
 class EvValue extends DoubleValue {
@@ -425,10 +425,10 @@ class ShutterSpeedValue extends DoubleValue {
   ShutterSpeedValue(double id, this.subValue) : super(id);
 
   @override
-  String get name => _name;
+  String? get name => _name;
 
   @override
-  String get wifiValue => _name; //TODO really parse the id value
+  String? get wifiValue => _name; //TODO really parse the id value
 
   @override
   factory ShutterSpeedValue.fromWifiValue(String wifiValue) {
@@ -450,7 +450,7 @@ class ShutterSpeedValue extends DoubleValue {
     if (subValue == -1) {
       it._name = it.id.toString();
     } else if (subValue == 1) {
-      it._name = "1/${it.id.toInt()}";
+      it._name = "1/${it.id!.toInt()}";
     } else {
       it._name = "0.$subValue\"";
     }
@@ -459,7 +459,7 @@ class ShutterSpeedValue extends DoubleValue {
 }
 
 class IsoValue extends IntValue {
-  IsoValue(int id) : super(id);
+  IsoValue(int? id) : super(id);
 
   @override
   factory IsoValue.fromWifiValue(String wifiValue) =>
@@ -470,28 +470,28 @@ class IsoValue extends IntValue {
 
   @override
   String get name {
-    var multiFrame = id > (2 * 0xFFFFFF)
+    var multiFrame = id! > (2 * 0xFFFFFF)
         ? "MultiFrame RM High"
-        : id > 0xFFFFFF
+        : id! > 0xFFFFFF
             ? "MultiFrame RM Standard"
             : "";
     var auto =
         id == 0xFFFFFF || id == (2 * 0xFFFFFF) + 1 || id == (3 * 0xFFFFFF) + 2
             ? "Auto"
             : "";
-    var value = id % 0xFFFFFF - id ~/ 0xFFFFFF;
+    var value = id! % 0xFFFFFF - id! ~/ 0xFFFFFF;
     return "${auto.isEmpty ? value : auto} $multiFrame"; //TODO enums for text?
   }
 }
 
 class IntValue extends Value<int> {
-  IntValue(int id) : super(id);
+  IntValue(int? id) : super(id);
 
   @override
   String get name => id.toString();
 
   @override
-  int get usbValue => id;
+  int? get usbValue => id;
 
   @override
   String get wifiValue => id
@@ -522,17 +522,17 @@ class WebApiVersionsValue extends Value<WebApiVersionId> {
   int get usbValue => throw UnsupportedError;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class AspectRatioValue extends Value<AspectRatioId> {
   AspectRatioValue(AspectRatioId id) : super(id);
 
   @override
-  factory AspectRatioValue.fromUSBValue(int usbValue) =>
+  factory AspectRatioValue.fromUSBValue(int? usbValue) =>
       AspectRatioValue(AspectRatioIdExtension.getIdFromUsb(usbValue));
 
   @override
@@ -540,20 +540,20 @@ class AspectRatioValue extends Value<AspectRatioId> {
       AspectRatioValue(AspectRatioIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class FocusStateValue extends Value<FocusStateId> {
   FocusStateValue(FocusStateId id) : super(id);
 
   @override
-  factory FocusStateValue.fromUSBValue(int usbValue) =>
+  factory FocusStateValue.fromUSBValue(int? usbValue) =>
       FocusStateValue(AutoFocusStateIdExtension.getIdFromUsb(usbValue));
 
   @override
@@ -561,13 +561,13 @@ class FocusStateValue extends Value<FocusStateId> {
       FocusStateValue(AutoFocusStateIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class TrackingFocusStateValue extends Value<TrackingFocusStateId> {
@@ -582,13 +582,13 @@ class TrackingFocusStateValue extends Value<TrackingFocusStateId> {
       TrackingFocusStateValue(TrackingFocusStateIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class CameraFunctionValue extends Value<CameraFunctionId> {
@@ -602,13 +602,13 @@ class CameraFunctionValue extends Value<CameraFunctionId> {
       CameraFunctionValue(CameraFunctionIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 
   @override
   int get usbValue => throw UnsupportedError;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 }
 
 class BeepModeValue extends Value<BeepModeId> {
@@ -621,13 +621,13 @@ class BeepModeValue extends Value<BeepModeId> {
   factory BeepModeValue.fromWifiValue(String wifiValue) => BeepModeValue(BeepModeIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 
   @override
   int get usbValue => throw UnsupportedError;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 }
 
 class CameraStatusValue extends Value<CameraStatusId> {
@@ -642,13 +642,13 @@ class CameraStatusValue extends Value<CameraStatusId> {
       CameraStatusValue(CameraStatusIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class TvColorSystemValue extends Value<TvColorSystemId> {
@@ -665,30 +665,30 @@ class TvColorSystemValue extends Value<TvColorSystemId> {
   int get usbValue => throw UnsupportedError;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class DriveModeValue extends Value<DriveModeId> {
   DriveModeValue(DriveModeId id) : super(id);
 
   @override
-  factory DriveModeValue.fromUSBValue(int usbValue) => DriveModeValue(DriveModeIdExtension.getIdFromUsb(usbValue));
+  factory DriveModeValue.fromUSBValue(int? usbValue) => DriveModeValue(DriveModeIdExtension.getIdFromUsb(usbValue));
 
   @override
   factory DriveModeValue.fromWifiValue(String wifiValue) =>
       DriveModeValue(DriveModeIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class ShootModeValue extends Value<ShootModeId> {
@@ -705,36 +705,36 @@ class ShootModeValue extends Value<ShootModeId> {
   int get usbValue => throw UnsupportedError;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class DroHdrValue extends Value<DroHdrId> {
   DroHdrValue(DroHdrId id) : super(id);
 
   @override
-  factory DroHdrValue.fromUSBValue(int usbValue) => DroHdrValue(DroHdrIdExtension.getIdFromUsb(usbValue));
+  factory DroHdrValue.fromUSBValue(int? usbValue) => DroHdrValue(DroHdrIdExtension.getIdFromUsb(usbValue));
 
   @override
   factory DroHdrValue.fromWifiValue(String wifiValue) => DroHdrValue(DroHdrIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class FlashModeValue extends Value<FlashModeId> {
   FlashModeValue(FlashModeId id) : super(id);
 
   @override
-  factory FlashModeValue.fromUSBValue(int usbValue) =>
+  factory FlashModeValue.fromUSBValue(int? usbValue) =>
       FlashModeValue(FlashModeIdExtension.getIdFromUsb(usbValue));
 
   @override
@@ -742,13 +742,13 @@ class FlashModeValue extends Value<FlashModeId> {
       FlashModeValue(FlashModeIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class MovieQualityValue extends Value<MovieQualityId> {
@@ -763,13 +763,13 @@ class MovieQualityValue extends Value<MovieQualityId> {
       MovieQualityValue(MovieFileQualityIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 
   @override
   int get usbValue => throw UnsupportedError;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 }
 
 class SceneSelectionValue extends Value<SceneSelectionId> {
@@ -783,13 +783,13 @@ class SceneSelectionValue extends Value<SceneSelectionId> {
       SceneSelectionValue(SceneSelectionIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 
   @override
   int get usbValue => throw UnsupportedError;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 }
 
 class ColorSettingValue extends Value<ColorSettingParameterId> {
@@ -803,13 +803,13 @@ class ColorSettingValue extends Value<ColorSettingParameterId> {
       ColorSettingValue(ColorSettingParameterIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 
   @override
   int get usbValue => throw UnsupportedError;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 }
 
 class OpCodeValue extends Value<OpCodeId> {
@@ -822,13 +822,13 @@ class OpCodeValue extends Value<OpCodeId> {
   factory OpCodeValue.fromWifiValue(String wifiValue) => OpCodeValue(OpCodesExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class LiveViewSizeValue extends Value<LiveViewSizeId> {
@@ -846,10 +846,10 @@ class LiveViewSizeValue extends Value<LiveViewSizeId> {
   int get usbValue => throw UnimplementedError;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class PostViewImageSizeValue extends Value<PostViewImageSizeId> {
@@ -868,10 +868,10 @@ class PostViewImageSizeValue extends Value<PostViewImageSizeId> {
   int get usbValue => throw UnimplementedError;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class MovieFileFormatValue extends Value<MovieFileFormatId> {
@@ -886,20 +886,20 @@ class MovieFileFormatValue extends Value<MovieFileFormatId> {
       MovieFileFormatValue(MovieFileFormatIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 
   @override
   int get usbValue => throw UnsupportedError;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 }
 
 class RecordVideoStateValue extends Value<RecordVideoStateId> {
   RecordVideoStateValue(RecordVideoStateId id) : super(id);
 
   @override
-  factory RecordVideoStateValue.fromUSBValue(int usbValue) =>
+  factory RecordVideoStateValue.fromUSBValue(int? usbValue) =>
       RecordVideoStateValue(RecordVideoStateIdExtension.getIdFromUsb(usbValue));
 
   @override
@@ -908,22 +908,22 @@ class RecordVideoStateValue extends Value<RecordVideoStateId> {
           RecordVideoStateIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class ImageSizeValue extends Value<ImageSizeId> {
-  final AspectRatioId aspectRatioId;
+  final AspectRatioId? aspectRatioId;
 
   ImageSizeValue(ImageSizeId id, this.aspectRatioId) : super(id);
 
   @override
-  factory ImageSizeValue.fromUSBValue(int usbValue) =>
+  factory ImageSizeValue.fromUSBValue(int? usbValue) =>
       ImageSizeValue(ImageSizeIdExtension.getIdFromUsb(usbValue), null);
 
   @override
@@ -931,20 +931,20 @@ class ImageSizeValue extends Value<ImageSizeId> {
       ImageSizeIdExtension.getIdFromWifi(wifiValue["size"]), AspectRatioIdExtension.getIdFromWifi(wifiValue["aspect"]));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class ShootingModeValue extends Value<ShootingModeId> {
   ShootingModeValue(ShootingModeId id) : super(id);
 
   @override
-  factory ShootingModeValue.fromUSBValue(int usbValue) =>
+  factory ShootingModeValue.fromUSBValue(int? usbValue) =>
       ShootingModeValue(ShootingModeIdExtension.getIdFromUsb(usbValue));
 
   @override
@@ -952,20 +952,20 @@ class ShootingModeValue extends Value<ShootingModeId> {
       ShootingModeValue(ShootingModeIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class FocusMagnifierPhaseValue extends Value<FocusMagnifierPhaseId> {
   FocusMagnifierPhaseValue(FocusMagnifierPhaseId id) : super(id);
 
   @override
-  factory FocusMagnifierPhaseValue.fromUSBValue(int usbValue) =>
+  factory FocusMagnifierPhaseValue.fromUSBValue(int? usbValue) =>
       FocusMagnifierPhaseValue(
           FocusMagnifierPhaseIdExtension.getIdFromUsb(usbValue));
 
@@ -975,20 +975,20 @@ class FocusMagnifierPhaseValue extends Value<FocusMagnifierPhaseId> {
           FocusMagnifierPhaseIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class FocusModeValue extends Value<FocusModeId> {
   FocusModeValue(FocusModeId id) : super(id);
 
   @override
-  factory FocusModeValue.fromUSBValue(int usbValue) =>
+  factory FocusModeValue.fromUSBValue(int? usbValue) =>
       FocusModeValue(FocusModeIdExtension.getIdFromUsb(usbValue));
 
   @override
@@ -996,13 +996,13 @@ class FocusModeValue extends Value<FocusModeId> {
       FocusModeValue(FocusModeIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class FocusModeToggleValue extends Value<FocusModeToggleId> {
@@ -1017,20 +1017,20 @@ class FocusModeToggleValue extends Value<FocusModeToggleId> {
       FocusModeToggleValue(FocusModeToggleIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class FocusAreaValue extends Value<FocusAreaId> {
   FocusAreaValue(FocusAreaId id) : super(id);
 
   @override
-  factory FocusAreaValue.fromUSBValue(int usbValue) =>
+  factory FocusAreaValue.fromUSBValue(int? usbValue) =>
       FocusAreaValue(FocusAreaIdExtension.getIdFromUsb(usbValue));
 
   @override
@@ -1038,13 +1038,13 @@ class FocusAreaValue extends Value<FocusAreaId> {
       FocusAreaValue(FocusAreaIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class FocusMagnifierDirectionValue extends Value<FocusMagnifierDirectionId> {
@@ -1061,20 +1061,20 @@ class FocusMagnifierDirectionValue extends Value<FocusMagnifierDirectionId> {
           FocusMagnifierDirectionIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class ImageFileFormatValue extends Value<ImageFileFormatId> {
   ImageFileFormatValue(ImageFileFormatId id) : super(id);
 
   @override
-  factory ImageFileFormatValue.fromUSBValue(int usbValue) =>
+  factory ImageFileFormatValue.fromUSBValue(int? usbValue) =>
       ImageFileFormatValue(ImageFileFormatIdExtension.getIdFromUsb(usbValue));
 
   @override
@@ -1082,20 +1082,20 @@ class ImageFileFormatValue extends Value<ImageFileFormatId> {
       ImageFileFormatValue(ImageFileFormatIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class MeteringModeValue extends Value<MeteringModeId> {
   MeteringModeValue(MeteringModeId id) : super(id);
 
   @override
-  factory MeteringModeValue.fromUSBValue(int usbValue) =>
+  factory MeteringModeValue.fromUSBValue(int? usbValue) =>
       MeteringModeValue(MeteringModeIdExtension.getIdFromUsb(usbValue));
 
   @override
@@ -1103,20 +1103,20 @@ class MeteringModeValue extends Value<MeteringModeId> {
       MeteringModeValue(MeteringModeIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class PictureEffectValue extends Value<PictureEffectId> {
   PictureEffectValue(PictureEffectId id) : super(id);
 
   @override
-  factory PictureEffectValue.fromUSBValue(int usbValue) =>
+  factory PictureEffectValue.fromUSBValue(int? usbValue) =>
       PictureEffectValue(PictureEffectIdExtension.getIdFromUsb(usbValue));
 
   @override
@@ -1124,13 +1124,13 @@ class PictureEffectValue extends Value<PictureEffectId> {
       PictureEffectValue(PictureEffectIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class SettingsIdValue extends Value<ItemId> {
@@ -1145,13 +1145,13 @@ class SettingsIdValue extends Value<ItemId> {
       SettingsIdValue(ItemIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class WebApiMethodValue extends Value<WebApiMethod> {
@@ -1170,8 +1170,8 @@ class WebApiMethodValue extends Value<WebApiMethod> {
         ItemIdExtension.getIdFromWifi(
             (wifiValue[0].replaceFirst(methodId.wifiValue, "") as String)
                 .startLow),
-        (wifiValue[1] as List)?.map((e) => e as String)?.toList(),
-        (wifiValue[2] as List)?.map((e) => e as String)?.toList(),
+        (wifiValue[1] as List?)?.map((e) => e as String)?.toList(),
+        (wifiValue[2] as List?)?.map((e) => e as String)?.toList(),
         WebApiVersionIdExtension.fromWifiValue(wifiValue[3])));
   }
 
@@ -1189,7 +1189,7 @@ class WhiteBalanceAbValue extends Value<WhiteBalanceAbId> {
   WhiteBalanceAbValue(WhiteBalanceAbId id) : super(id);
 
   @override
-  factory WhiteBalanceAbValue.fromUSBValue(int usbValue) =>
+  factory WhiteBalanceAbValue.fromUSBValue(int? usbValue) =>
       WhiteBalanceAbValue(WhiteBalanceAbIdExtension.getIdFromUsb(usbValue));
 
   @override
@@ -1197,20 +1197,20 @@ class WhiteBalanceAbValue extends Value<WhiteBalanceAbId> {
       WhiteBalanceAbValue(WhiteBalanceAbIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class WhiteBalanceGmValue extends Value<WhiteBalanceGmId> {
   WhiteBalanceGmValue(WhiteBalanceGmId id) : super(id);
 
   @override
-  factory WhiteBalanceGmValue.fromUSBValue(int usbValue) =>
+  factory WhiteBalanceGmValue.fromUSBValue(int? usbValue) =>
       WhiteBalanceGmValue(WhiteBalanceGmIdExtension.getIdFromUsb(usbValue));
 
   @override
@@ -1218,13 +1218,13 @@ class WhiteBalanceGmValue extends Value<WhiteBalanceGmId> {
       WhiteBalanceGmValue(WhiteBalanceGmIdExtension.getIdFromWifi(wifiValue));
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class WhiteBalanceModeValue extends Value<WhiteBalanceModeId> {
@@ -1234,7 +1234,7 @@ class WhiteBalanceModeValue extends Value<WhiteBalanceModeId> {
       : super(id);
 
   @override
-  factory WhiteBalanceModeValue.fromUSBValue(int usbValue) =>
+  factory WhiteBalanceModeValue.fromUSBValue(int? usbValue) =>
       WhiteBalanceModeValue(WhiteBalanceIdExtension.getIdFromUsb(usbValue));
 
   @override
@@ -1246,13 +1246,13 @@ class WhiteBalanceModeValue extends Value<WhiteBalanceModeId> {
   }
 
   @override
-  int get usbValue => id.usbValue;
+  int get usbValue => id!.usbValue;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class ZoomSettingValue extends Value<ZoomSettingId> {
@@ -1270,10 +1270,10 @@ class ZoomSettingValue extends Value<ZoomSettingId> {
   int get usbValue => throw UnimplementedError;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class ApiFunctionValue extends Value<ItemId> {
@@ -1299,10 +1299,10 @@ class ApiFunctionValue extends Value<ItemId> {
   int get usbValue => throw UnimplementedError;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => "${id.name} $methods";
+  String get name => "${id!.name} $methods";
 }
 
 class ContShootingModeValue extends Value<ContShootingModeId> {
@@ -1319,10 +1319,10 @@ class ContShootingModeValue extends Value<ContShootingModeId> {
   int get usbValue => throw UnimplementedError;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }
 
 class ContShootingSpeedValue extends Value<ContShootingSpeedId> {
@@ -1339,8 +1339,8 @@ class ContShootingSpeedValue extends Value<ContShootingSpeedId> {
   int get usbValue => throw UnimplementedError;
 
   @override
-  String get wifiValue => id.wifiValue;
+  String get wifiValue => id!.wifiValue;
 
   @override
-  String get name => id.name;
+  String get name => id!.name;
 }

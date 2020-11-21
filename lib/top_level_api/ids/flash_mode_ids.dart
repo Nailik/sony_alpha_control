@@ -75,7 +75,7 @@ extension FlashModeIdExtension on FlashModeId {
     }
   }
 
-  static FlashModeId getIdFromUsb(int usbValue) => FlashModeId.values
+  static FlashModeId getIdFromUsb(int? usbValue) => FlashModeId.values
           .firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(FlashModeId, usbValue);
         return FlashModeId.Unknown;

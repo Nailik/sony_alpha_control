@@ -600,13 +600,13 @@ extension ItemIdExtension on ItemId {
     }
   }
 
-  static ItemId getIdFromUsb(int usbValue) => ItemId.values
+  static ItemId getIdFromUsb(int? usbValue) => ItemId.values
           .firstWhere((element) => element.usbValue == usbValue, orElse: () {
         Logger.n(ItemId, usbValue);
         return ItemId.Unknown;
       });
 
-  static ItemId getIdFromWifi(String wifiValue) => ItemId.values
+  static ItemId getIdFromWifi(String? wifiValue) => ItemId.values
           .firstWhere((element) => element.wifiValue == wifiValue, orElse: () {
         Logger.n(ItemId, wifiValue);
         return ItemId.Unknown;
