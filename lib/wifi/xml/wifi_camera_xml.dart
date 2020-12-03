@@ -13,7 +13,7 @@ class WifiCameraXML {
   String? photoRoot;
   String? liveViewUrl;
 
-  List<CameraService>? serviceListNode;
+  List<CameraService?>? serviceListNode;
   CameraWebApi? scalarWebApiDeviceInfo;
 
   @override

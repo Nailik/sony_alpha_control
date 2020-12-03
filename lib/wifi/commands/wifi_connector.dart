@@ -23,7 +23,7 @@ class WifiConnector {
   static Stream<List<SonyCameraDevice>>? _availableCamerasStream;
   static StreamController<List<SonyCameraDevice>>? _controller;
 
-  static List<SonyCameraDevice> _devices = new List();
+  static List<SonyCameraDevice> _devices = new List.empty();
 
   static Stream<List<SonyCameraDevice>> getAvailableCameras(
       Duration updateDuration) {

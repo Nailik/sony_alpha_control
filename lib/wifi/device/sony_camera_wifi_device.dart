@@ -25,7 +25,7 @@ class SonyCameraWifiDevice extends SonyCameraDevice<CameraWifiSettings> {
 
   CameraWebApiService? getWebApiService(SonyWebApiServiceTypeId? service) =>
       info!.scalarWebApiDeviceInfo!.serviceList!.services!
-          .firstWhereOrNull((element) => element.type == service!.wifiValue);
+          .firstWhereOrNull((element) => element!.type == service!.wifiValue);
 
   @override
   CameraWifiSettings createSettings() => CameraWifiSettings(this);

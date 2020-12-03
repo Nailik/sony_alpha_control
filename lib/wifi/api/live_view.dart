@@ -80,7 +80,7 @@ class LiveView {
     var request = await client.getUrl(Uri.parse('http://192.168.122.1:8080/liveview/liveviewstream'))
       ..headers.contentType = ContentType.binary;
 
-    List<int> _buffer = List<int>();
+    List<int> _buffer = List.empty();
 
     (await request.close()).listen((event) async {
       _buffer.addAll(event);

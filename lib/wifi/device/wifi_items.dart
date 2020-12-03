@@ -21,7 +21,7 @@ extension SettingsItemExtension on SettingsItem {
         //0: int[] upper limit
         //1: int[] lower limit
         //2 int[] 1: 1/3 EV  2: 1/2 EV  0: invalid
-        List<EvValue> listOfValues = new List();
+        List<EvValue> listOfValues = new List.empty();
         for (int index = 0; index < list[2].length; index++) {
           listOfValues.addAll(getEvList(list[1][index], list[0][index], list[2][index]));
         }
@@ -29,8 +29,8 @@ extension SettingsItemExtension on SettingsItem {
         updateItem(value, available, listOfValues);
         break;
       case ItemId.WhiteBalanceMode:
-        List<WhiteBalanceColorTempValue> supportedColorTempList = List<WhiteBalanceColorTempValue>();
-        List<WhiteBalanceColorTempValue> availableColorTempList = List<WhiteBalanceColorTempValue>();
+        List<WhiteBalanceColorTempValue> supportedColorTempList = List<WhiteBalanceColorTempValue>.empty();
+        List<WhiteBalanceColorTempValue> availableColorTempList = List<WhiteBalanceColorTempValue>.empty();
 
         //colorTemperature
         SettingsItem<WhiteBalanceColorTempValue> settingsItemColorTemp =
@@ -45,9 +45,9 @@ extension SettingsItemExtension on SettingsItem {
               if (value.hasColorTemps) {
                 for (int i = e["colorTemperatureRange"][1];
                     i <= e["colorTemperatureRange"][0];
-                    i += e["colorTemperatureRange"][2]) {
+                    i += int.parse(e["colorTemperatureRange"][2])) {
                   supportedColorTempList.add(WhiteBalanceColorTempValue(i, value.id!));
-                  if (value.id == value?.id) {
+                  if (value.id == value.id) {
                     availableColorTempList.add(WhiteBalanceColorTempValue(i, value.id!));
                   }
                 }
@@ -86,8 +86,8 @@ extension SettingsItemExtension on SettingsItem {
         updateItem(listOfValues.elementAt(list[0] + (list[2]).abs()), listOfValues, supported);
         break;
       case ItemId.WhiteBalanceMode:
-        List<WhiteBalanceColorTempValue> supportedColorTempList = List<WhiteBalanceColorTempValue>();
-        List<WhiteBalanceColorTempValue> availableColorTempList = List<WhiteBalanceColorTempValue>();
+        List<WhiteBalanceColorTempValue> supportedColorTempList = List<WhiteBalanceColorTempValue>.empty();
+        List<WhiteBalanceColorTempValue> availableColorTempList = List<WhiteBalanceColorTempValue>.empty();
         Value currentWhiteBalance =
             WhiteBalanceModeValue.fromWifiValue(list[0]["whiteBalanceMode"], list[0]["colorTemperature"] != -1);
 
@@ -103,7 +103,7 @@ extension SettingsItemExtension on SettingsItem {
               if (value.hasColorTemps) {
                 for (int i = e["colorTemperatureRange"][1];
                     i <= e["colorTemperatureRange"][0];
-                    i += e["colorTemperatureRange"][2]) {
+                    i += int.parse(e["colorTemperatureRange"][2])) {
                   supportedColorTempList.add(WhiteBalanceColorTempValue(i, value.id!));
                   if (value.id == currentWhiteBalance.id) {
                     availableColorTempList.add(WhiteBalanceColorTempValue(i, value.id!));
@@ -148,8 +148,8 @@ extension SettingsItemExtension on SettingsItem {
   }
 
   update(dynamic data, SonyCameraWifiDevice device) {
-    List<Value> availableList;
-    Value current;
+    List<Value>? availableList;
+    Value? current;
 
     switch (itemId) {
       case ItemId.ImageSize:
@@ -241,7 +241,7 @@ extension SettingsItemExtension on SettingsItem {
         break;
     }
 
-    updateItem(current, availableList != null ? availableList : available, supported);
+    updateItem(current, availableList ?? available, supported);
   }
 
   List<EvValue> getEvList(int? min, int? max, int? stepIndex) {
@@ -251,7 +251,7 @@ extension SettingsItemExtension on SettingsItem {
     //2: int lower limit
     //3: int 1: 1/3 EV  2: 1/2 EV  0: invalid
     int z = stepIndex == 1 ? 3 : 2;
-    List<EvValue> listOfValues = new List();
+    List<EvValue> listOfValues = new List.empty();
 
     //list for 1/3 ev (x = 0), list for 1/2 ev (x = 1)
     for (int i = min!; i <= max!; i++) {

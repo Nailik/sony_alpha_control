@@ -13,8 +13,8 @@ import 'package:sonyalphacontrol/top_level_api/ids/white_balance_ab_ids.dart';
 import '../commands/usb_commands.dart';
 
 class CameraUsbSettings extends CameraSettings {
-  List<int?> mainSettings = new List();
-  List<int?> subSettings = new List();
+  List<int?> mainSettings = new List.empty();
+  List<int?> subSettings = new List.empty();
 
   @override
   Future<bool> update() async {
@@ -223,7 +223,7 @@ class CameraUsbSettings extends CameraSettings {
                 offset += 2;
               }
               setting.available
-                  .sort((a, b) => a.usbValue!.compareTo(b.usbValue!));
+                  .sort((a, b) => a!.usbValue!.compareTo(b!.usbValue!));
               break;
             default:
               //unkown
@@ -257,7 +257,7 @@ class CameraUsbSettings extends CameraSettings {
                 //extra
                 //TODO
                 //setting.updateItem(setting.value, setting.subValue, setting.available, setting.supported);
-                for (int i = min; i <= max; i += steps) {
+                for (int i = min; i <= max; i += int.parse(steps)) {
                   setting.available.add(Value.fromUsb(setting.itemId, i));
                 }
               }
@@ -335,10 +335,11 @@ class CameraUsbSettings extends CameraSettings {
     }
   }
 
-  bool isValidResponse(/*Response response*/) {
+ // bool isValidResponse(/*Response response*/) {
     /*return response.inData != null &&
         response.inData.length > 2 &&
         response.inData[0] == 0x01 &&
         response.inData[1] == 0x20;*/
-  }
+
+  //}
 }

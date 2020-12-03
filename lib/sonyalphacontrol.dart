@@ -10,3 +10,5 @@ export 'package:sonyalphacontrol/top_level_api/device/value.dart';
 export 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 export 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
 export 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
+export 'package:sonyalphacontrol/wifi/api/live_view.dart';
+export 'package:sonyalphacontrol/wifi/device/sony_camera_wifi_device.dart';

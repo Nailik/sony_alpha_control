@@ -584,6 +584,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
         numImages == 1, imageInfoUnk, imageSizeInBytes, name);
 
      */
+    throw UnimplementedError();
   }
 
   @override

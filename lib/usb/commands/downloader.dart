@@ -72,6 +72,7 @@ Future<List<CameraImage>> fetchPhotos(Map<String, dynamic> deviceJson) async {
   }
 
   return imageList;*/
+  throw UnimplementedError();
 }
 
 Future<CameraImage?> getImage(SonyCameraDevice device,

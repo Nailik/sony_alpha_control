@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:math';
@@ -169,13 +170,12 @@ class SonyCameraWifiApi extends CameraApiInterface {
         var jsonD = jsonDecode(wifiResponse.response);
         var list = jsonD["result"];
 
-        List<ApiFunctionValue> values = new List();
+        List<ApiFunctionValue> values = new List.empty();
 
         list[0].forEach((wifiValue) {
           ApiFunctionValue newItem = ApiFunctionValue.fromWifiValue(wifiValue);
 
-          ApiFunctionValue? existingItem = values.firstWhereOrNull(
-                  ((element) => element.id == newItem.id) as bool Function(ApiFunctionValue));
+          ApiFunctionValue? existingItem = values.firstWhereOrNull ((element) => element.id == newItem.id);
 
           if (existingItem != null) {
             if (!existingItem.methods.contains(newItem.methods)) {
@@ -243,7 +243,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
           }
         });
       }
-    }).then(((value) => pollSettings()) as FutureOr<_> Function(Null));
+    }).then(((value) => pollSettings()));
   }
 
 
@@ -1361,8 +1361,8 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
       WebApiMethodValue? webApiMethod = listInfoItem.values.firstWhereOrNull(
               ((element) =>
-          element.id.settingsId == itemId &&
-              element.id.apiName == apiMethodId) as bool Function(Value<dynamic>)) as WebApiMethodValue?;
+          element!.id.settingsId == itemId &&
+              element.id.apiName == apiMethodId)) as WebApiMethodValue?;
       if (webApiMethod != null) {
         functionAvailability = FunctionAvailability.Supported;
       }
@@ -1378,7 +1378,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
             device.cameraSettings.availableFunctions;
         ApiFunctionValue? apiFunctionValue = functions.values.firstWhereOrNull(
                 ((element) =>
-            element.id == itemId && element.methods.contains(apiMethodId)) as bool Function(ApiFunctionValue));
+            element.id == itemId && element.methods.contains(apiMethodId)));
 
         if (apiFunctionValue != null) {
           return FunctionAvailability.Available;

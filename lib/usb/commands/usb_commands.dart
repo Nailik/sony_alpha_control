@@ -206,6 +206,7 @@ class UsbCommands {
     //0000   10 00 00 00 04 00 03 c2 ff ff ff ff 04 50 00 00
 
     //10 00 00 00 01 00 08 10 0b 00 00 00 02 c0 ff ff
+    throw UnimplementedError();
   }
 }
 

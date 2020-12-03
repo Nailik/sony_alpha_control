@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sonyalphacontrol/sonyalphacontrol.dart';
-import 'package:sonyalphacontrol/wifi/api/live_view.dart';
 
 class LiveViewPage extends StatefulWidget {
   final SonyCameraDevice? device;
