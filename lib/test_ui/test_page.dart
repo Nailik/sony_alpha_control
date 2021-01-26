@@ -29,7 +29,7 @@ class TestsPageState extends State<TestsPage> {
                   icon: const Icon(Icons.update),
                   tooltip: 'Poll updates',
                   onPressed: () {
-                    device!.api!.pollSettings();
+                    device!.api.pollSettings();
                   },
                 ),
               ],
@@ -229,8 +229,8 @@ class TestsPageState extends State<TestsPage> {
                     title: Text(ItemId.Versions.name + " Camera"),
                     subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: [Text("getWebApiVersions", style: getTextStyle(device!.api!.getWebApiVersionsCamera))]),
-                    onTap: () => device!.api!.getWebApiVersionsCamera(update: ForceUpdate.On)),
+                        children: [Text("getWebApiVersions", style: getTextStyle(device!.api.getWebApiVersionsCamera))]),
+                    onTap: () => device!.api.getWebApiVersionsCamera(update: ForceUpdate.On)),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                   Expanded(
                       child: Padding(
@@ -264,9 +264,9 @@ class TestsPageState extends State<TestsPage> {
                 ListTile(
                     title: Text(ItemId.Versions.name + " AvContent"),
                     subtitle: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                      Text("getWebApiVersionsAvContent", style: getTextStyle(device!.api!.getWebApiVersionsAvContent))
+                      Text("getWebApiVersionsAvContent", style: getTextStyle(device!.api.getWebApiVersionsAvContent))
                     ]),
-                    onTap: () => device!.api!.getWebApiVersionsAvContent(update: ForceUpdate.On)),
+                    onTap: () => device!.api.getWebApiVersionsAvContent(update: ForceUpdate.On)),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                   Expanded(
                       child: Padding(
@@ -300,9 +300,9 @@ class TestsPageState extends State<TestsPage> {
                 ListTile(
                     title: Text(ItemId.Versions.name + " System"),
                     subtitle: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                      Text("getWebApiVersionsSystem", style: getTextStyle(device!.api!.getWebApiVersionsSystem))
+                      Text("getWebApiVersionsSystem", style: getTextStyle(device!.api.getWebApiVersionsSystem))
                     ]),
-                    onTap: () => device!.api!.getWebApiVersionsSystem(update: ForceUpdate.On)),
+                    onTap: () => device!.api.getWebApiVersionsSystem(update: ForceUpdate.On)),
                 Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                   Expanded(
                       child: Padding(
@@ -340,9 +340,9 @@ class TestsPageState extends State<TestsPage> {
                     subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text("getWebApiVersionsGuide", style: getTextStyle(device!.api!.getWebApiVersionsGuide))
+                          Text("getWebApiVersionsGuide", style: getTextStyle(device!.api.getWebApiVersionsGuide))
                         ]),
-                    onTap: () => device!.api!.getWebApiVersionsGuide(update: ForceUpdate.On)),
+                    onTap: () => device!.api.getWebApiVersionsGuide(update: ForceUpdate.On)),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -384,9 +384,9 @@ class TestsPageState extends State<TestsPage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text("getWebApiVersionsAccessControl",
-                              style: getTextStyle(device!.api!.getWebApiVersionsAccessControl))
+                              style: getTextStyle(device!.api.getWebApiVersionsAccessControl))
                         ]),
-                    onTap: () => device!.api!.getWebApiVersionsAccessControl(update: ForceUpdate.On)),
+                    onTap: () => device!.api.getWebApiVersionsAccessControl(update: ForceUpdate.On)),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -424,9 +424,9 @@ class TestsPageState extends State<TestsPage> {
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("getMethodTypesCamera", style: getTextStyle(device!.api!.getMethodTypesCamera))
+                      Text("getMethodTypesCamera", style: getTextStyle(device!.api.getMethodTypesCamera))
                     ]),
-                onTap: () => device!.api!.getMethodTypesCamera(update: ForceUpdate.On)),
+                onTap: () => device!.api.getMethodTypesCamera(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -460,9 +460,9 @@ class TestsPageState extends State<TestsPage> {
                 subtitle:
                 Row(mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("getMethodTypesAvContent", style: getTextStyle(device!.api!.getMethodTypesAvContent))
+                      Text("getMethodTypesAvContent", style: getTextStyle(device!.api.getMethodTypesAvContent))
                     ]),
-                onTap: () => device!.api!.getMethodTypesAvContent(update: ForceUpdate.On)),
+                onTap: () => device!.api.getMethodTypesAvContent(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -496,9 +496,9 @@ class TestsPageState extends State<TestsPage> {
                 subtitle:
                 Row(mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("getMethodTypesSystem", style: getTextStyle(device!.api!.getMethodTypesSystem))
+                      Text("getMethodTypesSystem", style: getTextStyle(device!.api.getMethodTypesSystem))
                     ]),
-                onTap: () => device!.api!.getMethodTypesSystem(update: ForceUpdate.On)),
+                onTap: () => device!.api.getMethodTypesSystem(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -532,9 +532,9 @@ class TestsPageState extends State<TestsPage> {
                 subtitle:
                 Row(mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("getWebApiVersionsAvContent", style: getTextStyle(device!.api!.getMethodTypesGuide))
+                      Text("getWebApiVersionsAvContent", style: getTextStyle(device!.api.getMethodTypesGuide))
                     ]),
-                onTap: () => device!.api!.getMethodTypesGuide(update: ForceUpdate.On)),
+                onTap: () => device!.api.getMethodTypesGuide(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -568,9 +568,9 @@ class TestsPageState extends State<TestsPage> {
                 subtitle:
                 Row(mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("getWebApiVersionsAvContent", style: getTextStyle(device!.api!.getMethodTypesAccessControl))
+                      Text("getWebApiVersionsAvContent", style: getTextStyle(device!.api.getMethodTypesAccessControl))
                     ]),
-                onTap: () => device!.api!.getMethodTypesAccessControl(update: ForceUpdate.On)),
+                onTap: () => device!.api.getMethodTypesAccessControl(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -604,8 +604,8 @@ class TestsPageState extends State<TestsPage> {
                 title: Text(ItemId.AvailableFunctions.name),
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [Text("getAvailableFunctions", style: getTextStyle(device!.api!.getAvailableFunctions))]),
-                onTap: () => device!.api!.getAvailableFunctions(update: ForceUpdate.On)),
+                    children: [Text("getAvailableFunctions", style: getTextStyle(device!.api.getAvailableFunctions))]),
+                onTap: () => device!.api.getAvailableFunctions(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -637,8 +637,8 @@ class TestsPageState extends State<TestsPage> {
                 title: Text(ItemId.ApplicationInfo.name),
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [Text("getApplicationInfo", style: getTextStyle(device!.api!.getApplicationInfo))]),
-                onTap: () => device!.api!.getApplicationInfo(update: ForceUpdate.On)),
+                    children: [Text("getApplicationInfo", style: getTextStyle(device!.api.getApplicationInfo))]),
+                onTap: () => device!.api.getApplicationInfo(update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -670,8 +670,8 @@ class TestsPageState extends State<TestsPage> {
                 title: Text(ItemId.AvailableSettings.name),
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [Text("getAvailableSettings", style: getTextStyle(device!.api!.getAvailableSettings))]),
-                onTap: () => device!.api!.getAvailableSettings(false, update: ForceUpdate.On)),
+                    children: [Text("getAvailableSettings", style: getTextStyle(device!.api.getAvailableSettings))]),
+                onTap: () => device!.api.getAvailableSettings(false, update: ForceUpdate.On)),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                   child: Padding(
@@ -702,11 +702,11 @@ class TestsPageState extends State<TestsPage> {
             ListTile(
               title: Text(ItemId.CameraFunction.name),
               subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text("setCameraFunction", style: getTextStyle(device!.api!.setCameraFunction)),
-                Text("getCameraFunction", style: getTextStyle(device!.api!.getCameraFunction)),
+                Text("setCameraFunction", style: getTextStyle(device!.api.setCameraFunction)),
+                Text("getCameraFunction", style: getTextStyle(device!.api.getCameraFunction)),
                 Text(device!.cameraSettings.cameraFunction.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
               ]),
-              onTap: () => device!.api!.getCameraFunction(update: ForceUpdate.On),
+              onTap: () => device!.api.getCameraFunction(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -721,7 +721,7 @@ class TestsPageState extends State<TestsPage> {
                                     child: Text(e!.name), value: e))
                             .toList(),
                         onChanged: (value) =>
-                            device!.api!.setCameraFunction(value),
+                            device!.api.setCameraFunction(value),
                       ))),
               Expanded(
                   child: Padding(
@@ -735,7 +735,7 @@ class TestsPageState extends State<TestsPage> {
                                     child: Text(e!.name), value: e))
                             .toList(),
                         onChanged: (value) =>
-                            device!.api!.setCameraFunction(value),
+                            device!.api.setCameraFunction(value),
                       ))),
             ]),
           ]),
@@ -755,14 +755,14 @@ class TestsPageState extends State<TestsPage> {
                 title: Text(ItemId.CapturePhoto.name + " ACT"),
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [Text("actCapturePhoto", style: getTextStyle(device!.api!.actCapturePhoto))]),
-                onTap: () => device!.api!.actCapturePhoto()),
+                    children: [Text("actCapturePhoto", style: getTextStyle(device!.api.actCapturePhoto))]),
+                onTap: () => device!.api.actCapturePhoto()),
             ListTile(
               title: Text(ItemId.CapturePhoto.name + " AWAIT"),
               subtitle: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [Text("awaitCapturePhoto", style: getTextStyle(device!.api!.actCapturePhoto))]),
-              onTap: () => device!.api!.awaitCapturePhoto(),
+                  children: [Text("awaitCapturePhoto", style: getTextStyle(device!.api.actCapturePhoto))]),
+              onTap: () => device!.api.awaitCapturePhoto(),
             ),
             Text(device!.cameraSettings.capturePhoto.values.toString()),
           ]),
@@ -782,14 +782,14 @@ class TestsPageState extends State<TestsPage> {
                 title: Text(ItemId.CameraSetup.name + " START"),
                 subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    children: [Text("startCameraSetup", style: getTextStyle(device!.api!.startCameraSetup))]),
-                onTap: () => device!.api!.startCameraSetup()),
+                    children: [Text("startCameraSetup", style: getTextStyle(device!.api.startCameraSetup))]),
+                onTap: () => device!.api.startCameraSetup()),
             ListTile(
               title: Text(ItemId.CameraSetup.name + " STOP"),
               subtitle: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [Text("stopCameraSetup", style: getTextStyle(device!.api!.stopCameraSetup))]),
-              onTap: () => device!.api!.stopCameraSetup(),
+                  children: [Text("stopCameraSetup", style: getTextStyle(device!.api.stopCameraSetup))]),
+              onTap: () => device!.api.stopCameraSetup(),
             )
           ]),
         ),
@@ -808,31 +808,31 @@ class TestsPageState extends State<TestsPage> {
                 title: Text(ItemId.Zoom.name),
                 subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Text(device!.cameraSettings.zoom.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
-                  Text("actZoom", style: getTextStyle(device!.api!.actZoom))
+                  Text("actZoom", style: getTextStyle(device!.api.actZoom))
                 ]),
                 onTap: () {}),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                 child: ListTile(
                     title: Text("In"),
-                    onTap: () => device!.api!.actZoom("in", "1shot")),
+                    onTap: () => device!.api.actZoom("in", "1shot")),
               ),
               Expanded(
                 child: ListTile(
                     title: Text("Out"),
-                    onTap: () => device!.api!.actZoom("out", "1shot")),
+                    onTap: () => device!.api.actZoom("out", "1shot")),
               )
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                 child: ListTile(
                     title: Text("In"),
-                    onTap: () => device!.api!.actZoom("in", "1shot")),
+                    onTap: () => device!.api.actZoom("in", "1shot")),
               ),
               Expanded(
                 child: ListTile(
                     title: Text("Out"),
-                    onTap: () => device!.api!.actZoom("out", "1shot")),
+                    onTap: () => device!.api.actZoom("out", "1shot")),
               )
             ]),
           ]),
@@ -861,16 +861,16 @@ class TestsPageState extends State<TestsPage> {
                       title: Text(ItemId.HalfPressShutter.name + " ACT"),
                       subtitle: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: [Text("actHalfPressShutter", style: getTextStyle(device!.api!.actHalfPressShutter))]),
-                      onTap: () => device!.api!.actHalfPressShutter()),
+                          children: [Text("actHalfPressShutter", style: getTextStyle(device!.api.actHalfPressShutter))]),
+                      onTap: () => device!.api.actHalfPressShutter()),
                 ),
                 Expanded(
                   child: ListTile(
                       title: Text(ItemId.HalfPressShutter.name + " CANCEL"),
                       subtitle: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                        Text("cancelHalfPressShutter", style: getTextStyle(device!.api!.cancelHalfPressShutter))
+                        Text("cancelHalfPressShutter", style: getTextStyle(device!.api.cancelHalfPressShutter))
                       ]),
-                      onTap: () => device!.api!.cancelHalfPressShutter()),
+                      onTap: () => device!.api.cancelHalfPressShutter()),
                 )
               ]),
             ]),
@@ -891,10 +891,10 @@ class TestsPageState extends State<TestsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                 Text(device!.cameraSettings.selfTimer.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
-                Text("getSelfTimer", style: getTextStyle(device!.api!.getSelfTimer)),
-                Text("setSelfTimer", style: getTextStyle(device!.api!.setSelfTimer))
+                Text("getSelfTimer", style: getTextStyle(device!.api.getSelfTimer)),
+                Text("setSelfTimer", style: getTextStyle(device!.api.setSelfTimer))
               ]),
-              onTap: () => device!.api!.getSelfTimer(update: ForceUpdate.On),
+              onTap: () => device!.api.getSelfTimer(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -908,7 +908,7 @@ class TestsPageState extends State<TestsPage> {
                                 DropdownMenuItem<IntValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device!.api!.setSelfTimer(value),
+                        onChanged: (value) => device!.api.setSelfTimer(value),
                       ))),
               Expanded(
                   child: Padding(
@@ -921,7 +921,7 @@ class TestsPageState extends State<TestsPage> {
                                 DropdownMenuItem<IntValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device!.api!.setSelfTimer(value),
+                        onChanged: (value) => device!.api.setSelfTimer(value),
                       ))),
             ]),
           ]),
@@ -941,10 +941,10 @@ class TestsPageState extends State<TestsPage> {
               title: Text(ItemId.ContShootingMode.name),
               subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(device!.cameraSettings.contShootingMode.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
-                Text("setContShootingMode", style: getTextStyle(device!.api!.setContShootingMode)),
-                Text("getContShootingMode", style: getTextStyle(device!.api!.getContShootingMode))
+                Text("setContShootingMode", style: getTextStyle(device!.api.setContShootingMode)),
+                Text("getContShootingMode", style: getTextStyle(device!.api.getContShootingMode))
               ]),
-              onTap: () => device!.api!.getContShootingMode(update: ForceUpdate.On),
+              onTap: () => device!.api.getContShootingMode(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -957,7 +957,7 @@ class TestsPageState extends State<TestsPage> {
                             .map<DropdownMenuItem<ContShootingModeValue>>(
                                 (e) => DropdownMenuItem<ContShootingModeValue>(child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device!.api!.setContShootingMode(value),
+                        onChanged: (value) => device!.api.setContShootingMode(value),
                       ))),
               Expanded(
                   child: Padding(
@@ -969,7 +969,7 @@ class TestsPageState extends State<TestsPage> {
                             .map<DropdownMenuItem<ContShootingModeValue>>(
                                 (e) => DropdownMenuItem<ContShootingModeValue>(child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device!.api!.setContShootingMode(value),
+                        onChanged: (value) => device!.api.setContShootingMode(value),
                       ))),
             ]),
           ]),
@@ -990,10 +990,10 @@ class TestsPageState extends State<TestsPage> {
               title: Text(ItemId.ContShootingSpeed.name),
               subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(device!.cameraSettings.contShootingSpeed.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
-                Text("setContShootingSpeed", style: getTextStyle(device!.api!.setContShootingSpeed)),
-                Text("getContShootingSpeed", style: getTextStyle(device!.api!.getContShootingSpeed))
+                Text("setContShootingSpeed", style: getTextStyle(device!.api.setContShootingSpeed)),
+                Text("getContShootingSpeed", style: getTextStyle(device!.api.getContShootingSpeed))
               ]),
-              onTap: () => device!.api!.getContShootingSpeed(update: ForceUpdate.On),
+              onTap: () => device!.api.getContShootingSpeed(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -1006,7 +1006,7 @@ class TestsPageState extends State<TestsPage> {
                             .map<DropdownMenuItem<ContShootingSpeedValue>>(
                                 (e) => DropdownMenuItem<ContShootingSpeedValue>(child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device!.api!.setContShootingSpeed(value),
+                        onChanged: (value) => device!.api.setContShootingSpeed(value),
                       ))),
               Expanded(
                   child: Padding(
@@ -1018,7 +1018,7 @@ class TestsPageState extends State<TestsPage> {
                             .map<DropdownMenuItem<ContShootingSpeedValue>>(
                                 (e) => DropdownMenuItem<ContShootingSpeedValue>(child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device!.api!.setContShootingSpeed(value),
+                        onChanged: (value) => device!.api.setContShootingSpeed(value),
                       ))),
             ]),
           ]),
@@ -1043,14 +1043,14 @@ class TestsPageState extends State<TestsPage> {
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.ContShooting.name + " START"),
-                    subtitle: Text("startContShooting", style: getTextStyle(device!.api!.startContShooting)),
-                    onTap: () => device!.api!.startContShooting()),
+                    subtitle: Text("startContShooting", style: getTextStyle(device!.api.startContShooting)),
+                    onTap: () => device!.api.startContShooting()),
               ),
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.ContShooting.name + " STOP"),
-                    subtitle: Text("stopContShooting", style: getTextStyle(device!.api!.stopContShooting)),
-                    onTap: () => device!.api!.stopContShooting()),
+                    subtitle: Text("stopContShooting", style: getTextStyle(device!.api.stopContShooting)),
+                    onTap: () => device!.api.stopContShooting()),
               )
             ]),
           ]),
@@ -1074,14 +1074,14 @@ class TestsPageState extends State<TestsPage> {
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.MovieRecording.name + " START"),
-                    subtitle: Text("startMovieRec", style: getTextStyle(device!.api!.startMovieRecording)),
-                    onTap: () => device!.api!.startMovieRecording()),
+                    subtitle: Text("startMovieRec", style: getTextStyle(device!.api.startMovieRecording)),
+                    onTap: () => device!.api.startMovieRecording()),
               ),
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.MovieRecording.name + " STOP"),
-                    subtitle: Text("stopMovieRec", style: getTextStyle(device!.api!.stopMovieRecording)),
-                    onTap: () => device!.api!.stopMovieRecording()),
+                    subtitle: Text("stopMovieRec", style: getTextStyle(device!.api.stopMovieRecording)),
+                    onTap: () => device!.api.stopMovieRecording()),
               )
             ]),
           ]),
@@ -1105,14 +1105,14 @@ class TestsPageState extends State<TestsPage> {
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.AudioRecording.name + " START"),
-                    subtitle: Text("startAudioRec", style: getTextStyle(device!.api!.startAudioRecording)),
-                    onTap: () => device!.api!.startAudioRecording()),
+                    subtitle: Text("startAudioRec", style: getTextStyle(device!.api.startAudioRecording)),
+                    onTap: () => device!.api.startAudioRecording()),
               ),
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.AudioRecording.name + " STOP"),
-                    subtitle: Text("stopAudioRec", style: getTextStyle(device!.api!.stopAudioRecording)),
-                    onTap: () => device!.api!.stopAudioRecording()),
+                    subtitle: Text("stopAudioRec", style: getTextStyle(device!.api.stopAudioRecording)),
+                    onTap: () => device!.api.stopAudioRecording()),
               )
             ]),
           ]),
@@ -1136,14 +1136,14 @@ class TestsPageState extends State<TestsPage> {
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.LoopRecording.name + " START"),
-                    subtitle: Text("startLoopRecording", style: getTextStyle(device!.api!.startLoopRecording)),
-                    onTap: () => device!.api!.startLoopRecording()),
+                    subtitle: Text("startLoopRecording", style: getTextStyle(device!.api.startLoopRecording)),
+                    onTap: () => device!.api.startLoopRecording()),
               ),
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.LoopRecording.name + " STOP"),
-                    subtitle: Text("stopLoopRecording", style: getTextStyle(device!.api!.stopLoopRecording)),
-                    onTap: () => device!.api!.stopLoopRecording()),
+                    subtitle: Text("stopLoopRecording", style: getTextStyle(device!.api.stopLoopRecording)),
+                    onTap: () => device!.api.stopLoopRecording()),
               )
             ]),
           ]),
@@ -1167,9 +1167,9 @@ class TestsPageState extends State<TestsPage> {
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.LiveView.name + " START"),
-                    subtitle: Text("startLiveView", style: getTextStyle(device!.api!.startLiveView)),
+                    subtitle: Text("startLiveView", style: getTextStyle(device!.api.startLiveView)),
                     onTap: () async{
-                      await device!.api!.startLiveView();
+                      await device!.api.startLiveView();
 
                       Navigator.pushReplacement(
                         context,
@@ -1180,8 +1180,8 @@ class TestsPageState extends State<TestsPage> {
               Expanded(
                 child: ListTile(
                     title: Text(ItemId.LiveView.name + " STOP"),
-                    subtitle: Text("stopLiveView", style: getTextStyle(device!.api!.stopLiveView)),
-                    onTap: () => device!.api!.stopLiveView()),
+                    subtitle: Text("stopLiveView", style: getTextStyle(device!.api.stopLiveView)),
+                    onTap: () => device!.api.stopLiveView()),
               )
             ]),
           ]),
@@ -1201,10 +1201,10 @@ class TestsPageState extends State<TestsPage> {
               title: Text(ItemId.MeteringMode.name),
               subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(device!.cameraSettings.meteringMode.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
-                Text("setContShootingSpeed", style: getTextStyle(device!.api!.setContShootingSpeed)),
-                Text("getContShootingSpeed ", style: getTextStyle(device!.api!.getContShootingSpeed))
+                Text("setContShootingSpeed", style: getTextStyle(device!.api.setContShootingSpeed)),
+                Text("getContShootingSpeed ", style: getTextStyle(device!.api.getContShootingSpeed))
               ]),
-              onTap: () => device!.api!.getMeteringMode(update: ForceUpdate.On),
+              onTap: () => device!.api.getMeteringMode(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -1218,7 +1218,7 @@ class TestsPageState extends State<TestsPage> {
                                 DropdownMenuItem<MeteringModeValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device!.api!.setMeteringMode(value),
+                        onChanged: (value) => device!.api.setMeteringMode(value),
                       ))),
               Expanded(
                   child: Padding(
@@ -1231,7 +1231,7 @@ class TestsPageState extends State<TestsPage> {
                                 DropdownMenuItem<MeteringModeValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device!.api!.setMeteringMode(value),
+                        onChanged: (value) => device!.api.setMeteringMode(value),
                       ))),
             ]),
           ]),
@@ -1252,17 +1252,17 @@ class TestsPageState extends State<TestsPage> {
               subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(device!.cameraSettings.exposureCompensation.value?.name ?? "NotAvailable",
                     textAlign: TextAlign.start),
-                Text("getExposureCompensation", style: getTextStyle(device!.api!.getExposureCompensation)),
-                Text("setExposureCompensation", style: getTextStyle(device!.api!.setExposureCompensation))
+                Text("getExposureCompensation", style: getTextStyle(device!.api.getExposureCompensation)),
+                Text("setExposureCompensation", style: getTextStyle(device!.api.setExposureCompensation))
               ]),
-              onTap: () => device!.api!.getExposureCompensation(update: ForceUpdate.On),
+              onTap: () => device!.api.getExposureCompensation(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
-                child: ListTile(title: Text("Up"), onTap: () => device!.api!.modifyExposureCompensation(1)),
+                child: ListTile(title: Text("Up"), onTap: () => device!.api.modifyExposureCompensation(1)),
               ),
               Expanded(
-                child: ListTile(title: Text("Down"), onTap: () => device!.api!.modifyExposureCompensation(-1)),
+                child: ListTile(title: Text("Down"), onTap: () => device!.api.modifyExposureCompensation(-1)),
               )
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -1276,7 +1276,7 @@ class TestsPageState extends State<TestsPage> {
                             DropdownMenuItem<EvValue>(
                                 child: Text(e.name!), value: e))
                             .toList(),
-                        onChanged: (value) => device!.api!.setExposureCompensation(value),
+                        onChanged: (value) => device!.api.setExposureCompensation(value),
                       ))),
               Expanded(
                   child: Padding(
@@ -1288,7 +1288,7 @@ class TestsPageState extends State<TestsPage> {
                             DropdownMenuItem<EvValue>(
                                 child: Text(e.name!), value: e))
                             .toList(),
-                        onChanged: (value) => device!.api!.setExposureCompensation(value),
+                        onChanged: (value) => device!.api.setExposureCompensation(value),
                       ))),
             ]),
           ]),
@@ -1313,12 +1313,12 @@ class TestsPageState extends State<TestsPage> {
                                 device!.cameraSettings.fNumber.value?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            Text("setFNumber", style: getTextStyle(device!.api!.setFNumber)),
-                            Text("getFNumber", style: getTextStyle(device!.api!.getFNumber)),
-                            Text("modifyFNumber", style: getTextStyle(device!.api!.modifyFNumber))
+                            Text("setFNumber", style: getTextStyle(device!.api.setFNumber)),
+                            Text("getFNumber", style: getTextStyle(device!.api.getFNumber)),
+                            Text("modifyFNumber", style: getTextStyle(device!.api.modifyFNumber))
                           ]),
                       onTap: () =>
-                          device!.api!.getFNumber(update: ForceUpdate.On),
+                          device!.api.getFNumber(update: ForceUpdate.On),
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1326,12 +1326,12 @@ class TestsPageState extends State<TestsPage> {
                           Expanded(
                             child: ListTile(
                                 title: Text("Up"),
-                                onTap: () => device!.api!.modifyFNumber(1)),
+                                onTap: () => device!.api.modifyFNumber(1)),
                           ),
                           Expanded(
                             child: ListTile(
                                 title: Text("Down"),
-                                onTap: () => device!.api!.modifyFNumber(-1)),
+                                onTap: () => device!.api.modifyFNumber(-1)),
                           )
                         ]),
                     Row(
@@ -1351,7 +1351,7 @@ class TestsPageState extends State<TestsPage> {
                                                     value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device!.api!.setFNumber(value),
+                                        device!.api.setFNumber(value),
                                   ))),
                           Expanded(
                               child: Padding(
@@ -1367,7 +1367,7 @@ class TestsPageState extends State<TestsPage> {
                                                     value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device!.api!.setFNumber(value),
+                                        device!.api.setFNumber(value),
                                   ))),
                         ]),
                   ]),
@@ -1390,11 +1390,11 @@ class TestsPageState extends State<TestsPage> {
                                 device!.cameraSettings.iso.value?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            Text("setIso", style: getTextStyle(device!.api!.setIso)),
-                            Text("getIso", style: getTextStyle(device!.api!.getIso)),
-                            Text("modifyIso", style: getTextStyle(device!.api!.modifyIso))
+                            Text("setIso", style: getTextStyle(device!.api.setIso)),
+                            Text("getIso", style: getTextStyle(device!.api.getIso)),
+                            Text("modifyIso", style: getTextStyle(device!.api.modifyIso))
                           ]),
-                      onTap: () => device!.api!.getIso(update: ForceUpdate.On),
+                      onTap: () => device!.api.getIso(update: ForceUpdate.On),
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1402,12 +1402,12 @@ class TestsPageState extends State<TestsPage> {
                           Expanded(
                             child: ListTile(
                                 title: Text("Up"),
-                                onTap: () => device!.api!.modifyIso(1)),
+                                onTap: () => device!.api.modifyIso(1)),
                           ),
                           Expanded(
                             child: ListTile(
                                 title: Text("Down"),
-                                onTap: () => device!.api!.modifyIso(-1)),
+                                onTap: () => device!.api.modifyIso(-1)),
                           )
                         ]),
                     Row(
@@ -1424,7 +1424,7 @@ class TestsPageState extends State<TestsPage> {
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device!.api!.setIso(value),
+                                        device!.api.setIso(value),
                                   ))),
                           Expanded(
                               child: Padding(
@@ -1437,7 +1437,7 @@ class TestsPageState extends State<TestsPage> {
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device!.api!.setIso(value),
+                                        device!.api.setIso(value),
                                   ))),
                         ]),
                   ]),
@@ -1461,11 +1461,11 @@ class TestsPageState extends State<TestsPage> {
                                     ?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            Text("getLiveViewSize", style: getTextStyle(device!.api!.getLiveViewSize)),
-                            Text("startLiveViewWithSize", style: getTextStyle(device!.api!.startLiveViewWithSize)),
+                            Text("getLiveViewSize", style: getTextStyle(device!.api.getLiveViewSize)),
+                            Text("startLiveViewWithSize", style: getTextStyle(device!.api.startLiveViewWithSize)),
                           ]),
                       onTap: () =>
-                          device!.api!.getLiveViewSize(update: ForceUpdate.On),
+                          device!.api.getLiveViewSize(update: ForceUpdate.On),
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1484,7 +1484,7 @@ class TestsPageState extends State<TestsPage> {
                                                 child: Text(e!.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device!.api!.startLiveViewWithSize(value),
+                                        device!.api.startLiveViewWithSize(value),
                                   ))),
                           Expanded(
                               child: Padding(
@@ -1500,7 +1500,7 @@ class TestsPageState extends State<TestsPage> {
                                                 child: Text(e!.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device!.api!.startLiveViewWithSize(value),
+                                        device!.api.startLiveViewWithSize(value),
                                   ))),
                         ]),
                   ]),
@@ -1524,10 +1524,10 @@ class TestsPageState extends State<TestsPage> {
                                     ?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            Text("setPostViewImageSize", style: getTextStyle(device!.api!.setPostViewImageSize)),
-                            Text("getPostViewImageSize", style: getTextStyle(device!.api!.getPostViewImageSize))
+                            Text("setPostViewImageSize", style: getTextStyle(device!.api.setPostViewImageSize)),
+                            Text("getPostViewImageSize", style: getTextStyle(device!.api.getPostViewImageSize))
                           ]),
-                      onTap: () => device!.api!
+                      onTap: () => device!.api
                           .getPostViewImageSize(update: ForceUpdate.On),
                     ),
                     Row(
@@ -1548,7 +1548,7 @@ class TestsPageState extends State<TestsPage> {
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device!.api!.setPostViewImageSize(value),
+                                        device!.api.setPostViewImageSize(value),
                                   ))),
                           Expanded(
                               child: Padding(
@@ -1565,7 +1565,7 @@ class TestsPageState extends State<TestsPage> {
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device!.api!.setPostViewImageSize(value),
+                                        device!.api.setPostViewImageSize(value),
                                   ))),
                         ]),
                   ]),
@@ -1589,11 +1589,11 @@ class TestsPageState extends State<TestsPage> {
                                     ?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            Text("getProgramShift", style: getTextStyle(device!.api!.getProgramShift)),
-                            Text("setProgramShift", style: getTextStyle(device!.api!.setProgramShift)),
+                            Text("getProgramShift", style: getTextStyle(device!.api.getProgramShift)),
+                            Text("setProgramShift", style: getTextStyle(device!.api.setProgramShift)),
                           ]),
                       onTap: () =>
-                          device!.api!.getProgramShift(update: ForceUpdate.On),
+                          device!.api.getProgramShift(update: ForceUpdate.On),
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1610,7 +1610,7 @@ class TestsPageState extends State<TestsPage> {
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device!.api!.setProgramShift(value),
+                                        device!.api.setProgramShift(value),
                                   ))),
                           Expanded(
                               child: Padding(
@@ -1624,7 +1624,7 @@ class TestsPageState extends State<TestsPage> {
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device!.api!.setProgramShift(value),
+                                        device!.api.setProgramShift(value),
                                   ))),
                         ]),
                   ]),
@@ -1647,22 +1647,22 @@ class TestsPageState extends State<TestsPage> {
                         device!.cameraSettings.shutterSpeed.value?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    Text("getShutterSpeed", style: getTextStyle(device!.api!.getShutterSpeed)),
-                    Text("modifyShutterSpeed", style: getTextStyle(device!.api!.modifyShutterSpeed)),
-                    Text("setProgramShift", style: getTextStyle(device!.api!.setProgramShift)),
+                    Text("getShutterSpeed", style: getTextStyle(device!.api.getShutterSpeed)),
+                    Text("modifyShutterSpeed", style: getTextStyle(device!.api.modifyShutterSpeed)),
+                    Text("setProgramShift", style: getTextStyle(device!.api.setProgramShift)),
                   ]),
-              onTap: () => device!.api!.getShutterSpeed(update: ForceUpdate.On),
+              onTap: () => device!.api.getShutterSpeed(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                 child: ListTile(
                     title: Text("Up"),
-                    onTap: () => device!.api!.modifyShutterSpeed(1)),
+                    onTap: () => device!.api.modifyShutterSpeed(1)),
               ),
               Expanded(
                 child: ListTile(
                     title: Text("Down"),
-                    onTap: () => device!.api!.modifyShutterSpeed(-1)),
+                    onTap: () => device!.api.modifyShutterSpeed(-1)),
               )
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -1676,7 +1676,7 @@ class TestsPageState extends State<TestsPage> {
                                 DropdownMenuItem<ShutterSpeedValue>(
                                     child: Text(e.name!), value: e))
                             .toList(),
-                        onChanged: (value) => device!.api!.setShutterSpeed(value),
+                        onChanged: (value) => device!.api.setShutterSpeed(value),
                       ))),
               Expanded(
                   child: Padding(
@@ -1688,7 +1688,7 @@ class TestsPageState extends State<TestsPage> {
                                 DropdownMenuItem<ShutterSpeedValue>(
                                     child: Text(e.name!), value: e))
                             .toList(),
-                        onChanged: (value) => device!.api!.setShutterSpeed(value),
+                        onChanged: (value) => device!.api.setShutterSpeed(value),
                       ))),
             ]),
           ]),
@@ -1713,8 +1713,8 @@ class TestsPageState extends State<TestsPage> {
                         device!.cameraSettings.focusAreaSpot.value?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    Text("setFocusAreaSpot", style: getTextStyle(device!.api!.setFocusAreaSpot)),
-                    Text("getFocusAreaSpot", style: getTextStyle(device!.api!.getFocusAreaSpot)),
+                    Text("setFocusAreaSpot", style: getTextStyle(device!.api.setFocusAreaSpot)),
+                    Text("getFocusAreaSpot", style: getTextStyle(device!.api.getFocusAreaSpot)),
                   ]),
             ),
           ]),
@@ -1739,11 +1739,11 @@ class TestsPageState extends State<TestsPage> {
                         device!.cameraSettings.whiteBalanceMode.value?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    Text("setWhiteBalanceMode", style: getTextStyle(device!.api!.setWhiteBalanceMode)),
-                    Text("getWhiteBalanceMode", style: getTextStyle(device!.api!.getWhiteBalanceMode)),
+                    Text("setWhiteBalanceMode", style: getTextStyle(device!.api.setWhiteBalanceMode)),
+                    Text("getWhiteBalanceMode", style: getTextStyle(device!.api.getWhiteBalanceMode)),
                   ]),
               onTap: () =>
-                  device!.api!.getWhiteBalanceMode(update: ForceUpdate.On),
+                  device!.api.getWhiteBalanceMode(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -1757,7 +1757,7 @@ class TestsPageState extends State<TestsPage> {
                                     child: Text(e!.name), value: e))
                             .toList(),
                         onChanged: (value) =>
-                            device!.api!.setWhiteBalanceMode(value),
+                            device!.api.setWhiteBalanceMode(value),
                       ))),
               Expanded(
                   child: Padding(
@@ -1770,7 +1770,7 @@ class TestsPageState extends State<TestsPage> {
                                     child: Text(e!.name), value: e))
                             .toList(),
                         onChanged: (value) =>
-                            device!.api!.setWhiteBalanceMode(value),
+                            device!.api.setWhiteBalanceMode(value),
                       ))),
             ]),
           ]),
@@ -1797,23 +1797,23 @@ class TestsPageState extends State<TestsPage> {
                             ?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    Text("setWhiteBalanceColorTemp", style: getTextStyle(device!.api!.setWhiteBalanceColorTemp)),
-                    Text("modifyWhiteBalanceColorTemp", style: getTextStyle(device!.api!.modifyWhiteBalanceColorTemp)),
-                    Text("getWhiteBalanceColorTemp", style: getTextStyle(device!.api!.getWhiteBalanceColorTemp)),
+                    Text("setWhiteBalanceColorTemp", style: getTextStyle(device!.api.setWhiteBalanceColorTemp)),
+                    Text("modifyWhiteBalanceColorTemp", style: getTextStyle(device!.api.modifyWhiteBalanceColorTemp)),
+                    Text("getWhiteBalanceColorTemp", style: getTextStyle(device!.api.getWhiteBalanceColorTemp)),
                   ]),
               onTap: () =>
-                  device!.api!.getWhiteBalanceColorTemp(update: ForceUpdate.On),
+                  device!.api.getWhiteBalanceColorTemp(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
                 child: ListTile(
                     title: Text("Up"),
-                    onTap: () => device!.api!.modifyWhiteBalanceColorTemp(1)),
+                    onTap: () => device!.api.modifyWhiteBalanceColorTemp(1)),
               ),
               Expanded(
                 child: ListTile(
                     title: Text("Down"),
-                    onTap: () => device!.api!.modifyWhiteBalanceColorTemp(-1)),
+                    onTap: () => device!.api.modifyWhiteBalanceColorTemp(-1)),
               )
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -1830,7 +1830,7 @@ class TestsPageState extends State<TestsPage> {
                                     child: Text(e!.name), value: e))
                             .toList(),
                         onChanged: (value) =>
-                            device!.api!.setWhiteBalanceColorTemp(value),
+                            device!.api.setWhiteBalanceColorTemp(value),
                       ))),
               Expanded(
                   child: Padding(
@@ -1845,7 +1845,7 @@ class TestsPageState extends State<TestsPage> {
                                     child: Text(e!.name), value: e))
                             .toList(),
                         onChanged: (value) =>
-                            device!.api!.setWhiteBalanceColorTemp(value),
+                            device!.api.setWhiteBalanceColorTemp(value),
                       ))),
             ]),
           ]),
@@ -1870,10 +1870,10 @@ class TestsPageState extends State<TestsPage> {
                         device!.cameraSettings.flashMode.value?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    Text("setFlashMode", style: getTextStyle(device!.api!.setFlashMode)),
-                    Text("getFlashMode", style: getTextStyle(device!.api!.getFlashMode)),
+                    Text("setFlashMode", style: getTextStyle(device!.api.setFlashMode)),
+                    Text("getFlashMode", style: getTextStyle(device!.api.getFlashMode)),
                   ]),
-              onTap: () => device!.api!.getFlashMode(update: ForceUpdate.On),
+              onTap: () => device!.api.getFlashMode(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -1886,7 +1886,7 @@ class TestsPageState extends State<TestsPage> {
                                 DropdownMenuItem<FlashModeValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device!.api!.setFlashMode(value),
+                        onChanged: (value) => device!.api.setFlashMode(value),
                       ))),
               Expanded(
                   child: Padding(
@@ -1898,7 +1898,7 @@ class TestsPageState extends State<TestsPage> {
                                 DropdownMenuItem<FlashModeValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device!.api!.setFlashMode(value),
+                        onChanged: (value) => device!.api.setFlashMode(value),
                       ))),
             ]),
           ]),
@@ -1923,10 +1923,10 @@ class TestsPageState extends State<TestsPage> {
                         device!.cameraSettings.focusMode.value?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    Text("setFocusMode", style: getTextStyle(device!.api!.setFocusMode)),
-                    Text("getFocusMode", style: getTextStyle(device!.api!.getFocusMode)),
+                    Text("setFocusMode", style: getTextStyle(device!.api.setFocusMode)),
+                    Text("getFocusMode", style: getTextStyle(device!.api.getFocusMode)),
                   ]),
-              onTap: () => device!.api!.getFocusMode(update: ForceUpdate.On),
+              onTap: () => device!.api.getFocusMode(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -1939,7 +1939,7 @@ class TestsPageState extends State<TestsPage> {
                                 DropdownMenuItem<FocusModeValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device!.api!.setFocusMode(value),
+                        onChanged: (value) => device!.api.setFocusMode(value),
                       ))),
               Expanded(
                   child: Padding(
@@ -1951,7 +1951,7 @@ class TestsPageState extends State<TestsPage> {
                                 DropdownMenuItem<FocusModeValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device!.api!.setFocusMode(value),
+                        onChanged: (value) => device!.api.setFocusMode(value),
                       ))),
             ]),
           ]),
@@ -1976,10 +1976,10 @@ class TestsPageState extends State<TestsPage> {
                         device!.cameraSettings.zoomSetting.value?.name ??
                             "NotAvailable",
                         textAlign: TextAlign.start),
-                    Text("setZoomSetting", style: getTextStyle(device!.api!.setZoomSetting)),
-                    Text("getZoomSetting", style: getTextStyle(device!.api!.getZoomSetting)),
+                    Text("setZoomSetting", style: getTextStyle(device!.api.setZoomSetting)),
+                    Text("getZoomSetting", style: getTextStyle(device!.api.getZoomSetting)),
                   ]),
-              onTap: () => device!.api!.getZoomSetting(update: ForceUpdate.On),
+              onTap: () => device!.api.getZoomSetting(update: ForceUpdate.On),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               Expanded(
@@ -1992,7 +1992,7 @@ class TestsPageState extends State<TestsPage> {
                                 DropdownMenuItem<ZoomSettingValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device!.api!.setZoomSetting(value),
+                        onChanged: (value) => device!.api.setZoomSetting(value),
                       ))),
               Expanded(
                   child: Padding(
@@ -2004,7 +2004,7 @@ class TestsPageState extends State<TestsPage> {
                                 DropdownMenuItem<ZoomSettingValue>(
                                     child: Text(e.name), value: e))
                             .toList(),
-                        onChanged: (value) => device!.api!.setZoomSetting(value),
+                        onChanged: (value) => device!.api.setZoomSetting(value),
                       ))),
             ]),
           ]),
@@ -2024,8 +2024,8 @@ class TestsPageState extends State<TestsPage> {
               title: Text(ItemId.StorageInformation.name),
               subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [Text("getStorageInformation", style: getTextStyle(device!.api!.getStorageInformation))]),
-              onTap: () => device!.api!.getStorageInformation(update: ForceUpdate.On),
+                  children: [Text("getStorageInformation", style: getTextStyle(device!.api.getStorageInformation))]),
+              onTap: () => device!.api.getStorageInformation(update: ForceUpdate.On),
             ),
             Padding(
                     padding: EdgeInsets.all(16),
@@ -2061,8 +2061,8 @@ class TestsPageState extends State<TestsPage> {
                             device!.cameraSettings.silentShooting.value?.name ??
                                 "NotAvailable",
                             textAlign: TextAlign.start),
-                        Text("setLiveViewInfo", style: getTextStyle(device!.api!.setLiveViewFrameInfo)),
-                        Text("getLiveViewInfo", style: getTextStyle(device!.api!.getLiveViewFrameInfo)),
+                        Text("setLiveViewInfo", style: getTextStyle(device!.api.setLiveViewFrameInfo)),
+                        Text("getLiveViewInfo", style: getTextStyle(device!.api.getLiveViewFrameInfo)),
                       ]),
             ),
           ]),
@@ -2089,11 +2089,11 @@ class TestsPageState extends State<TestsPage> {
                                     ?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            Text("setSilentShooting", style: getTextStyle(device!.api!.setSilentShooting)),
-                            Text("getSilentShooting", style: getTextStyle(device!.api!.getSilentShooting)),
+                            Text("setSilentShooting", style: getTextStyle(device!.api.setSilentShooting)),
+                            Text("getSilentShooting", style: getTextStyle(device!.api.getSilentShooting)),
                           ]),
                       onTap: () =>
-                          device!.api!.getSilentShooting(update: ForceUpdate.On),
+                          device!.api.getSilentShooting(update: ForceUpdate.On),
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -2110,7 +2110,7 @@ class TestsPageState extends State<TestsPage> {
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device!.api!.setSilentShooting(value),
+                                        device!.api.setSilentShooting(value),
                                   ))),
                           Expanded(
                               child: Padding(
@@ -2125,7 +2125,7 @@ class TestsPageState extends State<TestsPage> {
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device!.api!.setSilentShooting(value),
+                                        device!.api.setSilentShooting(value),
                                   ))),
                         ]),
                   ]),
@@ -2150,11 +2150,11 @@ class TestsPageState extends State<TestsPage> {
                                     ?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            Text("setShootMode", style: getTextStyle(device!.api!.setShootMode)),
-                            Text("getShootMode", style: getTextStyle(device!.api!.getShootMode))
+                            Text("setShootMode", style: getTextStyle(device!.api.setShootMode)),
+                            Text("getShootMode", style: getTextStyle(device!.api.getShootMode))
                           ]),
                       onTap: () =>
-                          device!.api!.getShootMode(update: ForceUpdate.On),
+                          device!.api.getShootMode(update: ForceUpdate.On),
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -2172,7 +2172,7 @@ class TestsPageState extends State<TestsPage> {
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device!.api!.setShootMode(value),
+                                        device!.api.setShootMode(value),
                                   ))),
                           Expanded(
                               child: Padding(
@@ -2187,7 +2187,7 @@ class TestsPageState extends State<TestsPage> {
                                                 child: Text(e.name), value: e))
                                         .toList(),
                                     onChanged: (value) =>
-                                        device!.api!.setShootMode(value),
+                                        device!.api.setShootMode(value),
                                   ))),
                         ]),
                   ]),
@@ -2213,11 +2213,11 @@ class TestsPageState extends State<TestsPage> {
                                     ?.name ??
                                     "NotAvailable",
                                 textAlign: TextAlign.start),
-                            Text("setImageFileFormat", style: getTextStyle(device!.api!.setImageFileFormat)),
-                            Text("getImageFileFormat", style: getTextStyle(device!.api!.getImageFileFormat))
+                            Text("setImageFileFormat", style: getTextStyle(device!.api.setImageFileFormat)),
+                            Text("getImageFileFormat", style: getTextStyle(device!.api.getImageFileFormat))
                           ]),
                       onTap: () =>
-                          device!.api!.getImageFileFormat(update: ForceUpdate.On),
+                          device!.api.getImageFileFormat(update: ForceUpdate.On),
                     ),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -2234,7 +2234,7 @@ class TestsPageState extends State<TestsPage> {
                                             DropdownMenuItem<ImageFileFormatValue>(
                                                 child: Text(e.name), value: e))
                                         .toList(),
-                                    onChanged: (value) => device!.api!.setImageFileFormat(value),
+                                    onChanged: (value) => device!.api.setImageFileFormat(value),
                               ))),
                       Expanded(
                           child: Padding(
@@ -2245,7 +2245,7 @@ class TestsPageState extends State<TestsPage> {
                                     .map<DropdownMenuItem<ImageFileFormatValue>>(
                                         (e) => DropdownMenuItem<ImageFileFormatValue>(child: Text(e.name), value: e))
                                     .toList(),
-                                onChanged: (value) => device!.api!.setImageFileFormat(value),
+                                onChanged: (value) => device!.api.setImageFileFormat(value),
                               ))),
                     ]),
                   ]),
@@ -2263,10 +2263,10 @@ class TestsPageState extends State<TestsPage> {
                       title: Text(ItemId.ImageSize.name),
                       subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                         Text(device!.cameraSettings.imageSize.value?.name ?? "NotAvailable", textAlign: TextAlign.start),
-                        Text("setImageSize", style: getTextStyle(device!.api!.setImageSize)),
-                        Text("getImageSize", style: getTextStyle(device!.api!.getImageSize))
+                        Text("setImageSize", style: getTextStyle(device!.api.setImageSize)),
+                        Text("getImageSize", style: getTextStyle(device!.api.getImageSize))
                       ]),
-                      onTap: () => device!.api!.getImageSize(update: ForceUpdate.On),
+                      onTap: () => device!.api.getImageSize(update: ForceUpdate.On),
                     ),
                     Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                       Expanded(
@@ -2278,7 +2278,7 @@ class TestsPageState extends State<TestsPage> {
                                     .map<DropdownMenuItem<ImageSizeValue>>(
                                         (e) => DropdownMenuItem<ImageSizeValue>(child: Text(e.name), value: e))
                                     .toList(),
-                                onChanged: (value) => device!.api!.setImageSize(value),
+                                onChanged: (value) => device!.api.setImageSize(value),
                               ))),
                       Expanded(
                           child: Padding(
@@ -2289,7 +2289,7 @@ class TestsPageState extends State<TestsPage> {
                                     .map<DropdownMenuItem<ImageSizeValue>>(
                                         (e) => DropdownMenuItem<ImageSizeValue>(child: Text(e.name), value: e))
                                     .toList(),
-                                onChanged: (value) => device!.api!.setImageSize(value),
+                                onChanged: (value) => device!.api.setImageSize(value),
                               ))),
                     ]),
                   ]),
@@ -2308,10 +2308,10 @@ class TestsPageState extends State<TestsPage> {
                       subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                         Text(device!.cameraSettings.aspectRatio.value?.name ?? "NotAvailable",
                             textAlign: TextAlign.start),
-                        Text("setAspectRatio", style: getTextStyle(device!.api!.setAspectRatio)),
-                        Text("getAspectRatio", style: getTextStyle(device!.api!.getAspectRatio))
+                        Text("setAspectRatio", style: getTextStyle(device!.api.setAspectRatio)),
+                        Text("getAspectRatio", style: getTextStyle(device!.api.getAspectRatio))
                       ]),
-                      onTap: () => device!.api!.getAspectRatio(update: ForceUpdate.On),
+                      onTap: () => device!.api.getAspectRatio(update: ForceUpdate.On),
                     ),
                     Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                       Expanded(
@@ -2323,7 +2323,7 @@ class TestsPageState extends State<TestsPage> {
                                     .map<DropdownMenuItem<AspectRatioValue>>(
                                         (e) => DropdownMenuItem<AspectRatioValue>(child: Text(e.name), value: e))
                                     .toList(),
-                                onChanged: (value) => device!.api!.setAspectRatio(value),
+                                onChanged: (value) => device!.api.setAspectRatio(value),
                               ))),
                       Expanded(
                           child: Padding(
@@ -2334,7 +2334,7 @@ class TestsPageState extends State<TestsPage> {
                                     .map<DropdownMenuItem<AspectRatioValue>>(
                                         (e) => DropdownMenuItem<AspectRatioValue>(child: Text(e.name), value: e))
                                     .toList(),
-                                onChanged: (value) => device!.api!.setAspectRatio(value),
+                                onChanged: (value) => device!.api.setAspectRatio(value),
                               ))),
                     ]),
                   ]),

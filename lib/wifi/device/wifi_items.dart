@@ -176,7 +176,7 @@ extension SettingsItemExtension on SettingsItem {
         settingsItemColorTemp.updateCurrentItem(Value.fromWifi(itemId, data["currentColorTemperature"]) as WhiteBalanceColorTempValue);
 
         if(autoUpdate && data["checkAvailability"] == true){
-          device.api!.getWhiteBalanceMode(update: ForceUpdate.Available);
+          device.api.getWhiteBalanceMode(update: ForceUpdate.Available);
         }
         break;
       case ItemId.ExposureCompensation:

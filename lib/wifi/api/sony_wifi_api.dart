@@ -30,9 +30,9 @@ class SonyWifiApi extends SonyApiInterface {
 
   @override
   Future<bool> connectCamera(SonyCameraDevice device) async {
-    await device.api!.getWebApiVersionsCamera();
-    await device.api!.getMethodTypesCamera();
-    await device.api!.getAvailableFunctions();
+    await device.api.getWebApiVersionsCamera();
+    await device.api.getMethodTypesCamera();
+    await device.api.getAvailableFunctions();
 
     await startConnection(device as SonyCameraWifiDevice);
     /*

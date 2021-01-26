@@ -93,7 +93,7 @@ BEGIN
             VALUE "FileDescription", "A new Flutter project." "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "sony_alpha_control" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2020 de.kilianeller. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2021 de.kilianeller. All rights reserved." "\0"
             VALUE "OriginalFilename", "sony_alpha_control.exe" "\0"
             VALUE "ProductName", "sony_alpha_control" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"

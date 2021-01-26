@@ -10,6 +10,7 @@ abstract class SonyCameraDevice<T extends CameraSettings> {
   SonyCameraWifiApi? _wifiApi;
   SonyCameraUsbApi? _usbApi;
 
+  CameraApiInterface get api;
   get wifiApi => _wifiApi;
 
   get usbApi => _usbApi;
@@ -27,27 +28,6 @@ abstract class SonyCameraDevice<T extends CameraSettings> {
   //TODO mode (important)
 
   //TODO get transfer
-
-//  CameraTransferInterface get content{
-
-  //}
-
-  CameraApiInterface? get api {
-    switch (interfaceType) {
-      case InterfaceType.Wifi_Interface:
-        if (_wifiApi == null) {
-          _wifiApi = SonyCameraWifiApi(this);
-        }
-        return _wifiApi;
-      case InterfaceType.USB_Interface:
-        if (_usbApi == null) {
-          _usbApi = SonyCameraUsbApi(this);
-        }
-        return _usbApi;
-      default:
-        return null;
-    }
-  }
 
   Future<bool> updateSettings() => cameraSettings.update();
 

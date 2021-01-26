@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:sonyalphacontrol/top_level_api/api/force_update.dart';
 import 'package:sonyalphacontrol/top_level_api/api/function_availability.dart';
 import 'package:sonyalphacontrol/top_level_api/api/sony_camera_api_interface.dart';
@@ -611,7 +612,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
     throw UnimplementedError();
   }
 
-  /*
+
   @override
   Stream<Image> streamLiveView() async* {
     while (true) {
@@ -624,7 +625,7 @@ class SonyCameraUsbApi extends CameraApiInterface {
       }
     }
   }
-*/
+
   @override
   Future<bool> modifyWhiteBalanceColorTemp(int direction) {
     // TODO: implement modifyWhiteBalanceColorTemp

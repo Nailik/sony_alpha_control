@@ -10,6 +10,7 @@ import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_api_method_set.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_method_ids.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/sony_web_api_service_type_ids.dart';
+import 'package:sonyalphacontrol/wifi/api/sony_camera_wifi_api.dart';
 import 'package:sonyalphacontrol/wifi/xml/camera_web_api.dart';
 import 'package:sonyalphacontrol/wifi/xml/wifi_camera_xml.dart';
 
@@ -18,7 +19,12 @@ import 'camera_wifi_settings.dart';
 class SonyCameraWifiDevice extends SonyCameraDevice<CameraWifiSettings> {
   WifiCameraXML? info;
 
+  SonyCameraWifiApi? _wifiApi;
+
   SonyCameraWifiDevice(String? name, this.info) : super(name);
+
+  @override
+  CameraApiInterface get api => _wifiApi ??= new SonyCameraWifiApi(this);
 
   @override
   InterfaceType get interfaceType => InterfaceType.Wifi_Interface;

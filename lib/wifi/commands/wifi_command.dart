@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
-import 'package:path_provider/path_provider.dart';
+//import 'package:path_provider/path_provider.dart'; not supporting null safety yet
 import 'package:sonyalphacontrol/top_level_api/api/sony_api.dart';
 import 'package:sonyalphacontrol/top_level_api/device/value.dart';
 import 'package:sonyalphacontrol/top_level_api/ids/item_ids.dart';
@@ -51,7 +50,7 @@ class WifiCommand {
     var json = jsonEncode(this);
     try {
       final response = await http
-          .post(url, body: json)
+          .post(Uri.parse(url), body: json)
           .timeout(Duration(milliseconds: timeout));
       print("request response");
 
@@ -66,15 +65,16 @@ class WifiCommand {
       print("TimeoutException");
       return WifiResponse(json, "TimeoutException");
       // handle timeout
-    } on ClientException catch (error) {
+    } on http.ClientException catch (error) {
       print("ClientException request");
       return WifiResponse(json, "ClientException");
     }
   }
 
   logRequestAndResponse(WifiResponse wifiResponse) async {
+    //${(await getApplicationSupportDirectory()).path} not supporting null safety yet
     var dir =
-        Directory("${(await getApplicationSupportDirectory()).path}/wifiLog");
+        Directory("/wifiLog");
     dir.create(recursive: true);
     var file = File('${dir.path}/${method}_${version}_${params}_.json');
     file.create(recursive: true);

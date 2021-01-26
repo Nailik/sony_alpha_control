@@ -51,8 +51,7 @@ class WifiCameraXML {
         (json['serviceListNode'] as List?)
             ?.map((e) => e == null
                 ? null
-                : CameraService.fromJson(e as Map<String, dynamic>))
-            ?.toList(),
+                : CameraService.fromJson(e as Map<String, dynamic>)).toList(),
       )..scalarWebApiDeviceInfo = json['av:X_ScalarWebAPI_DeviceInfo'] == null
           ? null
           : CameraWebApi.fromJson(

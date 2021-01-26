@@ -147,7 +147,7 @@ Future<CameraImage?> getImage(SonyCameraDevice device,
       return null;
     }
   } else {
-    Uint8List? data = bytelist.sublist(offset);
+    Uint8List data = bytelist.sublist(offset);
     var file;
     if (filePath != null) {
       file = new File(
