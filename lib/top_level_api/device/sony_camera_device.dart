@@ -15,6 +15,8 @@ abstract class SonyCameraDevice<T extends CameraSettings> {
 
   get usbApi => _usbApi;
 
+  //TOOD wifi (remote, image, p2p)
+
   SonyCameraDevice(this.name) {
     this.cameraSettings = createSettings();
   }

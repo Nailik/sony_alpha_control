@@ -1170,8 +1170,8 @@ class WebApiMethodValue extends Value<WebApiMethod> {
         ItemIdExtension.getIdFromWifi(
             (wifiValue[0].replaceFirst(methodId.wifiValue, "") as String)
                 .startLow),
-        (wifiValue[1] as List?)?.map((e) => e as String)?.toList(),
-        (wifiValue[2] as List?)?.map((e) => e as String)?.toList(),
+        (wifiValue[1] as List?)?.map((e) => e as String).toList(),
+        (wifiValue[2] as List?)?.map((e) => e as String).toList(),
         WebApiVersionIdExtension.fromWifiValue(wifiValue[3])));
   }
 

@@ -86,7 +86,7 @@ class InfoItem<T extends Value?> extends ChangeNotifier {
       list.map<T?>((e) => Value.fromWifi(itemId, e) as T?).toList();
 }
 
-class ListInfoItem<T extends Value?> extends ChangeNotifier {
+class ListInfoItem<T extends Value> extends ChangeNotifier {
   final ItemId itemId;
 
   List<T> get values => _value;
@@ -102,5 +102,5 @@ class ListInfoItem<T extends Value?> extends ChangeNotifier {
   ListInfoItem(this.itemId);
 
   createListFromWifiJson(List<dynamic> list) =>
-      list.map<T?>((e) => Value.fromWifi(itemId, e) as T?).toList();
+      list.map<T>((e) => Value.fromWifi(itemId, e) as T).toList();
 }

@@ -38,7 +38,7 @@ class FlutterUsb {
 
   static Future<List<UsbDevice>> get getUsbDevices async {
     logD("getUsbDevices called");
-    String devices = await (_channel.invokeMethod('getUsbDevices') as FutureOr<String>);
+    String devices = await (_channel.invokeMethod('getUsbDevices') as Future<String>);
     devices = devices.replaceAll(r'\', r'\\');
     logD("getUsbDevices result: $devices");
     return (jsonDecode(devices) as List)
@@ -52,7 +52,7 @@ class FlutterUsb {
         .invokeMethod('connectToUsbDevice', usbDevice.bstr)
         .then((value) => completer.complete(value));
     logD("connectToUsbDevice return future");
-    return await (completer.future as FutureOr<String>);
+    return await (completer.future as Future<String>);
   }
 
   static Future<Response> sendCommand(Command command) async {
@@ -70,7 +70,7 @@ class FlutterUsb {
     });
 
     logD("sendCommand return future");
-    return completer.future as FutureOr<Response>;
+    return completer.future as Future<Response>;
   }
 
   static void enableLogger({int maxLogLengthNew = 100}) {

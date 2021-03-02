@@ -107,7 +107,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   Future<ListInfoItem<WebApiMethodValue>> getMethodTypesCamera({WebApiVersionId? webApiVersion, ForceUpdate? update}) async {
     ListInfoItem<WebApiMethodValue> listInfoItem = await super.getMethodTypesCamera();
     if (listInfoItem.values.isEmpty) {
-      return await (_getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.CAMERA, webApiVersion!) as FutureOr<ListInfoItem<WebApiMethodValue>>);
+      return await (_getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.CAMERA, webApiVersion) as Future<ListInfoItem<WebApiMethodValue>>);
     }
     return await super.getMethodTypesCamera();
   }
@@ -115,7 +115,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   Future<ListInfoItem<WebApiMethodValue>> getMethodTypesAvContent({WebApiVersionId? webApiVersion, ForceUpdate? update}) async {
     ListInfoItem<WebApiMethodValue> listInfoItem = await super.getMethodTypesAvContent();
     if (listInfoItem.values.isEmpty) {
-      return await (_getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.AV_CONTENT, webApiVersion!) as FutureOr<ListInfoItem<WebApiMethodValue>>);
+      return await (_getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.AV_CONTENT, webApiVersion!) as Future<ListInfoItem<WebApiMethodValue>>);
     }
     return listInfoItem;
   }
@@ -123,7 +123,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   Future<ListInfoItem<WebApiMethodValue>> getMethodTypesSystem({WebApiVersionId? webApiVersion, ForceUpdate? update}) async {
     ListInfoItem<WebApiMethodValue> listInfoItem = await super.getMethodTypesSystem();
     if (listInfoItem.values.isEmpty) {
-      return await (_getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.SYSTEM, webApiVersion!) as FutureOr<ListInfoItem<WebApiMethodValue>>);
+      return await (_getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.SYSTEM, webApiVersion!) as Future<ListInfoItem<WebApiMethodValue>>);
     }
     return listInfoItem;
   }
@@ -131,7 +131,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
   Future<ListInfoItem<WebApiMethodValue>> getMethodTypesGuide({WebApiVersionId? webApiVersion, ForceUpdate? update}) async {
     ListInfoItem<WebApiMethodValue> listInfoItem = await super.getMethodTypesGuide();
     if (listInfoItem.values.isEmpty) {
-      return await (_getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.GUIDE, webApiVersion!) as FutureOr<ListInfoItem<WebApiMethodValue>>);
+      return await (_getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.GUIDE, webApiVersion!) as Future<ListInfoItem<WebApiMethodValue>>);
     }
     return listInfoItem;
   }
@@ -139,14 +139,14 @@ class SonyCameraWifiApi extends CameraApiInterface {
   Future<ListInfoItem<WebApiMethodValue>> getMethodTypesAccessControl({WebApiVersionId? webApiVersion, ForceUpdate? update}) async {
     ListInfoItem<WebApiMethodValue> listInfoItem = await super.getMethodTypesAccessControl();
     if (listInfoItem.values.isEmpty) {
-      return await (_getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.ACCESS_CONTROL, webApiVersion!) as FutureOr<ListInfoItem<WebApiMethodValue>>);
+      return await (_getMethodTypes(listInfoItem, SonyWebApiServiceTypeId.ACCESS_CONTROL, webApiVersion!) as Future<ListInfoItem<WebApiMethodValue>>);
     }
     return listInfoItem;
   }
 
-  Future<ListInfoItem> _getMethodTypes(ListInfoItem listInfoItem, SonyWebApiServiceTypeId serviceTypeId, WebApiVersionId webApiVersion) async {
+  Future<ListInfoItem> _getMethodTypes(ListInfoItem listInfoItem, SonyWebApiServiceTypeId serviceTypeId, WebApiVersionId? webApiVersion) async {
     return await WifiCommand.createCommand(ApiMethodId.GET, ItemId.MethodTypes,
-        params: [webApiVersion.wifiValue], service: serviceTypeId)
+        params: [webApiVersion?.wifiValue], service: serviceTypeId)
         .send(device)
         .then((wifiResponse) => wifiResponse.response)
         .then((response) =>
@@ -170,7 +170,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
         var jsonD = jsonDecode(wifiResponse.response);
         var list = jsonD["result"];
 
-        List<ApiFunctionValue> values = new List.empty();
+        List<ApiFunctionValue> values = new List.empty(growable: true);
 
         list[0].forEach((wifiValue) {
           ApiFunctionValue newItem = ApiFunctionValue.fromWifiValue(wifiValue);
@@ -463,7 +463,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
   @override
   Future<ListInfoItem<StringValue>> getStorageInformation({update = ForceUpdate.IfNull}) async =>
-      await (_updateListInfoItem(await super.getStorageInformation(update: update)) as FutureOr<ListInfoItem<StringValue>>);
+      await (_updateListInfoItem(await super.getStorageInformation(update: update)) as Future<ListInfoItem<StringValue>>);
 
   ///Zoom
 
@@ -1264,7 +1264,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
         break;
     }
 
-    return settingsItem as FutureOr<SettingsItem<T?>>;
+    return settingsItem as Future<SettingsItem<T?>>;
   }
 
   Future _updateCurrent(SettingsItem settingsItem) async {
@@ -1361,7 +1361,7 @@ class SonyCameraWifiApi extends CameraApiInterface {
 
       WebApiMethodValue? webApiMethod = listInfoItem.values.firstWhereOrNull(
               ((element) =>
-          element!.id.settingsId == itemId &&
+          element.id.settingsId == itemId &&
               element.id.apiName == apiMethodId)) as WebApiMethodValue?;
       if (webApiMethod != null) {
         functionAvailability = FunctionAvailability.Supported;

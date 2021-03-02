@@ -505,7 +505,7 @@ abstract class CameraApiInterface {
 
 
   Future<SettingsItem<FocusModeToggleValue>> getFocusModeToggle({ForceUpdate? update}) async =>
-      device.cameraSettings.focusModeToggleResponse as FutureOr<SettingsItem<FocusModeToggleValue>>;
+      device.cameraSettings.focusModeToggleResponse as Future<SettingsItem<FocusModeToggleValue>>;
 
   Future<bool?> setFocusModeToggle(FocusModeToggleId value);
 
