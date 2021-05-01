@@ -18,27 +18,23 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.12.0-29.10.beta <3.0.0'
+  sdk: '>=2.13.0-211.13.beta <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  wifi_iot:
-    git: https://github.com/alternadom/WiFiFlutter.git
-  xml2json: 5.0.0-nullsafety.0
-  convert:
-  http: 0.12.2
+  wifi_iot: 0.3.1
+  xml2json: 5.1.0
+  convert: 3.0.0-nullsafety.0
+  http: 0.13.0-nullsafety.0
   provider: 5.0.0-nullsafety.3
-  path_provider: 1.6.11
-  cross_connectivity: 2.0.1
-  flutter_isolate: 1.0.0+14
+  path_provider: 2.0.1
+  cross_connectivity: 3.0.2
+  flutter_isolate: 2.0.0-nullsafety.0
   logger: 1.0.0-nullsafety.0
 
 dependency_overrides:
-  convert: 3.0.0-nullsafety.0
-  http:
-    git: git://github.com/dart-lang/http.git
-  http_parser: ^4.0.0-nullsafety
+  http: 0.13.0-nullsafety.0
 
 dev_dependencies:
   build_runner:
