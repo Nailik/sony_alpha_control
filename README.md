@@ -2,7 +2,27 @@
 
 A new Flutter application.
 
-## Getting Started
+# API Overview
+
+## All Api Functions
+
+## How to Connect
+
+### Wifi
+
+#### Old
+
+#### Send to Smartphone
+
+#### New
+
+### USB 
+
+#### OLD
+
+#### NEW
+
+## How to Use
 
 This project is a starting point for a Flutter application.
 
